@@ -10,13 +10,13 @@ const Hero = () => {
       <div className="container-custom relative z-10 pt-20">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
           <div className="w-full md:w-1/2 text-center md:text-left animate-fade-in">
-            <h1 className="font-fraunces text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-gray-800">
+            <h1 className="font-bebas text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-gray-800">
               Whimsical Cookies & Decorating Classes That Delight
             </h1>
-            <h2 className="font-playfair text-2xl md:text-3xl font-medium text-bakery-pink-dark mb-2">
+            <h2 className="font-fraunces text-2xl md:text-3xl font-medium text-bakery-pink-dark mb-2">
               Made With Love in Folsom
             </h2>
-            <p className="text-gray-600 text-lg mb-8 max-w-lg mx-auto md:mx-0">
+            <p className="font-poppins text-gray-600 text-lg mb-8 max-w-lg mx-auto md:mx-0">
               From delightful custom cookies to hands-on decorating classes,
               Rose and Sugar brings creativity and sweetness to every
               celebration.

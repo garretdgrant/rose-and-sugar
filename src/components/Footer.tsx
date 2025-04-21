@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Column 1: Logo and Info */}
           <div className="text-center md:text-left">
             <Link href="/" className="inline-block mb-4">
-              <span className="font-fraunces text-2xl text-bakery-pink-dark">
+              <span className="font-bebas text-2xl text-bakery-pink-dark">
                 Rose <span className="text-gray-700">&</span> Sugar
               </span>
             </Link>
@@ -29,7 +29,7 @@ const Footer = () => {
 
           {/* Column 2: Contact Info */}
           <div className="text-center">
-            <h3 className="font-fraunces text-xl mb-4 text-gray-800 tracking-wide">
+            <h3 className="font-bebas text-xl mb-4 text-gray-800 tracking-wide">
               Contact
             </h3>
             <div className="space-y-3">
@@ -52,7 +52,7 @@ const Footer = () => {
 
           {/* Column 3: Quick Links */}
           <div className="text-center md:text-right">
-            <h3 className="font-fraunces text-xl mb-4 text-gray-800 tracking-wide">
+            <h3 className="font-bebas text-xl mb-4 text-gray-800 tracking-wide">
               Quick Links
             </h3>
             <ul className="space-y-2">

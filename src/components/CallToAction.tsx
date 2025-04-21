@@ -5,7 +5,7 @@ const CallToAction = () => {
   return (
     <section
       id="contact"
-      className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/70"
+      className="section-padding bg-gradient-to-b from-white to-bakery-pink-light"
     >
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
@@ -23,7 +23,7 @@ const CallToAction = () => {
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
                 <Phone size={20} className="text-white" />
               </div>
-              <h3 className="font-fraunces text-lg font-medium mb-2">
+              <h3 className="font-bebas text-lg font-medium mb-2">
                 Call or Text
               </h3>
               <p className="text-gray-600">555-123-4567</p>
@@ -36,7 +36,7 @@ const CallToAction = () => {
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
                 <Calendar size={20} className="text-white" />
               </div>
-              <h3 className="font-fraunces text-lg font-medium mb-2">
+              <h3 className="font-bebas text-lg font-medium mb-2">
                 Book a Class
               </h3>
               <p className="text-gray-600">June & July Sessions</p>
@@ -49,7 +49,7 @@ const CallToAction = () => {
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
                 <Mail size={20} className="text-white" />
               </div>
-              <h3 className="font-fraunces text-lg font-medium mb-2">
+              <h3 className="font-bebas text-lg font-medium mb-2">
                 Send a Message
               </h3>
               <p className="text-gray-600">megan@roseandsugar.com</p>

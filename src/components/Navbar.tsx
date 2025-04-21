@@ -62,7 +62,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               href={link.path}
-              className="font-manrope text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0 after:bg-bakery-pink-dark after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              className="font-poppins text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0 after:bg-bakery-pink-dark after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
             >
               {link.name}
             </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className="font-manrope text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 flex items-center gap-1 px-1 py-1 rounded focus:outline-none"
+                className="font-poppins text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 flex items-center gap-1 px-1 py-1 rounded focus:outline-none"
                 aria-label="Cookies menu"
               >
                 <Cookie className="w-5 h-5 mr-1" />
@@ -82,7 +82,7 @@ const Navbar = () => {
               <DropdownMenuItem asChild>
                 <Link
                   href="/cookies/custom-orders"
-                  className="font-manrope px-2 py-2 block w-full"
+                  className="font-poppins px-2 py-2 block w-full"
                 >
                   Custom Orders
                 </Link>
@@ -90,7 +90,7 @@ const Navbar = () => {
               <DropdownMenuItem asChild>
                 <Link
                   href="/cookies/pre-designed"
-                  className="font-manrope px-2 py-2 block w-full"
+                  className="font-poppins px-2 py-2 block w-full"
                 >
                   Pre-Designed
                 </Link>
@@ -107,7 +107,7 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.path}
-                  className="font-manrope text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                  className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
@@ -115,18 +115,18 @@ const Navbar = () => {
               ))}
               {/* Cookies dropdown - rendered as links on mobile */}
               <div className="border-t border-bakery-pink-light/40 py-2">
-                <div className="font-manrope text-gray-700 py-2">Cookies</div>
+                <div className="font-poppins text-gray-700 py-2">Cookies</div>
                 <div className="flex flex-col pl-2">
                   <Link
                     href="/cookies/custom-orders"
-                    className="font-manrope text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                    className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Custom Orders
                   </Link>
                   <Link
                     href="/cookies/pre-designed"
-                    className="font-manrope text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                    className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Pre-Designed
