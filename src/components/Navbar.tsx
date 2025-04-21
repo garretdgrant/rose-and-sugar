@@ -1,18 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Cookie } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Handle scroll event for navbar appearance
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -24,7 +28,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Cookies", path: "/cookies" },
+    // Cookies handled separately
     { name: "Classes", path: "/classes" },
     { name: "Contact", path: "/contact" },
   ];
@@ -36,7 +40,6 @@ const Navbar = () => {
       }`}
     >
       <div className="container-custom flex items-center justify-between">
-        {/* Logo */}
         <Link href="/" className="flex items-center">
           <img
             src="/logo.png"
@@ -64,6 +67,36 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+          {/* Cookies dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className="font-manrope text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 flex items-center gap-1 px-1 py-1 rounded focus:outline-none"
+                aria-label="Cookies menu"
+              >
+                <Cookie className="w-5 h-5 mr-1" />
+                <span>Cookies</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/cookies/custom-orders"
+                  className="font-manrope px-2 py-2 block w-full"
+                >
+                  Custom Orders
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/cookies/pre-designed"
+                  className="font-manrope px-2 py-2 block w-full"
+                >
+                  Pre-Designed
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         {/* Mobile Navigation */}
@@ -80,6 +113,26 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+              {/* Cookies dropdown - rendered as links on mobile */}
+              <div className="border-t border-bakery-pink-light/40 py-2">
+                <div className="font-manrope text-gray-700 py-2">Cookies</div>
+                <div className="flex flex-col pl-2">
+                  <Link
+                    href="/cookies/custom-orders"
+                    className="font-manrope text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Custom Orders
+                  </Link>
+                  <Link
+                    href="/cookies/pre-designed"
+                    className="font-manrope text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Pre-Designed
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}
