@@ -32,7 +32,7 @@ const customOrderFaqs = [
 
 const CustomOrders = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-bakery-offWhite">
+    <div className="min-h-screen pt-24 flex flex-col bg-bakery-offWhite">
       <main className="flex-grow pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-12">
