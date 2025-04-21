@@ -9,29 +9,38 @@ import SectionDivider from "@/components/ui/sectionDivider";
 
 const faqs = [
   {
-    question: "How far in advance should I order custom cookies?",
+    question: "Do you ship?",
     answer:
-      "We recommend placing your order at least 2-3 weeks in advance for custom designs. For major holidays or peak wedding season, earlier is better!",
+      "No. We can not legally ship cookies under California Cottage Laws.",
   },
   {
-    question: "Do you deliver or ship cookies?",
+    question: "Do you deliver?",
     answer:
-      "We offer local pickup in Folsom. Shipping is available for an additional fee within California only, as we want to ensure your cookies arrive in perfect condition.",
+      "Not at this time. You must pick up your order at the specified location in Folsom (on Old Town side) sent via email.",
   },
   {
-    question: "How long do the cookies stay fresh?",
+    question: "How far in advance should I order?",
     answer:
-      "Our cookies stay fresh for up to 3 weeks when stored in their sealed packaging at room temperature. Once opened, we recommend enjoying them within 5-7 days.",
+      "We are currently booking one month out depending on the time of year. It's never too early to order!! Sometimes we do have cancellations and can squeeze you in but it’s never a guarantee.",
   },
   {
-    question: "Do you accommodate dietary restrictions?",
-    answer:
-      "While our standard recipes contain wheat, dairy, and eggs, we can discuss options for certain dietary needs. Please note that all cookies are prepared in a kitchen that processes nuts.",
+    question: "How do I pay?",
+    answer: "We accept cash, check, Venmo, Zelle, or Apple Cash.",
   },
   {
-    question: "How do I book a private decorating class?",
+    question: "Do you have to put a deposit down?",
     answer:
-      "Fill out our contact form with your preferred date, group size, and event details. Private classes require a minimum of 8 participants and can be hosted at your location or a reserved venue.",
+      "We require full payment to secure your order. I request full payment two weeks prior to pickup.",
+  },
+  {
+    question: "Can I refrigerate my cookies?",
+    answer:
+      "Refrigeration is not recommended. Cookies will remain fresh for up to 2 weeks at room temp in the packaging. You can freeze the cookies for up to 3 months. Each order will come with Cookie Care instructions.",
+  },
+  {
+    question: "Do you have gluten-free or keto friendly options?",
+    answer:
+      "Right now, I only offer cookies made with gluten-free flour. They are not certified gluten free cookies so they are not recommended for serious gluten allergies.",
   },
 ];
 
