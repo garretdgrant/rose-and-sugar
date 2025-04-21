@@ -1,30 +1,92 @@
-import { Cake } from "lucide-react";
+import CustomInquiryForm from "@/components/CustomCookieInquiry";
+import FAQAccordion from "@/components/FAQAccordion";
+import SectionDivider from "@/components/ui/sectionDivider";
+
+const customOrderFaqs = [
+  {
+    question: "How far in advance should I order custom cookies?",
+    answer:
+      "We recommend placing your order at least 2-3 weeks in advance. Rush orders may be available for an additional fee, but cannot be guaranteed.",
+  },
+  {
+    question: "What's included in the base price per dozen?",
+    answer:
+      "Starting at $65 per dozen, each order includes up to two colors and basic designs. Character cookies and logos start at $70 per dozen. Additional colors, airbrushing, and intricate designs may increase pricing.",
+  },
+  {
+    question: "Do you accommodate dietary restrictions?",
+    answer:
+      "Our cookies contain wheat, milk, eggs, and soy (in sprinkles). While we cannot guarantee allergen-free cookies, we&apos;re happy to discuss your specific needs.",
+  },
+  {
+    question: "What are the payment and pickup options?",
+    answer:
+      "We accept Zelle, cash, or Venmo. Payment is required at least two weeks before pickup to confirm your order. Pickup is available in Folsom, with preferred times on Saturdays. A $10 weekday pickup fee applies.",
+  },
+  {
+    question: "How are the cookies packaged?",
+    answer:
+      "Cookies come individually heat-sealed for freshness at no additional cost. Ribbon-tied packaging is available for an additional charge per dozen.",
+  },
+];
 
 const CustomOrders = () => {
   return (
-    <div className="page-wrapper min-h-screen flex flex-col">
-      <main className="flex-grow flex flex-col items-center justify-center bg-bakery-pink-light/20 pt-20">
-        <div className="max-w-lg mx-auto text-center rounded-2xl px-8 py-14 shadow-xl bg-white/80 border border-bakery-pink-light">
-          <Cake className="mx-auto text-bakery-pink-dark mb-6" size={56} />
-          <h1 className="font-bebas text-3xl md:text-4xl text-bakery-pink-dark mb-3">
-            We&apos;re whipping something up!
-          </h1>
-          <p className="text-lg text-gray-700 mb-6 font-poppins">
-            Our custom cookie ordering page is getting a sprinkle of magic.
-            <br />
-            Check back soon for all the sweet details.
-          </p>
-          <div className="mt-6 flex flex-col items-center">
-            <div className="text-bakery-pink-dark/90 font-semibold mb-2">
-              Need something sooner?
+    <div className="min-h-screen flex flex-col bg-bakery-offWhite">
+      <main className="flex-grow pt-24 pb-16">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="text-center mb-12">
+            <h1 className="font-bebas text-4xl md:text-5xl text-bakery-pink-dark mb-6">
+              Custom Cookie Orders
+            </h1>
+            <div className="prose mx-auto text-gray-700 space-y-4 max-w-3xl">
+              <p className="text-lg">
+                Make your celebration extra sweet with our custom-designed sugar
+                cookies! Each cookie is handcrafted and decorated to match your
+                vision perfectly.
+              </p>
+              <div className="bg-white/80 rounded-lg p-6 shadow-sm text-left">
+                <p>
+                  Custom sugar cookies are available by the dozen, starting at
+                  $65 per dozen with a two dozen minimum. Character and logo
+                  cookies start at $70 per dozen. Airbrushing, intricate
+                  designs, and additional colors may increase pricing.
+                </p>
+                <p className="mt-4">
+                  <strong>Important Notes:</strong>
+                </p>
+                <ul className="list-disc pl-5 space-y-2 mt-2">
+                  <li>Orders should be placed at least two weeks in advance</li>
+                  <li>
+                    All cookies contain wheat, milk, eggs, and soy (in
+                    sprinkles)
+                  </li>
+                  <li>
+                    Pickup available in Folsom (preferred times on Saturdays)
+                  </li>
+                  <li>Payment via Zelle, cash, or Venmo</li>
+                </ul>
+              </div>
             </div>
-            <a
-              href="/contact"
-              className="btn-primary inline-block text-base px-5 py-2 rounded-full"
-            >
-              Contact us
-            </a>
           </div>
+          <SectionDivider icon="cookie" />
+          <div className="bg-white rounded-xl p-6 md:p-8 shadow-md mt-12 mb-12">
+            <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark mb-6 text-center">
+              Request a Custom Order
+            </h2>
+            <CustomInquiryForm />
+            <p className="text-center text-gray-600 mt-6">
+              After you submit your request, Megan will follow up within 48
+              hours with an invoice and next steps.
+            </p>
+          </div>
+
+          <section className="mb-12">
+            <h2 className="font-bebas text-2xl md:text-3xl text-center text-bakery-pink-dark mb-6">
+              Frequently Asked Questions
+            </h2>
+            <FAQAccordion faqs={customOrderFaqs} />
+          </section>
         </div>
       </main>
     </div>

@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,6 +54,7 @@ const CustomInquiryForm = () => {
 
   const onSubmit = (_data: FormValues) => {
     setIsSubmitting(true);
+    // Simulate form submission
     setTimeout(() => {
       toast({
         title: "Inquiry Submitted!",
@@ -177,7 +179,11 @@ const CustomInquiryForm = () => {
                     onChange={() => field.onChange("sealed")}
                   />
                   <span
-                    className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${field.value === "sealed" ? "border-bakery-pink bg-bakery-pink" : "border-gray-300"}`}
+                    className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${
+                      field.value === "sealed"
+                        ? "border-bakery-pink bg-bakery-pink"
+                        : "border-gray-300"
+                    }`}
                   >
                     {field.value === "sealed" && (
                       <span className="w-2 h-2 rounded-full bg-white"></span>
@@ -195,7 +201,11 @@ const CustomInquiryForm = () => {
                     onChange={() => field.onChange("ribbon")}
                   />
                   <span
-                    className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${field.value === "ribbon" ? "border-bakery-pink bg-bakery-pink" : "border-gray-300"}`}
+                    className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${
+                      field.value === "ribbon"
+                        ? "border-bakery-pink bg-bakery-pink"
+                        : "border-gray-300"
+                    }`}
                   >
                     {field.value === "ribbon" && (
                       <span className="w-2 h-2 rounded-full bg-white"></span>
