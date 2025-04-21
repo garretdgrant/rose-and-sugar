@@ -3,7 +3,10 @@ import Link from "next/link";
 
 const Services = () => {
   return (
-    <section id="services" className="section-padding bg-white">
+    <section
+      id="services"
+      className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/70"
+    >
       <div className="container-custom">
         <h2 className="section-heading mb-16">Our Services</h2>
 

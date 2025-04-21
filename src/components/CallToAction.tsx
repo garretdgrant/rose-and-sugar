@@ -5,7 +5,7 @@ const CallToAction = () => {
   return (
     <section
       id="contact"
-      className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/30"
+      className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/70"
     >
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">

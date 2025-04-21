@@ -39,10 +39,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-
       <SectionDivider icon="cookie" />
       <About />
-      {/* FAQ Section below Hero */}
+      {/* FAQ Section */}
       <section className="py-14 px-4 bg-gradient-to-b to-white from-bakery-offWhite">
         <h2 className="font-fraunces text-2xl md:text-3xl text-center mb-6 text-bakery-pink-dark">
           Have questions? We&apos;ve got answers.
@@ -50,13 +49,11 @@ export default function Home() {
         <FAQAccordion faqs={faqs} initiallyOpenIndex={0} />
       </section>
       <SectionDivider icon="flower2" />
-
       <Services />
       <Testimonials />
       <SectionDivider icon="flower" />
       <Gallery />
       <SectionDivider icon="chefHat" />
-
       <CallToAction />
     </>
   );

@@ -38,7 +38,7 @@ const Testimonials = () => {
   return (
     <section
       id="testimonials"
-      className="section-padding bg-bakery-pink-light/30"
+      className="section-padding bg-gradient-to-b to-white from-bakery-pink-light/70"
     >
       <div className="container-custom">
         <h2 className="section-heading">
