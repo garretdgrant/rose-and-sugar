@@ -6,7 +6,7 @@ const PreDesigned = () => {
       <main className="flex-grow flex flex-col items-center justify-center bg-bakery-pink-light/20 pt-20">
         <div className="max-w-lg mx-auto text-center rounded-2xl px-8 py-14 shadow-xl bg-white/80 border border-bakery-pink-light">
           <Cookie className="mx-auto text-bakery-pink-dark mb-6" size={56} />
-          <h1 className="font-bebas text-3xl md:text-4xl text-bakery-pink-dark mb-3">
+          <h1 className="font-fraunces text-3xl md:text-4xl text-bakery-pink-dark mb-3">
             Stay tuned for sweetness!
           </h1>
           <p className="text-lg text-gray-700 mb-6 font-poppins">
