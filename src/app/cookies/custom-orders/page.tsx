@@ -70,7 +70,7 @@ const CustomOrders = () => {
             </div>
           </div>
           <SectionDivider icon="cookie" />
-          <div className="bg-white rounded-xl p-6 md:p-8 shadow-md mt-12 mb-12">
+          <div className="bg-white rounded-xl p-6 md:p-8 shadow-xl mt-12 mb-12">
             <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark mb-6 text-center">
               Request a Custom Order
             </h2>
@@ -81,7 +81,7 @@ const CustomOrders = () => {
             </p>
           </div>
 
-          <section className="mb-12">
+          <section className="bg-white rounded-xl p-6 md:p-8 shadow-xl mt-12 mb-12">
             <h2 className="font-bebas text-2xl md:text-3xl text-center text-bakery-pink-dark mb-6">
               Frequently Asked Questions
             </h2>
