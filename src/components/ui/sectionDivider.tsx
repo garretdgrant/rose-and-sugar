@@ -1,11 +1,19 @@
-import { Flower, Cookie } from "lucide-react";
+import { Flower, Cookie, Flower2, ChefHat, CookingPot } from "lucide-react";
 
 type SectionDividerProps = {
-  icon?: "flower" | "cookie";
+  icon?: "flower" | "flower2" | "cookie" | "chefHat" | "pot";
+};
+
+const iconDict = {
+  flower: Flower,
+  flower2: Flower2,
+  cookie: Cookie,
+  chefHat: ChefHat,
+  pot: CookingPot,
 };
 
 const SectionDivider = ({ icon = "flower" }: SectionDividerProps) => {
-  const IconComponent = icon === "cookie" ? Cookie : Flower;
+  const IconComponent = iconDict[icon];
   return (
     <div className="mt-8 flex items-center justify-center">
       <div className="h-px bg-bakery-pink-light flex-grow"></div>

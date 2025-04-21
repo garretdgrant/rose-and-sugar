@@ -1,3 +1,4 @@
+import SectionDivider from "@/components/ui/sectionDivider";
 import { Calendar, Check, Users } from "lucide-react";
 import Link from "next/link";
 
@@ -40,8 +41,10 @@ const Classes = () => {
             </div>
           </div>
 
+          <SectionDivider icon="chefHat" />
+
           {/* Class Features */}
-          <div className="mb-16">
+          <div className="mt-16 mb-16">
             <h2 className="section-heading">What&apos;s Included</h2>
 
             <div className="feature-card">
@@ -65,9 +68,10 @@ const Classes = () => {
               </div>
             </div>
           </div>
+          <SectionDivider icon="cookie" />
 
           {/* Class Description */}
-          <div className="mb-16">
+          <div className="mt-16 mb-16">
             <h2 className="section-heading">The Class Experience</h2>
 
             <div className="flex flex-col lg:flex-row gap-12 items-center">
@@ -116,8 +120,10 @@ const Classes = () => {
             </div>
           </div>
 
+          <SectionDivider icon="flower2" />
+
           {/* Calendar Section */}
-          <div className="mb-16">
+          <div className="mt-16 mb-16">
             <h2 className="section-heading">Upcoming Classes</h2>
 
             <div className="text-center mb-8">

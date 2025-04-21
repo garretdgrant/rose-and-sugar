@@ -79,7 +79,7 @@
 
   /* Layout & Spacing */
   .page-wrapper {
-    @apply min-h-screen bg-white;
+    @apply min-h-screen bg-white pt-12;
   }
 
   .page-content {
