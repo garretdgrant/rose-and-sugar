@@ -51,7 +51,7 @@ export default function Home() {
       <SectionDivider icon="cookie" />
       <About />
       {/* FAQ Section */}
-      <section className="py-14 px-4 bg-gradient-to-b to-white from-bakery-offWhite">
+      <section className="custom-container py-14 px-4 bg-gradient-to-b to-white from-bakery-offWhite">
         <h2 className="font-bebas text-2xl md:text-3xl text-center mb-6 text-bakery-pink-dark">
           Have questions? We&apos;ve got answers.
         </h2>

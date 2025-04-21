@@ -57,7 +57,7 @@
   h4,
   h5,
   h6 {
-    @apply font-fraunces;
+    @apply font-bebas;
   }
 
   /* Removed the circular dependency here */
@@ -92,15 +92,15 @@
 
   /* Typography */
   .section-heading {
-    @apply font-fraunces text-4xl md:text-5xl text-center mb-6 md:mb-10 tracking-wide;
+    @apply font-bebas text-4xl md:text-5xl text-center mb-6 md:mb-10 tracking-wide;
   }
 
   .section-subheading {
-    @apply font-fraunces text-2xl md:text-3xl mb-4 text-gray-800;
+    @apply font-bebas text-2xl md:text-3xl mb-4 text-gray-800;
   }
 
   .page-heading {
-    @apply font-fraunces text-4xl md:text-5xl font-bold text-center mb-6;
+    @apply font-bebas text-4xl md:text-5xl font-bold text-center mb-6;
   }
 
   .body-text {
