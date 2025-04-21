@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,15 +20,9 @@ import { Button } from "@/components/ui/button";
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please provide a valid email address"),
-  phone: z.string().min(10, "Please provide a valid phone number"),
-  eventDate: z
-    .string()
-    .min(1, "Please provide the date when cookies are needed"),
-  quantity: z.string().min(1, "Please specify the quantity needed"),
-  flavorPreference: z.string().optional(),
-  packaging: z.enum(["sealed", "ribbon"]),
-  referralSource: z.string().min(1, "Please let us know how you found us"),
-  message: z.string().min(10, "Please provide details about your request"),
+  phone: z.string().optional(),
+  message: z.string().min(10, "Please provide your message"),
+  referralSource: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -44,19 +37,13 @@ const Contact = () => {
       name: "",
       email: "",
       phone: "",
-      eventDate: "",
-      quantity: "",
-      flavorPreference: "",
-      packaging: "sealed",
-      referralSource: "",
       message: "",
+      referralSource: "",
     },
   });
 
   const onSubmit = (_data: FormValues) => {
     setIsSubmitting(true);
-    // This is where you would normally send the form data to a server
-    // For now, we'll just simulate a submission with a timeout
 
     setTimeout(() => {
       toast({
@@ -69,34 +56,6 @@ const Contact = () => {
     }, 1500);
   };
 
-  const faqs = [
-    {
-      question: "How far in advance should I order custom cookies?",
-      answer:
-        "We recommend placing your order at least 2-3 weeks in advance for custom designs. For major holidays or peak wedding season, earlier is better!",
-    },
-    {
-      question: "Do you deliver or ship cookies?",
-      answer:
-        "We offer local pickup in Folsom. Shipping is available for an additional fee within California only, as we want to ensure your cookies arrive in perfect condition.",
-    },
-    {
-      question: "How long do the cookies stay fresh?",
-      answer:
-        "Our cookies stay fresh for up to 3 weeks when stored in their sealed packaging at room temperature. Once opened, we recommend enjoying them within 5-7 days.",
-    },
-    {
-      question: "Do you accommodate dietary restrictions?",
-      answer:
-        "While our standard recipes contain wheat, dairy, and eggs, we can discuss options for certain dietary needs. Please note that all cookies are prepared in a kitchen that processes nuts.",
-    },
-    {
-      question: "How do I book a private decorating class?",
-      answer:
-        "Fill out our contact form with your preferred date, group size, and event details. Private classes require a minimum of 8 participants and can be hosted at your location or a reserved venue.",
-    },
-  ];
-
   return (
     <div className="page-wrapper">
       <main className="page-content">
@@ -105,9 +64,8 @@ const Contact = () => {
 
           <div className="content-container text-center mb-12">
             <p className="body-text-large">
-              Have a question or ready to place an order? Fill out the form
-              below and Megan will get back to you within 48 hours to discuss
-              your custom cookie needs.
+              Have a question or just want to reach out? Fill out the form below
+              and Megan will get back to you within 48 hours.
             </p>
           </div>
 
@@ -115,9 +73,7 @@ const Contact = () => {
             {/* Contact Form */}
             <div className="w-full lg:w-2/3">
               <div className="content-card">
-                <h2 className="font-bebas text-2xl mb-6">
-                  Custom Cookie Inquiry
-                </h2>
+                <h2 className="font-bebas text-2xl mb-6">General Inquiry</h2>
 
                 <Form {...form}>
                   <form
@@ -164,7 +120,7 @@ const Contact = () => {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone Number</FormLabel>
+                            <FormLabel>Phone (optional)</FormLabel>
                             <FormControl>
                               <Input
                                 type="tel"
@@ -179,46 +135,15 @@ const Contact = () => {
 
                       <FormField
                         control={form.control}
-                        name="eventDate"
+                        name="referralSource"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Event Date / When Needed</FormLabel>
-                            <FormControl>
-                              <Input placeholder="MM/DD/YYYY" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <FormField
-                        control={form.control}
-                        name="quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>How Many Dozen?</FormLabel>
+                            <FormLabel>
+                              How did you hear about us? (optional)
+                            </FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="Number of dozens needed"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="flavorPreference"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Flavor Preferences (Optional)</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Any specific flavors?"
+                                placeholder="Instagram, friend, Google, etc."
                                 {...field}
                               />
                             </FormControl>
@@ -227,71 +152,6 @@ const Contact = () => {
                         )}
                       />
                     </div>
-
-                    <FormField
-                      control={form.control}
-                      name="packaging"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Packaging Preference</FormLabel>
-                          <div className="flex gap-4">
-                            <label className="flex items-center cursor-pointer">
-                              <input
-                                type="radio"
-                                className="sr-only"
-                                value="sealed"
-                                checked={field.value === "sealed"}
-                                onChange={() => field.onChange("sealed")}
-                              />
-                              <span
-                                className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${field.value === "sealed" ? "border-bakery-pink bg-bakery-pink" : "border-gray-300"}`}
-                              >
-                                {field.value === "sealed" && (
-                                  <span className="w-2 h-2 rounded-full bg-white"></span>
-                                )}
-                              </span>
-                              <span>Heat-Sealed (individually wrapped)</span>
-                            </label>
-
-                            <label className="flex items-center cursor-pointer">
-                              <input
-                                type="radio"
-                                className="sr-only"
-                                value="ribbon"
-                                checked={field.value === "ribbon"}
-                                onChange={() => field.onChange("ribbon")}
-                              />
-                              <span
-                                className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${field.value === "ribbon" ? "border-bakery-pink bg-bakery-pink" : "border-gray-300"}`}
-                              >
-                                {field.value === "ribbon" && (
-                                  <span className="w-2 h-2 rounded-full bg-white"></span>
-                                )}
-                              </span>
-                              <span>Ribbon-Tied</span>
-                            </label>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="referralSource"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>How did you hear about us?</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Instagram, friend, Google, etc."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
 
                     <FormField
                       control={form.control}
@@ -301,15 +161,11 @@ const Contact = () => {
                           <FormLabel>Message</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Please share details about your event, design ideas, or any questions you have."
+                              placeholder="Please let us know how we can help you!"
                               className="min-h-[120px]"
                               {...field}
                             />
                           </FormControl>
-                          <FormDescription>
-                            Feel free to describe your vision or link to
-                            inspiration images.
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -320,7 +176,7 @@ const Contact = () => {
                       className="w-full bg-bakery-pink hover:bg-bakery-pink-dark"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Sending..." : "Submit Inquiry"}
+                      {isSubmitting ? "Sending..." : "Submit"}
                     </Button>
                   </form>
                 </Form>
@@ -380,20 +236,6 @@ const Contact = () => {
                   For urgent requests, please call or text directly.
                 </p>
               </div>
-            </div>
-          </div>
-
-          {/* FAQs Section */}
-          <div className="mt-16">
-            <h2 className="section-heading">Frequently Asked Questions</h2>
-
-            <div className="max-w-3xl mx-auto">
-              {faqs.map((faq, index) => (
-                <div key={index} className="mb-6 last:mb-0">
-                  <h3 className="font-bebas text-xl mb-2">{faq.question}</h3>
-                  <p className="text-gray-700">{faq.answer}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>
