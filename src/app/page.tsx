@@ -5,6 +5,7 @@ import Testimonials from "../components/Testimonials";
 import Gallery from "../components/Gallery";
 import CallToAction from "../components/CallToAction";
 import FAQAccordion from "../components/FAQAccordion";
+import SectionDivider from "@/components/ui/sectionDivider";
 
 const faqs = [
   {
@@ -39,6 +40,7 @@ export default function Home() {
     <>
       <Hero />
       <About />
+      <SectionDivider />
       {/* FAQ Section below Hero */}
       <section className="py-14 px-4 bg-white/70">
         <h2 className="font-fraunces text-2xl md:text-3xl text-center mb-6 text-bakery-pink-dark">
