@@ -16,7 +16,7 @@ const customOrderFaqs = [
   {
     question: "Do you accommodate dietary restrictions?",
     answer:
-      "Our cookies contain wheat, milk, eggs, and soy (in sprinkles). While we cannot guarantee allergen-free cookies, we&apos;re happy to discuss your specific needs.",
+      "Our cookies contain wheat, milk, eggs, and soy (in sprinkles). While we cannot guarantee allergen-free cookies, we're happy to discuss your specific needs.",
   },
   {
     question: "What are the payment and pickup options?",
