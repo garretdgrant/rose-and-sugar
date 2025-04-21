@@ -12,7 +12,7 @@ const About = () => {
             <div className="w-full lg:w-1/2">
               <div className="image-highlight">
                 <img
-                  src="https://images.unsplash.com/photo-1556910103-1c02745aae4d"
+                  src="/meganAbout.webp"
                   alt="Megan decorating cookies"
                   className="image-wrapper"
                 />
@@ -25,30 +25,10 @@ const About = () => {
                 </p>
                 <p className="text-right mt-2">&mdash; Megan</p>
               </div>
-
-              {/* Divider */}
-              <SectionDivider icon="flower" />
-              {/* Difference Section */}
-              <div className="mt-8">
-                <h3 className="section-subheading">
-                  The Rose &amp; Sugar Difference
-                </h3>
-                <ul className="feature-list">
-                  <li>
-                    Small-batch, made-to-order cookies for maximum freshness
-                  </li>
-                  <li>Custom designs created just for your special occasion</li>
-                  <li>Floral-inspired details and feminine touches</li>
-                  <li>Intimate, beginner-friendly decorating classes</li>
-                  <li>Local ingredients whenever possible</li>
-                </ul>
-              </div>
             </div>
 
             {/* Right Column */}
             <div className="w-full lg:w-1/2">
-              <SectionDivider icon="chefHat" />
-
               <span className="mt-4 inline-block bg-bakery-pink-light text-bakery-pink-dark px-4 py-1 rounded-full text-sm font-medium mb-4">
                 The Story Behind Rose &amp; Sugar
               </span>
@@ -94,6 +74,21 @@ const About = () => {
                   your day. Thank you for trusting me and letting me be a part
                   of celebrating your special moments!
                 </p>
+              </div>
+              <SectionDivider icon="chefHat" />
+              <div className="mt-8">
+                <h3 className="section-subheading">
+                  The Rose &amp; Sugar Difference
+                </h3>
+                <ul className="feature-list">
+                  <li>
+                    Small-batch, made-to-order cookies for maximum freshness
+                  </li>
+                  <li>Custom designs created just for your special occasion</li>
+                  <li>Floral-inspired details and feminine touches</li>
+                  <li>Intimate, beginner-friendly decorating classes</li>
+                  <li>Local ingredients whenever possible</li>
+                </ul>
               </div>
             </div>
           </div>
