@@ -101,10 +101,28 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-200 mt-8 pt-8 text-center">
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Rose & Sugar. All rights reserved.
-          </p>
-        </div>
+  <div className="flex flex-col items-center space-y-2">
+    <p className="text-gray-500 text-sm">
+      © {new Date().getFullYear()} Rose &amp; Sugar. All rights reserved.
+    </p>
+    <a
+      href="https://www.edcwebdesign.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center space-x-3 group transition-colors"
+    >
+      <img
+        src="https://www.edcwebdesign.com/assets/logo.webp"
+        alt="EDC Web Design Logo"
+        className="h-6 w-auto"
+      />
+      <p className="text-gray-600 font-medium text-sm group-hover:text-pink-500 transition-colors">
+        Designed by EDC Web Design
+      </p>
+    </a>
+  </div>
+</div>
+
       </div>
     </footer>
   );
