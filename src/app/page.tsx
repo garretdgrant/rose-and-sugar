@@ -40,7 +40,7 @@ export default function Home() {
     <>
       <Hero />
       <About />
-      <SectionDivider />
+      <SectionDivider icon="cookie" />
       {/* FAQ Section below Hero */}
       <section className="py-14 px-4 bg-white/70">
         <h2 className="font-fraunces text-2xl md:text-3xl text-center mb-6 text-bakery-pink-dark">
@@ -50,6 +50,7 @@ export default function Home() {
       </section>
       <Services />
       <Testimonials />
+      <SectionDivider icon="flower" />
       <Gallery />
       <CallToAction />
     </>
