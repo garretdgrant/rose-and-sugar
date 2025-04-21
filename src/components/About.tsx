@@ -1,6 +1,9 @@
 const About = () => {
   return (
-    <section id="about" className="section-padding bg-bakery-offWhite">
+    <section
+      id="about"
+      className="section-padding bg-gradient-to-b from-white to-bakery-offWhite shadow-xl"
+    >
       <div className="container-custom">
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
           <div className="w-full md:w-2/5">
