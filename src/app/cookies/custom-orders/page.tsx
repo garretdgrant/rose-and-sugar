@@ -83,7 +83,6 @@ const CustomOrders = () => {
 
           <SectionDivider icon="flower2" />
 
-
           <section className="bg-white rounded-xl p-6 md:p-8 shadow-xl mt-12 mb-12">
             <h2 className="font-bebas text-2xl md:text-3xl text-center text-bakery-pink-dark mb-6">
               Frequently Asked Questions
