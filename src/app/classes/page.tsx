@@ -30,6 +30,20 @@ const Classes = () => {
             </p>
           </div>
 
+          {/* Class Image */}
+          <div className="mb-16">
+            <div className="relative max-w-2xl mx-auto">
+              <div className="image-highlight"></div>
+              <img
+                src="/roseSugarClassCropped.webp"
+                alt="Cookie decorating class"
+                className="image-wrapper"
+              />
+            </div>
+          </div>
+
+          <SectionDivider icon="flower" />
+
           {/* Calendar Section */}
           <div className="mt-16 mb-16">
             <h2 className="section-heading">Upcoming Classes</h2>
@@ -69,17 +83,6 @@ const Classes = () => {
               </Link>
             </div>
           </div>
-          {/* Class Image */}
-          {/* <div className="mb-16">
-            <div className="relative max-w-2xl mx-auto">
-              <div className="image-highlight"></div>
-              <img
-                src="https://images.unsplash.com/photo-1575663620136-5ebbfcc2c597"
-                alt="Cookie decorating class"
-                className="image-wrapper"
-              />
-            </div>
-          </div> */}
 
           <SectionDivider icon="chefHat" />
 
