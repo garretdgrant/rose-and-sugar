@@ -10,7 +10,7 @@ const About = () => {
             <div className="relative">
               <div className="bg-bakery-peach absolute -bottom-4 -left-4 w-full h-full rounded-lg -z-10"></div>
               <img
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d"
+                src="/roseSugarClassCropped.webp"
                 alt="Megan decorating cookies"
                 className="rounded-lg shadow-lg w-full h-auto object-cover"
               />
