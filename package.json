@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier . --write",
-    "preprod": "pnpm prettier && git add . && pnpm build"
+    "preprod": "pnpm prettier && git add . && pnpm build && git status"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
