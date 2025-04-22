@@ -33,7 +33,7 @@ const Hero = () => {
           </div>
 
           <div
-            className="w-full md:w-1/2 mt-8 md:mt-0 animate-fade-in"
+            className="w-full py-6 md:w-1/2 mt-8 md:mt-0 animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
             <div className="relative">
