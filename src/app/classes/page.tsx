@@ -30,8 +30,47 @@ const Classes = () => {
             </p>
           </div>
 
+          {/* Calendar Section */}
+          <div className="mt-16 mb-16">
+            <h2 className="section-heading">Upcoming Classes</h2>
+
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center">
+                <Calendar size={24} className="text-primary-foreground mr-2" />
+                <h3 className="section-subheading inline-block">
+                  {upcomingMonths.join(" & ")} {new Date().getFullYear()}
+                </h3>
+              </div>
+
+              <p className="body-text mt-4">
+                Rose & Sugar classes are returning in{" "}
+                {upcomingMonths.join(" and ")}! Check back soon to see our full
+                schedule and book your spot.
+              </p>
+            </div>
+            {/* Calendly Placeholder */}
+            <div className="border-2 border-dashed border-primary py-8 px-2 rounded-lg bg-muted mb-8">
+              <div className="text-center content-spacing">
+                <h3 className="section-subheading">
+                  Book A Cookie Decorating Class!
+                </h3>
+                <CalendlyEmbed />
+              </div>
+            </div>
+
+            <div className="text-center">
+              <p className="body-text mb-6">
+                Want to be notified when new classes are added? Contact Megan to
+                join the waiting list.
+              </p>
+
+              <Link href="/contact" className="btn-primary">
+                Book a Class
+              </Link>
+            </div>
+          </div>
           {/* Class Image */}
-          <div className="mb-16">
+          {/* <div className="mb-16">
             <div className="relative max-w-2xl mx-auto">
               <div className="image-highlight"></div>
               <img
@@ -40,7 +79,7 @@ const Classes = () => {
                 className="image-wrapper"
               />
             </div>
-          </div>
+          </div> */}
 
           <SectionDivider icon="chefHat" />
 
@@ -123,55 +162,8 @@ const Classes = () => {
 
           <SectionDivider icon="flower2" />
 
-          {/* Calendar Section */}
-          <div className="mt-16 mb-16">
-            <h2 className="section-heading">Upcoming Classes</h2>
-
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center">
-                <Calendar size={24} className="text-primary-foreground mr-2" />
-                <h3 className="section-subheading inline-block">
-                  {upcomingMonths.join(" & ")} {new Date().getFullYear()}
-                </h3>
-              </div>
-
-              <p className="body-text mt-4">
-                Rose & Sugar classes are returning in{" "}
-                {upcomingMonths.join(" and ")}! Check back soon to see our full
-                schedule and book your spot.
-              </p>
-            </div>
-            {/* Calendly Placeholder */}
-            <div className="border-2 border-dashed border-primary p-8 rounded-lg bg-muted mb-8">
-              <div className="text-center content-spacing">
-                <h3 className="section-subheading">
-                  Book A Cookie Decorating Class!
-                </h3>
-                <CalendlyEmbed />
-                {/* <p className="body-text">
-                  This is where the Calendly booking calendar will be embedded
-                  to allow easy class registration.
-                </p>
-                <p className="text-muted-foreground text-sm mt-4 italic">
-                  (This placeholder will be replaced with an actual calendar.)
-                </p> */}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <p className="body-text mb-6">
-                Want to be notified when new classes are added? Contact Megan to
-                join the waiting list.
-              </p>
-
-              <Link href="/contact" className="btn-primary">
-                Book a Class
-              </Link>
-            </div>
-          </div>
-
           {/* Private Events */}
-          <div className="bg-primary/30 p-8 rounded-lg">
+          <div className="mt-8 bg-primary/30 p-8 rounded-lg">
             <h2 className="section-subheading text-center">
               Private Group Classes
             </h2>
