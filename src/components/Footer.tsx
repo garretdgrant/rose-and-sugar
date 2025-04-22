@@ -17,13 +17,13 @@ const Footer = () => {
               Bringing sweetness and creativity to every celebration.
             </p>
             <a
-              href="https://instagram.com/roseandsugar"
+              href="https://www.instagram.com/roseandsugarcookies/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center text-bakery-pink-dark hover:text-bakery-pink transition-colors"
             >
               <Instagram size={20} className="mr-2" />
-              <span>@roseandsugar</span>
+              <span>@roseandsugarcookies</span>
             </a>
           </div>
 

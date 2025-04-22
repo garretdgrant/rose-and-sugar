@@ -1,3 +1,4 @@
+import CalendlyEmbed from "@/components/Calendly";
 import SectionDivider from "@/components/ui/sectionDivider";
 import { Calendar, Check, Users } from "lucide-react";
 import Link from "next/link";
@@ -140,20 +141,20 @@ const Classes = () => {
                 schedule and book your spot.
               </p>
             </div>
-
             {/* Calendly Placeholder */}
             <div className="border-2 border-dashed border-primary p-8 rounded-lg bg-muted mb-8">
               <div className="text-center content-spacing">
                 <h3 className="section-subheading">
-                  Calendly Calendar Coming Soon
+                  Book A Cookie Decorating Class!
                 </h3>
-                <p className="body-text">
+                <CalendlyEmbed />
+                {/* <p className="body-text">
                   This is where the Calendly booking calendar will be embedded
                   to allow easy class registration.
                 </p>
                 <p className="text-muted-foreground text-sm mt-4 italic">
                   (This placeholder will be replaced with an actual calendar.)
-                </p>
+                </p> */}
               </div>
             </div>
 
