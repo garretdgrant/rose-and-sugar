@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
-type FormData = {
+export type FormData = {
   name: string;
   email: string;
   phone: string;

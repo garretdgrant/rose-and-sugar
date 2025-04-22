@@ -1,29 +1,140 @@
-import { Cookie } from "lucide-react";
+"use client";
+import { useState } from "react";
+import DesignCard from "@/components/cookie/DesignCard";
+import OrderForm from "@/components/cookie/OrderForm";
+import { useToast } from "@/hooks/use-toast";
+
+interface Design {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  price: string;
+  quantity: number;
+}
+
+interface OrderFormData {
+  name: string;
+  email: string;
+  phone: string;
+  pickupDate: string;
+  message?: string;
+  heardAbout?: string;
+  selectedDesigns: Design[];
+}
+
+const initialDesigns: Design[] = [
+  {
+    id: "design1",
+    name: "Birthday Celebration",
+    description:
+      "Colorful birthday-themed sugar cookies with sprinkles and custom message options.",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    price: "$42/dozen",
+    quantity: 0,
+  },
+  {
+    id: "design2",
+    name: "Thank You Set",
+    description:
+      "Elegant floral-inspired thank you cookies in soft pastel colors.",
+    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
+    price: "$42/dozen",
+    quantity: 0,
+  },
+  {
+    id: "design3",
+    name: "Baby Shower Collection",
+    description: "Sweet baby-themed cookies in gender-neutral colors.",
+    image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
+    price: "$45/dozen",
+    quantity: 0,
+  },
+  {
+    id: "design4",
+    name: "Welcome Home",
+    description: "House-warming cookie set with charming home designs.",
+    image: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
+    price: "$45/dozen",
+    quantity: 0,
+  },
+  {
+    id: "design5",
+    name: "Seasonal Favorites",
+    description: "Rotating selection of seasonal and holiday designs.",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    price: "$42/dozen",
+    quantity: 0,
+  },
+  {
+    id: "design6",
+    name: "Congratulations Bundle",
+    description:
+      "Celebratory cookies perfect for graduations and achievements.",
+    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
+    price: "$42/dozen",
+    quantity: 0,
+  },
+];
 
 const PreDesigned = () => {
+  const [designs, setDesigns] = useState<Design[]>(initialDesigns);
+  const { toast } = useToast();
+
+  const handleQuantityChange = (id: string, quantity: number) => {
+    setDesigns((prev) =>
+      prev.map((design) =>
+        design.id === id ? { ...design, quantity } : design,
+      ),
+    );
+  };
+
+  const handleSubmit = (formData: OrderFormData) => {
+    console.log("Order submitted:", formData);
+    toast({
+      title: "Order Submitted!",
+      description: "We'll be in touch within 48 hours to confirm your order.",
+    });
+  };
+
+  const selectedDesigns = designs.filter((design) => design.quantity > 0);
+
   return (
-    <div className="page-wrapper min-h-screen flex flex-col">
-      <main className="flex-grow flex flex-col items-center justify-center bg-bakery-pink-light/20 pt-20">
-        <div className="max-w-lg mx-auto text-center rounded-2xl px-8 py-14 shadow-xl bg-white/80 border border-bakery-pink-light">
-          <Cookie className="mx-auto text-bakery-pink-dark mb-6" size={56} />
-          <h1 className="font-bebas text-3xl md:text-4xl text-bakery-pink-dark mb-3">
-            Stay tuned for sweetness!
+    <div className="min-h-screen pt-16 flex flex-col bg-bakery-offWhite">
+      <main className="flex-grow pt-24 pb-16">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <h1 className="font-bebas text-4xl md:text-5xl text-bakery-pink-dark text-center mb-6">
+            Pre-Designed Cookie Collection
           </h1>
-          <p className="text-lg text-gray-700 mb-6 font-poppins">
-            Our pre-designed cookie collection is in the oven.
-            <br />
-            Come back soon for all the sweet details!
+          <p className="text-center max-w-3xl mx-auto text-gray-700 mb-12">
+            Browse our ready-to-order cookie designs below! These pre-made
+            options are perfect for birthdays, thank-yous, and more. Simply
+            select the designs you&apos;d like, choose quantities, and send your
+            request — we&apos;ll take care of the rest!
           </p>
-          <div className="mt-6 flex flex-col items-center">
-            <span className="text-bakery-pink-dark/90 font-semibold mb-2">
-              Want to see a sneak peek?
-            </span>
-            <a
-              href="/contact"
-              className="btn-primary inline-block text-base px-5 py-2 rounded-full"
-            >
-              Contact us
-            </a>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {designs.map((design) => (
+              <DesignCard
+                key={design.id}
+                {...design}
+                onQuantityChange={handleQuantityChange}
+              />
+            ))}
+          </div>
+
+          <div className="max-w-2xl mx-auto bg-white rounded-xl p-6 md:p-8 shadow-md">
+            <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark mb-6 text-center">
+              Request Your Order
+            </h2>
+            <OrderForm
+              selectedDesigns={selectedDesigns}
+              onSubmit={() => handleSubmit}
+            />
+            <p className="text-center text-gray-600 mt-6">
+              We&apos;ll follow up within 48 hours to confirm availability and
+              pricing. Thank you!
+            </p>
           </div>
         </div>
       </main>
