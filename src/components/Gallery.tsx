@@ -11,32 +11,32 @@ const Gallery = () => {
 
   const galleryItems = [
     {
-      src: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+      src: "/gallery/easter.jpg",
+      alt: "3-tier wedding cake",
+      caption: "Easter basket cookies",
+    },
+    {
+      src: "/gallery/class1.jpg",
+      alt: "Cake decorating class",
+      caption: "Cookie Decorating Class",
+    },
+    {
+      src: "/gallery/catCookies.jpg",
+      alt: "Cupcake platter",
+      caption: "Cat theme cookies",
+    },
+    {
+      src: "/gallery/wedding3.jpg",
       alt: "3-tier wedding cake",
       caption: "3-tier wedding cake — EDH",
     },
     {
-      src: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      alt: "Cake decorating class",
-      caption: "Cake decorating class",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1634151739970-bba3910d0d36?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/gallery/insects.jpg",
       alt: "Birthday cake",
-      caption: "Chocolate birthday cake with berries",
+      caption: "Garden theme cookies",
     },
     {
-      src: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      alt: "Cupcake platter",
-      caption: "Holiday cupcake platter",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1517427294546-5aa121f68e8a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      alt: "Kids baking class",
-      caption: "Kids holiday baking class",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/gallery/weddingCookies2.jpg",
       alt: "Baby shower cake",
       caption: "Gender reveal cake",
     },
