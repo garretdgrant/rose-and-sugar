@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please provide a valid email address"),
-  phone: z.string().optional(),
+  phone: z.string(),
   message: z.string().min(10, "Please provide your message"),
   referralSource: z.string().optional(),
 });
@@ -120,7 +120,7 @@ const Contact = () => {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone (optional)</FormLabel>
+                            <FormLabel>Phone</FormLabel>
                             <FormControl>
                               <Input
                                 type="tel"
