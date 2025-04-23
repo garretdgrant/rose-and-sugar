@@ -26,7 +26,7 @@ const formSchema = z.object({
     .min(1, "Please provide the date when cookies are needed"),
   quantity: z.string().min(1, "Please specify the quantity needed"),
   flavorPreference: z.string().optional(),
-  packaging: z.enum(["sealed", "ribbon"]),
+  packaging: z.enum(["sealed", "ribbon", "undecided"]),
   referralSource: z.string().min(1, "Please let us know how you found us"),
   message: z.string().min(10, "Please provide details about your request"),
 });
@@ -139,7 +139,7 @@ const CustomInquiryForm = () => {
             name="quantity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>How Many Dozen?</FormLabel>
+                <FormLabel>How Many Dozen? (2 minimum)</FormLabel>
                 <FormControl>
                   <Input placeholder="Number of dozens needed" {...field} />
                 </FormControl>
@@ -153,7 +153,7 @@ const CustomInquiryForm = () => {
             name="flavorPreference"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Flavor Preferences (Optional)</FormLabel>
+                <FormLabel>Flavor Preferences</FormLabel>
                 <FormControl>
                   <Input placeholder="Any specific flavors?" {...field} />
                 </FormControl>
@@ -211,7 +211,28 @@ const CustomInquiryForm = () => {
                       <span className="w-2 h-2 rounded-full bg-white"></span>
                     )}
                   </span>
-                  <span>Ribbon-Tied</span>
+                  <span>Ribbon-Tied (+$6)</span>
+                </label>
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    className="sr-only"
+                    value="undecided"
+                    checked={field.value === "undecided"}
+                    onChange={() => field.onChange("undecided")}
+                  />
+                  <span
+                    className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${
+                      field.value === "undecided"
+                        ? "border-bakery-pink bg-bakery-pink"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    {field.value === "undecided" && (
+                      <span className="w-2 h-2 rounded-full bg-white"></span>
+                    )}
+                  </span>
+                  <span>Decide Later</span>
                 </label>
               </div>
               <FormMessage />
@@ -224,7 +245,7 @@ const CustomInquiryForm = () => {
           name="referralSource"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How did you hear about us?</FormLabel>
+              <FormLabel>How did you hear about us? (optional)</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Instagram, friend, Google, etc."
