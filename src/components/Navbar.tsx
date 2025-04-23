@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "Home", path: "/" },
+    // { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     // Cookies handled separately
     { name: "Classes", path: "/classes" },
@@ -58,15 +58,6 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 items-center">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.path}
-              className="font-poppins text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0 after:bg-bakery-pink-dark after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-            >
-              {link.name}
-            </Link>
-          ))}
           {/* Cookies dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -97,22 +88,21 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.path}
+              className="font-poppins text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0 after:bg-bakery-pink-dark after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+            >
+              {link.name}
+            </Link>
+          ))}
         </nav>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-white shadow-md py-4 md:hidden">
             <div className="flex flex-col space-y-3 px-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.path}
-                  className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
               {/* Cookies dropdown - rendered as links on mobile */}
               <div className="border-t border-bakery-pink-light/40 py-2">
                 <div className="font-poppins text-gray-700 py-2">Cookies</div>
@@ -133,6 +123,16 @@ const Navbar = () => {
                   </Link>
                 </div>
               </div>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.path}
+                  className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         )}
