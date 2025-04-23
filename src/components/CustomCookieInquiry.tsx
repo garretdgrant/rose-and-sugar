@@ -39,6 +39,7 @@ const formSchema = z.object({
   packaging: z.enum(["sealed", "ribbon", "undecided"]),
   referralSource: z.string().min(1, "Please let us know how you found us"),
   message: z.string().min(10, "Please provide details about your request"),
+  dyefree: z.boolean(),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -69,6 +70,7 @@ const CustomInquiryForm = () => {
       packaging: "sealed",
       referralSource: "",
       message: "",
+      dyefree: false,
     },
   });
 
@@ -167,50 +169,85 @@ const CustomInquiryForm = () => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
-            name="flavorPreference"
+            name="dyefree"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Flavor Preferences</FormLabel>
-                <FormDescription>Select all that apply</FormDescription>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {flavorOptions.map((option) => (
-                    <label
-                      key={option.value}
-                      className="flex items-center space-x-2"
-                    >
-                      <input
-                        type="checkbox"
-                        value={option.value}
-                        checked={field.value?.includes(option.value)}
-                        onChange={(e) => {
-                          const isChecked = e.target.checked;
-                          if (isChecked) {
-                            field.onChange([
-                              ...(field.value || []),
-                              option.value,
-                            ]);
-                          } else {
-                            field.onChange(
-                              (field.value || []).filter(
-                                (val) => val !== option.value,
-                              ),
-                            );
-                          }
-                        }}
-                        className="accent-bakery-pink"
-                      />
-                      <span>{option.label}</span>
-                    </label>
-                  ))}
+                <FormLabel>Dye-Free Icing (+$10/dozen)</FormLabel>
+                <div className="flex gap-6 mt-2">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      value="true"
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
+                      className="accent-bakery-pink"
+                    />
+                    <span>Yes</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      value="false"
+                      checked={field.value === false}
+                      onChange={() => field.onChange(false)}
+                      className="accent-bakery-pink"
+                    />
+                    <span>No</span>
+                  </label>
                 </div>
+                <FormDescription className="text-sm text-muted-foreground">
+                  Colors will be more muted and natural.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="flavorPreference"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Flavor Preferences</FormLabel>
+              <FormDescription>Select all that apply</FormDescription>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {flavorOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className="flex items-center space-x-2"
+                  >
+                    <input
+                      type="checkbox"
+                      value={option.value}
+                      checked={field.value?.includes(option.value)}
+                      onChange={(e) => {
+                        const isChecked = e.target.checked;
+                        if (isChecked) {
+                          field.onChange([
+                            ...(field.value || []),
+                            option.value,
+                          ]);
+                        } else {
+                          field.onChange(
+                            (field.value || []).filter(
+                              (val) => val !== option.value,
+                            ),
+                          );
+                        }
+                      }}
+                      className="accent-bakery-pink"
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
