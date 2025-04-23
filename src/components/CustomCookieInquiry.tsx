@@ -25,7 +25,17 @@ const formSchema = z.object({
     .string()
     .min(1, "Please provide the date when cookies are needed"),
   quantity: z.string().min(1, "Please specify the quantity needed"),
-  flavorPreference: z.string().optional(),
+  flavorPreference: z.array(
+    z.enum([
+      "vanilla",
+      "lemon",
+      "almond",
+      "confetti",
+      "gf",
+      "maple",
+      "undecided",
+    ]),
+  ),
   packaging: z.enum(["sealed", "ribbon", "undecided"]),
   referralSource: z.string().min(1, "Please let us know how you found us"),
   message: z.string().min(10, "Please provide details about your request"),
@@ -36,7 +46,17 @@ export type FormValues = z.infer<typeof formSchema>;
 const CustomInquiryForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const flavorOptions: FormValues["flavorPreference"] extends (infer T)[]
+    ? { label: string; value: T }[]
+    : never = [
+    { label: "Vanilla", value: "vanilla" },
+    { label: "Lemon", value: "lemon" },
+    { label: "Almond", value: "almond" },
+    { label: "Confetti", value: "confetti" },
+    { label: "GF Flour (+$6/dozen)", value: "gf" },
+    { label: "Maple", value: "maple" },
+    { label: "Decide Later", value: "undecided" },
+  ];
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,7 +65,7 @@ const CustomInquiryForm = () => {
       phone: "",
       eventDate: "",
       quantity: "",
-      flavorPreference: "",
+      flavorPreference: [],
       packaging: "sealed",
       referralSource: "",
       message: "",
@@ -154,9 +174,38 @@ const CustomInquiryForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Flavor Preferences</FormLabel>
-                <FormControl>
-                  <Input placeholder="Any specific flavors?" {...field} />
-                </FormControl>
+                <FormDescription>Select all that apply</FormDescription>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {flavorOptions.map((option) => (
+                    <label
+                      key={option.value}
+                      className="flex items-center space-x-2"
+                    >
+                      <input
+                        type="checkbox"
+                        value={option.value}
+                        checked={field.value?.includes(option.value)}
+                        onChange={(e) => {
+                          const isChecked = e.target.checked;
+                          if (isChecked) {
+                            field.onChange([
+                              ...(field.value || []),
+                              option.value,
+                            ]);
+                          } else {
+                            field.onChange(
+                              (field.value || []).filter(
+                                (val) => val !== option.value,
+                              ),
+                            );
+                          }
+                        }}
+                        className="accent-bakery-pink"
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
                 <FormMessage />
               </FormItem>
             )}
