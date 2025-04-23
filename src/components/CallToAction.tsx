@@ -26,7 +26,7 @@ const CallToAction = () => {
               <h3 className="font-bebas text-lg font-medium mb-2">
                 Call or Text
               </h3>
-              <p className="text-gray-600">555-123-4567</p>
+              <p className="text-gray-600">916-337-8880</p>
             </Link>
 
             <Link
@@ -52,7 +52,6 @@ const CallToAction = () => {
               <h3 className="font-bebas text-lg font-medium mb-2">
                 Send a Message
               </h3>
-              <p className="text-gray-600">megan@roseandsugar.com</p>
             </Link>
           </div>
         </div>

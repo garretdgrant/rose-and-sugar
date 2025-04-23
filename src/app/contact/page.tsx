@@ -195,7 +195,7 @@ const Contact = () => {
                     <Phone size={20} className="text-bakery-pink-dark mr-3" />
                     <div>
                       <p className="font-medium">Phone</p>
-                      <p className="text-gray-700">555-123-4567</p>
+                      <p className="text-gray-700">916-337-8880</p>
                     </div>
                   </div>
 
@@ -203,7 +203,9 @@ const Contact = () => {
                     <Mail size={20} className="text-bakery-pink-dark mr-3" />
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-gray-700">megan@roseandsugar.com</p>
+                      <p className="text-gray-700">
+                        roseandsugarcookies@gmail.com
+                      </p>
                     </div>
                   </div>
 
@@ -215,12 +217,12 @@ const Contact = () => {
                     <div>
                       <p className="font-medium">Instagram</p>
                       <a
-                        href="https://instagram.com/roseandsugar"
+                        href="https://instagram.com/roseandsugarcookies"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-bakery-pink-dark hover:underline"
                       >
-                        @roseandsugar
+                        @roseandsugarcookies
                       </a>
                     </div>
                   </div>
