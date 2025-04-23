@@ -1,4 +1,4 @@
-import { Phone, Calendar, Mail } from "lucide-react";
+import { Phone, Calendar, Cookie } from "lucide-react";
 import Link from "next/link";
 
 const CallToAction = () => {
@@ -17,7 +17,7 @@ const CallToAction = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <Link
-              href="/contact"
+              href="sms:9163378880"
               className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
@@ -43,14 +43,14 @@ const CallToAction = () => {
             </Link>
 
             <Link
-              href="/contact"
+              href="/cookies/custom-orders"
               className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
-                <Mail size={20} className="text-white" />
+                <Cookie size={20} className="text-white" />
               </div>
               <h3 className="font-bebas text-lg font-medium mb-2">
-                Send a Message
+                Order Custom Cookies
               </h3>
             </Link>
           </div>
