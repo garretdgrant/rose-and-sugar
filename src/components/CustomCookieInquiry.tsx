@@ -250,7 +250,9 @@ const CustomInquiryForm = () => {
                 />
               </FormControl>
               <FormDescription>
-                Feel free to describe your vision or link to inspiration images.
+                Please tell us a little about what you&apos;re looking for, we
+                can always make updates later. Feel free to describe your vision
+                or link to inspiration images.
               </FormDescription>
               <FormMessage />
             </FormItem>
