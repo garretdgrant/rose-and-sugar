@@ -11,7 +11,7 @@ const customOrderFaqs = [
   {
     question: "What's included in the base price per dozen?",
     answer:
-      "Starting at $65 per dozen, each order includes up to two colors and basic designs. Character cookies and logos start at $70 per dozen. Additional colors, airbrushing, and intricate designs may increase pricing.",
+      "Starting at $65 per dozen, each order includes up to five colors and basic to intermediate detail. Character cookies and logos start at $70 per dozen. Additional colors, airbrushing, and intricate designs may increase pricing.",
   },
   {
     question: "Do you accommodate dietary restrictions?",
