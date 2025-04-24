@@ -24,7 +24,9 @@ const formSchema = z.object({
   eventDate: z
     .string()
     .min(1, "Please provide the date when cookies are needed"),
-  quantity: z.string().min(1, "Please specify the quantity needed"),
+  quantity: z.enum(["2", "3", "4", "5", "6", "7", "8", "9", "10"], {
+    errorMap: () => ({ message: "Please select a quantity between 2 and 10" }),
+  }),
   flavorPreference: z.array(
     z.enum([
       "vanilla",
@@ -65,7 +67,7 @@ const CustomInquiryForm = () => {
       email: "",
       phone: "",
       eventDate: "",
-      quantity: "",
+      quantity: "2",
       flavorPreference: [],
       packaging: "sealed",
       referralSource: "",
@@ -161,14 +163,27 @@ const CustomInquiryForm = () => {
             name="quantity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>How Many Dozen? (2 minimum)</FormLabel>
+                <FormLabel>How Many Dozen?</FormLabel>
                 <FormControl>
-                  <Input placeholder="Number of dozens needed" {...field} />
+                  <select
+                    {...field}
+                    className="input-classname block w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    <option value="" disabled>
+                      Select quantity
+                    </option>
+                    {Array.from({ length: 9 }, (_, i) => i + 2).map((num) => (
+                      <option key={num} value={num.toString()}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="dyefree"
