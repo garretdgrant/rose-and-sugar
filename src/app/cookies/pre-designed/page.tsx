@@ -26,12 +26,12 @@ interface OrderFormData {
 
 const initialDesigns: Design[] = [
   {
-    id: "design1",
+    id: "gift-for-mom",
     name: "Birthday Celebration",
     description:
       "Colorful birthday-themed sugar cookies with sprinkles and custom message options.",
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
-    price: "$42/dozen",
+    image: "/predesigned/gift-for-mom.webp",
+    price: "$25/box",
     quantity: 0,
   },
   {
