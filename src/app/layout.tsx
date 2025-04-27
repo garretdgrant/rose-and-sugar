@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase,
     title:
-      "Beutifal Custom Cookies in Folsom | Rose & Sugar Handcrafted Designs",
+      "Beautiful Custom Cookies in Folsom | Rose & Sugar Handcrafted Designs",
     description:
       "Order custom sugar cookies in Folsom, CA for birthdays, showers, and celebrations. Handcrafted by Rose & Sugar with love and local flair.",
     alternates: {
