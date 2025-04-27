@@ -1,10 +1,10 @@
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Services from "../components/Services";
-import Testimonials from "../components/Testimonials";
-import Gallery from "../components/Gallery";
-import CallToAction from "../components/CallToAction";
-import FAQAccordion from "../components/FAQAccordion";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
+import Gallery from "@/components/Gallery";
+import CallToAction from "@/components/CallToAction";
+import FAQAccordion from "@/components/FAQAccordion";
 import SectionDivider from "@/components/ui/sectionDivider";
 
 const faqs = [
@@ -44,6 +44,39 @@ const faqs = [
   },
 ];
 
+const galleryItems = [
+  {
+    src: "/gallery/easter.jpg",
+    alt: "3-tier wedding cake",
+    caption: "Easter basket cookies",
+  },
+  {
+    src: "/gallery/class1.jpg",
+    alt: "Cake decorating class",
+    caption: "Cookie Decorating Class",
+  },
+  {
+    src: "/gallery/catCookies.jpg",
+    alt: "Cupcake platter",
+    caption: "Cat theme cookies",
+  },
+  {
+    src: "/gallery/wedding3.jpg",
+    alt: "3-tier wedding cake",
+    caption: "3-tier wedding cake — EDH",
+  },
+  {
+    src: "/gallery/insects.jpg",
+    alt: "Birthday cake",
+    caption: "Garden theme cookies",
+  },
+  {
+    src: "/gallery/weddingCookies2.jpg",
+    alt: "Baby shower cake",
+    caption: "Gender reveal cake",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -63,7 +96,7 @@ export default function Home() {
       <Services />
       <Testimonials />
       <SectionDivider icon="flower" />
-      <Gallery />
+      <Gallery items={galleryItems} />
       <SectionDivider icon="chefHat" />
       <CallToAction />
     </>

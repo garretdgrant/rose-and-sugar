@@ -8,7 +8,9 @@ const Services = () => {
       className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/70"
     >
       <div className="container-custom">
-        <h2 className="section-heading mb-16">Our Services</h2>
+        <h2 className="font-bebas text-4xl md:text-5xl text-center mb-12 text-bakery-pink-dark">
+          Our Services
+        </h2>
 
         <div className="flex flex-col md:flex-row gap-12">
           {/* Custom Cookies Column */}
@@ -57,7 +59,7 @@ const Services = () => {
             </div>
 
             <div className="mt-8 flex justify-center">
-              <Link href="/cookies" className="btn-primary">
+              <Link href="/cookies/custom-orders" className="btn-primary">
                 Order Custom Cookies
               </Link>
             </div>

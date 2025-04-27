@@ -1,54 +1,22 @@
 "use client";
+
 import { SetStateAction, useState } from "react";
 import ImageModal from "./ImageModal";
 
-const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<null | {
-    src: string;
-    alt: string;
-    caption: string;
-  }>(null);
+interface GalleryItem {
+  src: string;
+  alt: string;
+  caption: string;
+}
 
-  const galleryItems = [
-    {
-      src: "/gallery/easter.jpg",
-      alt: "3-tier wedding cake",
-      caption: "Easter basket cookies",
-    },
-    {
-      src: "/gallery/class1.jpg",
-      alt: "Cake decorating class",
-      caption: "Cookie Decorating Class",
-    },
-    {
-      src: "/gallery/catCookies.jpg",
-      alt: "Cupcake platter",
-      caption: "Cat theme cookies",
-    },
-    {
-      src: "/gallery/wedding3.jpg",
-      alt: "3-tier wedding cake",
-      caption: "3-tier wedding cake — EDH",
-    },
-    {
-      src: "/gallery/insects.jpg",
-      alt: "Birthday cake",
-      caption: "Garden theme cookies",
-    },
-    {
-      src: "/gallery/weddingCookies2.jpg",
-      alt: "Baby shower cake",
-      caption: "Gender reveal cake",
-    },
-  ];
+interface GalleryProps {
+  items: GalleryItem[];
+}
 
-  const openModal = (
-    image: SetStateAction<{
-      src: string;
-      alt: string;
-      caption: string;
-    } | null>,
-  ) => {
+const Gallery = ({ items }: GalleryProps) => {
+  const [selectedImage, setSelectedImage] = useState<null | GalleryItem>(null);
+
+  const openModal = (image: SetStateAction<GalleryItem | null>) => {
     setSelectedImage(image);
   };
 
@@ -59,10 +27,12 @@ const Gallery = () => {
   return (
     <section id="gallery" className="section-padding bg-white">
       <div className="container-custom">
-        <h2 className="section-heading">Gallery</h2>
+        <h2 className="font-bebas text-4xl md:text-5xl text-center mb-12 text-bakery-pink-dark">
+          Cookie Gallery
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {galleryItems.map((item, index) => (
+          {items.map((item, index) => (
             <div
               key={index}
               onClick={() => openModal(item)}
