@@ -20,8 +20,10 @@ const About = () => {
 
               <div className="mt-8 bg-bakery-pink-light/30 p-6 rounded-lg">
                 <p className="body-text-large italic text-center text-bakery-pink-dark">
-                  &quot;I believe every celebration deserves something sweet,
-                  and every cookie tells its own story.&quot;
+                  &quot;As a planner at heart, I know how important the small
+                  details are and I love sharing my passion for events and
+                  celebrating life&apos;s most special moments by creating
+                  thoughtful and detailed cookies for all occasions!&quot;
                 </p>
                 <p className="text-right mt-2">&mdash; Megan</p>
               </div>

@@ -25,20 +25,20 @@ const About = () => {
               Creating Sweet Memories
             </h2>
             <p className="text-gray-700 text-lg mb-6">
-              Hi, I&apos;m Megan — Folsom native, cookie artist, and the
-              creative heart behind Rose & Sugar. Every cookie is crafted with
-              love and decorated with a floral-inspired touch that makes each
-              order uniquely special ✨
+              Hi, I&apos;m Megan — Sacramento area native, cookie artist, and
+              the creative heart behind Rose & Sugar. Every cookie is crafted
+              with love and decorated with a floral-inspired touch that makes
+              each order uniquely special ✨
             </p>
             <p className="text-gray-700 text-lg mb-6">
               What started as a passion for creating beautiful treats has
-              blossomed into a boutique cookie studio where I get to share the
-              joy of cookie decorating through both custom orders and intimate
-              classes.
+              blossomed into this thriving small business where I get to share
+              the joy of cookie decorating through both custom orders and
+              intimate classes.
             </p>
             <p className="text-gray-600 font-medium italic">
-              &quot;I believe every celebration deserves something sweet, and
-              every cookie tells its own story.&quot;
+              &quot;I truly believe cookies can make a huge difference in any
+              celebration & make anyone smile!&quot;
             </p>
           </div>
         </div>

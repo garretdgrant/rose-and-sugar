@@ -172,11 +172,13 @@ const CustomInquiryForm = () => {
                     <option value="" disabled>
                       Select quantity
                     </option>
-                    {["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"].map((num) => (
-                      <option key={num} value={num.toString()}>
-                        {num}
-                      </option>
-                    ))}
+                    {["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"].map(
+                      (num) => (
+                        <option key={num} value={num.toString()}>
+                          {num}
+                        </option>
+                      ),
+                    )}
                   </select>
                 </FormControl>
                 <FormMessage />
