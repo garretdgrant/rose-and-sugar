@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -27,21 +28,24 @@ const formSchema = z.object({
   quantity: z.enum(["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"], {
     errorMap: () => ({ message: "Please select a quantity between 2 and 10" }),
   }),
-  flavorPreference: z.array(
-    z.enum([
-      "vanilla",
-      "lemon",
-      "almond",
-      "confetti",
-      "gf",
-      "maple",
-      "undecided",
-    ]),
-  ),
+  flavorPreference: z
+    .array(
+      z.enum([
+        "vanilla",
+        "lemon",
+        "almond",
+        "confetti",
+        "gf",
+        "maple",
+        "undecided",
+      ]),
+    )
+    .min(1, "Please select at least one flavor"),
   packaging: z.enum(["sealed", "ribbon", "undecided"]),
-  referralSource: z.string().min(1, "Please let us know how you found us"),
+  referralSource: z.string().optional(),
   message: z.string().min(10, "Please provide details about your request"),
   dyefree: z.boolean(),
+  company: z.string().optional(),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -49,6 +53,7 @@ export type FormValues = z.infer<typeof formSchema>;
 const CustomInquiryForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   const flavorOptions: FormValues["flavorPreference"] extends (infer T)[]
     ? { label: string; value: T }[]
     : never = [
@@ -73,21 +78,66 @@ const CustomInquiryForm = () => {
       referralSource: "",
       message: "",
       dyefree: false,
+      company: "",
     },
   });
-
-  const onSubmit = (_data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
+
+    try {
+      const response = await fetch("/api/contact/custom-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit inquiry");
+      }
+
       toast({
         title: "Inquiry Submitted!",
         description:
           "Thank you for your message. Megan will be in touch within 48 hours.",
       });
+
       form.reset();
+      router.push("/cookies/thank-you");
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Failed",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
+  };
+
+  const handleFlavorChange = (
+    value: FormValues["flavorPreference"][number],
+    isChecked: boolean,
+    currentValues: FormValues["flavorPreference"],
+  ) => {
+    if (isChecked) {
+      let updatedValues = [...currentValues, value];
+
+      if (value !== "undecided") {
+        // If a real flavor is selected, remove "undecided"
+        updatedValues = updatedValues.filter((v) => v !== "undecided");
+      } else {
+        // If "undecided" is selected, remove all other flavors
+        updatedValues = ["undecided"];
+      }
+
+      return updatedValues;
+    } else {
+      // If unchecked, remove that flavor
+      return currentValues.filter((v) => v !== value);
+    }
   };
 
   return (
@@ -105,6 +155,21 @@ const CustomInquiryForm = () => {
                 </FormControl>
                 <FormMessage />
               </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+              <div style={{ display: "none" }}>
+                <Input
+                  type="text"
+                  autoComplete="off"
+                  tabIndex={-1}
+                  {...field}
+                />
+              </div>
             )}
           />
 
@@ -241,19 +306,15 @@ const CustomInquiryForm = () => {
                       value={option.value}
                       checked={field.value?.includes(option.value)}
                       onChange={(e) => {
+                        const value = e.target
+                          .value as FormValues["flavorPreference"][number];
                         const isChecked = e.target.checked;
-                        if (isChecked) {
-                          field.onChange([
-                            ...(field.value || []),
-                            option.value,
-                          ]);
-                        } else {
-                          field.onChange(
-                            (field.value || []).filter(
-                              (val) => val !== option.value,
-                            ),
-                          );
-                        }
+                        const updatedValues = handleFlavorChange(
+                          value,
+                          isChecked,
+                          field.value || [],
+                        );
+                        field.onChange(updatedValues);
                       }}
                       className="accent-bakery-pink"
                     />
