@@ -122,17 +122,19 @@ const Classes = () => {
                 <div className="content-spacing">
                   <p className="body-text">
                     Each Rose & Sugar class is designed to be both educational
-                    and enjoyable. You&apos;ll learn proper icing consistency,
-                    coloring techniques, and various decorating methods
-                    including flooding, piping, and wet-on-wet designs.
+                    and enjoyable. You&apos;ll learn various decorating methods
+                    including outlining, flooding, some detail piping, and
+                    wet-on-wet designs. Each class begins with a practice cookie
+                    and practice piping sheet before jumping into the set.
                   </p>
 
                   <p className="body-text">
-                    Classes typically run for 2.5 hours, giving you plenty of
-                    time to practice your skills and decorate 6-8 cookies that
-                    you&apos;ll take home in a beautiful box. We keep our
-                    classes small (maximum 15 people) to ensure everyone
-                    receives personal attention.
+                    Each class begins with a practice cookie and practice piping
+                    sheet before jumping into the set. Classes typically run for
+                    1.5-2 hours, giving you plenty of time to practice your
+                    skills and decorate 3-5 cookies that you&apos;ll take home
+                    in a beautiful box. We keep our classes small (maximum 15
+                    people) to ensure everyone receives personal attention.
                   </p>
 
                   <p className="body-text">
