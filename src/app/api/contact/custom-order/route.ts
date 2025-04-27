@@ -6,7 +6,7 @@ import { isValidEmail, isValidPhone } from "@/lib/validations";
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const receiverEmail = process.env.RECEIVER_EMAIL;
-
+  const googleWebApp = process.env.GOOGLE_WEB_APP;
   try {
     const body = await req.json();
     const {
@@ -129,6 +129,25 @@ export async function POST(req: NextRequest) {
     if (error) {
       throw error;
     }
+    // 🆕 Send the data to Google Sheet after the email
+    await fetch(`${googleWebApp}?sheet=custom`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        eventDate,
+        quantity,
+        flavorPreference,
+        packaging,
+        dyefree,
+        referralSource,
+        message,
+      }),
+    });
 
     return Response.json({ success: true, data });
   } catch (error) {
