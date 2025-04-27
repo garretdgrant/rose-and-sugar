@@ -1,6 +1,7 @@
 import CustomInquiryForm from "@/components/CustomCookieInquiry";
 import FAQAccordion from "@/components/FAQAccordion";
 import SectionDivider from "@/components/ui/sectionDivider";
+import Link from "next/link";
 
 const customOrderFaqs = [
   {
@@ -44,6 +45,15 @@ const CustomOrders = () => {
                 Make your celebration extra sweet with our custom-designed sugar
                 cookies! Each cookie is handcrafted and decorated to match your
                 vision perfectly.
+              </p>
+              <p className="text-lg">
+                Looking for pre-designed cookies?{" "}
+                <Link
+                  className="text-bakery-pink-dark"
+                  href="/cookies/pre-designed"
+                >
+                  Order Here
+                </Link>
               </p>
               <div className="bg-white/80 rounded-lg p-6 shadow-sm text-left">
                 <p>

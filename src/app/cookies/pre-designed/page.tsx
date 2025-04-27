@@ -3,6 +3,7 @@ import { useState } from "react";
 import DesignCard from "@/components/cookie/DesignCard";
 import OrderForm from "@/components/cookie/OrderForm";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 interface Design {
   id: string;
@@ -111,6 +112,15 @@ const PreDesigned = () => {
             options are perfect for birthdays, thank-yous, and more. Simply
             select the designs you&apos;d like, choose quantities, and send your
             request — we&apos;ll take care of the rest!
+            <br />
+            <br />
+            Looking for custom designed cookies?{" "}
+            <Link
+              className="text-bakery-pink-dark"
+              href="/cookies/custom-orders"
+            >
+              Order Here
+            </Link>
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">

@@ -23,7 +23,7 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <Link href="/cookies" className="btn-primary">
+              <Link href="/cookies/custom-orders" className="btn-primary">
                 Order Cookies
               </Link>
               <Link href="/classes" className="btn-secondary">
