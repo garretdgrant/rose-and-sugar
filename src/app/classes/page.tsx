@@ -151,13 +151,14 @@ const Classes = () => {
                   </h3>
 
                   <div className="body-text italic mb-4">
-                    &quot;Megan&apos;s class was so much fun! I&apos;ve never
-                    decorated cookies before, and she made it approachable and
-                    enjoyable. I was shocked at how professional my cookies
-                    looked by the end!&quot;
+                    &quot;The cookie decorating class was so fun! It was
+                    intimidating coming into the class but with Megan&apos;s
+                    great instruction and being able to bring it down to an
+                    entry level it was so much fun and we were able to create
+                    really beautiful designs!&quot;
                   </div>
 
-                  <div className="text-right font-medium">— Lisa M.</div>
+                  <div className="text-right font-medium">— Brittany D.</div>
                 </div>
               </div>
             </div>
