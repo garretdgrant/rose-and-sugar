@@ -24,7 +24,7 @@ const formSchema = z.object({
   eventDate: z
     .string()
     .min(1, "Please provide the date when cookies are needed"),
-  quantity: z.enum(["2", "3", "4", "5", "6", "7", "8", "9", "10"], {
+  quantity: z.enum(["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"], {
     errorMap: () => ({ message: "Please select a quantity between 2 and 10" }),
   }),
   flavorPreference: z.array(
@@ -172,7 +172,7 @@ const CustomInquiryForm = () => {
                     <option value="" disabled>
                       Select quantity
                     </option>
-                    {Array.from({ length: 9 }, (_, i) => i + 2).map((num) => (
+                    {["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"].map((num) => (
                       <option key={num} value={num.toString()}>
                         {num}
                       </option>
