@@ -27,53 +27,56 @@ interface OrderFormData {
 const initialDesigns: Design[] = [
   {
     id: "gift-for-mom",
-    name: "Birthday Celebration",
+    name: "Gift for Mom Box",
     description:
-      "Colorful birthday-themed sugar cookies with sprinkles and custom message options.",
+      "A sweet gift box featuring pastel sugar cookies spelling 'MOM,' beautifully decorated with delicate floral designs. Perfect for Mother's Day or to celebrate any special mom!",
     image: "/predesigned/gift-for-mom.webp",
     price: "$25/box",
     quantity: 0,
   },
   {
-    id: "design2",
-    name: "Thank You Set",
+    id: "teacher-appreciation",
+    name: "Teacher Appreciation Box (One Dozen)",
     description:
-      "Elegant floral-inspired thank you cookies in soft pastel colors.",
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
-    price: "$42/dozen",
+      "An adorable assortment of custom sugar cookies featuring apples, pencils, notebooks, and coffee cups — the perfect sweet gift to celebrate and thank an amazing teacher!",
+    image: "/predesigned/teacher-appreciation.webp",
+    price: "$50/box",
     quantity: 0,
   },
   {
-    id: "design3",
-    name: "Baby Shower Collection",
-    description: "Sweet baby-themed cookies in gender-neutral colors.",
-    image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
-    price: "$45/dozen",
-    quantity: 0,
-  },
-  {
-    id: "design4",
-    name: "Welcome Home",
-    description: "House-warming cookie set with charming home designs.",
-    image: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
-    price: "$45/dozen",
-    quantity: 0,
-  },
-  {
-    id: "design5",
-    name: "Seasonal Favorites",
-    description: "Rotating selection of seasonal and holiday designs.",
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
-    price: "$42/dozen",
-    quantity: 0,
-  },
-  {
-    id: "design6",
-    name: "Congratulations Bundle",
+    id: "floral-bundle",
+    name: "Floral Bundle (Half Dozen)",
     description:
-      "Celebratory cookies perfect for graduations and achievements.",
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
-    price: "$42/dozen",
+      "A beautiful half dozen of hand-decorated floral sugar cookies, featuring a variety of delicate flowers in soft pastel colors. Perfect for spring celebrations, Mother's Day, or as a thoughtful gift!",
+    image: "/predesigned/floral-bundle.webp",
+    price: "$40/box",
+    quantity: 0,
+  },
+  {
+    id: "one-in-a-melon",
+    name: "One in a Melon Pie (Custom Text)",
+    description:
+      "A fun and colorful watermelon-themed sugar cookie pie, featuring eight slice cookies and one customizable center cookie. Personalize it with a name, title, or special message!",
+    image: "/predesigned/one-in-melon.webp",
+    price: "$36/pie",
+    quantity: 0,
+  },
+  {
+    id: "welcome-home-box",
+    name: "Welcome Home Gift Box",
+    description:
+      "A thoughtful gift box featuring four hand-decorated sugar cookies, including a house, a welcome wreath, and customizable options like a realtor logo. Perfect for celebrating a new home or thanking clients!",
+    image: "/predesigned/welcome-home.webp",
+    price: "$25/box",
+    quantity: 0,
+  },
+  {
+    id: "buttercream-dreams",
+    name: "Buttercream Dreams",
+    description:
+      "A dozen soft sugar cookies topped with beautiful, hand-piped buttercream roses. Perfect for any celebration or to simply brighten someone’s day!",
+    image: "/predesigned/buttercream-dreams.webp",
+    price: "$36/dozen",
     quantity: 0,
   },
 ];
