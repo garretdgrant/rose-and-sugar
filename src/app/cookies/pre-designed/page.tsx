@@ -2,26 +2,15 @@
 import { useState } from "react";
 import DesignCard from "@/components/cookie/DesignCard";
 import OrderForm from "@/components/cookie/OrderForm";
-import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
-interface Design {
+export interface Design {
   id: string;
   name: string;
   description: string;
   image: string;
   price: string;
   quantity: number;
-}
-
-interface OrderFormData {
-  name: string;
-  email: string;
-  phone: string;
-  pickupDate: string;
-  message?: string;
-  heardAbout?: string;
-  selectedDesigns: Design[];
 }
 
 const initialDesigns: Design[] = [
@@ -83,7 +72,6 @@ const initialDesigns: Design[] = [
 
 const PreDesigned = () => {
   const [designs, setDesigns] = useState<Design[]>(initialDesigns);
-  const { toast } = useToast();
 
   const handleQuantityChange = (id: string, quantity: number) => {
     setDesigns((prev) =>
@@ -91,14 +79,6 @@ const PreDesigned = () => {
         design.id === id ? { ...design, quantity } : design,
       ),
     );
-  };
-
-  const handleSubmit = (formData: OrderFormData) => {
-    console.log("Order submitted:", formData);
-    toast({
-      title: "Order Submitted!",
-      description: "We'll be in touch within 48 hours to confirm your order.",
-    });
   };
 
   const selectedDesigns = designs.filter((design) => design.quantity > 0);
@@ -140,10 +120,7 @@ const PreDesigned = () => {
             <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark mb-6 text-center">
               Request Your Order
             </h2>
-            <OrderForm
-              selectedDesigns={selectedDesigns}
-              onSubmit={() => handleSubmit}
-            />
+            <OrderForm selectedDesigns={selectedDesigns} />
             <p className="text-center text-gray-600 mt-6">
               We&apos;ll follow up within 48 hours to confirm availability and
               pricing. Thank you!
