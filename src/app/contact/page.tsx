@@ -16,13 +16,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { isValidPhone } from "@/lib/validations";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please provide a valid email address"),
-  phone: z.string(),
+  phone: z.string().refine((value) => isValidPhone(value), {
+    message: "Please provide a valid phone number",
+  }),
   message: z.string().min(10, "Please provide your message"),
   referralSource: z.string().optional(),
+  company: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -30,6 +35,7 @@ type FormValues = z.infer<typeof formSchema>;
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -39,21 +45,38 @@ const Contact = () => {
       phone: "",
       message: "",
       referralSource: "",
+      company: "",
     },
   });
 
-  const onSubmit = (_data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      toast({
-        title: "Inquiry Submitted!",
-        description:
-          "Thank you for your message. Megan will be in touch within 48 hours.",
+    try {
+      const response = await fetch("/api/contact/general", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
       form.reset();
+      router.push("/cookies/thank-you");
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Failed",
+        description:
+          "Something went wrong. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -169,6 +192,13 @@ const Contact = () => {
                           <FormMessage />
                         </FormItem>
                       )}
+                    />
+                    <input
+                      type="text"
+                      name="company" // honeypot field name
+                      style={{ display: "none" }}
+                      tabIndex={-1}
+                      autoComplete="off"
                     />
 
                     <Button
