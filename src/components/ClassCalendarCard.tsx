@@ -18,9 +18,9 @@ const ClassCalendarCard = ({
   title,
   description,
   price,
-  // link,
 }: ClassCalendarCardProps) => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const classId = `${month}-${day}-${title}`.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <>
@@ -91,6 +91,7 @@ const ClassCalendarCard = ({
         day={day}
         description={description}
         price={price}
+        classId={classId}
       />
     </>
   );

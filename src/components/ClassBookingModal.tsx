@@ -30,6 +30,7 @@ interface ClassBookingModalProps {
   day: string;
   description: string;
   price: string;
+  classId: string;
 }
 
 // Form validation schema
@@ -53,6 +54,7 @@ const ClassBookingModal = ({
   day,
   description,
   price,
+  classId,
 }: ClassBookingModalProps) => {
   const router = useRouter();
 
@@ -66,9 +68,28 @@ const ClassBookingModal = ({
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Booking submitted:", data);
-    router.push("/cookies/thank-you");
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const payload = {
+        ...data,
+        classId,
+      };
+      const response = await fetch("/api/contact/class-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        router.push("/cookies/thank-you");
+      } else {
+        console.error("Failed to submit booking");
+      }
+    } catch (error) {
+      console.error("Error submitting booking:", error);
+    }
   };
 
   return (
