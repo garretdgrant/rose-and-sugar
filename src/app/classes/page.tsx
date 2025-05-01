@@ -89,9 +89,16 @@ const Classes = () => {
                 <h3 className="section-subheading">
                   Book A Cookie Decorating Class!
                 </h3>
-                {/* <CalendlyEmbed /> */}
                 {/* Class Calendar Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+                <div
+                  className={`grid gap-8 max-w-5xl mx-auto mb-12 ${
+                    upcomingClasses.length === 1
+                      ? "grid-cols-1 justify-center"
+                      : upcomingClasses.length === 2
+                        ? "grid-cols-1 md:grid-cols-2"
+                        : "grid-cols-1 md:grid-cols-3"
+                  }`}
+                >
                   {upcomingClasses.map((classItem, index) => (
                     <ClassCalendarCard
                       key={index}
