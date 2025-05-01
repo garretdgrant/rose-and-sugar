@@ -1,4 +1,5 @@
-import CalendlyEmbed from "@/components/Calendly";
+"use client";
+import ClassCalendarCard from "@/components/ClassCalendarCard";
 import SectionDivider from "@/components/ui/sectionDivider";
 import { Calendar, Check, Users } from "lucide-react";
 import Link from "next/link";
@@ -14,6 +15,35 @@ const Classes = () => {
   ];
 
   const upcomingMonths = ["June", "July"];
+  const upcomingClasses = [
+    {
+      month: "JUNE",
+      day: "12",
+      title: "Spring Cookie Decorating",
+      description:
+        "Learn to create beautiful floral designs perfect for spring celebrations and garden parties.",
+      price: "$65 per person",
+      link: "/contact",
+    },
+    {
+      month: "JUNE",
+      day: "25",
+      title: "Wedding Cookie Workshop",
+      description:
+        "Create elegant wedding-themed cookies with royal icing techniques and delicate details.",
+      price: "$75 per person",
+      link: "/contact",
+    },
+    {
+      month: "JULY",
+      day: "8",
+      title: "Summer Fun Cookies",
+      description:
+        "Design playful summer-themed cookies featuring beach, picnic, and seasonal motifs.",
+      price: "$65 per person",
+      link: "/contact",
+    },
+  ];
 
   return (
     <div className="page-wrapper">
@@ -56,10 +86,9 @@ const Classes = () => {
                 </h3>
               </div>
 
-              <p className="body-text mt-4">
-                Rose & Sugar classes are returning in{" "}
-                {upcomingMonths.join(" and ")}! Check back soon to see our full
-                schedule and book your spot.
+              <p className="body-text mt-4 mb-10">
+                Select from our upcoming cookie decorating classes and book your
+                spot today!
               </p>
             </div>
             {/* Calendly Placeholder */}
@@ -68,7 +97,21 @@ const Classes = () => {
                 <h3 className="section-subheading">
                   Book A Cookie Decorating Class!
                 </h3>
-                <CalendlyEmbed />
+                {/* <CalendlyEmbed /> */}
+                {/* Class Calendar Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+                  {upcomingClasses.map((classItem, index) => (
+                    <ClassCalendarCard
+                      key={index}
+                      month={classItem.month}
+                      day={classItem.day}
+                      title={classItem.title}
+                      description={classItem.description}
+                      price={classItem.price}
+                      link={classItem.link}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -79,7 +122,7 @@ const Classes = () => {
               </p>
 
               <Link href="/contact" className="btn-primary">
-                Book a Class
+                Join Waitlist
               </Link>
             </div>
           </div>
