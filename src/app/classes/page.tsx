@@ -18,29 +18,21 @@ const Classes = () => {
   const upcomingClasses = [
     {
       month: "JUNE",
-      day: "12",
-      title: "Spring Cookie Decorating",
+      day: "14",
+      title: "Groovy Summer",
       description:
-        "Learn to create beautiful floral designs perfect for spring celebrations and garden parties.",
+        "Join us for a fun, retro-themed cookie class perfect for summer vibes and tie-dye fun!",
       price: "$65 per person",
-      link: "/contact",
-    },
-    {
-      month: "JUNE",
-      day: "25",
-      title: "Wedding Cookie Workshop",
-      description:
-        "Create elegant wedding-themed cookies with royal icing techniques and delicate details.",
-      price: "$75 per person",
+      time: "11:00 AM",
       link: "/contact",
     },
     {
       month: "JULY",
-      day: "8",
-      title: "Summer Fun Cookies",
+      day: "TBD",
+      title: "Christmas in July",
       description:
-        "Design playful summer-themed cookies featuring beach, picnic, and seasonal motifs.",
-      price: "$65 per person",
+        "Celebrate the holidays early with festive cookie decorating — date and location coming soon!",
+      price: "TBD",
       link: "/contact",
     },
   ];
