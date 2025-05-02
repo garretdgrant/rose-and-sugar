@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 import {
   Dialog,
@@ -67,7 +68,7 @@ const ClassBookingModal = ({
       seats: 1,
     },
   });
-
+  const { isSubmitting } = form.formState;
   const onSubmit = async (data: FormValues) => {
     try {
       const payload = {
@@ -83,7 +84,7 @@ const ClassBookingModal = ({
       });
 
       if (response.ok) {
-        router.push("/cookies/thank-you");
+        router.push("/classes/thank-you");
       } else {
         console.error("Failed to submit booking");
       }
@@ -217,9 +218,17 @@ const ClassBookingModal = ({
               <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full bg-bakery-pink hover:bg-bakery-pink-dark text-white font-medium py-2 rounded-full transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-bakery-pink hover:bg-bakery-pink-dark text-white font-medium py-2 rounded-full transition-colors flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Complete Booking
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Complete Booking"
+                  )}
                 </Button>
               </div>
             </form>
