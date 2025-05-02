@@ -10,6 +10,8 @@ interface ClassCalendarCardProps {
   description: string;
   price: string;
   link: string;
+  address: string;
+  time: string;
 }
 
 const ClassCalendarCard = ({
@@ -18,6 +20,8 @@ const ClassCalendarCard = ({
   title,
   description,
   price,
+  address,
+  time,
 }: ClassCalendarCardProps) => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const classId = `${month}-${day}-${title}`.toLowerCase().replace(/\s+/g, "-");
@@ -62,7 +66,12 @@ const ClassCalendarCard = ({
           <h3 className="font-bebas text-xl text-center mb-2 text-bakery-pink-dark">
             {title}
           </h3>
-
+          <p className="text-gray-600 text-center mb-4 flex-grow">
+            Where: {address}
+          </p>
+          <p className="text-gray-600 text-center mb-4 flex-grow">
+            When: {time}
+          </p>
           <p className="text-gray-600 text-center mb-4 flex-grow">
             {description}
           </p>

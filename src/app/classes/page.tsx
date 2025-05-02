@@ -21,9 +21,11 @@ const Classes = () => {
       day: "14",
       title: "Groovy Summer",
       description:
-        "Join us for a fun, retro-themed cookie class perfect for summer vibes and tie-dye fun!",
+        "Join us for a fun, retro themed cookie decorating class filled with groovy summer vibes! Class includes four cookie designs, and all the instructions and materials you’ll need, with light snacks and drinks.",
+      address:
+        "Granite City Work Loft 722 Sutter Street Folsom 95630 (Stair access only)",
       price: "$65 per person",
-      time: "11:00 AM",
+      time: "11:00 AM - 1:00 PM",
       link: "/contact",
     },
     {
@@ -32,7 +34,9 @@ const Classes = () => {
       title: "Christmas in July",
       description:
         "Celebrate the holidays early with festive cookie decorating — date and location coming soon!",
+      address: "TBD",
       price: "TBD",
+      time: "TBD",
       link: "/contact",
     },
   ];
@@ -107,6 +111,8 @@ const Classes = () => {
                       title={classItem.title}
                       description={classItem.description}
                       price={classItem.price}
+                      address={classItem.address}
+                      time={classItem.time}
                       link={classItem.link}
                     />
                   ))}
