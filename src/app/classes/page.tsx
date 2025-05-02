@@ -171,12 +171,11 @@ const Classes = () => {
                   </p>
 
                   <p className="body-text">
-                    Each class begins with a practice cookie and practice piping
-                    sheet before jumping into the set. Classes typically run for
-                    1.5-2 hours, giving you plenty of time to practice your
-                    skills and decorate 3-5 cookies that you&apos;ll take home
-                    in a beautiful box. We keep our classes small (maximum 15
-                    people) to ensure everyone receives personal attention.
+                    Classes typically run for 1.5-2 hours, giving you plenty of
+                    time to practice your skills and decorate 3-5 cookies that
+                    you&apos;ll take home in a beautiful box. We keep our
+                    classes small (maximum 15 people) to ensure everyone
+                    receives personal attention.
                   </p>
 
                   <p className="body-text">
