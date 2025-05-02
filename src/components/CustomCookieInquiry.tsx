@@ -37,6 +37,7 @@ const formSchema = z.object({
         "confetti",
         "gf",
         "maple",
+        "chocolate-chip",
         "undecided",
       ]),
     )
@@ -63,6 +64,7 @@ const CustomInquiryForm = () => {
     { label: "Confetti", value: "confetti" },
     { label: "GF Flour (+$6/dozen)", value: "gf" },
     { label: "Maple", value: "maple" },
+    { label: "Chocolate Chip", value: "chocolate-chip" },
     { label: "Decide Later", value: "undecided" },
   ];
   const form = useForm<FormValues>({
@@ -73,7 +75,7 @@ const CustomInquiryForm = () => {
       phone: "",
       eventDate: "",
       quantity: "2",
-      flavorPreference: [],
+      flavorPreference: ["undecided"],
       packaging: "sealed",
       referralSource: "",
       message: "",
