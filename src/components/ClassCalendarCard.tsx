@@ -9,7 +9,6 @@ interface ClassCalendarCardProps {
   title: string;
   description: string;
   price: string;
-  link: string;
   address: string;
   time: string;
 }
