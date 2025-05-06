@@ -2,7 +2,6 @@ import { Design } from "@/components/PreDesignedClient"; // or wherever your Des
 import { urlFor } from "./sanityImage";
 import { sanityClient } from "./sanityClient";
 
-
 export interface FetchedDesign {
   _id: string;
   _createdAt: string;
@@ -82,4 +81,3 @@ export const transformToDesign = (item: FetchedDesign): Design => ({
   price: item.price,
   quantity: 0,
 });
-

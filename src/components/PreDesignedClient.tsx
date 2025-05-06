@@ -14,67 +14,12 @@ export interface Design {
   quantity: number;
 }
 
-const initialDesigns: Design[] = [
-  {
-    id: "teacher-appreciation",
-    name: "Teacher Appreciation Box (One Dozen)",
-    description:
-      "An adorable assortment of custom sugar cookies featuring apples, pencils, notebooks, and coffee cups — the perfect sweet gift to celebrate and thank an amazing teacher!",
-    image: "/predesigned/teacher-appreciation.webp",
-    price: "$50/box",
-    quantity: 0,
-  },
-  {
-    id: "floral-bundle",
-    name: "Floral Bundle (Half Dozen)",
-    description:
-      "A beautiful half dozen of hand-decorated floral sugar cookies, featuring a variety of delicate flowers in soft pastel colors. Perfect for spring celebrations, Mother's Day, or as a thoughtful gift!",
-    image: "/predesigned/floral-bundle.webp",
-    price: "$40/box",
-    quantity: 0,
-  },
-  {
-    id: "one-in-a-melon",
-    name: "One in a Melon Pie (Custom Text)",
-    description:
-      "A fun and colorful watermelon-themed sugar cookie pie, featuring eight slice cookies and one customizable center cookie. Personalize it with a name, title, or special message!",
-    image: "/predesigned/one-in-melon.webp",
-    price: "$36/pie",
-    quantity: 0,
-  },
-  {
-    id: "welcome-home-box",
-    name: "Welcome Home Gift Box",
-    description:
-      "A thoughtful gift box featuring four hand-decorated sugar cookies, including a house, a welcome wreath, and customizable options like a realtor logo. Perfect for celebrating a new home or thanking clients!",
-    image: "/predesigned/welcome-home.webp",
-    price: "$25/box",
-    quantity: 0,
-  },
-  {
-    id: "buttercream-dreams",
-    name: "Buttercream Dreams",
-    description:
-      "A dozen soft sugar cookies topped with beautiful, hand-piped buttercream roses. Perfect for any celebration or to simply brighten someone’s day!",
-    image: "/predesigned/buttercream-dreams.webp",
-    price: "$36/dozen",
-    quantity: 0,
-  },
-  {
-    id: "test-adding-design",
-    name: "test design",
-    description: "tst design",
-    image: "/predesigned/buttercream-dreams.webp",
-    price: "$36/dozen",
-    quantity: 0,
-  },
-];
-
 const PreDesignedClient = ({ predesigns }: { predesigns: FetchedDesign[] }) => {
-    const transformedDesigns = predesigns.map(design => transformToDesign(design))
+  const transformedDesigns = predesigns.map((design) =>
+    transformToDesign(design),
+  );
 
   const [designs, setDesigns] = useState<Design[]>(transformedDesigns);
-  console.log(transformedDesigns);
   const handleQuantityChange = (id: string, quantity: number) => {
     setDesigns((prev) =>
       prev.map((design) =>
