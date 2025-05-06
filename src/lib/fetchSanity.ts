@@ -59,7 +59,7 @@ export const getClasses = async (): Promise<FetchedClass[]> => {
 };
 
 export const getPredesigns = async (): Promise<FetchedDesign[]> => {
-  const query = `*[_type == "predesign"]{
+  const query = `*[_type == "predesign"] | order(orderRank) {
     _id,
     _type,
     name,
