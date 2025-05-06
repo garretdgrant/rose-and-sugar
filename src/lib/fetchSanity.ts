@@ -1,6 +1,5 @@
-import { Design } from "@/components/PreDesignedClient"; // or wherever your Design type lives
+import { Design } from "@/components/PreDesignedClient";
 import { urlFor } from "./sanityImage";
-import { sanityClient } from "./sanityClient";
 
 export interface FetchedDesign {
   _id: string;
@@ -38,6 +37,24 @@ export interface FetchedClass {
   _updatedAt: string;
 }
 
+const token = process.env.SANITY_READ_TOKEN!;
+
+const sanityFetch = async <T>(groqQuery: string): Promise<T> => {
+  const encodedQuery = encodeURIComponent(groqQuery);
+  const url = `https://p984b1z5.api.sanity.io/v2024-06-01/data/query/production?query=${encodedQuery}`;
+
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    // ✅ Enable ISR (revalidate every 60 seconds)
+    next: { revalidate: 60 },
+  });
+
+  const json = await res.json();
+  return json.result;
+};
+
 export const getClasses = async (): Promise<FetchedClass[]> => {
   const query = `*[_type == "class"]{
     _id,
@@ -53,8 +70,7 @@ export const getClasses = async (): Promise<FetchedClass[]> => {
     _createdAt,
     _updatedAt
   }`;
-
-  return await sanityClient.fetch(query);
+  return sanityFetch<FetchedClass[]>(query);
 };
 
 export const getPredesigns = async (): Promise<FetchedDesign[]> => {
@@ -69,8 +85,7 @@ export const getPredesigns = async (): Promise<FetchedDesign[]> => {
     _createdAt,
     _updatedAt
   }`;
-
-  return await sanityClient.fetch(query);
+  return sanityFetch<FetchedDesign[]>(query);
 };
 
 export const transformToDesign = (item: FetchedDesign): Design => ({
