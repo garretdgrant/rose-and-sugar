@@ -1,19 +1,12 @@
 "use client";
 import ClassCalendarCard from "@/components/ClassCalendarCard";
 import SectionDivider from "@/components/ui/sectionDivider";
+import { FetchedClass } from "@/lib/fetchSanity";
 import { Calendar, Check, Users } from "lucide-react";
 import Link from "next/link";
 
 interface ClientClassesProps {
-  upcomingClasses: {
-    title: string;
-    month: string;
-    day: string;
-    description: string;
-    price: string;
-    address: string;
-    time: string;
-  }[];
+  upcomingClasses: FetchedClass[];
 }
 
 const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {

@@ -1,4 +1,4 @@
-import { getClasses } from "@/lib/getClasses";
+import { FetchedClass, getClasses } from "@/lib/fetchSanity";
 import ClientClasses from "@/components/ClientClasses";
 const monthOrder = [
   "january",
@@ -15,26 +15,9 @@ const monthOrder = [
   "december",
 ];
 
-export interface ClassItem {
-  _id: string;
-  title: string;
-  month: string;
-  day?: string;
-  time?: string;
-  price?: string;
-  description?: string;
-  address?: string;
-  link?: string;
-  _createdAt?: string;
-  _updatedAt?: string;
-  _rev?: string;
-  _type?: string;
-}
-
 const ClassesPage = async () => {
   const upcomingClasses = await getClasses();
-
-  upcomingClasses.sort((a: ClassItem, b: ClassItem) => {
+  upcomingClasses.sort((a: FetchedClass, b: FetchedClass) => {
     // Normalize & lookup month index
     const monthIndexA = monthOrder.indexOf((a.month || "").toLowerCase());
     const monthIndexB = monthOrder.indexOf((b.month || "").toLowerCase());
