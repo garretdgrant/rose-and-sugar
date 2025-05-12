@@ -11,6 +11,7 @@ interface ClassCalendarCardProps {
   price: string;
   address: string;
   time: string;
+  imageUrl: string;
 }
 
 const ClassCalendarCard = ({
@@ -21,20 +22,30 @@ const ClassCalendarCard = ({
   price,
   address,
   time,
+  imageUrl,
 }: ClassCalendarCardProps) => {
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const classId = `${month}-${day}-${title}`.toLowerCase().replace(/\s+/g, "-");
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   return (
     <>
       <Card
-        className="h-full border-bakery-pink/20 bg-white/90 hover:bg-white hover:border-bakery-pink/40 transition-all duration-300 hover:translate-y-[-5px] cursor-pointer"
+        className="h-full flex flex-col border-bakery-pink/20 bg-white/90 hover:bg-white hover:border-bakery-pink/40 transition-all duration-300 hover:translate-y-[-5px] cursor-pointer overflow-hidden"
         onClick={() => setIsBookingModalOpen(true)}
       >
-        <CardContent className="p-6 flex flex-col h-full">
+        {/* Card Image - New addition */}
+        <div className="w-full h-48 overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+
+        <CardContent className="p-6 flex flex-col flex-grow">
           {/* Calendar Icon - Now inside the card */}
-          <div className="mx-auto mb-6">
-            <div className="relative w-24 aspect-square rounded-lg overflow-hidden shadow-md">
+          <div className="mx-auto mb-6 -mt-10 relative z-10">
+            <div className="relative w-24 aspect-square rounded-lg overflow-hidden shadow-md bg-white">
               <div className="absolute inset-0 flex flex-col">
                 {/* Month Header */}
                 <div className="bg-bakery-pink text-white text-center py-1 font-bebas text-lg tracking-wider">

@@ -2,6 +2,7 @@
 import ClassCalendarCard from "@/components/ClassCalendarCard";
 import SectionDivider from "@/components/ui/sectionDivider";
 import { FetchedClass } from "@/lib/fetchSanity";
+import { urlFor } from "@/lib/sanityImage";
 import { Calendar, Check, Users } from "lucide-react";
 import Link from "next/link";
 
@@ -83,9 +84,9 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
                         : "grid-cols-1 md:grid-cols-3"
                   }`}
                 >
-                  {upcomingClasses.map((classItem, index) => (
+                  {upcomingClasses.map((classItem) => (
                     <ClassCalendarCard
-                      key={index}
+                      key={classItem._id}
                       month={classItem.month}
                       day={classItem.day}
                       title={classItem.title}
@@ -93,6 +94,11 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
                       price={classItem.price}
                       address={classItem.address}
                       time={classItem.time}
+                      imageUrl={
+                        classItem.image
+                          ? urlFor(classItem.image).url()
+                          : "/openDefault.webp"
+                      }
                     />
                   ))}
                 </div>

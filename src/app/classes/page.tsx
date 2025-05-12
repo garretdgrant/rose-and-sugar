@@ -31,7 +31,6 @@ const ClassesPage = async () => {
 
     return dayA - dayB;
   });
-
   return <ClientClasses upcomingClasses={upcomingClasses} />;
 };
 

@@ -35,6 +35,13 @@ export interface FetchedClass {
   price: string;
   _createdAt: string;
   _updatedAt: string;
+  image?: {
+    _type: "image";
+    asset: {
+      _ref: string;
+      _type: "reference";
+    };
+  };
 }
 
 const token = process.env.SANITY_READ_TOKEN!;
@@ -66,7 +73,7 @@ export const getClasses = async (): Promise<FetchedClass[]> => {
     address,
     description,
     price,
-    link,
+    image,
     _createdAt,
     _updatedAt
   }`;
