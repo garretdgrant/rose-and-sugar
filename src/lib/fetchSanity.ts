@@ -42,6 +42,7 @@ export interface FetchedClass {
       _type: "reference";
     };
   };
+  seatsLeft: number;
 }
 
 const token = process.env.SANITY_READ_TOKEN!;
@@ -74,6 +75,7 @@ export const getClasses = async (): Promise<FetchedClass[]> => {
     description,
     price,
     image,
+    seatsLeft,
     _createdAt,
     _updatedAt
   }`;

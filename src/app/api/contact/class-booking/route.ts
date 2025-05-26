@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { fullName, email, phone, seats, classId } = body;
+    const { fullName, email, phone, seats, classId, isWaitlist } = body;
 
     console.log("🎟️ Received Class Booking:", body);
 
@@ -50,6 +50,10 @@ export async function POST(req: NextRequest) {
             <tr><td style="padding: 8px; font-weight: bold;">Phone:</td><td style="padding: 8px;">${phone}</td></tr>
             <tr><td style="padding: 8px; font-weight: bold;">Seats Reserved:</td><td style="padding: 8px;">${seats}</td></tr>
             <tr><td style="padding: 8px; font-weight: bold;">Class ID:</td><td style="padding: 8px;">${classId}</td></tr>
+            <tr>
+              <td style="padding: 8px; font-weight: bold;">Waitlist:</td>
+              <td style="padding: 8px;">${isWaitlist ? "Yes" : "No"}</td>
+            </tr>
           </table>
         </div>
       `,
@@ -61,7 +65,14 @@ export async function POST(req: NextRequest) {
     await fetch(`${googleWebApp}?sheet=classes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName, email, phone, seats, classId }),
+      body: JSON.stringify({
+        fullName,
+        email,
+        phone,
+        seats,
+        classId,
+        isWaitlist,
+      }),
     });
 
     return Response.json({ success: true, data });

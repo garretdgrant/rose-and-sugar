@@ -21,6 +21,7 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
   ];
 
   const upcomingMonths = ["June", "July"];
+  console.log(upcomingClasses);
 
   return (
     <div className="page-wrapper">
@@ -99,6 +100,7 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
                           ? urlFor(classItem.image).url()
                           : "/openDefault.webp"
                       }
+                      seatsLeft={classItem.seatsLeft}
                     />
                   ))}
                 </div>

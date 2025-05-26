@@ -32,6 +32,7 @@ interface ClassBookingModalProps {
   description: string;
   price: string;
   classId: string;
+  isWaitlist: boolean;
 }
 
 // Form validation schema
@@ -56,6 +57,7 @@ const ClassBookingModal = ({
   description,
   price,
   classId,
+  isWaitlist,
 }: ClassBookingModalProps) => {
   const router = useRouter();
 
@@ -74,6 +76,7 @@ const ClassBookingModal = ({
       const payload = {
         ...data,
         classId,
+        isWaitlist,
       };
       const response = await fetch("/api/contact/class-booking", {
         method: "POST",

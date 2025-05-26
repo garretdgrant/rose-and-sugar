@@ -12,6 +12,7 @@ interface ClassCalendarCardProps {
   address: string;
   time: string;
   imageUrl: string;
+  seatsLeft: number;
 }
 
 const ClassCalendarCard = ({
@@ -23,6 +24,7 @@ const ClassCalendarCard = ({
   address,
   time,
   imageUrl,
+  seatsLeft,
 }: ClassCalendarCardProps) => {
   const classId = `${month}-${day}-${title}`.toLowerCase().replace(/\s+/g, "-");
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -86,9 +88,12 @@ const ClassCalendarCard = ({
             {description}
           </p>
 
+          <p className="text-gray-600 text-center mb-4 flex-grow">
+            Seats Remaining: {seatsLeft}
+          </p>
+
           <div className="flex items-center justify-between mt-auto">
             <span className="font-medium text-gray-700">{price}</span>
-
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -96,7 +101,7 @@ const ClassCalendarCard = ({
               }}
               className="bg-bakery-pink/90 hover:bg-bakery-pink text-white py-1 px-4 rounded-full text-sm transition-colors"
             >
-              Book Now
+              {seatsLeft ? "Book Now" : "Join Waitlist"}
             </button>
           </div>
         </CardContent>
@@ -111,6 +116,7 @@ const ClassCalendarCard = ({
         description={description}
         price={price}
         classId={classId}
+        isWaitlist={!seatsLeft}
       />
     </>
   );
