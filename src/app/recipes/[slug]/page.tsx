@@ -4,18 +4,23 @@ import SectionDivider from "@/components/ui/sectionDivider";
 import { recipes, getRecipeBySlug } from "@/lib/recipes";
 import type { Metadata } from "next";
 
+type RecipePageParams = {
+  slug: string;
+};
+
 type RecipePageProps = {
-  params: {
-    slug: string;
-  };
+  params: Promise<RecipePageParams>;
 };
 
 export function generateStaticParams() {
   return recipes.map((recipe) => ({ slug: recipe.slug }));
 }
 
-export function generateMetadata({ params }: RecipePageProps): Metadata {
-  const recipe = getRecipeBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: RecipePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const recipe = getRecipeBySlug(slug);
 
   if (!recipe) {
     return {
@@ -29,8 +34,9 @@ export function generateMetadata({ params }: RecipePageProps): Metadata {
   };
 }
 
-const RecipeDetailPage = ({ params }: RecipePageProps) => {
-  const recipe = getRecipeBySlug(params.slug);
+const RecipeDetailPage = async ({ params }: RecipePageProps) => {
+  const { slug } = await params;
+  const recipe = getRecipeBySlug(slug);
 
   if (!recipe) {
     notFound();
