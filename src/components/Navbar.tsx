@@ -29,6 +29,7 @@ const Navbar = () => {
     // { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     // Cookies handled separately
+    { name: "Recipes", path: "/recipes" },
     { name: "Classes", path: "/classes" },
     { name: "Contact", path: "/contact" },
   ];
