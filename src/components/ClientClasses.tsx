@@ -200,7 +200,8 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
             <p className="body-text text-center mb-6 max-w-2xl mx-auto">
               Looking for a unique activity for a bridal shower, team building,
               or birthday celebration? Rose & Sugar offers private decorating
-              classes tailored to your event.
+              classes tailored to your event. Private bookings require a minimum
+              of 8 guests at $55 per person.
             </p>
 
             <div className="text-center">
