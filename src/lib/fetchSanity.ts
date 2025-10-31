@@ -14,6 +14,7 @@ export interface FetchedDesign {
     current: string;
     _type: "slug";
   };
+  category?: string;
   image: {
     _type: "image";
     asset: {
@@ -69,6 +70,7 @@ export interface FetchedClass {
 }
 
 const token = process.env.SANITY_READ_TOKEN!;
+const DEFAULT_COOKIE_CATEGORY = "General Baked Cookies";
 
 const sanityFetch = async <T>(groqQuery: string): Promise<T> => {
   const encodedQuery = encodeURIComponent(groqQuery);
@@ -113,6 +115,7 @@ export const getPredesigns = async (): Promise<FetchedDesign[]> => {
     description,
     price,
     slug,
+    category,
     image,
     _createdAt,
     _updatedAt
@@ -143,6 +146,7 @@ export const transformToDesign = (item: FetchedDesign): Design => ({
   description: item.description,
   image: urlFor(item.image).width(600).url(),
   price: item.price,
+  category: item.category ?? DEFAULT_COOKIE_CATEGORY,
   quantity: 0,
 });
 
@@ -152,5 +156,6 @@ export const transformToSweetBake = (item: FetchedSweetBake): Design => ({
   description: item.description,
   image: urlFor(item.image).width(600).url(),
   price: item.price,
+  category: item.category ?? DEFAULT_COOKIE_CATEGORY,
   quantity: 0,
 });

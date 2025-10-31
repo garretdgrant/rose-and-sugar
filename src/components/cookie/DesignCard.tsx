@@ -10,6 +10,7 @@ interface DesignCardProps {
   image: string;
   quantity: number;
   price: string;
+  category?: string;
   onQuantityChange: (id: string, quantity: number) => void;
 }
 
@@ -20,6 +21,7 @@ const DesignCard = ({
   image,
   quantity,
   price,
+  category,
   onQuantityChange,
 }: DesignCardProps) => {
   const handleQuantityChange = (increment: boolean) => {
@@ -52,6 +54,11 @@ const DesignCard = ({
           <p className="text-bakery-pink-dark font-semibold mb-2">
             {price || "$42"}
           </p>
+          {category && (
+            <span className="mb-3 inline-flex items-center rounded-full bg-bakery-pink-light/20 px-3 py-1 text-xs font-medium uppercase tracking-wide text-bakery-pink-dark">
+              {category}
+            </span>
+          )}
           <p className="text-muted-foreground mb-4">{description}</p>
 
           <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
