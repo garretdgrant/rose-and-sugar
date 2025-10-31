@@ -1,16 +1,31 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import DesignCard from "@/components/cookie/DesignCard";
-import OrderForm from "@/components/cookie/OrderForm";
-import { FetchedSweetBake, transformToSweetBake } from "@/lib/fetchSanity";
-import type { Design } from "@/components/PreDesignedClient";
+import UnderConstruction from "@/components/UnderConstruction";
+import { FetchedSweetBake } from "@/lib/fetchSanity";
 
 const PreDesignedBakesClient = ({
   sweetBakes,
 }: {
   sweetBakes: FetchedSweetBake[];
 }) => {
+  void sweetBakes;
+
+  return (
+    <UnderConstruction
+      title="Sweet Bakes Are Baking!"
+      message="Our pre-designed cakes and cupcake sets are in the oven. We’ll share the full menu soon. In the meantime, reach out and we’ll help craft something delicious for you."
+      ctaLabel="Get In Touch"
+      ctaHref="/contact"
+    />
+  );
+
+  /*
+  import { useEffect, useMemo, useState } from "react";
+  import Link from "next/link";
+  import DesignCard from "@/components/cookie/DesignCard";
+  import OrderForm from "@/components/cookie/OrderForm";
+  import { transformToSweetBake } from "@/lib/fetchSanity";
+  import type { Design } from "@/components/PreDesignedClient";
+
   const transformedBakes = useMemo(
     () => sweetBakes.map((item) => transformToSweetBake(item)),
     [sweetBakes],
@@ -94,6 +109,7 @@ const PreDesignedBakesClient = ({
       </main>
     </div>
   );
+  */
 };
 
 export default PreDesignedBakesClient;
