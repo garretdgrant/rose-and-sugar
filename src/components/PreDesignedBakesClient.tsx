@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import DesignCard from "@/components/cookie/DesignCard";
 import OrderForm from "@/components/cookie/OrderForm";
@@ -11,42 +11,16 @@ const PreDesignedBakesClient = ({
 }: {
   sweetBakes: FetchedSweetBake[];
 }) => {
-  const transformedBakes = sweetBakes.map((item) => transformToSweetBake(item));
+  const transformedBakes = useMemo(
+    () => sweetBakes.map((item) => transformToSweetBake(item)),
+    [sweetBakes],
+  );
 
-  const showcaseBakes: Design[] = [
-    {
-      id: "honey-pear-tier",
-      name: "Honey Pear Celebration Cake",
-      description:
-        "Three fluffy vanilla layers with honey buttercream, pear compote, and pressed floral accents. Perfect for intimate showers or birthdays.",
-      image: "/openDefault.webp",
-      price: "$95 / 6-inch cake",
-      quantity: 0,
-    },
-    {
-      id: "cinnamon-swirl-dozen",
-      name: "Cinnamon Swirl Cupcake Dozen",
-      description:
-        "A dozen brown sugar cupcakes topped with cinnamon cream cheese frosting and caramel drizzle.",
-      image: "/openDefault.webp",
-      price: "$54 / dozen",
-      quantity: 0,
-    },
-    {
-      id: "midnight-ganache",
-      name: "Midnight Ganache Party Cake",
-      description:
-        "Rich dark chocolate sponge layered with whipped ganache, finished with a mirror glaze and seasonal berries.",
-      image: "/openDefault.webp",
-      price: "$120 / 8-inch cake",
-      quantity: 0,
-    },
-  ];
+  const [designs, setDesigns] = useState<Design[]>(transformedBakes);
 
-  const [designs, setDesigns] = useState<Design[]>([
-    ...transformedBakes,
-    ...showcaseBakes,
-  ]);
+  useEffect(() => {
+    setDesigns(transformedBakes);
+  }, [transformedBakes]);
 
   const handleQuantityChange = (id: string, quantity: number) => {
     setDesigns((prev) =>
@@ -79,15 +53,25 @@ const PreDesignedBakesClient = ({
             .
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {designs.map((design) => (
-              <DesignCard
-                key={design.id}
-                {...design}
-                onQuantityChange={handleQuantityChange}
-              />
-            ))}
-          </div>
+          {designs.length === 0 ? (
+            <p className="text-center text-gray-600 mb-12">
+              New sweet bakes are baking! Check back soon or{" "}
+              <Link className="text-bakery-pink-dark" href="/contact">
+                contact us
+              </Link>{" "}
+              for custom treats.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {designs.map((design) => (
+                <DesignCard
+                  key={design.id}
+                  {...design}
+                  onQuantityChange={handleQuantityChange}
+                />
+              ))}
+            </div>
+          )}
 
           <div
             id="order-form"
