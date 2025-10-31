@@ -26,6 +26,8 @@ interface OrderFormProps {
     quantity: number;
     price: string;
   }[];
+  thankYouPath?: string;
+  submitEndpoint?: string;
 }
 
 // Define the Zod schema for validation
@@ -43,7 +45,11 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const OrderForm = ({ selectedDesigns }: OrderFormProps) => {
+const OrderForm = ({
+  selectedDesigns,
+  thankYouPath = "/cookies/thank-you",
+  submitEndpoint = "/api/contact/predesign-order",
+}: OrderFormProps) => {
   const { toast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,7 +96,7 @@ const OrderForm = ({ selectedDesigns }: OrderFormProps) => {
     };
 
     try {
-      const response = await fetch("/api/contact/predesign-order", {
+      const response = await fetch(submitEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +114,7 @@ const OrderForm = ({ selectedDesigns }: OrderFormProps) => {
       });
 
       form.reset();
-      router.push("/cookies/thank-you");
+      router.push(thankYouPath);
     } catch (error) {
       console.error(error);
       toast({

@@ -23,6 +23,29 @@ export interface FetchedDesign {
   };
 }
 
+export interface FetchedSweetBake {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+  _type: "sweetBake";
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  servings: string;
+  slug: {
+    current: string;
+    _type: "slug";
+  };
+  image: {
+    _type: "image";
+    asset: {
+      _ref: string;
+      _type: "reference";
+    };
+  };
+}
+
 export interface FetchedClass {
   _id: string;
   _type: "class";
@@ -97,7 +120,33 @@ export const getPredesigns = async (): Promise<FetchedDesign[]> => {
   return sanityFetch<FetchedDesign[]>(query);
 };
 
+export const getSweetBakes = async (): Promise<FetchedSweetBake[]> => {
+  const query = `*[_type == "sweetBake"] | order(orderRank) {
+    _id,
+    _type,
+    name,
+    description,
+    price,
+    category,
+    servings,
+    slug,
+    image,
+    _createdAt,
+    _updatedAt
+  }`;
+  return sanityFetch<FetchedSweetBake[]>(query);
+};
+
 export const transformToDesign = (item: FetchedDesign): Design => ({
+  id: item.slug.current,
+  name: item.name,
+  description: item.description,
+  image: urlFor(item.image).width(600).url(),
+  price: item.price,
+  quantity: 0,
+});
+
+export const transformToSweetBake = (item: FetchedSweetBake): Design => ({
   id: item.slug.current,
   name: item.name,
   description: item.description,
