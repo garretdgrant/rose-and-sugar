@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, X, Cookie } from "lucide-react";
+import { Menu, X, Cookie, Cake } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -94,6 +94,27 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className="font-poppins text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 flex items-center gap-1 px-1 py-1 rounded focus:outline-none"
+                aria-label="Sweet bakes menu"
+              >
+                <Cake className="w-5 h-5 mr-1" />
+                <span>Sweet Bakes</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/sweet-bakes/pre-designed"
+                  className="font-poppins px-2 py-2 block w-full"
+                >
+                  Pre-Designed Cakes &amp; Cupcakes
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -133,6 +154,20 @@ const Navbar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Pre-Designed
+                  </Link>
+                </div>
+              </div>
+              <div className="border-b border-bakery-pink-light/40 py-2">
+                <div className="font-poppins text-gray-700 py-2">
+                  Sweet Bakes
+                </div>
+                <div className="flex flex-col pl-2">
+                  <Link
+                    href="/sweet-bakes/pre-designed"
+                    className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Pre-Designed Cakes &amp; Cupcakes
                   </Link>
                 </div>
               </div>
