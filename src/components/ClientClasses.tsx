@@ -3,7 +3,7 @@ import ClassCalendarCard from "@/components/ClassCalendarCard";
 import SectionDivider from "@/components/ui/sectionDivider";
 import { FetchedClass } from "@/lib/fetchSanity";
 import { urlFor } from "@/lib/sanityImage";
-import { Calendar, Check, Users } from "lucide-react";
+import { Check, Users } from "lucide-react";
 import Link from "next/link";
 
 interface ClientClassesProps {
@@ -19,10 +19,6 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
     "Take home your beautiful cookie creations",
     "Fun, relaxed atmosphere with lots of creative freedom",
   ];
-
-  const upcomingMonths = ["June", "July"];
-  console.log(upcomingClasses);
-
   return (
     <div className="page-wrapper">
       <main className="page-content">
@@ -57,13 +53,6 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
             <h2 className="section-heading">Upcoming Classes</h2>
 
             <div className="text-center mb-8">
-              <div className="flex items-center justify-center">
-                <Calendar size={24} className="text-primary-foreground mr-2" />
-                <h3 className="section-subheading inline-block">
-                  {upcomingMonths.join(" & ")} {new Date().getFullYear()}
-                </h3>
-              </div>
-
               <p className="body-text mt-4 mb-10">
                 Select from our upcoming cookie decorating classes and book your
                 spot today!
