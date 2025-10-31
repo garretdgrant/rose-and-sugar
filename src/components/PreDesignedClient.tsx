@@ -63,7 +63,10 @@ const PreDesignedClient = ({ predesigns }: { predesigns: FetchedDesign[] }) => {
             ))}
           </div>
 
-          <div className="max-w-2xl mx-auto bg-white rounded-xl p-6 md:p-8 shadow-md">
+          <div
+            id="order-form"
+            className="max-w-2xl mx-auto bg-white rounded-xl p-6 md:p-8 shadow-md"
+          >
             <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark mb-6 text-center">
               Request Your Order
             </h2>
