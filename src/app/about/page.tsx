@@ -1,4 +1,5 @@
 import SectionDivider from "@/components/ui/sectionDivider";
+import Image from "next/image";
 
 const About = () => {
   return (
@@ -11,9 +12,11 @@ const About = () => {
             {/* Left Column */}
             <div className="w-full lg:w-1/2">
               <div className="image-highlight">
-                <img
+                <Image
                   src="/meganAbout.webp"
                   alt="Megan decorating cookies"
+                  width={520}
+                  height={520}
                   className="image-wrapper"
                 />
               </div>

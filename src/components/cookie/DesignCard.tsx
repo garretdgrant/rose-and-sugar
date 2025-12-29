@@ -2,6 +2,7 @@ import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface DesignCardProps {
   id: string;
@@ -47,8 +48,14 @@ const DesignCard = ({
     <Card className="bg-white border border-bakery-pink-light/50 h-full">
       <CardContent className="flex h-full flex-col p-4">
         <div className="flex-1">
-          <div className="overflow-hidden rounded-lg mb-4">
-            <img src={image} alt={name} className="h-64 w-full object-cover" />
+          <div className="relative h-64 w-full overflow-hidden rounded-lg mb-4">
+            <Image
+              src={image}
+              alt={name}
+              fill
+              sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
           <h3 className="section-subheading text-xl mb-2">{name}</h3>
           <p className="text-bakery-pink-dark font-semibold mb-2">

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const About = () => {
   return (
     <section
@@ -9,9 +11,11 @@ const About = () => {
           <div className="w-full md:w-2/5">
             <div className="relative">
               <div className="bg-bakery-peach absolute -bottom-4 -left-4 w-full h-full rounded-lg -z-10"></div>
-              <img
+              <Image
                 src="/roseSugarClassCropped.webp"
                 alt="Megan decorating cookies"
+                width={520}
+                height={520}
                 className="rounded-lg shadow-lg w-full h-auto object-cover"
               />
             </div>

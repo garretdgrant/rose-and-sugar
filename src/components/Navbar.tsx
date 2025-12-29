@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,9 +46,12 @@ const Navbar = () => {
     >
       <div className="container-custom flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <img
+          <Image
             src="/logo.png"
             alt="Rose & Sugar Logo"
+            width={200}
+            height={80}
+            priority
             className="h-16 md:h-20 w-auto max-h-20"
           />
         </Link>

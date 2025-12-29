@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Users,
   Palette,
@@ -246,46 +247,58 @@ const CorporateTeamBuilding = () => {
           <div className="container-custom">
             <h2 className="section-heading">Team-Building in Action</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              <div className="aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
-                <img
+              <div className="relative aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
+                <Image
                   src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=400&fit=crop"
                   alt="Team collaborating on a creative project"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
-                <img
+              <div className="relative aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
+                <Image
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=400&fit=crop"
                   alt="Coworkers working together and smiling"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
-                <img
+              <div className="relative aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
+                <Image
                   src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&h=400&fit=crop"
                   alt="Team members enjoying a group activity"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
-                <img
+              <div className="relative aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
+                <Image
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=400&fit=crop"
                   alt="Collaborative team workshop in progress"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
-                <img
+              <div className="relative aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
+                <Image
                   src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=400&fit=crop"
                   alt="Group participating in hands-on activity"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
-                <img
+              <div className="relative aspect-square rounded-lg overflow-hidden bg-bakery-pink-light/30">
+                <Image
                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop"
                   alt="Team celebrating together"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             </div>

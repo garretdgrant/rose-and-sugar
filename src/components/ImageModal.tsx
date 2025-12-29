@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 interface ImageModalProps {
   isOpen: boolean;
@@ -58,9 +59,12 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) => {
         </div>
 
         <div className="p-4">
-          <img
+          <Image
             src={image.src}
             alt={image.alt}
+            width={1200}
+            height={900}
+            sizes="100vw"
             className="w-full h-auto max-h-[70vh] object-contain"
           />
         </div>
