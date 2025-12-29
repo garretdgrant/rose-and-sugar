@@ -112,11 +112,13 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="flex items-center space-x-3 group transition-colors"
             >
-              <img
-                src="https://www.edcwebdesign.com/assets/logo.webp"
-                alt="EDC Web Design Logo"
-                className="h-6 w-auto"
-              />
+              <span className="inline-flex items-center justify-center rounded-full bg-black p-2 shadow-sm">
+                <img
+                  src="https://www.edcwebdesign.com/logo.png"
+                  alt="EDC Web Design Logo"
+                  className="h-9 w-auto"
+                />
+              </span>
               <p className="text-gray-600 font-medium text-sm group-hover:text-pink-500 transition-colors">
                 Designed by EDC Web Design
               </p>
