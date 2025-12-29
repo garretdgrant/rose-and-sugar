@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import ClassBookingModal from "./ClassBookingModal";
+import Image from "next/image";
 
 interface ClassCalendarCardProps {
   month: string;
@@ -36,11 +37,13 @@ const ClassCalendarCard = ({
         onClick={() => setIsBookingModalOpen(true)}
       >
         {/* Card Image - New addition */}
-        <div className="w-full h-48 overflow-hidden">
-          <img
+        <div className="relative w-full h-48 overflow-hidden">
+          <Image
             src={imageUrl}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            fill
+            sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>
 

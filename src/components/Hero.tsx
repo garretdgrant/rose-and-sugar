@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const Hero = () => {
   return (
@@ -38,9 +39,12 @@ const Hero = () => {
           >
             <div className="relative">
               <div className="bg-bakery-peach rounded-full absolute -top-4 -right-4 w-64 h-64 md:w-80 md:h-80 -z-10"></div>
-              <img
+              <Image
                 src="/singleCookie.webp"
                 alt="Decorated cookies by Rose and Sugar"
+                width={640}
+                height={480}
+                priority
                 className="rounded-lg shadow-lg max-w-full h-auto object-cover"
               />
             </div>

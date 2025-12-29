@@ -5,6 +5,7 @@ import { FetchedClass } from "@/lib/fetchSanity";
 import { urlFor } from "@/lib/sanityImage";
 import { Check, Users } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface ClientClassesProps {
   upcomingClasses: FetchedClass[];
@@ -38,9 +39,11 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
           <div className="mb-16">
             <div className="relative max-w-2xl mx-auto">
               <div className="image-highlight"></div>
-              <img
+              <Image
                 src="/roseSugarClassCropped.webp"
                 alt="Cookie decorating class"
+                width={640}
+                height={480}
                 className="image-wrapper"
               />
             </div>
