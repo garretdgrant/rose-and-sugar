@@ -5,6 +5,7 @@ import {
   Palette,
   Heart,
   Gift,
+  Phone,
   Building2,
   Briefcase,
   Home,
@@ -101,9 +102,13 @@ const CorporateTeamBuilding = () => {
                 experience. No baking skills required — just a willingness to
                 connect, collaborate, and have fun.
               </p>
-              <Link href="/contact" className="btn-primary text-lg px-8 py-4">
-                Request a Corporate Booking
-              </Link>
+              <a
+                href="tel:9163378880"
+                className="btn-primary text-lg px-8 py-4 inline-flex items-center justify-center gap-2"
+              >
+                <Phone className="h-5 w-5" />
+                Request Corporate Class
+              </a>
             </div>
           </div>
         </section>
