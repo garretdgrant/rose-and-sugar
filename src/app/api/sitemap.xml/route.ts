@@ -13,6 +13,7 @@ const staticPages = [
   "/classes",
   "/about",
   "/contact",
+  "/privacy-policy",
 ];
 
 const lastModDate = new Date().toISOString().split("T")[0];
