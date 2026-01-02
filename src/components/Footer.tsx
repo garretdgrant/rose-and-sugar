@@ -59,14 +59,6 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/about"
                   className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
                 >
@@ -75,10 +67,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/cookies/pre-designed"
+                  href="/contact"
                   className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
                 >
-                  Cookies
+                  Contact
                 </Link>
               </li>
               <li>
@@ -87,22 +79,6 @@ const Footer = () => {
                   className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
                 >
                   Team-Building
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/classes"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  Classes
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  Contact
                 </Link>
               </li>
               <li>
