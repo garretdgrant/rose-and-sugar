@@ -148,32 +148,40 @@ const CorporateTeamBuilding = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-bakery-pink">
                 <p className="text-gray-700 italic mb-4">
-                  &quot;This was the highlight of our quarterly offsite.
-                  Everyone was laughing, helping each other, and genuinely
-                  having fun — something rare for team events.&quot;
+                  &quot;I have taken two cookie decorating classes with Megan
+                  and they have been WONDERFUL! She is an excellent teacher, the
+                  atmosphere of the class is very relaxing. It&apos;s a perfect
+                  way to spend time with friends and learn a new skill. Highly
+                  recommend!&quot;
                 </p>
                 <p className="text-sm text-gray-600 font-medium">
-                  — HR Director, Tech Startup
+                  — Aubrey Byers
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-bakery-pink">
                 <p className="text-gray-700 italic mb-4">
-                  &quot;Way better than another happy hour. Our team still talks
-                  about the cookie decorating class months later. Already
-                  booking our next session!&quot;
+                  &quot;Highly recommend Megan&apos;s cookie decorating class!!!
+                  Super fun and easy to understand instructions! I feel like a
+                  pro decorator now! And the cookies are the best I&apos;ve ever
+                  tasted!!!!!&quot;
                 </p>
                 <p className="text-sm text-gray-600 font-medium">
-                  — Office Manager, Local Real Estate Team
+                  — Jenn Phippin
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-bakery-pink">
                 <p className="text-gray-700 italic mb-4">
-                  &quot;Megan made it so easy and welcoming. Even our most
-                  reserved team members opened up and got creative. Highly
-                  recommend for any group.&quot;
+                  &quot;I recently took a class at Rose &amp; Sugar, and
+                  I&apos;m still glowing from the experience! The experience was
+                  calming, and so thoughtfully curated&mdash;you feel inspired
+                  the moment you walk in. The class was welcoming and fun, with
+                  just the right mix of creativity and instruction. You can tell
+                  how much heart goes into every detail, from the setup to the
+                  warm, personal touches throughout. It felt more like a mini
+                  retreat than just a class! Megan is wonderful!&quot;
                 </p>
                 <p className="text-sm text-gray-600 font-medium">
-                  — Founder, Small Business Team
+                  — Rose & Sugar Guest
                 </p>
               </div>
             </div>
