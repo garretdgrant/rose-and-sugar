@@ -2,12 +2,7 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-  ],
+  content: ["./src/app/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -82,11 +77,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        fraunces: ["Fraunces", "serif"],
-        playfair: ["Playfair Display", "serif"],
-        manrope: ["Manrope", "sans-serif"],
-        bebas: ["Bebas Neue", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
+        fraunces: ["var(--font-fraunces)", "serif"],
+        playfair: ["var(--font-playfair)", "serif"],
+        bebas: ["var(--font-bebas)", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

@@ -1,11 +1,25 @@
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Services from "@/components/Services";
-import Testimonials from "@/components/Testimonials";
-import Gallery from "@/components/Gallery";
-import CallToAction from "@/components/CallToAction";
-import FAQAccordion from "@/components/FAQAccordion";
 import SectionDivider from "@/components/ui/sectionDivider";
+
+const About = dynamic(() => import("@/components/About"), {
+  loading: () => null,
+});
+const Services = dynamic(() => import("@/components/Services"), {
+  loading: () => null,
+});
+const Testimonials = dynamic(() => import("@/components/Testimonials"), {
+  loading: () => null,
+});
+const Gallery = dynamic(() => import("@/components/Gallery"), {
+  loading: () => null,
+});
+const CallToAction = dynamic(() => import("@/components/CallToAction"), {
+  loading: () => null,
+});
+const FAQAccordion = dynamic(() => import("@/components/FAQAccordion"), {
+  loading: () => null,
+});
 
 const faqs = [
   {

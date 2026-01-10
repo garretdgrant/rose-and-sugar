@@ -5,7 +5,14 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-gradient-to-b from-bakery-pink-light/40 to-white flex items-center">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[url('/cookies.webp')] bg-cover bg-center opacity-20"></div>
+        <Image
+          src="/cookies.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-20"
+          aria-hidden="true"
+        />
       </div>
 
       <div className="container-custom relative z-10 pt-20">
@@ -45,6 +52,7 @@ const Hero = () => {
                 width={640}
                 height={480}
                 priority
+                sizes="(max-width: 768px) 100vw, 1200px"
                 className="rounded-lg shadow-lg max-w-full h-auto object-cover"
               />
             </div>
