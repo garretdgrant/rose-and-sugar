@@ -6,9 +6,13 @@ const Services = () => {
     <section
       id="services"
       className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/70"
+      aria-labelledby="services-heading"
     >
       <div className="container-custom">
-        <h2 className="font-bebas text-4xl md:text-5xl text-center mb-12 text-bakery-pink-dark">
+        <h2
+          className="font-bebas text-4xl md:text-5xl text-center mb-12 text-bakery-pink-dark"
+          id="services-heading"
+        >
           Our Services
         </h2>
 
@@ -16,7 +20,7 @@ const Services = () => {
           {/* Custom Cookies Column */}
           <div className="w-full md:w-1/2 bg-bakery-offWhite rounded-xl p-8 shadow-md hover-card">
             <div className="flex items-center justify-center h-16 w-16 bg-bakery-pink rounded-full mb-6 mx-auto">
-              <Cookie size={28} className="text-white" />
+              <Cookie size={28} className="text-white" aria-hidden="true" />
             </div>
 
             <h3 className="section-subheading text-center">Custom Cookies</h3>
@@ -30,6 +34,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-pink-dark mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">Custom Designs & Gift Boxes</p>
               </div>
@@ -37,6 +42,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-pink-dark mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">Various Flavor Options</p>
               </div>
@@ -44,6 +50,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-pink-dark mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">Sealed or Ribbon Packaging</p>
               </div>
@@ -51,6 +58,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-pink-dark mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">
                   &quot;Welcome Home&quot; Gift Sets
@@ -68,7 +76,7 @@ const Services = () => {
           {/* Cookie Classes Column */}
           <div className="w-full md:w-1/2 bg-bakery-cream rounded-xl p-8 shadow-md hover-card">
             <div className="flex items-center justify-center h-16 w-16 bg-bakery-brown rounded-full mb-6 mx-auto">
-              <Users size={28} className="text-white" />
+              <Users size={28} className="text-white" aria-hidden="true" />
             </div>
 
             <h3 className="section-subheading text-center">
@@ -84,6 +92,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-brown mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">Small Groups (Max 15)</p>
               </div>
@@ -91,6 +100,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-brown mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">All Supplies Included</p>
               </div>
@@ -98,6 +108,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-brown mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">Perfect for Beginners</p>
               </div>
@@ -105,6 +116,7 @@ const Services = () => {
                 <Check
                   className="text-bakery-brown mr-2 mt-1 flex-shrink-0"
                   size={18}
+                  aria-hidden="true"
                 />
                 <p className="text-gray-700">Take Home Your Creations</p>
               </div>

@@ -45,6 +45,11 @@
     @apply bg-white text-foreground font-poppins;
   }
 
+  a,
+  button {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bakery-pink-dark focus-visible:ring-offset-2;
+  }
+
   h1,
   h2,
   h3,

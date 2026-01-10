@@ -23,7 +23,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center text-bakery-pink-dark hover:text-bakery-pink transition-colors"
             >
-              <Instagram size={20} className="mr-2" />
+              <Instagram size={20} className="mr-2" aria-hidden="true" />
               <span>@roseandsugarcookies</span>
             </a>
           </div>
@@ -35,17 +35,29 @@ const Footer = () => {
             </h3>
             <div className="space-y-3">
               <div className="flex items-center justify-center">
-                <Home size={18} className="mr-2 text-bakery-pink-dark" />
+                <Home
+                  size={18}
+                  className="mr-2 text-bakery-pink-dark"
+                  aria-hidden="true"
+                />
                 <p className="text-gray-600">
                   Serving Folsom & Surrounding Areas
                 </p>
               </div>
               <div className="flex items-center justify-center">
-                <Phone size={18} className="mr-2 text-bakery-pink-dark" />
+                <Phone
+                  size={18}
+                  className="mr-2 text-bakery-pink-dark"
+                  aria-hidden="true"
+                />
                 <p className="text-gray-600">916-337-8880</p>
               </div>
               <div className="flex items-center justify-center">
-                <Mail size={18} className="mr-2 text-bakery-pink-dark" />
+                <Mail
+                  size={18}
+                  className="mr-2 text-bakery-pink-dark"
+                  aria-hidden="true"
+                />
                 <p className="text-gray-600">roseandsugarcookies@gmail.com</p>
               </div>
             </div>

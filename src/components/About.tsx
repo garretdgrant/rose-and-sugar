@@ -5,6 +5,7 @@ const About = () => {
     <section
       id="about"
       className="section-padding bg-gradient-to-b from-white to-bakery-pink-light/70"
+      aria-labelledby="about-heading"
     >
       <div className="container-custom">
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
@@ -25,7 +26,7 @@ const About = () => {
             <span className="inline-block bg-bakery-pink-light text-bakery-pink-dark px-4 py-1 rounded-full text-sm font-medium mb-4">
               Meet Your Cookie Artist
             </span>
-            <h2 className="section-heading text-left mb-4">
+            <h2 className="section-heading text-left mb-4" id="about-heading">
               Creating Sweet Memories
             </h2>
             <p className="text-gray-700 text-lg mb-6">

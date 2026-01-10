@@ -3,7 +3,10 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-bakery-pink-light/40 to-white flex items-center">
+    <section
+      className="relative min-h-screen bg-gradient-to-b from-bakery-pink-light/40 to-white flex items-center"
+      aria-labelledby="hero-heading"
+    >
       <div className="absolute inset-0 z-0">
         <Image
           src="/cookies.webp"
@@ -18,7 +21,10 @@ const Hero = () => {
       <div className="container-custom relative z-10 pt-20">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
           <div className="w-full md:w-1/2 text-center md:text-left animate-fade-in">
-            <h1 className="font-bebas text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-gray-800">
+            <h1
+              className="font-bebas text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-gray-800"
+              id="hero-heading"
+            >
               Handcrafted Custom Cookies & Decorating Classes That Delight
             </h1>
             <h2 className="font-bebas text-2xl md:text-3xl font-medium text-bakery-pink-dark mb-2">

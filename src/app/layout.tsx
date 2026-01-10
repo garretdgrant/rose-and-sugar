@@ -112,6 +112,12 @@ export default function RootLayout({
       className={`${poppins.variable} ${bebasNeue.variable} ${playfairDisplay.variable} ${fraunces.variable}`}
     >
       <body className="antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-gray-800 focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
         <Script
           id="localbusiness-jsonld"
           type="application/ld+json"
@@ -119,7 +125,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Navbar />
-        {children}
+        <main id="main-content" role="main">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

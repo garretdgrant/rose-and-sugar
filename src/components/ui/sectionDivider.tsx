@@ -17,7 +17,11 @@ const SectionDivider = ({ icon = "flower" }: SectionDividerProps) => {
   return (
     <div className="mt-8 flex items-center justify-center">
       <div className="h-px bg-bakery-pink-light flex-grow"></div>
-      <IconComponent size={24} className="mx-4 text-bakery-pink" />
+      <IconComponent
+        size={24}
+        className="mx-4 text-bakery-pink"
+        aria-hidden="true"
+      />
       <div className="h-px bg-bakery-pink-light flex-grow"></div>
     </div>
   );

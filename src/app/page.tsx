@@ -98,13 +98,19 @@ export default function Home() {
       <SectionDivider icon="cookie" />
       <About />
       {/* FAQ Section */}
-      <section className="custom-container px-8 bg-gradient-to-b to-white from-bakery-pink-light/70">
-        <section className="bg-white rounded-xl p-6 md:p-8 shadow-xl max-w-3xl mx-auto w-full">
-          <h2 className="font-bebas text-2xl md:text-3xl text-center mb-6 text-bakery-pink-dark">
+      <section
+        className="custom-container px-8 bg-gradient-to-b to-white from-bakery-pink-light/70"
+        aria-labelledby="faq-heading"
+      >
+        <div className="bg-white rounded-xl p-6 md:p-8 shadow-xl max-w-3xl mx-auto w-full">
+          <h2
+            className="font-bebas text-2xl md:text-3xl text-center mb-6 text-bakery-pink-dark"
+            id="faq-heading"
+          >
             Have questions? We&apos;ve got answers.
           </h2>
           <FAQAccordion faqs={faqs} initiallyOpenIndex={0} />
-        </section>
+        </div>
       </section>
       <SectionDivider icon="flower2" />
       <Services />

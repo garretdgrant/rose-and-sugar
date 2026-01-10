@@ -6,10 +6,13 @@ const CallToAction = () => {
     <section
       id="contact"
       className="section-padding bg-gradient-to-b from-white to-bakery-pink-light"
+      aria-labelledby="cta-heading"
     >
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="section-heading">Ready to Create Something Sweet?</h2>
+          <h2 className="section-heading" id="cta-heading">
+            Ready to Create Something Sweet?
+          </h2>
           <p className="text-gray-700 text-lg mb-10 max-w-2xl mx-auto">
             Whether you&apos;re planning a celebration or want to join a
             decorating class, we&apos;d love to hear from you!
@@ -21,7 +24,7 @@ const CallToAction = () => {
               className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
-                <Phone size={20} className="text-white" />
+                <Phone size={20} className="text-white" aria-hidden="true" />
               </div>
               <h3 className="font-bebas text-lg font-medium mb-2">
                 Call or Text
@@ -34,7 +37,7 @@ const CallToAction = () => {
               className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
-                <Calendar size={20} className="text-white" />
+                <Calendar size={20} className="text-white" aria-hidden="true" />
               </div>
               <h3 className="font-bebas text-lg font-medium mb-2">
                 Book a Class
@@ -47,7 +50,7 @@ const CallToAction = () => {
               className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className="w-12 h-12 rounded-full bg-bakery-pink flex items-center justify-center mb-4">
-                <Cookie size={20} className="text-white" />
+                <Cookie size={20} className="text-white" aria-hidden="true" />
               </div>
               <h3 className="font-bebas text-lg font-medium mb-2">
                 Order Custom Cookies

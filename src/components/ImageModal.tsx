@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 
@@ -14,21 +14,39 @@ interface ImageModalProps {
 
 const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) => {
   const [isAnimating, setIsAnimating] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       setIsAnimating(true);
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
       // Lock body scroll
       document.body.style.overflow = "hidden";
+      closeButtonRef.current?.focus();
     } else {
       // Restore body scroll
       document.body.style.overflow = "unset";
+      previousFocusRef.current?.focus();
     }
 
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -44,17 +62,27 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) => {
       onClick={handleBackdropClick}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="image-modal-title"
         className={`bg-white rounded-lg overflow-hidden max-w-4xl w-full shadow-2xl transition-all duration-300 ${
           isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-90"
         }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
-          <h3 className="font-playfair text-xl font-medium">{image.caption}</h3>
+          <h3
+            className="font-playfair text-xl font-medium"
+            id="image-modal-title"
+          >
+            {image.caption}
+          </h3>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 focus:outline-none"
+            aria-label="Close image preview"
           >
-            <X size={24} />
+            <X size={24} aria-hidden="true" />
           </button>
         </div>
 
