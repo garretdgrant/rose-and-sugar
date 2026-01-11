@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import {
   Users,
   Palette,
@@ -14,6 +15,7 @@ import {
   Globe,
 } from "lucide-react";
 import { buildPageMetadata } from "@/lib/metadata";
+import FAQAccordion from "@/components/FAQAccordion";
 
 export async function generateMetadata() {
   return buildPageMetadata({
@@ -88,8 +90,48 @@ const CorporateTeamBuilding = () => {
     { icon: Globe, label: "Remote Teams Meeting In-Person" },
   ];
 
+  const faqs = [
+    {
+      question: "How large can a corporate team-building class be?",
+      answer:
+        "We can accommodate a wide range of group sizes and customize the setup to fit your team.",
+    },
+    {
+      question: "Do you host classes on-site at our office?",
+      answer:
+        "Yes. We bring the full cookie decorating experience to your location.",
+    },
+    {
+      question: "What is included in the corporate class?",
+      answer:
+        "All cookies, icing, tools, packaging, and guided instruction are included.",
+    },
+    {
+      question: "Can you customize cookies with company branding?",
+      answer: "Yes. We can incorporate logos, brand colors, or a custom theme.",
+    },
+  ];
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="page-wrapper">
+      <Script
+        id="faq-jsonld-corporate"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <main className="page-content">
         <section className="relative bg-gradient-to-b from-bakery-pink-light/40 to-white py-20 md:py-28">
           <div className="container-custom">
@@ -320,6 +362,15 @@ const CorporateTeamBuilding = () => {
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding bg-white">
+          <div className="container-custom">
+            <h2 className="section-heading">Corporate Class FAQs</h2>
+            <div className="max-w-3xl mx-auto">
+              <FAQAccordion faqs={faqs} />
             </div>
           </div>
         </section>
