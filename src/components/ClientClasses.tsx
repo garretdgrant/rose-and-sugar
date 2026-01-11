@@ -44,6 +44,8 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
                 alt="Cookie decorating class"
                 width={640}
                 height={480}
+                sizes="(max-width: 768px) 100vw, 640px"
+                quality={70}
                 className="image-wrapper"
               />
             </div>

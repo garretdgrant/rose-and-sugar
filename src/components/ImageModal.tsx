@@ -92,7 +92,8 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) => {
             alt={image.alt}
             width={1200}
             height={900}
-            sizes="100vw"
+            sizes="(max-width: 1024px) 100vw, 896px"
+            quality={70}
             className="w-full h-auto max-h-[70vh] object-contain"
           />
         </div>

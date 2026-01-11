@@ -43,6 +43,7 @@ const ClassCalendarCard = ({
             alt={title}
             fill
             sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+            quality={70}
             className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>

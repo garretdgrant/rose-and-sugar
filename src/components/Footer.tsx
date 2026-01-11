@@ -123,6 +123,9 @@ const Footer = () => {
                   alt="EDC Web Design Logo"
                   width={180}
                   height={48}
+                  sizes="180px"
+                  quality={70}
+                  unoptimized
                   className="h-12 w-auto"
                 />
               </span>

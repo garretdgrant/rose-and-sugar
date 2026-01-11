@@ -68,6 +68,8 @@ const Navbar = () => {
             width={200}
             height={80}
             priority
+            sizes="(max-width: 768px) 160px, 200px"
+            quality={70}
             className="h-16 md:h-20 w-auto max-h-20"
           />
         </Link>

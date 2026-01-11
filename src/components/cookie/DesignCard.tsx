@@ -54,6 +54,7 @@ const DesignCard = ({
               alt={name}
               fill
               sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+              quality={70}
               className="object-cover"
             />
           </div>

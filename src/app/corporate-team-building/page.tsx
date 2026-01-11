@@ -266,6 +266,7 @@ const CorporateTeamBuilding = () => {
                   alt="Team collaborating on a creative project"
                   fill
                   sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  quality={70}
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -275,6 +276,7 @@ const CorporateTeamBuilding = () => {
                   alt="Coworkers working together and smiling"
                   fill
                   sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  quality={70}
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -284,6 +286,7 @@ const CorporateTeamBuilding = () => {
                   alt="Team members enjoying a group activity"
                   fill
                   sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  quality={70}
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -293,6 +296,7 @@ const CorporateTeamBuilding = () => {
                   alt="Collaborative team workshop in progress"
                   fill
                   sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  quality={70}
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -302,6 +306,7 @@ const CorporateTeamBuilding = () => {
                   alt="Group participating in hands-on activity"
                   fill
                   sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  quality={70}
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -311,6 +316,7 @@ const CorporateTeamBuilding = () => {
                   alt="Team celebrating together"
                   fill
                   sizes="(min-width: 1024px) 240px, (min-width: 768px) 33vw, 50vw"
+                  quality={70}
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>

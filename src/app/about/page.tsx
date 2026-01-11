@@ -17,6 +17,8 @@ const About = () => {
                   alt="Megan decorating cookies"
                   width={520}
                   height={520}
+                  sizes="(max-width: 768px) 100vw, 520px"
+                  quality={70}
                   className="image-wrapper"
                 />
               </div>

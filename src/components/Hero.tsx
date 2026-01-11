@@ -13,6 +13,8 @@ const Hero = () => {
           alt=""
           fill
           sizes="100vw"
+          quality={70}
+          unoptimized
           className="object-cover object-center opacity-20"
           aria-hidden="true"
         />
@@ -58,7 +60,8 @@ const Hero = () => {
                 width={640}
                 height={480}
                 priority
-                sizes="(max-width: 768px) 100vw, 1200px"
+                sizes="(max-width: 768px) 100vw, 640px"
+                quality={70}
                 className="rounded-lg shadow-lg max-w-full h-auto object-cover"
               />
             </div>
