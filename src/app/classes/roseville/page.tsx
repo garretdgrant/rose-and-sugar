@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "What is included in the class?",
     answer:
-      "You&apos;ll receive cookies, icing, tools, packaging, and step-by-step guidance.",
+      "You'll receive cookies, icing, tools, packaging, and step-by-step guidance.",
   },
   {
     question: "Do you offer custom cookies in Roseville?",
