@@ -15,6 +15,7 @@ const staticPages = [
   "/classes/loomis",
   "/classes/sacramento",
   "/classes/el-dorado-hills",
+  "/classes/roseville",
   "/about",
   "/contact",
   "/privacy-policy",
