@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Card, CardContent } from "./ui/card";
 import ClassBookingModal from "./ClassBookingModal";
 import Image from "next/image";
+import { MapPin, Clock, Users } from "lucide-react";
 
 interface ClassCalendarCardProps {
   month: string;
@@ -30,86 +30,117 @@ const ClassCalendarCard = ({
   const classId = `${month}-${day}-${title}`.toLowerCase().replace(/\s+/g, "-");
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
+  const isLowSeats = seatsLeft > 0 && seatsLeft <= 3;
+  const isSoldOut = seatsLeft === 0;
+
   return (
     <>
-      <Card
-        className="h-full flex flex-col border-bakery-pink/20 bg-white/90 hover:bg-white hover:border-bakery-pink/40 transition-all duration-300 hover:translate-y-[-5px] cursor-pointer overflow-hidden"
+      <article
+        className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer border border-gray-100 hover:border-bakery-pink-light"
         onClick={() => setIsBookingModalOpen(true)}
       >
-        {/* Card Image - New addition */}
-        <div className="relative w-full h-48 overflow-hidden">
+        {/* Image container with overlay */}
+        <div className="relative h-52 overflow-hidden">
           <Image
             src={imageUrl}
             alt={title}
             fill
-            sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
             quality={70}
-            className="object-cover transition-transform duration-300 hover:scale-105"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
-        </div>
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-        <CardContent className="p-6 flex flex-col flex-grow">
-          {/* Calendar Icon - Now inside the card */}
-          <div className="mx-auto mb-6 -mt-10 relative z-10">
-            <div className="relative w-24 aspect-square rounded-lg overflow-hidden shadow-md bg-white">
-              <div className="absolute inset-0 flex flex-col">
-                {/* Month Header */}
-                <div className="bg-bakery-pink text-white text-center py-1 font-bebas text-lg tracking-wider">
-                  {month}
-                </div>
-
-                {/* Day Number */}
-                <div className="bg-white flex-grow flex items-center justify-center">
-                  <span className="font-bebas text-4xl text-gray-800">
-                    {day}
-                  </span>
-                </div>
-
-                {/* Calendar Ring Holes */}
-                <div className="absolute top-0 left-0 right-0 flex justify-center space-x-4 pt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-bakery-pink-dark opacity-80"
-                    />
-                  ))}
-                </div>
+          {/* Date badge - positioned on image */}
+          <div className="absolute top-4 left-4 z-10">
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden w-16">
+              <div className="bg-bakery-pink-dark text-white text-center py-1 font-bebas text-sm tracking-widest uppercase">
+                {month.slice(0, 3)}
+              </div>
+              <div className="bg-white text-center py-2">
+                <span className="font-bebas text-3xl text-gray-900">{day}</span>
               </div>
             </div>
           </div>
 
-          {/* Class Information */}
-          <h3 className="font-bebas text-xl text-center mb-2 text-bakery-pink-dark">
+          {/* Status badge */}
+          {(isLowSeats || isSoldOut) && (
+            <div className="absolute top-4 right-4 z-10">
+              <span
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-poppins font-medium shadow-lg ${
+                  isSoldOut
+                    ? "bg-gray-900 text-white"
+                    : "bg-amber-500 text-white"
+                }`}
+              >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${isSoldOut ? "bg-gray-400" : "bg-white animate-pulse"}`}
+                />
+                {isSoldOut ? "Sold Out" : `${seatsLeft} spots left`}
+              </span>
+            </div>
+          )}
+
+          {/* Price tag on image */}
+          <div className="absolute bottom-4 right-4 z-10">
+            <span className="bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full font-poppins font-semibold text-bakery-pink-dark shadow-lg">
+              {price}
+            </span>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          {/* Title */}
+          <h3 className="font-bebas text-2xl text-gray-900 tracking-wide group-hover:text-bakery-pink-dark transition-colors duration-300">
             {title}
           </h3>
-          <p className="text-gray-600 text-center mb-4 flex-grow">
-            Where: {address}
-          </p>
-          <p className="text-gray-600 text-center mb-4 flex-grow">
-            When: {time}
-          </p>
-          <p className="text-gray-600 text-center mb-4 flex-grow">
+
+          {/* Meta info */}
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center gap-2 text-gray-600">
+              <Clock className="w-4 h-4 text-bakery-pink" />
+              <span className="text-sm font-poppins">{time}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <MapPin className="w-4 h-4 text-bakery-pink" />
+              <span className="text-sm font-poppins">{address}</span>
+            </div>
+            {!isSoldOut && seatsLeft > 0 && (
+              <div className="flex items-center gap-2 text-gray-600">
+                <Users className="w-4 h-4 text-bakery-pink" />
+                <span className="text-sm font-poppins">
+                  {seatsLeft} seats available
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Description */}
+          <p className="mt-4 text-gray-600 text-sm font-poppins leading-relaxed line-clamp-2">
             {description}
           </p>
 
-          <p className="text-gray-600 text-center mb-4 flex-grow">
-            Seats Remaining: {seatsLeft}
-          </p>
+          {/* CTA Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsBookingModalOpen(true);
+            }}
+            className={`mt-6 w-full py-3 px-6 rounded-full font-poppins font-medium text-sm transition-all duration-300 ${
+              isSoldOut
+                ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                : "bg-bakery-pink-dark text-white hover:bg-bakery-pink-dark/90 shadow-md shadow-bakery-pink-dark/20 hover:shadow-lg hover:shadow-bakery-pink-dark/30 hover:-translate-y-0.5"
+            }`}
+          >
+            {isSoldOut ? "Join Waitlist" : "Reserve Your Spot"}
+          </button>
+        </div>
 
-          <div className="flex items-center justify-between mt-auto">
-            <span className="font-medium text-gray-700">{price}</span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsBookingModalOpen(true);
-              }}
-              className="bg-bakery-pink/90 hover:bg-bakery-pink text-white py-1 px-4 rounded-full text-sm transition-colors"
-            >
-              {seatsLeft ? "Book Now" : "Join Waitlist"}
-            </button>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Hover accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bakery-pink-light via-bakery-pink to-bakery-pink-dark transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+      </article>
 
       <ClassBookingModal
         open={isBookingModalOpen}

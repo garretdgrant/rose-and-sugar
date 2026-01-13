@@ -173,54 +173,56 @@ const RosevilleClassesPage = () => {
         </section>
 
         {/* What You'll Learn - Editorial grid */}
-        <section className="mt-32 container-custom">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="font-bebas text-4xl md:text-5xl text-center text-gray-900 tracking-tight">
-              What You&apos;ll Learn
-            </h2>
+        <section className="mt-32 section-padding bg-gradient-to-b from-white to-bakery-pink-light/70">
+          <div className="container-custom">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="font-bebas text-4xl md:text-5xl text-center text-gray-900 tracking-tight">
+                What You&apos;ll Learn
+              </h2>
 
-            <div className="mt-12 grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  icon: Palette,
-                  title: "Royal Icing Techniques",
-                  desc: "Master piping, flooding, and detail work with professional guidance.",
-                },
-                {
-                  icon: Clock,
-                  title: "2-Hour Sessions",
-                  desc: "Relaxed pace with plenty of time to create and ask questions.",
-                },
-                {
-                  icon: Gift,
-                  title: "Take Home Your Art",
-                  desc: "Leave with a beautiful box of cookies you decorated yourself.",
-                },
-                {
-                  icon: MapPin,
-                  title: "Near Roseville",
-                  desc: "Convenient location for Roseville, Folsom, and surrounding areas.",
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="group bg-white rounded-xl p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors duration-300">
-                      <item.icon className="w-5 h-5 text-bakery-pink-dark" />
-                    </div>
-                    <div>
-                      <h3 className="font-bebas text-xl md:text-2xl text-gray-900 tracking-wide">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-gray-600 font-poppins leading-relaxed">
-                        {item.desc}
-                      </p>
+              <div className="mt-12 grid md:grid-cols-2 gap-6">
+                {[
+                  {
+                    icon: Palette,
+                    title: "Royal Icing Techniques",
+                    desc: "Master piping, flooding, and detail work with professional guidance.",
+                  },
+                  {
+                    icon: Clock,
+                    title: "2-Hour Sessions",
+                    desc: "Relaxed pace with plenty of time to create and ask questions.",
+                  },
+                  {
+                    icon: Gift,
+                    title: "Take Home Your Art",
+                    desc: "Leave with a beautiful box of cookies you decorated yourself.",
+                  },
+                  {
+                    icon: MapPin,
+                    title: "Near Roseville",
+                    desc: "Convenient location for Roseville, Folsom, and surrounding areas.",
+                  },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="group bg-white rounded-xl p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors duration-300">
+                        <item.icon className="w-5 h-5 text-bakery-pink-dark" />
+                      </div>
+                      <div>
+                        <h3 className="font-bebas text-xl md:text-2xl text-gray-900 tracking-wide">
+                          {item.title}
+                        </h3>
+                        <p className="mt-2 text-gray-600 font-poppins leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -253,47 +255,49 @@ const RosevilleClassesPage = () => {
         </section>
 
         {/* Custom Cookies Section */}
-        <section className="mt-32 container-custom">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
-              <div className="md:flex md:items-center md:gap-12">
-                <div className="md:flex-1">
-                  <span className="inline-block px-3 py-1 bg-bakery-peach/50 rounded-full text-sm font-poppins text-bakery-pink-dark mb-4">
-                    Custom Orders
-                  </span>
-                  <h2 className="font-bebas text-3xl md:text-4xl text-gray-900 tracking-tight">
-                    Need Cookies for a Roseville Event?
-                  </h2>
-                  <p className="mt-4 text-gray-600 font-poppins leading-relaxed">
-                    From birthday parties to corporate events, we create custom
-                    decorated cookies for Roseville celebrations. Hand-crafted
-                    with attention to every detail.
-                  </p>
-                  <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                    <Link
-                      href="/cookies/custom-orders"
-                      className="btn-primary text-center"
-                    >
-                      Start Custom Order
-                    </Link>
-                    <Link
-                      href="/cookies/pre-designed"
-                      className="btn-secondary text-center"
-                    >
-                      Pre-Designed Sets
-                    </Link>
+        <section className="mt-32 section-padding bg-gradient-to-b from-white to-bakery-pink-light/70">
+          <div className="container-custom">
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
+                <div className="md:flex md:items-center md:gap-12">
+                  <div className="md:flex-1">
+                    <span className="inline-block px-3 py-1 bg-bakery-peach/50 rounded-full text-sm font-poppins text-bakery-pink-dark mb-4">
+                      Custom Orders
+                    </span>
+                    <h2 className="font-bebas text-3xl md:text-4xl text-gray-900 tracking-tight">
+                      Need Cookies for a Roseville Event?
+                    </h2>
+                    <p className="mt-4 text-gray-600 font-poppins leading-relaxed">
+                      From birthday parties to corporate events, we create
+                      custom decorated cookies for Roseville celebrations.
+                      Hand-crafted with attention to every detail.
+                    </p>
+                    <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                      <Link
+                        href="/cookies/custom-orders"
+                        className="btn-primary text-center"
+                      >
+                        Start Custom Order
+                      </Link>
+                      <Link
+                        href="/cookies/pre-designed"
+                        className="btn-secondary text-center"
+                      >
+                        Pre-Designed Sets
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-8 md:mt-0 md:flex-shrink-0">
-                  <div className="relative">
-                    <div className="absolute -bottom-3 -right-3 w-full h-full bg-bakery-pink-light rounded-xl" />
-                    <Image
-                      src="/gallery/weddingCookies.jpg"
-                      alt="Custom decorated cookies"
-                      width={280}
-                      height={280}
-                      className="relative rounded-xl shadow-lg object-cover w-full md:w-[280px] h-auto aspect-square"
-                    />
+                  <div className="mt-8 md:mt-0 md:flex-shrink-0">
+                    <div className="relative">
+                      <div className="absolute -bottom-3 -right-3 w-full h-full bg-bakery-pink-light rounded-xl" />
+                      <Image
+                        src="/gallery/weddingCookies.jpg"
+                        alt="Custom decorated cookies"
+                        width={280}
+                        height={280}
+                        className="relative rounded-xl shadow-lg object-cover w-full md:w-[280px] h-auto aspect-square"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -302,17 +306,19 @@ const RosevilleClassesPage = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="mt-32 container-custom">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-bebas text-4xl md:text-5xl text-center text-gray-900 tracking-tight">
-              Questions About Classes
-            </h2>
-            <p className="mt-4 text-center text-gray-600 font-poppins">
-              Everything Roseville guests need to know
-            </p>
+        <section className="mt-32 section-padding bg-gradient-to-b from-white to-bakery-pink-light/70">
+          <div className="container-custom">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-bebas text-4xl md:text-5xl text-center text-gray-900 tracking-tight">
+                Questions About Classes
+              </h2>
+              <p className="mt-4 text-center text-gray-600 font-poppins">
+                Everything Roseville guests need to know
+              </p>
 
-            <div className="mt-10 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
-              <FAQAccordion faqs={faqs} />
+              <div className="mt-10 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                <FAQAccordion faqs={faqs} />
+              </div>
             </div>
           </div>
         </section>
