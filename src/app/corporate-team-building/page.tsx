@@ -155,8 +155,17 @@ const CorporateTeamBuilding = () => {
           </div>
         </section>
 
-        <section className="section-padding bg-bakery-offWhite">
-          <div className="container-custom">
+        <section
+          className="section-padding bg-bakery-offWhite relative overflow-hidden"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.55'/%3E%3C/svg%3E\")",
+            backgroundAttachment: "fixed",
+            backgroundRepeat: "repeat",
+            backgroundSize: "400px 400px",
+          }}
+        >
+          <div className="container-custom relative z-10">
             <h2 className="section-heading">
               Why Cookie Decorating Works for Teams
             </h2>
@@ -169,15 +178,21 @@ const CorporateTeamBuilding = () => {
               {benefits.map((benefit) => (
                 <div
                   key={benefit.title}
-                  className="bg-white p-6 rounded-lg shadow-md text-center hover-card"
+                  className="group bg-white rounded-xl p-6 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
                 >
-                  <div className="w-16 h-16 bg-bakery-pink-light rounded-full flex items-center justify-center mx-auto mb-4">
-                    <benefit.icon className="w-8 h-8 text-bakery-pink-dark" />
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors duration-300">
+                      <benefit.icon className="w-5 h-5 text-bakery-pink-dark" />
+                    </div>
+                    <div>
+                      <h3 className="font-fraunces text-xl text-gray-800">
+                        {benefit.title}
+                      </h3>
+                      <p className="mt-2 text-gray-600">
+                        {benefit.description}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-fraunces text-xl mb-2 text-gray-800">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600">{benefit.description}</p>
                 </div>
               ))}
             </div>
