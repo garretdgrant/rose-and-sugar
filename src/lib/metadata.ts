@@ -45,7 +45,7 @@ export const buildPageMetadata = ({
   title,
   description,
   path,
-  imagePath = "/logo.png",
+  imagePath = "/singleCookie.webp",
   type = "website",
 }: PageMetadataOptions): Metadata => {
   const metadataBase = getMetadataBase();
