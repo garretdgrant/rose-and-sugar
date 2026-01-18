@@ -11,6 +11,7 @@ const staticPages = [
   "/cookies/pre-designed",
   "/cookies/custom-orders",
   "/classes",
+  "/classes/locations",
   "/classes/folsom",
   "/classes/loomis",
   "/classes/sacramento",

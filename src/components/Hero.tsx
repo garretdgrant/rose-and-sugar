@@ -72,7 +72,7 @@ const Hero = () => {
           >
             {/* Badge */}
             <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 transition-all duration-700 delay-200 ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 mt-6 md:mt-0 transition-all duration-700 delay-200 ${
                 mounted
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-4"

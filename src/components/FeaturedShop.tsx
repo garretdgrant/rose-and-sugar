@@ -11,6 +11,7 @@ import {
   Check,
   Sparkles,
   Calendar,
+  Users,
 } from "lucide-react";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
@@ -56,7 +57,7 @@ const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
         {/* Image Section */}
         <Link
           href={`/classes/${node.handle}`}
-          className="relative h-64 md:h-72 overflow-hidden block"
+          className="relative h-72 md:h-80 overflow-hidden block"
         >
           <Image
             src={image?.url || "/openDefault.webp"}
@@ -123,6 +124,14 @@ const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
               </div>
               <span className="text-sm font-poppins font-medium">
                 Folsom, CA
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <div className="w-8 h-8 rounded-full bg-bakery-pink-light/50 flex items-center justify-center">
+                <Users className="w-4 h-4 text-bakery-pink-dark" />
+              </div>
+              <span className="text-sm font-poppins font-medium">
+                Limited seats
               </span>
             </div>
           </div>
@@ -358,10 +367,10 @@ const FeaturedShop = () => {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           {/* Featured Class - Left Side */}
           {featuredClass && (
-            <div className="animate-fade-in">
+            <div className="animate-fade-in h-full">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bebas text-2xl text-gray-800 tracking-wide">
                   Upcoming Class
@@ -374,13 +383,18 @@ const FeaturedShop = () => {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-              <FeaturedClassCard product={featuredClass} />
+              <div className="h-[calc(100%-2.5rem)]">
+                <FeaturedClassCard product={featuredClass} />
+              </div>
             </div>
           )}
 
           {/* Featured Cookies - Right Side */}
           {featuredCookies.length > 0 && (
-            <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <div
+              className="animate-fade-in h-full flex flex-col"
+              style={{ animationDelay: "0.2s" }}
+            >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bebas text-2xl text-gray-800 tracking-wide">
                   Pre-Designed Cookies
@@ -394,7 +408,7 @@ const FeaturedShop = () => {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 flex-1">
                 {featuredCookies.map((cookie, index) => (
                   <FeaturedCookieCard
                     key={cookie.node.id}

@@ -69,10 +69,7 @@ const Navbar = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const navLinks = [
-    { name: "Classes", path: "/classes", icon: Calendar },
-    { name: "Contact", path: "/contact", icon: MessageCircle },
-  ];
+  const navLinks = [{ name: "Classes", path: "/classes", icon: Calendar }];
 
   const cookieLinks = [
     {
@@ -245,6 +242,14 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          <Link
+            href="/contact"
+            className="relative px-4 py-2 font-poppins text-gray-700 font-medium text-sm rounded-full hover:text-bakery-pink-dark transition-all duration-300 group"
+          >
+            <span className="relative z-10">Contact</span>
+            <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
+          </Link>
+
           {/* More dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -408,6 +413,18 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
+
+              <Link
+                href="/contact"
+                className="mt-4 flex items-center gap-4 font-poppins text-gray-800 font-medium py-4 px-5 rounded-2xl bg-white hover:bg-bakery-pink-light/40 border border-gray-100 hover:border-bakery-pink-light shadow-sm hover:shadow-md transition-all duration-300 group"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="w-10 h-10 rounded-xl bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors">
+                  <MessageCircle className="w-5 h-5 text-bakery-pink-dark" />
+                </span>
+                <span className="flex-1">Contact</span>
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-bakery-pink-dark group-hover:translate-x-1 transition-all" />
+              </Link>
 
               {/* More section */}
               <div className="mt-3">
