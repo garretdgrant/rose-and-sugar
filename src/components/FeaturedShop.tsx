@@ -224,11 +224,11 @@ const FeaturedCookieCard = ({
           )}
 
           {/* Hover overlay with quick add */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4">
             <button
               onClick={handleAddToCart}
               disabled={isAdded}
-              className={`transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 px-4 py-2 rounded-full text-sm font-poppins font-medium ${
+              className={`transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-300 px-4 py-2 rounded-full text-sm font-poppins font-medium ${
                 isAdded
                   ? "bg-emerald-500 text-white"
                   : "bg-white text-gray-900 hover:bg-bakery-pink hover:text-white"
