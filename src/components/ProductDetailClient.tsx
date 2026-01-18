@@ -8,13 +8,27 @@ import { useCartStore } from "@/stores/cartStore";
 
 export default function ProductDetailClient({
   product,
+  actionLabel = "Add to Cart",
+  addedLabel = "Added to Cart!",
+  addedLabelSingular,
+  addedLabelPlural,
+  helperText = "Secure checkout powered by Shopify",
 }: {
   product: ShopifyProduct["node"];
+  actionLabel?: string;
+  addedLabel?: string;
+  addedLabelSingular?: string;
+  addedLabelPlural?: string;
+  helperText?: string;
 }) {
   const addItem = useCartStore((s) => s.addItem);
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const firstVariant = product.variants?.edges?.[0]?.node;
+  const addedLabelText =
+    quantity === 1
+      ? addedLabelSingular || addedLabel
+      : addedLabelPlural || addedLabel;
 
   const handleAdd = async () => {
     if (!firstVariant || isAdded) return;
@@ -83,19 +97,19 @@ export default function ProductDetailClient({
         {isAdded ? (
           <>
             <Check className="mr-2 h-5 w-5" />
-            Added to Cart!
+            {addedLabelText}
           </>
         ) : (
           <>
             <ShoppingCart className="mr-2 h-5 w-5" />
-            Add to Cart
+            {actionLabel}
           </>
         )}
       </Button>
 
       {/* Helper Text */}
       <p className="text-center text-sm text-gray-500 font-poppins">
-        Secure checkout powered by Shopify
+        {helperText}
       </p>
     </div>
   );

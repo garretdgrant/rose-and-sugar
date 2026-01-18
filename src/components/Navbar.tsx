@@ -100,12 +100,6 @@ const Navbar = () => {
           className="hidden md:flex space-x-6 items-center"
           aria-label="Primary"
         >
-          <Link
-            href="/"
-            className="font-poppins text-gray-700 hover:text-bakery-pink-dark transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0 after:bg-bakery-pink-dark after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-          >
-            Home
-          </Link>
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -187,20 +181,13 @@ const Navbar = () => {
             className="absolute top-full left-0 w-full bg-white shadow-md py-4 md:hidden"
           >
             <div className="flex flex-col space-y-3 px-4">
-              <Link
-                href="/"
-                className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
-                onClick={() => setMobileMenuOpen(false)}
-                ref={firstMobileLinkRef}
-              >
-                Home
-              </Link>
-              {navLinks.map((link) => (
+              {navLinks.map((link, index) => (
                 <Link
                   key={link.name}
                   href={link.path}
                   className="font-poppins text-gray-700 py-2 hover:text-bakery-pink-dark transition-colors duration-300"
                   onClick={() => setMobileMenuOpen(false)}
+                  ref={index === 0 ? firstMobileLinkRef : undefined}
                 >
                   {link.name}
                 </Link>
