@@ -68,6 +68,7 @@ const PreDesignedBakesClient = ({
                   key={design.id}
                   {...design}
                   onQuantityChange={handleQuantityChange}
+                  hrefBase="/sweet-bakes/pre-designed"
                 />
               ))}
             </div>

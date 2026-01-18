@@ -110,7 +110,7 @@ const ClientClasses = () => {
                 alt="Cookie decorating class in progress"
                 width={900}
                 height={500}
-                className="relative rounded-2xl shadow-2xl w-full h-auto object-cover"
+                className="relative rounded-2xl shadow-2xl w-full h-auto object-cover lg:h-[520px]"
                 priority
               />
               {/* Floating badge */}

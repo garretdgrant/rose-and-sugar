@@ -134,6 +134,7 @@ const PreDesignedClient = ({ predesigns }: { predesigns: FetchedDesign[] }) => {
                   key={design.id}
                   {...design}
                   onQuantityChange={handleQuantityChange}
+                  hrefBase="/cookies/pre-designed"
                 />
               ))}
             </div>

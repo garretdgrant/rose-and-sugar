@@ -1,3 +1,5 @@
+import React from "react";
+import Link from "next/link";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Plus, Minus } from "lucide-react";
@@ -13,6 +15,7 @@ interface DesignCardProps {
   price: string;
   category?: string;
   onQuantityChange: (id: string, quantity: number) => void;
+  hrefBase?: string;
 }
 
 const DesignCard = ({
@@ -78,7 +81,10 @@ const DesignCard = ({
                   variant="ghost"
                   size="sm"
                   className="h-8 w-8 p-0 hover:bg-accent"
-                  onClick={() => handleQuantityChange(false)}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.stopPropagation();
+                    handleQuantityChange(false);
+                  }}
                 >
                   <Minus className="h-4 w-4" />
                 </Button>
@@ -95,7 +101,10 @@ const DesignCard = ({
                   variant="ghost"
                   size="sm"
                   className="h-8 w-8 p-0 hover:bg-accent"
-                  onClick={() => handleQuantityChange(true)}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.stopPropagation();
+                    handleQuantityChange(true);
+                  }}
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -112,7 +121,10 @@ const DesignCard = ({
               ? "bg-gray-200 text-gray-500"
               : "bg-bakery-pink-dark text-white hover:bg-bakery-pink-dark/90",
           )}
-          onClick={handleCheckoutClick}
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation();
+            handleCheckoutClick();
+          }}
         >
           Checkout Now
         </Button>
@@ -121,4 +133,15 @@ const DesignCard = ({
   );
 };
 
-export default DesignCard;
+const WrappedDesignCard = (props: DesignCardProps) => {
+  const base = props.hrefBase ?? "/sweet-bakes/pre-designed";
+  // Ensure no trailing slash on base
+  const normalizedBase = base.endsWith("/") ? base.slice(0, -1) : base;
+  return (
+    <Link href={`${normalizedBase}/${props.id}`} className="block">
+      <DesignCard {...props} />
+    </Link>
+  );
+};
+
+export default WrappedDesignCard;

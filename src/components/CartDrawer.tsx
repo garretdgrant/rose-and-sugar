@@ -95,7 +95,8 @@ const CartDrawer = () => {
               <div className="flex-1 overflow-y-auto pr-2 min-h-0">
                 <div className="space-y-4">
                   {items.map((item) => {
-                    const imageNode = item.product.node.images?.edges?.[0]?.node;
+                    const imageNode =
+                      item.product.node.images?.edges?.[0]?.node;
                     return (
                       <div
                         key={item.variantId}
@@ -143,7 +144,10 @@ const CartDrawer = () => {
                               size="icon"
                               className="h-6 w-6"
                               onClick={() =>
-                                updateQuantity(item.variantId, item.quantity - 1)
+                                updateQuantity(
+                                  item.variantId,
+                                  item.quantity - 1,
+                                )
                               }
                               aria-label={`Decrease quantity of ${item.product.node.title}`}
                             >
@@ -157,7 +161,10 @@ const CartDrawer = () => {
                               size="icon"
                               className="h-6 w-6"
                               onClick={() =>
-                                updateQuantity(item.variantId, item.quantity + 1)
+                                updateQuantity(
+                                  item.variantId,
+                                  item.quantity + 1,
+                                )
                               }
                               aria-label={`Increase quantity of ${item.product.node.title}`}
                             >

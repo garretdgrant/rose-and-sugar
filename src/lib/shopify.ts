@@ -1,8 +1,7 @@
 // Shopify Storefront API helpers for client-side product/catalog use.
 const SHOPIFY_API_VERSION =
   process.env.NEXT_PUBLIC_SHOPIFY_API_VERSION || "2025-07";
-const SHOPIFY_STORE_DOMAIN =
-  process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
+const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
 const SHOPIFY_STOREFRONT_TOKEN =
   process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN || "";
 
