@@ -45,7 +45,7 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
     <article className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-bakery-pink-light/20 hover:border-bakery-pink-light/40">
       {/* Image Container */}
       <Link
-        href={`/cookies/pre-designed/${node.handle}`}
+        href={`/cookies/signature-sugar-cookie-sets/${node.handle}`}
         className="relative aspect-square overflow-hidden bg-bakery-offWhite block"
       >
         {imageNode?.url ? (
@@ -79,7 +79,7 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
 
       {/* Content */}
       <div className="p-5">
-        <Link href={`/cookies/pre-designed/${node.handle}`}>
+        <Link href={`/cookies/signature-sugar-cookie-sets/${node.handle}`}>
           <h3 className="font-bebas text-xl text-gray-800 mb-1.5 leading-tight tracking-wide group-hover:text-bakery-pink-dark transition-colors">
             {node.title}
           </h3>

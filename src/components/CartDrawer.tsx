@@ -139,7 +139,7 @@ const CartDrawer = () => {
                     Browse Classes
                   </Link>
                   <Link
-                    href="/cookies/pre-designed"
+                    href="/cookies/signature-sugar-cookie-sets"
                     className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white text-gray-700 font-poppins font-medium rounded-xl border border-bakery-pink-light hover:bg-bakery-pink-light/30 hover:border-bakery-pink transition-all duration-300"
                     onClick={() => setIsOpen(false)}
                   >

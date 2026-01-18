@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: Props) {
     title: product ? `${product.title} | Rose & Sugar` : "Product",
     description:
       product?.description ??
-      "Discover Rose & Sugar's pre-designed cookies and seasonal sets.",
-    path: `/cookies/pre-designed/${slug}`,
+      "Discover Rose & Sugar's signature cookie sets and seasonal designs.",
+    path: `/cookies/signature-sugar-cookie-sets/${slug}`,
   });
 }
 
@@ -48,7 +48,7 @@ const Page = async ({ params }: Props) => {
             or the link might be incorrect.
           </p>
           <Link
-            href="/cookies/pre-designed"
+            href="/cookies/signature-sugar-cookie-sets"
             className="inline-flex items-center gap-2 px-6 py-3 bg-bakery-pink-dark text-white rounded-full font-medium hover:bg-bakery-pink-dark/90 transition-colors shadow-lg shadow-bakery-pink-dark/20"
           >
             <Sparkles className="w-4 h-4" />
@@ -86,7 +86,7 @@ const Page = async ({ params }: Props) => {
       price: parseFloat(price).toFixed(2),
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
-      url: `https://roseandsugar.com/cookies/pre-designed/${product.handle}`,
+      url: `https://roseandsugar.com/cookies/signature-sugar-cookie-sets/${product.handle}`,
     },
   };
 
@@ -112,10 +112,10 @@ const Page = async ({ params }: Props) => {
               </Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
               <Link
-                href="/cookies/pre-designed"
+                href="/cookies/signature-sugar-cookie-sets"
                 className="text-gray-500 hover:text-bakery-pink-dark transition-colors"
               >
-                Pre-Designed
+                Signature Sets
               </Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
               <span className="text-gray-800 font-medium truncate max-w-[200px]">
@@ -365,7 +365,7 @@ const Page = async ({ params }: Props) => {
                       },
                       {
                         q: "Can I customize the colors or designs?",
-                        a: "These are pre-designed sets, but we'd love to create custom cookies for you! Visit our Custom Orders page to get started.",
+                        a: "These are signature sets, but we'd love to create custom cookies for you! Visit our Custom Orders page to get started.",
                       },
                     ].map((faq, i) => (
                       <details
@@ -462,12 +462,12 @@ const Page = async ({ params }: Props) => {
                   Explore More Designs
                 </h2>
                 <p className="text-gray-700 font-poppins mb-6 max-w-xl mx-auto">
-                  Browse our full collection of pre-designed cookie sets for
-                  every occasion.
+                  Browse our full collection of signature cookie sets for every
+                  occasion.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    href="/cookies/pre-designed"
+                    href="/cookies/signature-sugar-cookie-sets"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-bakery-pink-dark text-white rounded-full font-semibold hover:bg-bakery-pink-dark/90 transition-all shadow-xl shadow-bakery-pink-dark/30 hover:shadow-2xl hover:-translate-y-0.5"
                   >
                     View Collection

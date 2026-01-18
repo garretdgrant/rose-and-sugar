@@ -8,7 +8,7 @@ const Footer = () => {
   const quickLinks = [
     { href: "/about", label: "About" },
     { href: "/classes/locations", label: "Classes" },
-    { href: "/cookies/pre-designed", label: "Shop Cookies" },
+    { href: "/cookies/signature-sugar-cookie-sets", label: "Shop Cookies" },
     { href: "/cookies/custom-orders", label: "Custom Orders" },
   ];
 

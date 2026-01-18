@@ -3,9 +3,16 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
 import ShopifyCookieGrid from "@/components/cookie/ShopifyCookieGrid";
+import FAQAccordion from "@/components/FAQAccordion";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { cookieCategories } from "@/data/cookieCategories";
-import { Search, SlidersHorizontal, X, Sparkles } from "lucide-react";
+import {
+  Search,
+  SlidersHorizontal,
+  X,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
 
 type SortOption = "featured" | "price-low" | "price-high" | "name-az";
 
@@ -125,6 +132,29 @@ const ShopifyPreDesignedClient = () => {
   const hasActiveFilters =
     selectedCategory !== "All" || searchQuery.trim() || sortBy !== "featured";
 
+  const faqs = [
+    {
+      question: "What are Signature Sets?",
+      answer:
+        "Signature Sets are ready-to-order cookie collections with curated designs and color palettes.",
+    },
+    {
+      question: "Can I change colors or designs?",
+      answer:
+        "Signature Sets are pre-designed, but we can create a custom set for you. Use the Custom Orders form to request changes.",
+    },
+    {
+      question: "How far in advance should I order?",
+      answer:
+        "We typically book one month out. Ordering early helps secure your preferred pickup date.",
+    },
+    {
+      question: "Do you ship Signature Sets?",
+      answer:
+        "At this time we do not ship. Pickup details are shared after your order is confirmed.",
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-bakery-pink-light/20 via-white to-bakery-cream/30">
       {/* Hero Section */}
@@ -144,7 +174,7 @@ const ShopifyPreDesignedClient = () => {
             </div>
 
             <h1 className="font-bebas text-5xl md:text-6xl lg:text-7xl text-gray-800 tracking-wide mb-4">
-              Pre-Designed Collection
+              Signature Sets
             </h1>
 
             <p className="font-poppins text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -343,29 +373,52 @@ const ShopifyPreDesignedClient = () => {
               className="mt-16 animate-fade-in"
               style={{ animationDelay: "0.3s" }}
             >
-              <div className="relative bg-gradient-to-r from-bakery-pink-light/60 via-bakery-peach/40 to-bakery-pink-light/60 rounded-3xl p-8 md:p-12 overflow-hidden">
-                {/* Decorative circles */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/30 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-20 w-24 h-24 bg-white/20 rounded-full translate-y-1/2" />
+              <div className="relative bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown rounded-3xl overflow-hidden shadow-xl">
+                {/* Decorative pattern */}
+                <div
+                  className="absolute inset-0 opacity-10"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                  }}
+                />
 
-                <div className="relative z-10 text-center max-w-2xl mx-auto">
-                  <h2 className="font-bebas text-3xl md:text-4xl text-gray-800 mb-3">
-                    Want Something Unique?
-                  </h2>
-                  <p className="text-gray-700 mb-6 font-poppins">
-                    Create custom cookies tailored to your event, theme, or
-                    brand. We&apos;ll work with you to bring your vision to
-                    life.
-                  </p>
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 p-8 md:p-10">
+                  <div className="text-center md:text-left">
+                    <h2 className="font-bebas text-2xl md:text-3xl text-white mb-2">
+                      Need Something Custom?
+                    </h2>
+                    <p className="font-poppins text-white/90 text-sm md:text-base max-w-lg">
+                      Design your dream cookies for any occasion. Weddings,
+                      birthdays, corporate events—we bring your vision to life.
+                    </p>
+                  </div>
                   <Link
                     href="/cookies/custom-orders"
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-bakery-pink-dark text-white rounded-full font-semibold hover:bg-bakery-pink-dark/90 transition-all shadow-xl shadow-bakery-pink-dark/30 hover:shadow-2xl hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-white rounded-2xl font-poppins font-bold text-bakery-pink-dark hover:bg-bakery-cream hover:scale-105 transition-all duration-300 shadow-lg whitespace-nowrap"
                   >
-                    Start Your Custom Order
+                    Start Custom Order
+                    <ArrowRight className="w-5 h-5" />
                   </Link>
                 </div>
               </div>
             </div>
+          )}
+
+          {/* FAQ */}
+          {!isLoading && !loadError && (
+            <section className="mt-20">
+              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20 max-w-4xl mx-auto">
+                <div className="text-center mb-8">
+                  <h2 className="font-bebas text-3xl md:text-4xl text-gray-800">
+                    Signature Sets FAQ
+                  </h2>
+                  <p className="mt-3 text-gray-600 font-poppins">
+                    Quick answers about ordering, timing, and customization.
+                  </p>
+                </div>
+                <FAQAccordion faqs={faqs} />
+              </div>
+            </section>
           )}
         </div>
       </main>

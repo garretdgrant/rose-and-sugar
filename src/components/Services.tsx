@@ -77,13 +77,14 @@ const Services = () => {
             className="font-bebas text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight"
             id="services-heading"
           >
-            <span className="text-gray-800">Our</span>{" "}
+            <span className="text-gray-800">Custom</span>{" "}
             <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-              Services
+              Cookies &amp; Classes
             </span>
           </h2>
           <p className="mt-6 font-poppins text-lg text-gray-600">
-            From custom creations to hands-on experiences
+            Edible art for life&apos;s sweetest celebrations — plus hands-on
+            decorating experiences.
           </p>
         </div>
 

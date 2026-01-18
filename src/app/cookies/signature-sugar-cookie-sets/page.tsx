@@ -3,10 +3,10 @@ import { buildPageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: "Pre-Designed Cookie Sets | Rose & Sugar",
+    title: "Signature Cookie Sets | Rose & Sugar",
     description:
-      "Order pre-designed sugar cookie sets from Rose & Sugar in Folsom, CA. Easy gifting and celebration-ready designs with handcrafted detail.",
-    path: "/cookies/pre-designed",
+      "Order signature cookie sets from Rose & Sugar in Folsom, CA. Easy gifting and celebration-ready designs with handcrafted detail.",
+    path: "/cookies/signature-sugar-cookie-sets",
   });
 }
 

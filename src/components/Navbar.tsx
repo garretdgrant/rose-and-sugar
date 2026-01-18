@@ -27,7 +27,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreExpanded, setMoreExpanded] = useState(false);
-  const [cookiesExpanded, setCookiesExpanded] = useState(false);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const hasMounted = useRef(false);
@@ -69,27 +68,21 @@ const Navbar = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const navLinks = [{ name: "Classes", path: "/classes", icon: Calendar }];
-
-  const cookieLinks = [
+  const navLinks = [
+    { name: "Classes", path: "/classes", icon: Calendar },
     {
-      name: "Custom Orders",
-      path: "/cookies/custom-orders",
-      icon: Sparkles,
-      description: "Design your own",
-    },
-    {
-      name: "Pre-Designed",
-      path: "/cookies/pre-designed",
+      name: "Shop Cookies",
+      path: "/cookies/signature-sugar-cookie-sets",
       icon: Cookie,
-      description: "Ready to order",
     },
+    { name: "Custom Cookies", path: "/cookies/custom-orders", icon: Sparkles },
   ];
 
   const moreLinks = [
     { name: "Sweet Bakes", path: "/sweet-bakes/pre-designed", icon: Gift },
     { name: "Corporate Events", path: "/corporate-team-building", icon: Users },
     { name: "About", path: "/about", icon: Home },
+    { name: "Contact", path: "/contact", icon: MessageCircle },
   ];
 
   return (
@@ -171,84 +164,6 @@ const Navbar = () => {
               <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
             </Link>
           ))}
-
-          {/* Cookies dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                className="relative px-4 py-2 font-poppins text-gray-700 font-medium text-sm rounded-full hover:text-bakery-pink-dark transition-all duration-300 flex items-center gap-1.5 group focus:outline-none"
-                aria-label="Cookies menu"
-              >
-                <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
-                <Cookie
-                  className="w-4 h-4 relative z-10 group-hover:rotate-12 transition-transform duration-300"
-                  aria-hidden="true"
-                />
-                <span className="relative z-10">Cookies</span>
-                <ChevronDown
-                  className="w-3.5 h-3.5 relative z-10 transition-transform duration-200 group-data-[state=open]:rotate-180"
-                  aria-hidden="true"
-                />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="center"
-              sideOffset={8}
-              className="bg-white/95 backdrop-blur-md border border-bakery-pink-light/40 rounded-2xl shadow-xl shadow-bakery-pink/10 p-2 min-w-[200px]"
-            >
-              <DropdownMenuItem asChild>
-                <Link
-                  href="/cookies/custom-orders"
-                  className="font-poppins text-sm px-4 py-3 rounded-xl flex items-center gap-3 hover:bg-bakery-pink-light/40 transition-colors cursor-pointer"
-                >
-                  <span className="w-8 h-8 rounded-full bg-bakery-peach/60 flex items-center justify-center">
-                    <Sparkles
-                      className="w-4 h-4 text-bakery-pink-dark"
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <span>
-                    <span className="block font-medium text-gray-800">
-                      Custom Orders
-                    </span>
-                    <span className="block text-xs text-gray-500">
-                      Design your own
-                    </span>
-                  </span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link
-                  href="/cookies/pre-designed"
-                  className="font-poppins text-sm px-4 py-3 rounded-xl flex items-center gap-3 hover:bg-bakery-pink-light/40 transition-colors cursor-pointer"
-                >
-                  <span className="w-8 h-8 rounded-full bg-bakery-pink-light/60 flex items-center justify-center">
-                    <Cookie
-                      className="w-4 h-4 text-bakery-pink-dark"
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <span>
-                    <span className="block font-medium text-gray-800">
-                      Pre-Designed
-                    </span>
-                    <span className="block text-xs text-gray-500">
-                      Ready to order
-                    </span>
-                  </span>
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Link
-            href="/contact"
-            className="relative px-4 py-2 font-poppins text-gray-700 font-medium text-sm rounded-full hover:text-bakery-pink-dark transition-all duration-300 group"
-          >
-            <span className="relative z-10">Contact</span>
-            <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
-          </Link>
 
           {/* More dropdown */}
           <DropdownMenu>
@@ -359,72 +274,6 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
-
-              {/* Cookies section */}
-              <div className="mt-6">
-                <button
-                  type="button"
-                  onClick={() => setCookiesExpanded(!cookiesExpanded)}
-                  className="flex items-center justify-between w-full font-poppins text-gray-800 font-medium py-4 px-5 rounded-2xl bg-white hover:bg-bakery-pink-light/40 border border-gray-100 hover:border-bakery-pink-light shadow-sm transition-all duration-300"
-                  aria-expanded={cookiesExpanded}
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="w-10 h-10 rounded-xl bg-bakery-peach/50 flex items-center justify-center">
-                      <Cookie className="w-5 h-5 text-bakery-pink-dark" />
-                    </span>
-                    <span>Cookies</span>
-                  </div>
-                  <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-                      cookiesExpanded ? "rotate-180" : ""
-                    }`}
-                    aria-hidden="true"
-                  />
-                </button>
-
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    cookiesExpanded
-                      ? "max-h-48 opacity-100 mt-2"
-                      : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="space-y-2 pl-4">
-                    {cookieLinks.map((link) => (
-                      <Link
-                        key={link.name}
-                        href={link.path}
-                        className="flex items-center gap-3 font-poppins text-gray-700 py-3 px-4 rounded-xl bg-bakery-cream/50 hover:bg-bakery-pink-light/40 border border-transparent hover:border-bakery-pink-light/50 transition-all duration-300"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <span className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm">
-                          <link.icon className="w-4 h-4 text-bakery-pink-dark" />
-                        </span>
-                        <span>
-                          <span className="block font-medium text-gray-800 text-sm">
-                            {link.name}
-                          </span>
-                          <span className="block text-xs text-gray-500">
-                            {link.description}
-                          </span>
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <Link
-                href="/contact"
-                className="mt-4 flex items-center gap-4 font-poppins text-gray-800 font-medium py-4 px-5 rounded-2xl bg-white hover:bg-bakery-pink-light/40 border border-gray-100 hover:border-bakery-pink-light shadow-sm hover:shadow-md transition-all duration-300 group"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="w-10 h-10 rounded-xl bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors">
-                  <MessageCircle className="w-5 h-5 text-bakery-pink-dark" />
-                </span>
-                <span className="flex-1">Contact</span>
-                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-bakery-pink-dark group-hover:translate-x-1 transition-all" />
-              </Link>
 
               {/* More section */}
               <div className="mt-3">

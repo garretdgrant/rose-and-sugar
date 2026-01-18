@@ -1,7 +1,7 @@
 import CustomInquiryForm from "@/components/CustomCookieInquiry";
 import FAQAccordion from "@/components/FAQAccordion";
-import SectionDivider from "@/components/ui/sectionDivider";
 import Link from "next/link";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const customOrderFaqs = [
   {
@@ -33,73 +33,137 @@ const customOrderFaqs = [
 
 const CustomOrders = () => {
   return (
-    <div className="min-h-screen pt-24 flex flex-col bg-bakery-offWhite">
-      <main className="flex-grow pt-24 pb-16">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-12">
-            <h1 className="font-bebas text-4xl md:text-5xl text-bakery-pink-dark mb-6">
-              Custom Cookie Orders
+    <div className="min-h-screen bg-gradient-to-b from-bakery-cream/40 via-white to-bakery-pink-light/30">
+      <main className="relative overflow-hidden pt-28 pb-20">
+        {/* Background texture */}
+        <div
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Decorative blobs */}
+        <div className="absolute -top-32 right-0 w-[420px] h-[420px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl" />
+        <div className="absolute -bottom-32 left-0 w-[380px] h-[380px] rounded-full bg-gradient-to-tr from-bakery-peach/40 to-transparent blur-3xl" />
+
+        {/* Hero */}
+        <section className="container-custom relative z-10 pt-4 md:pt-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6">
+              <Sparkles className="w-4 h-4 text-bakery-pink-dark" />
+              <span className="text-sm font-poppins font-medium text-gray-700">
+                Custom Orders
+              </span>
+            </div>
+            <h1 className="font-bebas text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight">
+              <span className="text-gray-800">Custom</span>{" "}
+              <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+                Cookie Orders
+              </span>
             </h1>
-            <div className="prose mx-auto text-gray-700 space-y-4 max-w-3xl">
-              <p className="text-lg">
-                Make your celebration extra sweet with our custom-designed sugar
-                cookies! Each cookie is handcrafted and decorated to match your
-                vision perfectly.
-              </p>
-              <p className="text-lg">
-                Looking for pre-designed cookies?{" "}
-                <Link
-                  className="text-bakery-pink-dark"
-                  href="/cookies/pre-designed"
-                >
-                  Order Here
-                </Link>
-              </p>
-              <div className="bg-white/80 rounded-lg p-6 shadow-sm text-left">
-                <p>
-                  Custom sugar cookies are available by the dozen, starting at
-                  $65 per dozen with a two dozen minimum. Character and logo
-                  cookies start at $70 per dozen. Airbrushing, intricate
-                  designs, and additional colors may increase pricing.
-                </p>
-                <p className="mt-4">
-                  <strong>Important Notes:</strong>
-                </p>
-                <ul className="list-disc pl-5 space-y-2 mt-2">
-                  <li>Orders should be placed at least two weeks in advance</li>
-                  <li>
-                    All cookies contain wheat, milk, eggs, and soy (in
-                    sprinkles)
-                  </li>
-                  <li>
-                    Pickup available in Folsom (preferred times on Saturdays)
-                  </li>
-                  <li>Payment via Zelle, cash, or Venmo</li>
-                </ul>
-              </div>
+            <p className="mt-6 font-poppins text-lg md:text-xl text-gray-600 leading-relaxed">
+              Make your celebration extra sweet with custom-designed sugar
+              cookies. Every set is handcrafted and tailored to your vision.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/cookies/signature-sugar-cookie-sets"
+                className="group inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm text-gray-800 px-6 py-3 rounded-full font-poppins font-medium border border-bakery-pink-light/60 hover:bg-bakery-pink-light/20 transition-all duration-300"
+              >
+                Looking for Signature Sets?
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
-          <SectionDivider icon="cookie" />
-          <div className="bg-white rounded-xl p-6 md:p-8 shadow-xl mt-12 mb-12">
-            <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark mb-6 text-center">
-              Request a Custom Order
-            </h2>
+        </section>
+
+        {/* Highlights */}
+        <section className="container-custom relative z-10 mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-2xl shadow-bakery-pink/20 border border-bakery-pink-light/60">
+              <h2 className="font-bebas text-2xl md:text-3xl text-gray-800 mb-4">
+                Pricing & Minimums
+              </h2>
+              <p className="text-gray-700 font-poppins leading-relaxed">
+                Custom sugar cookies start at $65 per dozen with a two dozen
+                minimum. Character and logo cookies start at $70 per dozen.
+                Airbrushing, intricate designs, and additional colors may
+                increase pricing.
+              </p>
+            </div>
+            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-2xl shadow-bakery-pink/20 border border-bakery-pink-light/60">
+              <h2 className="font-bebas text-2xl md:text-3xl text-gray-800 mb-4">
+                Important Notes
+              </h2>
+              <ul className="space-y-3 font-poppins text-gray-700">
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-bakery-pink-dark" />
+                  Orders should be placed at least two weeks in advance.
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-bakery-pink-dark" />
+                  All cookies contain wheat, milk, eggs, and soy (in sprinkles).
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-bakery-pink-dark" />
+                  Pickup available in Folsom, preferred Saturdays.
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-bakery-pink-dark" />
+                  Payment via Zelle, cash, or Venmo.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Wave divider */}
+        <div className="relative mt-16">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bakery-cream/60 to-bakery-pink-light/20" />
+          <div className="relative overflow-hidden leading-none">
+            <svg
+              className="relative block w-full h-16 md:h-24"
+              viewBox="0 0 1200 120"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* Form */}
+        <section className="container-custom relative z-10 mt-10">
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/10 border border-bakery-pink-light/30">
+            <div className="text-center mb-8">
+              <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark">
+                Request a Custom Order
+              </h2>
+              <p className="mt-2 text-gray-600 font-poppins">
+                Tell us about your event and we&apos;ll follow up within 48
+                hours.
+              </p>
+            </div>
             <CustomInquiryForm />
-            <p className="text-center text-gray-600 mt-6">
+            <p className="text-center text-gray-600 mt-6 font-poppins">
               After you submit your request, Megan will follow up within 48
               hours with an invoice and next steps.
             </p>
           </div>
+        </section>
 
-          <SectionDivider icon="flower2" />
-
-          <section className="bg-white rounded-xl p-6 md:p-8 shadow-xl mt-12 mb-12">
+        {/* FAQ */}
+        <section className="container-custom relative z-10 mt-16">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20 max-w-4xl mx-auto">
             <h2 className="font-bebas text-2xl md:text-3xl text-center text-bakery-pink-dark mb-6">
               Frequently Asked Questions
             </h2>
             <FAQAccordion faqs={customOrderFaqs} />
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
     </div>
   );

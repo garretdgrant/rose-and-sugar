@@ -209,7 +209,7 @@ const FeaturedCookieCard = ({
 
   return (
     <Link
-      href={`/cookies/pre-designed/${node.handle}`}
+      href={`/cookies/signature-sugar-cookie-sets/${node.handle}`}
       className="group block"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
@@ -397,10 +397,10 @@ const FeaturedShop = () => {
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bebas text-2xl text-gray-800 tracking-wide">
-                  Pre-Designed Cookies
+                  Signature Sets
                 </h3>
                 <Link
-                  href="/cookies/pre-designed"
+                  href="/cookies/signature-sugar-cookie-sets"
                   className="inline-flex items-center gap-2 text-bakery-pink-dark font-poppins font-medium text-sm hover:gap-3 transition-all duration-300 group"
                 >
                   Shop All Cookies
@@ -421,7 +421,7 @@ const FeaturedShop = () => {
               {/* Browse more CTA */}
               <div className="mt-6 text-center">
                 <Link
-                  href="/cookies/pre-designed"
+                  href="/cookies/signature-sugar-cookie-sets"
                   className="inline-flex items-center justify-center gap-3 w-full py-4 px-6 rounded-2xl bg-white border-2 border-bakery-pink-light hover:border-bakery-pink hover:bg-bakery-pink-light/30 font-poppins font-semibold text-bakery-pink-dark transition-all duration-300 group"
                 >
                   <ShoppingCart className="w-5 h-5" />

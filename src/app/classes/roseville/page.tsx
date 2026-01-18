@@ -280,10 +280,10 @@ const RosevilleClassesPage = () => {
                         Start Custom Order
                       </Link>
                       <Link
-                        href="/cookies/pre-designed"
+                        href="/cookies/signature-sugar-cookie-sets"
                         className="btn-secondary text-center"
                       >
-                        Pre-Designed Sets
+                        Signature Sets
                       </Link>
                     </div>
                   </div>

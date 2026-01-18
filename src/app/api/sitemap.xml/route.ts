@@ -8,7 +8,7 @@ const baseUrl = "https://www.roseandsugar.com";
 const staticPages = [
   "",
   "/corporate-team-building",
-  "/cookies/pre-designed",
+  "/cookies/signature-sugar-cookie-sets",
   "/cookies/custom-orders",
   "/classes",
   "/classes/locations",

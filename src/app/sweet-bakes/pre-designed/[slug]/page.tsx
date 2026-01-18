@@ -13,10 +13,10 @@ export default async function Page({ params }: Props) {
       <main className="min-h-screen flex items-center justify-center bg-pink-50">
         <div className="max-w-xl p-8 text-center">
           <h2 className="text-2xl font-semibold text-pink-700">
-            Cookie not found
+            Item not found
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Try browsing our pre-designed collection.
+            Try browsing our Signature Sets collection.
           </p>
         </div>
       </main>
@@ -67,7 +67,7 @@ export default async function Page({ params }: Props) {
         </div>
 
         <div className="mt-10 text-center text-sm text-gray-500">
-          This is a mock detail page for pre-designed cookies.
+          This is a mock detail page for Signature Sets.
         </div>
       </section>
     </main>

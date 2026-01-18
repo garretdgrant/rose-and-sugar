@@ -81,7 +81,7 @@ const PreDesignedClient = ({ predesigns }: { predesigns: FetchedDesign[] }) => {
       <main className="flex-grow pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           <h1 className="font-bebas text-4xl md:text-5xl text-bakery-pink-dark text-center mb-6">
-            Pre-Designed Cookie Collection
+            Signature Sets Collection
           </h1>
           <p className="text-center max-w-3xl mx-auto text-gray-700 mb-12">
             Browse our ready-to-order cookie designs below! These pre-made
@@ -134,7 +134,7 @@ const PreDesignedClient = ({ predesigns }: { predesigns: FetchedDesign[] }) => {
                   key={design.id}
                   {...design}
                   onQuantityChange={handleQuantityChange}
-                  hrefBase="/cookies/pre-designed"
+                  hrefBase="/cookies/signature-sugar-cookie-sets"
                 />
               ))}
             </div>

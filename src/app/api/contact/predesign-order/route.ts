@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: "leads@edcwebdesign.com",
       to: `${receiverEmail}`,
-      subject: `🚨 NEW Pre-Designed 🍪 Order: ${name}`,
+      subject: `🚨 NEW Signature Set 🍪 Order: ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; color: #333;">
           <h2 style="color: #d97706;">🍪 New Pre-Design Order</h2>
