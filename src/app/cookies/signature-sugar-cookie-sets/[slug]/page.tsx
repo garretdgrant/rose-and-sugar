@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { fetchProductByHandle } from "@/lib/shopify";
-import { buildPageMetadata } from "@/lib/metadata";
+import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import {
   ChevronRight,
@@ -74,6 +75,25 @@ const Page = async ({ params }: Props) => {
     tags.includes("bestseller");
   const isNew = tags.includes("new");
 
+  const faqs = [
+    {
+      q: "How long do the cookies stay fresh?",
+      a: "Our cookies stay fresh for 2-3 weeks when stored in an airtight container at room temperature. For best results, keep them away from direct sunlight and humidity.",
+    },
+    {
+      q: "Can I freeze the cookies?",
+      a: "Yes! Freeze in a single layer, then transfer to an airtight container. They'll keep for up to 2 months. Thaw at room temperature for 1-2 hours before serving.",
+    },
+    {
+      q: "Do you offer local delivery?",
+      a: "We offer local pickup in Folsom, CA. Delivery options may be available for larger orders—please contact us for details.",
+    },
+    {
+      q: "Can I customize the colors or designs?",
+      a: "These are signature sets, but we'd love to create custom cookies for you! Visit our Custom Orders page to get started.",
+    },
+  ];
+
   const structuredData = {
     "@context": "https://schema.org/",
     "@type": "Product",
@@ -90,8 +110,63 @@ const Page = async ({ params }: Props) => {
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: buildCanonicalUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Signature Sets",
+        item: buildCanonicalUrl("/cookies/signature-sugar-cookie-sets"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.title,
+        item: buildCanonicalUrl(
+          `/cookies/signature-sugar-cookie-sets/${product.handle}`,
+        ),
+      },
+    ],
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-bakery-pink-light/10 via-white to-bakery-cream/20">
+      <Script
+        id="product-jsonld-cookie"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script
+        id="breadcrumbs-jsonld-cookie"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <Script
+        id="faq-jsonld-cookie"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Decorative background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-40 -left-20 w-80 h-80 bg-bakery-peach/20 rounded-full blur-3xl" />
@@ -350,24 +425,7 @@ const Page = async ({ params }: Props) => {
                     Frequently Asked Questions
                   </h2>
                   <div className="space-y-3">
-                    {[
-                      {
-                        q: "How long do the cookies stay fresh?",
-                        a: "Our cookies stay fresh for 2-3 weeks when stored in an airtight container at room temperature. For best results, keep them away from direct sunlight and humidity.",
-                      },
-                      {
-                        q: "Can I freeze the cookies?",
-                        a: "Yes! Freeze in a single layer, then transfer to an airtight container. They'll keep for up to 2 months. Thaw at room temperature for 1-2 hours before serving.",
-                      },
-                      {
-                        q: "Do you offer local delivery?",
-                        a: "We offer local pickup in Folsom, CA. Delivery options may be available for larger orders—please contact us for details.",
-                      },
-                      {
-                        q: "Can I customize the colors or designs?",
-                        a: "These are signature sets, but we'd love to create custom cookies for you! Visit our Custom Orders page to get started.",
-                      },
-                    ].map((faq, i) => (
+                    {faqs.map((faq, i) => (
                       <details
                         key={i}
                         className="group bg-bakery-offWhite rounded-xl overflow-hidden"

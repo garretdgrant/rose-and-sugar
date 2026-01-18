@@ -7,9 +7,7 @@ export type ClassLocationFaq = {
   answerText: string;
 };
 
-export const buildClassLocationFaqs = (
-  city: string
-): ClassLocationFaq[] => [
+export const buildClassLocationFaqs = (city: string): ClassLocationFaq[] => [
   {
     question: `Are there cookie decorating classes in ${city}?`,
     answerText: `Yes, Rose & Sugar hosts classes for ${city} guests with all supplies included.`,

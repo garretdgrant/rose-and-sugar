@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { buildPageMetadata } from "@/lib/metadata";
+import Script from "next/script";
+import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import { getClassBySlug } from "@/data/classDetails";
 import {
@@ -105,8 +106,61 @@ const ClassDetailPage = async ({ params }: Props) => {
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: buildCanonicalUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Classes",
+        item: buildCanonicalUrl("/classes"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.title,
+        item: buildCanonicalUrl(`/classes/${product.handle}`),
+      },
+    ],
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: classDetail.faq.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-bakery-pink-light/10 via-white to-bakery-cream/20">
+      <Script
+        id="event-jsonld-class"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script
+        id="breadcrumbs-jsonld-class"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <Script
+        id="faq-jsonld-class"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Decorative background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-40 -left-20 w-80 h-80 bg-bakery-peach/20 rounded-full blur-3xl" />

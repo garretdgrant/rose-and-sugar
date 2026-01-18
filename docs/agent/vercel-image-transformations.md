@@ -80,6 +80,7 @@ The agent should answer:
 - Are there **remote domains** that are no longer used?
 
 Output: a short explanation of the current image config, with recommendations if:
+
 - sizes arrays are too big,
 - formats are missing,
 - or remote domains can be trimmed.
@@ -142,6 +143,7 @@ The agent should list **concrete patterns** that most likely contribute to extra
 The agent should produce a **prioritized list of changes**, grouped by impact:
 
 ### High Impact / Easy Wins
+
 - Consolidate image widths into a small shared set for all baking / product images.
 - Convert tiny assets (icons, UI glyphs, some logos) from `<Image>` to **SVG** or inline components.
 - Ensure every hero / LCP image has:
@@ -149,6 +151,7 @@ The agent should produce a **prioritized list of changes**, grouped by impact:
   - tight `sizes` definition to avoid overfetching
 
 ### Medium Impact
+
 - Refactor any `fill` images that depend on auto height and instead give them:
   - a responsive parent with fixed aspect ratio
   - explicit CSS aspect ratio where possible
@@ -157,6 +160,7 @@ The agent should produce a **prioritized list of changes**, grouped by impact:
   - a compressed WebP at realistic resolution
 
 ### Lower Impact / Nice to Have
+
 - Clean up unused images in `/public`.
 - Remove unused remote image domains from `next.config.*`.
 - Standardize an internal helper for product/collection images so everyone uses the same `sizes` and layout.

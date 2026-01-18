@@ -18,7 +18,10 @@ const heroDescription = `Hands-on cookie decorating for ${city} guests. Learn ro
 
 const LoomisClassesPage = () => {
   const faqs = buildClassLocationFaqs(city);
-  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd("Loomis", "/classes/loomis-sugar-cookie-decorating-class");
+  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd(
+    "Loomis",
+    "/classes/loomis-sugar-cookie-decorating-class",
+  );
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

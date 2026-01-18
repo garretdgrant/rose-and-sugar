@@ -19,7 +19,10 @@ const heroDescription = `Hands-on cookie decorating for ${city} guests. Learn ro
 
 const ElDoradoHillsClassesPage = () => {
   const faqs = buildClassLocationFaqs(city);
-  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd("El Dorado Hills", "/classes/el-dorado-hills-sugar-cookie-decorating-class");
+  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd(
+    "El Dorado Hills",
+    "/classes/el-dorado-hills-sugar-cookie-decorating-class",
+  );
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

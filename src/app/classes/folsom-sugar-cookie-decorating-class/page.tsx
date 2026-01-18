@@ -19,7 +19,10 @@ const heroDescription =
 
 const FolsomClassesPage = () => {
   const faqs = buildClassLocationFaqs(city);
-  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd("Folsom", "/classes/folsom-sugar-cookie-decorating-class");
+  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd(
+    "Folsom",
+    "/classes/folsom-sugar-cookie-decorating-class",
+  );
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

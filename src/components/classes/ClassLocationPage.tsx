@@ -253,7 +253,10 @@ const ClassLocationPage = ({
 
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20">
               <FAQAccordion
-                faqs={faqs.map(({ question, answer }) => ({ question, answer }))}
+                faqs={faqs.map(({ question, answer }) => ({
+                  question,
+                  answer,
+                }))}
                 initiallyOpenIndex={0}
               />
             </div>
