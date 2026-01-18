@@ -26,7 +26,7 @@ const Footer = () => {
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-bakery-pink-light via-bakery-pink to-bakery-pink-light" />
 
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1.3fr] gap-10 lg:gap-8">
             {/* Brand Column */}
             <div className="lg:col-span-1">
               <Link href="/" className="inline-block mb-5 group">
@@ -140,7 +140,7 @@ const Footer = () => {
                       aria-hidden="true"
                     />
                   </div>
-                  <p className="text-gray-600 font-poppins text-sm group-hover:text-bakery-pink-dark transition-colors break-all">
+                  <p className="text-gray-600 font-poppins text-sm group-hover:text-bakery-pink-dark transition-colors whitespace-nowrap">
                     roseandsugarcookies@gmail.com
                   </p>
                 </a>
