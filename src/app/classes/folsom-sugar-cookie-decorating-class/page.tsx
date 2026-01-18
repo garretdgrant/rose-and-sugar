@@ -1,6 +1,8 @@
-import { buildPageMetadata } from "@/lib/metadata";
-import FolsomClassesClient from "./FolsomClassesClient";
 import Script from "next/script";
+import ClassLocationPage from "@/components/classes/ClassLocationPage";
+import { buildPageMetadata } from "@/lib/metadata";
+import { buildClassLocationFaqs } from "@/data/classLocationFaqs";
+import { buildClassLocationBreadcrumbJsonLd } from "@/data/classLocationBreadcrumbs";
 
 export async function generateMetadata() {
   return buildPageMetadata({
@@ -11,30 +13,13 @@ export async function generateMetadata() {
   });
 }
 
-const faqs = [
-  {
-    question: "Are there cookie decorating classes in Folsom?",
-    answerText:
-      "Yes, Rose & Sugar hosts classes for Folsom guests with all supplies included.",
-  },
-  {
-    question: "Is this a good cooking class for beginners?",
-    answerText:
-      "Yes. Classes are beginner-friendly and include guided instruction.",
-  },
-  {
-    question: "What is included in the class?",
-    answerText:
-      "You'll receive cookies, icing, tools, packaging, and step-by-step guidance.",
-  },
-  {
-    question: "Do you offer custom cookies in Folsom?",
-    answerText:
-      "Yes, custom cookie orders are available for Folsom celebrations and events.",
-  },
-];
+const city = "Folsom";
+const heroDescription =
+  "Hands-on cookie decorating for Folsom guests. Learn royal icing techniques in a welcoming, beginner-friendly setting.";
 
 const FolsomClassesPage = () => {
+  const faqs = buildClassLocationFaqs(city);
+  const breadcrumbJsonLd = buildClassLocationBreadcrumbJsonLd("Folsom", "/classes/folsom-sugar-cookie-decorating-class");
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -51,11 +36,20 @@ const FolsomClassesPage = () => {
   return (
     <>
       <Script
+        id="breadcrumbs-jsonld-folsom"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <Script
         id="faq-jsonld-folsom"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <FolsomClassesClient />
+      <ClassLocationPage
+        city={city}
+        heroDescription={heroDescription}
+        faqs={faqs}
+      />
     </>
   );
 };

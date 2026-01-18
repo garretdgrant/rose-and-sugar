@@ -1,265 +1,56 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import FAQAccordion from "@/components/FAQAccordion";
+import ClassLocationHero from "@/components/classes/ClassLocationHero";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import {
-  MapPin,
-  Clock,
-  Palette,
-  Gift,
-  Sparkles,
   ArrowRight,
+  Clock,
   Cookie,
+  Gift,
+  MapPin,
+  Palette,
+  Sparkles,
 } from "lucide-react";
+import { ClassLocationFaq } from "@/data/classLocationFaqs";
 
-const faqs = [
-  {
-    question: "Are there cookie decorating classes in Folsom?",
-    answer: (
-      <>
-        Yes, Rose & Sugar hosts classes for Folsom guests with all supplies
-        included. See{" "}
-        <Link className="text-bakery-pink-dark" href="/classes">
-          upcoming classes
-        </Link>
-        .
-      </>
-    ),
-  },
-  {
-    question: "Is this a good cooking class for beginners?",
-    answer: (
-      <>
-        Yes. Classes are beginner-friendly and include guided instruction. View{" "}
-        <Link className="text-bakery-pink-dark" href="/classes">
-          class sessions
-        </Link>
-        .
-      </>
-    ),
-  },
-  {
-    question: "What is included in the class?",
-    answer: (
-      <>
-        You&apos;ll receive cookies, icing, tools, packaging, and step-by-step
-        guidance. For full details,{" "}
-        <Link className="text-bakery-pink-dark" href="/classes">
-          view upcoming classes
-        </Link>
-        .
-      </>
-    ),
-  },
-  {
-    question: "Do you offer custom cookies in Folsom?",
-    answer: (
-      <>
-        Yes, custom cookie orders are available for Folsom celebrations and
-        events. Start at{" "}
-        <Link
-          className="text-bakery-pink-dark"
-          href="/cookies/order-custom-sugar-cookies"
-        >
-          Custom Cookie Orders
-        </Link>
-        .
-      </>
-    ),
-  },
-];
+interface ClassLocationPageProps {
+  city: string;
+  heroDescription: string;
+  faqs: ClassLocationFaq[];
+}
 
-const features = [
-  {
-    icon: Palette,
-    title: "Royal Icing Techniques",
-    desc: "Master piping, flooding, and detail work with professional guidance.",
-  },
-  {
-    icon: Clock,
-    title: "2-Hour Sessions",
-    desc: "Relaxed pace with plenty of time to create and ask questions.",
-  },
-  {
-    icon: Gift,
-    title: "Take Home Your Art",
-    desc: "Leave with a beautiful box of cookies you decorated yourself.",
-  },
-  {
-    icon: MapPin,
-    title: "Folsom Location",
-    desc: "Convenient location for Folsom and surrounding areas.",
-  },
-];
-
-const FolsomClassesClient = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+const ClassLocationPage = ({
+  city,
+  heroDescription,
+  faqs,
+}: ClassLocationPageProps) => {
+  const features = [
+    {
+      icon: Palette,
+      title: "Royal Icing Techniques",
+      desc: "Master piping, flooding, and detail work with professional guidance.",
+    },
+    {
+      icon: Clock,
+      title: "2-Hour Sessions",
+      desc: "Relaxed pace with plenty of time to create and ask questions.",
+    },
+    {
+      icon: Gift,
+      title: "Take Home Your Art",
+      desc: "Leave with a beautiful box of cookies you decorated yourself.",
+    },
+    {
+      icon: MapPin,
+      title: `${city} Location`,
+      desc: `Convenient location for ${city} and surrounding areas.`,
+    },
+  ];
 
   return (
     <main className="relative overflow-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        {/* Layered background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-peach/30" />
-
-        {/* Large decorative blob - top right */}
-        <div
-          className={`absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-bakery-pink-light/60 to-bakery-peach/40 blur-3xl transition-all duration-1000 ${
-            mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}
-        />
-
-        {/* Medium blob - bottom left */}
-        <div
-          className={`absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/50 to-bakery-pink-light/30 blur-2xl transition-all duration-1000 delay-200 ${
-            mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}
-        />
-
-        {/* Floating accent shapes */}
-        <div
-          className={`absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-bakery-pink-dark/60 transition-all duration-700 delay-500 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ animation: "float 4s ease-in-out infinite" }}
-        />
-        <div
-          className={`absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-bakery-brown/50 transition-all duration-700 delay-700 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ animation: "float 5s ease-in-out infinite 0.5s" }}
-        />
-        <div
-          className={`absolute bottom-1/3 right-1/3 w-2 h-2 rounded-full bg-bakery-pink/70 transition-all duration-700 delay-900 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ animation: "float 3.5s ease-in-out infinite 1s" }}
-        />
-
-        {/* Subtle texture overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("/paper-texture.svg")`,
-          }}
-        />
-
-        <div className="container-custom relative z-10 py-32 md:py-40">
-          {/* Breadcrumb */}
-          <div
-            className={`mb-8 -mt-10 md:-mt-12 transition-all duration-700 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/classes">Classes</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Folsom</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-
-          <div className="max-w-5xl mx-auto text-center">
-            {/* Location badge */}
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 transition-all duration-700 delay-200 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <MapPin className="w-4 h-4 text-bakery-pink-dark" />
-              <span className="text-sm font-poppins font-medium text-gray-700">
-                Serving Folsom, CA
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <h1
-              className={`font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-6 transition-all duration-700 delay-300 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <span className="block text-gray-800">Cookie Decorating</span>
-              <span className="block bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-                Classes
-              </span>
-            </h1>
-
-            {/* Subheadline */}
-            <p
-              className={`font-poppins text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed transition-all duration-700 delay-400 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              Hands-on cookie decorating for Folsom guests. Learn royal icing
-              techniques in a welcoming, beginner-friendly setting.
-            </p>
-
-            {/* CTA */}
-            <div
-              className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-500 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <Link
-                href="/classes"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white font-poppins font-semibold rounded-full shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300"
-              >
-                View Upcoming Classes
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* SVG wave divider */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
-          <svg
-            className="relative block w-full h-16 md:h-24"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+      <ClassLocationHero city={city} heroDescription={heroDescription} />
 
       {/* ===== HERO IMAGE SECTION ===== */}
       <section className="relative py-16 md:py-24 bg-white overflow-hidden">
@@ -323,9 +114,9 @@ const FolsomClassesClient = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              {features.map((item, idx) => (
+              {features.map((item) => (
                 <div
-                  key={idx}
+                  key={item.title}
                   className="group bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-lg hover:shadow-bakery-pink/10 transition-all duration-300 border border-bakery-pink-light/20 hover:border-bakery-pink-light"
                 >
                   <div className="flex items-start gap-5">
@@ -397,12 +188,12 @@ const FolsomClassesClient = () => {
                     <h2 className="font-bebas text-4xl md:text-5xl text-gray-900 tracking-tight leading-[0.95]">
                       <span className="text-gray-800">Need Cookies for a</span>{" "}
                       <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-                        Folsom Event?
+                        {city} Event?
                       </span>
                     </h2>
                     <p className="mt-4 text-gray-600 font-poppins leading-relaxed text-lg">
                       From birthday parties to corporate events, we create
-                      custom decorated cookies for Folsom celebrations.
+                      custom decorated cookies for {city} celebrations.
                       Hand-crafted with attention to every detail.
                     </p>
                     <div className="mt-8 flex flex-col sm:flex-row gap-4">
@@ -456,12 +247,15 @@ const FolsomClassesClient = () => {
                 </span>
               </h2>
               <p className="mt-6 font-poppins text-lg text-gray-600">
-                Everything Folsom guests need to know
+                Everything {city} guests need to know
               </p>
             </div>
 
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20">
-              <FAQAccordion faqs={faqs} initiallyOpenIndex={0} />
+              <FAQAccordion
+                faqs={faqs.map(({ question, answer }) => ({ question, answer }))}
+                initiallyOpenIndex={0}
+              />
             </div>
           </div>
         </div>
@@ -504,4 +298,4 @@ const FolsomClassesClient = () => {
   );
 };
 
-export default FolsomClassesClient;
+export default ClassLocationPage;
