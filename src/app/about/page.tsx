@@ -1,7 +1,70 @@
 import SectionDivider from "@/components/ui/sectionDivider";
+import FAQAccordion from "@/components/FAQAccordion";
+import Link from "next/link";
 import Image from "next/image";
 
 const About = () => {
+  const faqs = [
+    {
+      question: "Where are you located?",
+      answer: (
+        <>
+          Rose & Sugar is based in Folsom, CA and serves the greater Sacramento
+          area. See our{" "}
+          <Link className="text-bakery-pink-dark" href="/classes/locations">
+            class locations
+          </Link>
+          .
+        </>
+      ),
+    },
+    {
+      question: "How far in advance should I place an order?",
+      answer: (
+        <>
+          We recommend ordering at least 2-3 weeks in advance. Seasonal demand
+          may require more lead time. Start here for{" "}
+          <Link
+            className="text-bakery-pink-dark"
+            href="/cookies/order-custom-sugar-cookies"
+          >
+            Custom Cookie Orders
+          </Link>
+          .
+        </>
+      ),
+    },
+    {
+      question: "Do you offer classes for beginners?",
+      answer: (
+        <>
+          Yes! Classes are beginner-friendly and include all supplies,
+          step-by-step instruction, and take-home packaging. View{" "}
+          <Link className="text-bakery-pink-dark" href="/classes">
+            upcoming classes
+          </Link>
+          .
+        </>
+      ),
+    },
+    {
+      question: "Can you match a theme or invitation?",
+      answer: (
+        <>
+          Absolutely. We specialize in custom designs and can match colors,
+          themes, and event details.{" "}
+          <Link
+            className="text-bakery-pink-dark"
+            href="/cookies/order-custom-sugar-cookies"
+          >
+            Request a custom order
+          </Link>
+          .
+        </>
+      ),
+    },
+  ];
+
   return (
     <div className="page-wrapper">
       <main className="page-content">
@@ -101,6 +164,15 @@ const About = () => {
           </div>
         </div>
       </main>
+      <section className="container-custom pb-16">
+        <SectionDivider icon="flower2" />
+        <div className="mt-8 bg-white rounded-xl p-6 md:p-8 shadow-xl">
+          <h3 className="section-subheading text-center">
+            Frequently Asked Questions
+          </h3>
+          <FAQAccordion faqs={faqs} />
+        </div>
+      </section>
     </div>
   );
 };

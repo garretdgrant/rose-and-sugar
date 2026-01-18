@@ -25,23 +25,64 @@ export async function generateMetadata() {
 const faqs = [
   {
     question: "Do you offer cookie decorating classes for Sacramento?",
-    answer:
+    answerText:
       "Yes, Sacramento guests are welcome to join our nearby classes with all supplies included.",
+    answer: (
+      <>
+        Yes, Sacramento guests are welcome to join our nearby classes with all
+        supplies included. See{" "}
+        <Link className="text-bakery-pink-dark" href="/classes">
+          upcoming classes
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "Are these hands-on cooking classes?",
-    answer:
+    answerText:
       "Yes. You will decorate your own cookie set with guided instruction.",
+    answer: (
+      <>
+        Yes. You will decorate your own cookie set with guided instruction. View{" "}
+        <Link className="text-bakery-pink-dark" href="/classes">
+          class sessions
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "How long do the classes last?",
-    answer:
+    answerText:
       "Classes typically run about 1.5 to 2 hours depending on the theme.",
+    answer: (
+      <>
+        Classes typically run about 1.5 to 2 hours depending on the theme. See{" "}
+        <Link className="text-bakery-pink-dark" href="/classes">
+          upcoming classes
+        </Link>{" "}
+        for details.
+      </>
+    ),
   },
   {
     question: "Do you take custom cookie orders in Sacramento?",
-    answer:
+    answerText:
       "Yes, we create custom cookie sets for Sacramento celebrations and events.",
+    answer: (
+      <>
+        Yes, we create custom cookie sets for Sacramento celebrations and
+        events. Start at{" "}
+        <Link
+          className="text-bakery-pink-dark"
+          href="/cookies/order-custom-sugar-cookies"
+        >
+          Custom Cookie Orders
+        </Link>
+        .
+      </>
+    ),
   },
 ];
 
@@ -54,7 +95,7 @@ const SacramentoClassesPage = () => {
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answer,
+        text: faq.answerText,
       },
     })),
   };
@@ -71,7 +112,7 @@ const SacramentoClassesPage = () => {
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.4] z-0"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("/paper-texture.svg")`,
         }}
       />
 
@@ -271,7 +312,7 @@ const SacramentoClassesPage = () => {
                   </p>
                   <div className="mt-8 flex flex-col sm:flex-row gap-4">
                     <Link
-                      href="/cookies/custom-orders"
+                      href="/cookies/order-custom-sugar-cookies"
                       className="btn-primary text-center"
                     >
                       Start Custom Order
@@ -312,7 +353,9 @@ const SacramentoClassesPage = () => {
             </p>
 
             <div className="mt-10 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
-              <FAQAccordion faqs={faqs} />
+              <FAQAccordion
+                faqs={faqs.map(({ question, answer }) => ({ question, answer }))}
+              />
             </div>
           </div>
         </section>

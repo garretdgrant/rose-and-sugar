@@ -458,7 +458,7 @@ const FeaturedShop = () => {
                 </p>
               </div>
               <Link
-                href="/cookies/custom-orders"
+                href="/cookies/order-custom-sugar-cookies"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white rounded-2xl font-poppins font-bold text-bakery-pink-dark hover:bg-bakery-cream hover:scale-105 transition-all duration-300 shadow-lg whitespace-nowrap"
               >
                 Start Custom Order

@@ -135,23 +135,61 @@ const ShopifyPreDesignedClient = () => {
   const faqs = [
     {
       question: "What are Signature Sets?",
-      answer:
-        "Signature Sets are ready-to-order cookie collections with curated designs and color palettes.",
+      answer: (
+        <>
+          Signature Sets are ready-to-order cookie collections with curated
+          designs and color palettes. If you need something tailored,{" "}
+          <Link
+            className="text-bakery-pink-dark"
+            href="/cookies/order-custom-sugar-cookies"
+          >
+            request a custom order
+          </Link>
+          .
+        </>
+      ),
     },
     {
       question: "Can I change colors or designs?",
-      answer:
-        "Signature Sets are pre-designed, but we can create a custom set for you. Use the Custom Orders form to request changes.",
+      answer: (
+        <>
+          Signature Sets are pre-designed, but we can create a custom set for
+          you. Use the{" "}
+          <Link
+            className="text-bakery-pink-dark"
+            href="/cookies/order-custom-sugar-cookies"
+          >
+            Custom Cookie Orders
+          </Link>{" "}
+          form to request changes.
+        </>
+      ),
     },
     {
       question: "How far in advance should I order?",
-      answer:
-        "We typically book one month out. Ordering early helps secure your preferred pickup date.",
+      answer: (
+        <>
+          We typically book one month out. Ordering early helps secure your
+          preferred pickup date. For timing questions,{" "}
+          <Link className="text-bakery-pink-dark" href="/contact">
+            contact us
+          </Link>
+          .
+        </>
+      ),
     },
     {
       question: "Do you ship Signature Sets?",
-      answer:
-        "At this time we do not ship. Pickup details are shared after your order is confirmed.",
+      answer: (
+        <>
+          At this time we do not ship. Pickup details are shared after your
+          order is confirmed. For pickup info,{" "}
+          <Link className="text-bakery-pink-dark" href="/contact">
+            contact us
+          </Link>
+          .
+        </>
+      ),
     },
   ];
 
@@ -358,7 +396,7 @@ const ShopifyPreDesignedClient = () => {
                 Can&apos;t find what you&apos;re looking for?
               </p>
               <Link
-                href="/cookies/custom-orders"
+                href="/cookies/order-custom-sugar-cookies"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-bakery-pink-dark text-white rounded-full font-medium hover:bg-bakery-pink-dark/90 transition-colors shadow-lg shadow-bakery-pink-dark/20"
               >
                 <Sparkles className="w-4 h-4" />
@@ -393,7 +431,7 @@ const ShopifyPreDesignedClient = () => {
                     </p>
                   </div>
                   <Link
-                    href="/cookies/custom-orders"
+                    href="/cookies/order-custom-sugar-cookies"
                     className="inline-flex items-center gap-3 px-8 py-4 bg-white rounded-2xl font-poppins font-bold text-bakery-pink-dark hover:bg-bakery-cream hover:scale-105 transition-all duration-300 shadow-lg whitespace-nowrap"
                   >
                     Start Custom Order

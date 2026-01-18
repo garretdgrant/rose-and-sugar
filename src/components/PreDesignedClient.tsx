@@ -93,7 +93,7 @@ const PreDesignedClient = ({ predesigns }: { predesigns: FetchedDesign[] }) => {
             Looking for custom designed cookies?{" "}
             <Link
               className="text-bakery-pink-dark"
-              href="/cookies/custom-orders"
+              href="/cookies/order-custom-sugar-cookies"
             >
               Order Here
             </Link>

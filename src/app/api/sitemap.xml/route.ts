@@ -9,7 +9,7 @@ const staticPages = [
   "",
   "/corporate-team-building",
   "/cookies/signature-sugar-cookie-sets",
-  "/cookies/custom-orders",
+  "/cookies/order-custom-sugar-cookies",
   "/classes",
   "/classes/locations",
   "/classes/folsom",

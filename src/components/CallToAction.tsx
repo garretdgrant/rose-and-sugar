@@ -29,7 +29,7 @@ const CallToAction = () => {
       shadow: "shadow-bakery-peach/30",
     },
     {
-      href: "/cookies/custom-orders",
+      href: "/cookies/order-custom-sugar-cookies",
       icon: Cookie,
       title: "Order Cookies",
       description: "Custom Designs",

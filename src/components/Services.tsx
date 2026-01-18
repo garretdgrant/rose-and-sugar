@@ -141,7 +141,7 @@ const Services = () => {
 
                 {/* CTA */}
                 <Link
-                  href="/cookies/custom-orders"
+                  href="/cookies/order-custom-sugar-cookies"
                   className="group/btn inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white font-poppins font-semibold rounded-full shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Order Custom Cookies

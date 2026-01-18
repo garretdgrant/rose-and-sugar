@@ -75,7 +75,7 @@ const Navbar = () => {
       path: "/cookies/signature-sugar-cookie-sets",
       icon: Cookie,
     },
-    { name: "Custom Cookies", path: "/cookies/custom-orders", icon: Sparkles },
+    { name: "Custom Cookies", path: "/cookies/order-custom-sugar-cookies", icon: Sparkles },
   ];
 
   const moreLinks = [

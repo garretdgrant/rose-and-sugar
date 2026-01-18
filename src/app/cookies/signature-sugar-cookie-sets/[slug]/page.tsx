@@ -421,7 +421,7 @@ const Page = async ({ params }: Props) => {
                     Create a unique design tailored to your event or theme.
                   </p>
                   <Link
-                    href="/cookies/custom-orders"
+                    href="/cookies/order-custom-sugar-cookies"
                     className="inline-flex items-center gap-2 w-full justify-center px-5 py-3 bg-bakery-pink-dark text-white rounded-xl font-medium hover:bg-bakery-pink-dark/90 transition-colors shadow-md"
                   >
                     <Sparkles className="w-4 h-4" />
@@ -473,7 +473,7 @@ const Page = async ({ params }: Props) => {
                     View Collection
                   </Link>
                   <Link
-                    href="/cookies/custom-orders"
+                    href="/cookies/order-custom-sugar-cookies"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-bakery-pink-dark rounded-full font-semibold hover:bg-bakery-offWhite transition-all shadow-lg"
                   >
                     Custom Orders

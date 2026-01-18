@@ -6,28 +6,74 @@ import { ArrowRight, Sparkles } from "lucide-react";
 const customOrderFaqs = [
   {
     question: "How far in advance should I order custom cookies?",
-    answer:
-      "We recommend placing your order at least 2-3 weeks in advance. Rush orders may be available for an additional fee, but cannot be guaranteed.",
+    answer: (
+      <>
+        We recommend placing your order at least 2-3 weeks in advance. Rush
+        orders may be available for an additional fee, but cannot be
+        guaranteed. For timing questions,{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          contact us
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "What's included in the base price per dozen?",
-    answer:
-      "Starting at $65 per dozen, each order includes up to five colors and basic to intermediate detail. Character cookies and logos start at $70 per dozen. Additional colors, airbrushing, and intricate designs may increase pricing.",
+    answer: (
+      <>
+        Starting at $65 per dozen, each order includes up to five colors and
+        basic to intermediate detail. Character cookies and logos start at $70
+        per dozen. Additional colors, airbrushing, and intricate designs may
+        increase pricing. For a custom quote,{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          reach out
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "Do you accommodate dietary restrictions?",
-    answer:
-      "Our cookies contain wheat, milk, eggs, and soy (in sprinkles). While we cannot guarantee allergen-free cookies, we're happy to discuss your specific needs.",
+    answer: (
+      <>
+        Our cookies contain wheat, milk, eggs, and soy (in sprinkles). While we
+        cannot guarantee allergen-free cookies, we&apos;re happy to discuss your
+        specific needs.{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          Contact us
+        </Link>{" "}
+        for details.
+      </>
+    ),
   },
   {
     question: "What are the payment and pickup options?",
-    answer:
-      "We accept Zelle, cash, or Venmo. Payment is required at least two weeks before pickup to confirm your order. Pickup is available in Folsom, with preferred times on Saturdays. A $10 weekday pickup fee applies.",
+    answer: (
+      <>
+        We accept Zelle, cash, or Venmo. Payment is required at least two weeks
+        before pickup to confirm your order. Pickup is available in Folsom, with
+        preferred times on Saturdays. A $10 weekday pickup fee applies.{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          Contact us
+        </Link>{" "}
+        for scheduling.
+      </>
+    ),
   },
   {
     question: "How are the cookies packaged?",
-    answer:
-      "Cookies come individually heat-sealed for freshness at no additional cost. Ribbon-tied packaging is available for an additional charge per dozen.",
+    answer: (
+      <>
+        Cookies come individually heat-sealed for freshness at no additional
+        cost. Ribbon-tied packaging is available for an additional charge per
+        dozen. For packaging add-ons,{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          reach out
+        </Link>
+        .
+      </>
+    ),
   },
 ];
 
@@ -35,13 +81,6 @@ const CustomOrders = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-bakery-cream/40 via-white to-bakery-pink-light/30">
       <main className="relative overflow-hidden pt-28 pb-20">
-        {/* Background texture */}
-        <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
 
         {/* Decorative blobs */}
         <div className="absolute -top-32 right-0 w-[420px] h-[420px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl" />
@@ -118,26 +157,23 @@ const CustomOrders = () => {
           </div>
         </section>
 
-        {/* Wave divider */}
-        <div className="relative mt-16">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bakery-cream/60 to-bakery-pink-light/20" />
-          <div className="relative overflow-hidden leading-none">
+        {/* Form */}
+        <section className="relative mt-10 py-16">
+          <div className="absolute inset-0 bg-gradient-to-b from-bakery-pink-light/40 via-bakery-cream/30 to-white" />
+          <div className="absolute top-0 left-0 right-0 overflow-hidden leading-none">
             <svg
-              className="relative block w-full h-16 md:h-24"
+              className="relative block w-full h-16 md:h-24 rotate-180"
               viewBox="0 0 1200 120"
               preserveAspectRatio="none"
             >
               <path
                 d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"
-                fill="white"
+                className="fill-bakery-pink-light/30"
               />
             </svg>
           </div>
-        </div>
-
-        {/* Form */}
-        <section className="container-custom relative z-10 mt-10">
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/10 border border-bakery-pink-light/30">
+          <div className="container-custom relative z-10">
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/10 border border-bakery-pink-light/30">
             <div className="text-center mb-8">
               <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark">
                 Request a Custom Order
@@ -152,6 +188,7 @@ const CustomOrders = () => {
               After you submit your request, Megan will follow up within 48
               hours with an invoice and next steps.
             </p>
+          </div>
           </div>
         </section>
 

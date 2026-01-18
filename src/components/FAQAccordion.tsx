@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -7,7 +8,7 @@ import {
 
 export type FAQ = {
   question: string;
-  answer: string;
+  answer: ReactNode;
 };
 
 interface FAQAccordionProps {

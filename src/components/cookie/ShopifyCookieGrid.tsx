@@ -52,7 +52,7 @@ const ShopifyCookieGrid = ({
           <p className="text-gray-500 mb-8 font-poppins">{emptyMessage}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/cookies/custom-orders"
+              href="/cookies/order-custom-sugar-cookies"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-bakery-pink-dark text-white rounded-full font-medium hover:bg-bakery-pink-dark/90 transition-colors shadow-lg shadow-bakery-pink-dark/20"
             >
               <Sparkles className="w-4 h-4" />

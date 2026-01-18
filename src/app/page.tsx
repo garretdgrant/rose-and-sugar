@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import Hero from "@/components/Hero";
 
 const About = dynamic(() => import("@/components/About"), {
@@ -26,22 +27,61 @@ const FAQAccordion = dynamic(() => import("@/components/FAQAccordion"), {
 const faqs = [
   {
     question: "Do you ship?",
-    answer:
-      "No. We can not legally ship cookies under California Cottage Laws.",
+    answer: (
+      <>
+        No. We can not legally ship cookies under California Cottage Laws.
+        Please reach out via our{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          contact page
+        </Link>{" "}
+        for pickup details.
+      </>
+    ),
   },
   {
     question: "Do you deliver?",
-    answer:
-      "Not at this time. You must pick up your order at the specified location in Folsom (on Old Town side) sent via email.",
+    answer: (
+      <>
+        Not at this time. You must pick up your order at the specified location
+        in Folsom (on Old Town side) sent via email. If you have questions,
+        <Link className="text-bakery-pink-dark" href="/contact">
+          {" "}
+          contact us
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "How far in advance should I order?",
-    answer:
-      "We are currently booking one month out depending on the time of year. It's never too early to order!! Sometimes we do have cancellations and can squeeze you in but it's never a guarantee.",
+    answer: (
+      <>
+        We are currently booking one month out depending on the time of year.
+        It&apos;s never too early to order!! Sometimes we do have cancellations
+        and can squeeze you in but it&apos;s never a guarantee. For custom
+        orders, start here:{" "}
+        <Link
+          className="text-bakery-pink-dark"
+          href="/cookies/order-custom-sugar-cookies"
+        >
+          Custom Cookie Orders
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "How do I pay?",
-    answer: "We accept cash, check, Venmo, Zelle, or Apple Cash.",
+    answer: (
+      <>
+        We accept cash, check, Venmo, Zelle, or Apple Cash. If you need an
+        invoice,{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          reach out
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "Do you have to put a deposit down?",
@@ -55,8 +95,17 @@ const faqs = [
   },
   {
     question: "Do you have gluten-free or keto friendly options?",
-    answer:
-      "Right now, I only offer cookies made with gluten-free flour. They are not certified gluten free cookies so they are not recommended for serious gluten allergies.",
+    answer: (
+      <>
+        Right now, I only offer cookies made with gluten-free flour. They are
+        not certified gluten free cookies so they are not recommended for
+        serious gluten allergies. Please{" "}
+        <Link className="text-bakery-pink-dark" href="/contact">
+          contact us
+        </Link>{" "}
+        with any dietary questions.
+      </>
+    ),
   },
 ];
 

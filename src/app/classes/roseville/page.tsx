@@ -25,23 +25,65 @@ export async function generateMetadata() {
 const faqs = [
   {
     question: "Are there cookie decorating classes near Roseville?",
-    answer:
+    answerText:
       "Yes, Rose & Sugar welcomes Roseville guests to nearby classes with all supplies included.",
+    answer: (
+      <>
+        Yes, Rose & Sugar welcomes Roseville guests to nearby classes with all
+        supplies included. See{" "}
+        <Link className="text-bakery-pink-dark" href="/classes">
+          upcoming classes
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "Is this a good cooking class for beginners?",
-    answer:
+    answerText:
       "Yes. Classes are beginner-friendly and include guided instruction.",
+    answer: (
+      <>
+        Yes. Classes are beginner-friendly and include guided instruction. View{" "}
+        <Link className="text-bakery-pink-dark" href="/classes">
+          class sessions
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "What is included in the class?",
-    answer:
+    answerText:
       "You'll receive cookies, icing, tools, packaging, and step-by-step guidance.",
+    answer: (
+      <>
+        You&apos;ll receive cookies, icing, tools, packaging, and step-by-step
+        guidance. For full details,{" "}
+        <Link className="text-bakery-pink-dark" href="/classes">
+          view upcoming classes
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: "Do you offer custom cookies in Roseville?",
-    answer:
+    answerText:
       "Yes, custom cookie orders are available for Roseville celebrations and events.",
+    answer: (
+      <>
+        Yes, custom cookie orders are available for Roseville celebrations and
+        events. Start at{" "}
+        <Link
+          className="text-bakery-pink-dark"
+          href="/cookies/order-custom-sugar-cookies"
+        >
+          Custom Cookie Orders
+        </Link>
+        .
+      </>
+    ),
   },
 ];
 
@@ -54,7 +96,7 @@ const RosevilleClassesPage = () => {
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answer,
+        text: faq.answerText,
       },
     })),
   };
@@ -71,7 +113,7 @@ const RosevilleClassesPage = () => {
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.4] z-0"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("/paper-texture.svg")`,
         }}
       />
 
@@ -274,7 +316,7 @@ const RosevilleClassesPage = () => {
                     </p>
                     <div className="mt-8 flex flex-col sm:flex-row gap-4">
                       <Link
-                        href="/cookies/custom-orders"
+                        href="/cookies/order-custom-sugar-cookies"
                         className="btn-primary text-center"
                       >
                         Start Custom Order
@@ -317,7 +359,12 @@ const RosevilleClassesPage = () => {
               </p>
 
               <div className="mt-10 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
-                <FAQAccordion faqs={faqs} />
+                <FAQAccordion
+                  faqs={faqs.map(({ question, answer }) => ({
+                    question,
+                    answer,
+                  }))}
+                />
               </div>
             </div>
           </div>
