@@ -117,7 +117,7 @@ const ClassDetailPage = async ({ params }: Props) => {
       <div className="relative z-10">
         {/* Breadcrumbs */}
         <nav className="pt-28 pb-6 md:pt-32">
-          <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto px-4 md:px-6">
             <div className="flex items-center gap-2 text-sm font-poppins">
               <Link
                 href="/"
@@ -142,7 +142,7 @@ const ClassDetailPage = async ({ params }: Props) => {
 
         {/* Main Class Section */}
         <section className="pb-16 md:pb-24">
-          <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
               {/* Left: Image Gallery */}
               <div className="space-y-4">
@@ -328,7 +328,7 @@ const ClassDetailPage = async ({ params }: Props) => {
 
         {/* Details Section */}
         <section className="py-16 bg-white/60 backdrop-blur-sm border-y border-bakery-pink-light/20">
-          <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Main Content */}
               <div className="lg:col-span-2 space-y-10">

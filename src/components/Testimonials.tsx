@@ -3,36 +3,84 @@
 import { useEffect, useState } from "react";
 import { Quote, Star } from "lucide-react";
 
-const Testimonials = () => {
+type Testimonial = {
+  id: number | string;
+  text: string;
+  name: string;
+  event: string;
+  stars: number;
+};
+
+type TrustIndicator = {
+  value: string;
+  label: string;
+};
+
+interface TestimonialsProps {
+  headline?: React.ReactNode;
+  subheading?: string;
+  testimonials?: Testimonial[];
+  showTrustIndicators?: boolean;
+  trustIndicators?: TrustIndicator[];
+}
+
+const defaultTestimonials: Testimonial[] = [
+  {
+    id: 1,
+    text: "Megan's cookies are absolutely magical! She made the most beautiful set for my daughter's birthday party. Not only did they look stunning, but they tasted amazing too!",
+    name: "Sarah J.",
+    event: "Birthday Party",
+    stars: 5,
+  },
+  {
+    id: 2,
+    text: "I took one of Megan's decorating classes with friends and it was SO much fun! She's patient, creative, and makes the whole experience enjoyable. Can't wait to go back!",
+    name: "Lisa M.",
+    event: "Decorating Class",
+    stars: 5,
+  },
+  {
+    id: 3,
+    text: "The custom cookies Megan created for our baby shower were perfect. Everyone loved the delicate floral designs, and the packaging was beautiful. Highly recommend!",
+    name: "Jessica & David",
+    event: "Baby Shower",
+    stars: 5,
+  },
+];
+
+const defaultTrustIndicators: TrustIndicator[] = [
+  { value: "200+", label: "Happy Customers" },
+  { value: "5.0", label: "Average Rating" },
+  { value: "100%", label: "Satisfaction" },
+];
+
+const defaultHeadline = (
+  <>
+    &ldquo;Megan&apos;s cookies are{" "}
+    <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+      pure magic
+    </span>
+    !&rdquo;
+  </>
+);
+
+const Testimonials = ({
+  headline = defaultHeadline,
+  subheading = "What our happy customers are saying",
+  testimonials = defaultTestimonials,
+  showTrustIndicators = true,
+  trustIndicators = defaultTrustIndicators,
+}: TestimonialsProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const testimonials = [
-    {
-      id: 1,
-      text: "Megan's cookies are absolutely magical! She made the most beautiful set for my daughter's birthday party. Not only did they look stunning, but they tasted amazing too!",
-      name: "Sarah J.",
-      event: "Birthday Party",
-      stars: 5,
-    },
-    {
-      id: 2,
-      text: "I took one of Megan's decorating classes with friends and it was SO much fun! She's patient, creative, and makes the whole experience enjoyable. Can't wait to go back!",
-      name: "Lisa M.",
-      event: "Decorating Class",
-      stars: 5,
-    },
-    {
-      id: 3,
-      text: "The custom cookies Megan created for our baby shower were perfect. Everyone loved the delicate floral designs, and the packaging was beautiful. Highly recommend!",
-      name: "Jessica & David",
-      event: "Baby Shower",
-      stars: 5,
-    },
-  ];
+  const resolvedTestimonials =
+    testimonials.length >= 3 ? testimonials : defaultTestimonials;
+  const resolvedTrustIndicators =
+    trustIndicators.length > 0 ? trustIndicators : defaultTrustIndicators;
 
   const renderStars = (count: number) => {
     return Array(count)
@@ -94,14 +142,10 @@ const Testimonials = () => {
             className="font-playfair text-4xl md:text-5xl lg:text-6xl italic text-gray-800 leading-tight"
             id="testimonials-heading"
           >
-            &ldquo;Megan&apos;s cookies are{" "}
-            <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-              pure magic
-            </span>
-            !&rdquo;
+            {headline}
           </h2>
           <p className="mt-6 font-poppins text-lg text-gray-600">
-            What our happy customers are saying
+            {subheading}
           </p>
         </div>
 
@@ -127,7 +171,7 @@ const Testimonials = () => {
 
                 {/* Quote text */}
                 <blockquote className="font-playfair text-2xl md:text-3xl text-gray-800 leading-relaxed mb-8">
-                  &ldquo;{testimonials[0].text}&rdquo;
+                  &ldquo;{resolvedTestimonials[0].text}&rdquo;
                 </blockquote>
 
                 {/* Author info */}
@@ -135,24 +179,24 @@ const Testimonials = () => {
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
                       <span className="font-bebas text-xl text-bakery-pink-dark">
-                        {testimonials[0].name.charAt(0)}
+                        {resolvedTestimonials[0].name.charAt(0)}
                       </span>
                     </div>
                     <div>
                       <p className="font-poppins font-semibold text-gray-800">
-                        {testimonials[0].name}
+                        {resolvedTestimonials[0].name}
                       </p>
                       <p className="font-poppins text-sm text-gray-500">
-                        {testimonials[0].event}
+                        {resolvedTestimonials[0].event}
                       </p>
                     </div>
                   </div>
                   <div
                     className="flex gap-1"
                     role="img"
-                    aria-label={`${testimonials[0].stars} out of 5 stars`}
+                    aria-label={`${resolvedTestimonials[0].stars} out of 5 stars`}
                   >
-                    {renderStars(testimonials[0].stars)}
+                    {renderStars(resolvedTestimonials[0].stars)}
                   </div>
                 </div>
               </div>
@@ -161,7 +205,7 @@ const Testimonials = () => {
 
           {/* Stacked testimonials */}
           <div className="md:col-span-5 flex flex-col gap-6 lg:gap-8">
-            {testimonials.slice(1).map((testimonial, index) => (
+            {resolvedTestimonials.slice(1).map((testimonial, index) => (
               <div
                 key={testimonial.id}
                 className={`transition-all duration-1000 ${
@@ -209,28 +253,29 @@ const Testimonials = () => {
         </div>
 
         {/* Trust indicators */}
-        <div
-          className={`mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-1000 delay-800 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="text-center">
-            <p className="font-bebas text-4xl text-bakery-pink-dark">200+</p>
-            <p className="font-poppins text-sm text-gray-500">
-              Happy Customers
-            </p>
+        {showTrustIndicators && (
+          <div
+            className={`mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-1000 delay-800 ${
+              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            {resolvedTrustIndicators.map((indicator, index) => (
+              <div key={indicator.label} className="flex items-center gap-8">
+                <div className="text-center">
+                  <p className="font-bebas text-4xl text-bakery-pink-dark">
+                    {indicator.value}
+                  </p>
+                  <p className="font-poppins text-sm text-gray-500">
+                    {indicator.label}
+                  </p>
+                </div>
+                {index < resolvedTrustIndicators.length - 1 && (
+                  <div className="hidden md:block w-px h-12 bg-gray-200" />
+                )}
+              </div>
+            ))}
           </div>
-          <div className="hidden md:block w-px h-12 bg-gray-200" />
-          <div className="text-center">
-            <p className="font-bebas text-4xl text-bakery-pink-dark">5.0</p>
-            <p className="font-poppins text-sm text-gray-500">Average Rating</p>
-          </div>
-          <div className="hidden md:block w-px h-12 bg-gray-200" />
-          <div className="text-center">
-            <p className="font-bebas text-4xl text-bakery-pink-dark">100%</p>
-            <p className="font-poppins text-sm text-gray-500">Satisfaction</p>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

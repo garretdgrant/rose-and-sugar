@@ -15,27 +15,27 @@ export async function generateMetadata() {
 const locations = [
   {
     name: "Folsom",
-    path: "/classes/folsom",
+    path: "/classes/folsom-sugar-cookie-decorating-class",
     detail: "Hands-on classes with royal icing techniques.",
   },
   {
     name: "Loomis",
-    path: "/classes/loomis",
+    path: "/classes/loomis-sugar-cookie-decorating-class",
     detail: "Small-group decorating sessions for all levels.",
   },
   {
     name: "Sacramento",
-    path: "/classes/sacramento",
+    path: "/classes/sacramento-sugar-cookie-decorating-class",
     detail: "Creative cookie classes with all supplies included.",
   },
   {
     name: "El Dorado Hills",
-    path: "/classes/el-dorado-hills",
+    path: "/classes/el-dorado-hills-sugar-cookie-decorating-class",
     detail: "Beginner-friendly instruction and take-home sets.",
   },
   {
     name: "Roseville",
-    path: "/classes/roseville",
+    path: "/classes/roseville-sugar-cookie-decorating-class",
     detail: "Seasonal classes with guided decorating tips.",
   },
 ];

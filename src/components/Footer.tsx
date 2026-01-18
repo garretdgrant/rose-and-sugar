@@ -169,14 +169,14 @@ const Footer = () => {
               <Image
                 src="https://www.edcwebdesign.com/logo.png"
                 alt="EDC Web Design"
-                width={140}
-                height={36}
-                sizes="140px"
+                width={220}
+                height={56}
+                sizes="220px"
                 quality={80}
                 unoptimized
-                className="h-9 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+                className="h-14 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               />
-              <span className="hidden sm:flex items-center gap-1 text-gray-400 font-poppins text-xs group-hover:text-gray-300 transition-colors">
+              <span className="flex items-center gap-1 text-gray-400 font-poppins text-xs group-hover:text-gray-300 transition-colors">
                 Website by EDC
                 <ArrowUpRight
                   size={12}

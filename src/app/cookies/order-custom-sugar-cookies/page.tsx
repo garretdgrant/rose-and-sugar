@@ -9,8 +9,8 @@ const customOrderFaqs = [
     answer: (
       <>
         We recommend placing your order at least 2-3 weeks in advance. Rush
-        orders may be available for an additional fee, but cannot be
-        guaranteed. For timing questions,{" "}
+        orders may be available for an additional fee, but cannot be guaranteed.
+        For timing questions,{" "}
         <Link className="text-bakery-pink-dark" href="/contact">
           contact us
         </Link>
@@ -81,7 +81,6 @@ const CustomOrders = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-bakery-cream/40 via-white to-bakery-pink-light/30">
       <main className="relative overflow-hidden pt-28 pb-20">
-
         {/* Decorative blobs */}
         <div className="absolute -top-32 right-0 w-[420px] h-[420px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl" />
         <div className="absolute -bottom-32 left-0 w-[380px] h-[380px] rounded-full bg-gradient-to-tr from-bakery-peach/40 to-transparent blur-3xl" />
@@ -174,21 +173,21 @@ const CustomOrders = () => {
           </div>
           <div className="container-custom relative z-10">
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/10 border border-bakery-pink-light/30">
-            <div className="text-center mb-8">
-              <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark">
-                Request a Custom Order
-              </h2>
-              <p className="mt-2 text-gray-600 font-poppins">
-                Tell us about your event and we&apos;ll follow up within 48
-                hours.
+              <div className="text-center mb-8">
+                <h2 className="font-bebas text-2xl md:text-3xl text-bakery-pink-dark">
+                  Request a Custom Order
+                </h2>
+                <p className="mt-2 text-gray-600 font-poppins">
+                  Tell us about your event and we&apos;ll follow up within 48
+                  hours.
+                </p>
+              </div>
+              <CustomInquiryForm />
+              <p className="text-center text-gray-600 mt-6 font-poppins">
+                After you submit your request, Megan will follow up within 48
+                hours with an invoice and next steps.
               </p>
             </div>
-            <CustomInquiryForm />
-            <p className="text-center text-gray-600 mt-6 font-poppins">
-              After you submit your request, Megan will follow up within 48
-              hours with an invoice and next steps.
-            </p>
-          </div>
           </div>
         </section>
 
