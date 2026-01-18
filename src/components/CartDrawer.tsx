@@ -26,10 +26,16 @@ import {
 import { useCartStore } from "@/stores/cartStore";
 
 const CartDrawer = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const { items, isLoading, updateQuantity, removeItem, createCheckout } =
-    useCartStore();
+  const {
+    items,
+    isLoading,
+    updateQuantity,
+    removeItem,
+    createCheckout,
+    isOpen,
+    setIsOpen,
+  } = useCartStore();
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
