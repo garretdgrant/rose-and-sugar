@@ -1,7 +1,7 @@
 "use client";
-import ClassCalendarCard from "@/components/ClassCalendarCard";
-import { FetchedClass } from "@/lib/fetchSanity";
-import { urlFor } from "@/lib/sanityImage";
+import { useEffect, useState } from "react";
+import ClassProductCard from "@/components/ClassProductCard";
+import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import {
   Check,
   Users,
@@ -11,15 +11,15 @@ import {
   Heart,
   Calendar,
   Mail,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface ClientClassesProps {
-  upcomingClasses: FetchedClass[];
-}
-
-const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
+const ClientClasses = () => {
+  const [upcomingClasses, setUpcomingClasses] = useState<ShopifyProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const classFeatures = [
     "Hands-on instruction perfect for all skill levels",
     "All supplies included (cookies, icing, tools, and packaging)",
@@ -51,6 +51,27 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
       desc: "No experience needed to create beautiful cookies",
     },
   ];
+
+  useEffect(() => {
+    const loadClasses = async () => {
+      setIsLoading(true);
+      setLoadError(null);
+      try {
+        const products = await fetchProducts(
+          20,
+          'product_type:"Cookie Decorating Class"',
+        );
+        setUpcomingClasses(products);
+      } catch (error) {
+        console.error("Failed to load classes:", error);
+        setLoadError("We couldn't load upcoming classes right now.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadClasses();
+  }, []);
 
   return (
     <div className="min-h-screen bg-bakery-cream">
@@ -164,34 +185,39 @@ const ClientClasses = ({ upcomingClasses }: ClientClassesProps) => {
               </div>
 
               {/* Class Cards Grid - Now without wrapper card for cleaner look */}
-              <div
-                className={`grid gap-6 lg:gap-8 ${
-                  upcomingClasses.length === 1
-                    ? "grid-cols-1 max-w-md mx-auto"
-                    : upcomingClasses.length === 2
-                      ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto"
-                      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                }`}
-              >
-                {upcomingClasses.map((classItem) => (
-                  <ClassCalendarCard
-                    key={classItem._id}
-                    month={classItem.month}
-                    day={classItem.day}
-                    title={classItem.title}
-                    description={classItem.description}
-                    price={classItem.price}
-                    address={classItem.address}
-                    time={classItem.time}
-                    imageUrl={
-                      classItem.image
-                        ? urlFor(classItem.image).url()
-                        : "/openDefault.webp"
-                    }
-                    seatsLeft={classItem.seatsLeft}
-                  />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="flex justify-center items-center py-16">
+                  <Loader2 className="w-8 h-8 animate-spin text-bakery-pink-dark" />
+                </div>
+              ) : loadError ? (
+                <div className="text-center py-12 bg-white/70 rounded-2xl border border-bakery-pink-light/40">
+                  <p className="text-gray-600">{loadError}</p>
+                </div>
+              ) : upcomingClasses.length === 0 ? (
+                <div className="text-center py-12 bg-white/70 rounded-2xl border border-bakery-pink-light/40">
+                  <p className="text-gray-600">
+                    No upcoming classes at the moment. Check back soon for new
+                    dates!
+                  </p>
+                </div>
+              ) : (
+                <div
+                  className={`grid gap-6 lg:gap-8 ${
+                    upcomingClasses.length === 1
+                      ? "grid-cols-1 max-w-md mx-auto"
+                      : upcomingClasses.length === 2
+                        ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto"
+                        : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  }`}
+                >
+                  {upcomingClasses.map((classItem) => (
+                    <ClassProductCard
+                      key={classItem.node.id}
+                      product={classItem}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* Waitlist CTA - Elevated card design */}
               <div className="mt-14">

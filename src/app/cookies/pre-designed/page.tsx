@@ -1,5 +1,4 @@
-import PreDesignedClient from "@/components/PreDesignedClient";
-import { getPredesigns } from "@/lib/fetchSanity";
+import ShopifyPreDesignedClient from "@/components/ShopifyPreDesignedClient";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata() {
@@ -12,9 +11,7 @@ export async function generateMetadata() {
 }
 
 const PreDesignedPage = async () => {
-  const predesigns = await getPredesigns();
-
-  return <PreDesignedClient predesigns={predesigns} />;
+  return <ShopifyPreDesignedClient />;
 };
 
 export default PreDesignedPage;

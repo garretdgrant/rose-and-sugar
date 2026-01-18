@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import Image from "next/image";
+import CartDrawer from "@/components/CartDrawer";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -74,22 +75,25 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Mobile Menu Button */}
-        <button
-          ref={mobileMenuButtonRef}
-          type="button"
-          className="md:hidden text-gray-700 focus:outline-none"
-          onClick={toggleMobileMenu}
-          aria-controls="mobile-menu"
-          aria-expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? (
-            <X size={24} aria-hidden="true" />
-          ) : (
-            <Menu size={24} aria-hidden="true" />
-          )}
-        </button>
+        {/* Mobile Actions */}
+        <div className="md:hidden flex items-center gap-3">
+          <CartDrawer />
+          <button
+            ref={mobileMenuButtonRef}
+            type="button"
+            className="text-gray-700 focus:outline-none"
+            onClick={toggleMobileMenu}
+            aria-controls="mobile-menu"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? (
+              <X size={24} aria-hidden="true" />
+            ) : (
+              <Menu size={24} aria-hidden="true" />
+            )}
+          </button>
+        </div>
 
         {/* Desktop Navigation */}
         <nav
@@ -172,6 +176,7 @@ const Navbar = () => {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          <CartDrawer />
         </nav>
 
         {/* Mobile Navigation */}
