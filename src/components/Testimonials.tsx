@@ -1,21 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Quote, Star } from "lucide-react";
+
 const Testimonials = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const testimonials = [
     {
       id: 1,
       text: "Megan's cookies are absolutely magical! She made the most beautiful set for my daughter's birthday party. Not only did they look stunning, but they tasted amazing too!",
       name: "Sarah J.",
+      event: "Birthday Party",
       stars: 5,
     },
     {
       id: 2,
       text: "I took one of Megan's decorating classes with friends and it was SO much fun! She's patient, creative, and makes the whole experience enjoyable. Can't wait to go back!",
       name: "Lisa M.",
+      event: "Decorating Class",
       stars: 5,
     },
     {
       id: 3,
       text: "The custom cookies Megan created for our baby shower were perfect. Everyone loved the delicate floral designs, and the packaging was beautiful. Highly recommend!",
       name: "Jessica & David",
+      event: "Baby Shower",
       stars: 5,
     },
   ];
@@ -24,51 +38,198 @@ const Testimonials = () => {
     return Array(count)
       .fill(0)
       .map((_, index) => (
-        <svg
+        <Star
           key={index}
-          className="w-5 h-5 text-yellow-400"
-          fill="currentColor"
-          viewBox="0 0 20 20"
+          className="w-4 h-4 text-yellow-400 fill-yellow-400"
           aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
+        />
       ));
   };
 
   return (
     <section
       id="testimonials"
-      className="section-padding bg-gradient-to-b to-white from-bakery-pink-light/70"
+      className="relative py-24 md:py-32 overflow-hidden"
       aria-labelledby="testimonials-heading"
     >
-      <div className="container-custom">
-        <h2 className="section-heading" id="testimonials-heading">
-          &quot;Megan&apos;s cookies are pure magic!&quot;
-        </h2>
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-bakery-pink-light/40 via-bakery-cream/30 to-white" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-            >
-              <div
-                className="flex mb-4"
-                role="img"
-                aria-label={`${testimonial.stars} out of 5 stars`}
-              >
-                {renderStars(testimonial.stars)}
+      {/* Decorative elements */}
+      <div
+        className={`absolute top-1/4 -left-20 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-bakery-peach/30 to-transparent blur-3xl transition-all duration-1000 ${
+          mounted ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      <div
+        className={`absolute bottom-1/4 -right-20 w-[350px] h-[350px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl transition-all duration-1000 delay-200 ${
+          mounted ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      {/* Large decorative quote marks */}
+      <div
+        className={`absolute top-20 left-[10%] transition-all duration-1000 delay-300 ${
+          mounted ? "opacity-10" : "opacity-0"
+        }`}
+      >
+        <Quote className="w-32 h-32 text-bakery-pink-dark transform -rotate-12" />
+      </div>
+      <div
+        className={`absolute bottom-20 right-[10%] transition-all duration-1000 delay-500 ${
+          mounted ? "opacity-10" : "opacity-0"
+        }`}
+      >
+        <Quote className="w-24 h-24 text-bakery-brown transform rotate-12 scale-x-[-1]" />
+      </div>
+
+      <div className="container-custom relative z-10">
+        {/* Section header */}
+        <div
+          className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-1000 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <h2
+            className="font-playfair text-4xl md:text-5xl lg:text-6xl italic text-gray-800 leading-tight"
+            id="testimonials-heading"
+          >
+            &ldquo;Megan&apos;s cookies are{" "}
+            <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+              pure magic
+            </span>
+            !&rdquo;
+          </h2>
+          <p className="mt-6 font-poppins text-lg text-gray-600">
+            What our happy customers are saying
+          </p>
+        </div>
+
+        {/* Testimonials grid - editorial layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
+          {/* Featured testimonial - larger */}
+          <div
+            className={`md:col-span-7 transition-all duration-1000 delay-200 ${
+              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
+          >
+            <div className="group h-full bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-xl border border-bakery-pink-light/20 hover:border-bakery-pink-light/50 transition-all duration-500 relative overflow-hidden">
+              {/* Decorative accent */}
+              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-bakery-pink-dark via-bakery-pink to-bakery-peach rounded-l-3xl" />
+
+              <div className="pl-4">
+                {/* Quote icon */}
+                <div className="mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-bakery-pink-light/50 to-bakery-peach/50 flex items-center justify-center">
+                    <Quote className="w-6 h-6 text-bakery-pink-dark" />
+                  </div>
+                </div>
+
+                {/* Quote text */}
+                <blockquote className="font-playfair text-2xl md:text-3xl text-gray-800 leading-relaxed mb-8">
+                  &ldquo;{testimonials[0].text}&rdquo;
+                </blockquote>
+
+                {/* Author info */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
+                      <span className="font-bebas text-xl text-bakery-pink-dark">
+                        {testimonials[0].name.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-poppins font-semibold text-gray-800">
+                        {testimonials[0].name}
+                      </p>
+                      <p className="font-poppins text-sm text-gray-500">
+                        {testimonials[0].event}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className="flex gap-1"
+                    role="img"
+                    aria-label={`${testimonials[0].stars} out of 5 stars`}
+                  >
+                    {renderStars(testimonials[0].stars)}
+                  </div>
+                </div>
               </div>
-              <p className="text-gray-700 italic mb-6">
-                &quot;{testimonial.text}&quot;
-              </p>
-              <p className="font-medium text-bakery-pink-dark">
-                — {testimonial.name}
-              </p>
             </div>
-          ))}
+          </div>
+
+          {/* Stacked testimonials */}
+          <div className="md:col-span-5 flex flex-col gap-6 lg:gap-8">
+            {testimonials.slice(1).map((testimonial, index) => (
+              <div
+                key={testimonial.id}
+                className={`transition-all duration-1000 ${
+                  mounted
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-12"
+                }`}
+                style={{ transitionDelay: `${400 + index * 200}ms` }}
+              >
+                <div className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-lg border border-bakery-pink-light/20 hover:border-bakery-pink-light/50 transition-all duration-500">
+                  {/* Stars */}
+                  <div
+                    className="flex gap-1 mb-4"
+                    role="img"
+                    aria-label={`${testimonial.stars} out of 5 stars`}
+                  >
+                    {renderStars(testimonial.stars)}
+                  </div>
+
+                  {/* Quote */}
+                  <blockquote className="font-poppins text-gray-700 leading-relaxed mb-5">
+                    &ldquo;{testimonial.text}&rdquo;
+                  </blockquote>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-bakery-peach to-bakery-cream flex items-center justify-center">
+                      <span className="font-bebas text-sm text-bakery-brown">
+                        {testimonial.name.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-poppins font-medium text-sm text-gray-800">
+                        {testimonial.name}
+                      </p>
+                      <p className="font-poppins text-xs text-gray-500">
+                        {testimonial.event}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Trust indicators */}
+        <div
+          className={`mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-1000 delay-800 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <div className="text-center">
+            <p className="font-bebas text-4xl text-bakery-pink-dark">200+</p>
+            <p className="font-poppins text-sm text-gray-500">
+              Happy Customers
+            </p>
+          </div>
+          <div className="hidden md:block w-px h-12 bg-gray-200" />
+          <div className="text-center">
+            <p className="font-bebas text-4xl text-bakery-pink-dark">5.0</p>
+            <p className="font-poppins text-sm text-gray-500">Average Rating</p>
+          </div>
+          <div className="hidden md:block w-px h-12 bg-gray-200" />
+          <div className="text-center">
+            <p className="font-bebas text-4xl text-bakery-pink-dark">100%</p>
+            <p className="font-poppins text-sm text-gray-500">Satisfaction</p>
+          </div>
         </div>
       </div>
     </section>
