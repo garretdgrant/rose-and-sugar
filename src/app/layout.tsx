@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import QueryProvider from "@/components/QueryProvider";
 import Script from "next/script";
 import { bebasNeue, fraunces, playfairDisplay, poppins } from "./fonts";
 
@@ -124,11 +125,13 @@ export default function RootLayout({
           strategy="beforeInteractive" // ← KEY: SSR-compatible
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Navbar />
-        <main id="main-content" role="main">
-          {children}
-        </main>
-        <Footer />
+        <QueryProvider>
+          <Navbar />
+          <main id="main-content" role="main">
+            {children}
+          </main>
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );

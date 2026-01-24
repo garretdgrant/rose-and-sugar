@@ -15,7 +15,7 @@ const GRAPHQL_ENDPOINT = `https://${SHOPIFY_DOMAIN}/api/2025-01/graphql.json`;
 
 export async function shopifyFetch<T>(
   query: string,
-  variables?: Record<string, any>,
+  variables?: Record<string, unknown>,
 ): Promise<T> {
   const res = await fetch(GRAPHQL_ENDPOINT, {
     method: "POST",
@@ -31,7 +31,7 @@ export async function shopifyFetch<T>(
     throw new Error(`Shopify request failed: ${res.status} ${res.statusText}`);
   }
 
-  const json = await res.json();
+  const json = (await res.json()) as { data: T; errors?: unknown };
 
   if (json.errors) {
     console.error("Shopify GraphQL errors:", json.errors);

@@ -22,9 +22,9 @@ const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
   const [isAdded, setIsAdded] = useState(false);
   const { node } = product;
 
-  const variant = node.variants.edges[0]?.node;
-  const image = node.images.edges[0]?.node;
-  const price = parseFloat(node.priceRange.minVariantPrice.amount);
+  const variant = node.variants?.edges?.[0]?.node;
+  const image = node.images?.edges?.[0]?.node;
+  const price = parseFloat(node.priceRange?.minVariantPrice?.amount || "0");
   const isAvailable = variant?.availableForSale ?? true;
 
   // Extract date from title

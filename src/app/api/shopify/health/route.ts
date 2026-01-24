@@ -10,6 +10,13 @@ const HEALTH_QUERY = `
   }
 `;
 
+const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return "Unknown error";
+};
+
 export async function GET() {
   try {
     const data = await shopifyFetch<{ shop: { name: string } }>(HEALTH_QUERY);
@@ -18,10 +25,10 @@ export async function GET() {
       ok: true,
       shop: data.shop.name,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[SHOPIFY_HEALTH_ERROR]", err);
     return NextResponse.json(
-      { ok: false, error: err.message ?? "Unknown error" },
+      { ok: false, error: getErrorMessage(err) },
       { status: 500 },
     );
   }

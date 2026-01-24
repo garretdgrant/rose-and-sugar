@@ -4,8 +4,15 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
 import ShopifyCookieGrid from "@/components/cookie/ShopifyCookieGrid";
 import FAQAccordion from "@/components/FAQAccordion";
-import { mockShopifyCookies } from "@/data/shopifyMocks";
-import { cookieCategories } from "@/data/cookieCategories";
+import type { ShopifyProduct } from "@/types/shopify";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  fetchPredesignedList,
+  mapPredesignedToShopifyProduct,
+  predesignedDetailQueryKey,
+  predesignedListQueryKey,
+  type PredesignedApiProduct,
+} from "@/lib/predesignedCookies";
 import {
   Search,
   SlidersHorizontal,
@@ -17,9 +24,20 @@ import {
 type SortOption = "featured" | "price-low" | "price-high" | "name-az";
 
 const ShopifyPreDesignedClient = () => {
-  const products = mockShopifyCookies;
-  const isLoading = false;
-  const loadError = null;
+  const queryClient = useQueryClient();
+  const {
+    data: apiProducts,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: predesignedListQueryKey,
+    queryFn: fetchPredesignedList,
+  });
+  const loadError =
+    isError && (!apiProducts || apiProducts.length === 0)
+      ? "We couldn't load the cookie collection right now."
+      : null;
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("featured");
@@ -31,28 +49,44 @@ const ShopifyPreDesignedClient = () => {
     setMounted(true);
   }, []);
 
-  // Data is static for now, so no loading effect is required.
+  const products = useMemo<ShopifyProduct[]>(() => {
+    return (apiProducts || []).map(mapPredesignedToShopifyProduct);
+  }, [apiProducts]);
+
+  useEffect(() => {
+    if (!apiProducts) return;
+    apiProducts.forEach((product: PredesignedApiProduct) => {
+      const key = predesignedDetailQueryKey(product.handle);
+      if (queryClient.getQueryData(key)) return;
+      queryClient.setQueryData(key, product);
+    });
+  }, [apiProducts, queryClient]);
+
+  const productTypeCategories = useMemo(() => {
+    const seen = new Set<string>();
+    const categories: string[] = [];
+
+    products.forEach((product) => {
+      const type = product.node.productType?.trim();
+      if (!type) return;
+      const key = type.toLowerCase();
+      if (seen.has(key)) return;
+      seen.add(key);
+      categories.push(type);
+    });
+
+    return categories;
+  }, [products]);
 
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...products];
 
     // Category filter
     if (selectedCategory !== "All") {
-      const slug = selectedCategory.toLowerCase().replace(/\s+/g, "-");
-      const slugPhrase = slug.replace(/-/g, " ");
-
-      result = result.filter((product) => {
-        const title = product.node.title.toLowerCase();
-        const tags = (product.node.tags || []).map((tag) => tag.toLowerCase());
-        const tagMatches = tags.some(
-          (tag) =>
-            tag.includes(slugPhrase) ||
-            tag.replace(/\s+/g, "-") === slug ||
-            tag.includes(slug),
-        );
-
-        return tagMatches || title.includes(slugPhrase) || title.includes(slug);
-      });
+      const selectedType = selectedCategory.toLowerCase();
+      result = result.filter(
+        (product) => product.node.productType?.toLowerCase() === selectedType,
+      );
     }
 
     // Search filter
@@ -296,10 +330,7 @@ const ShopifyPreDesignedClient = () => {
                         msOverflowStyle: "none",
                       }}
                     >
-                      {[
-                        "All",
-                        ...cookieCategories.map((category) => category.name),
-                      ].map((category) => {
+                      {["All", ...productTypeCategories].map((category) => {
                         const isActive = selectedCategory === category;
                         return (
                           <button
@@ -356,7 +387,7 @@ const ShopifyPreDesignedClient = () => {
               </div>
               <p className="text-gray-700 font-medium mb-2">{loadError}</p>
               <button
-                onClick={() => window.location.reload()}
+                onClick={() => refetch()}
                 className="text-bakery-pink-dark hover:underline text-sm"
               >
                 Try again

@@ -1,167 +1,210 @@
-# Dashboard Query Caching Implementation Instructions (TanStack Query)
+# TanStack Query Caching Strategy for Predesigned Cookies
 
-These instructions are for implementing **query caching** in the dashboard app to prevent unnecessary backend calls when navigating between list and detail pages (e.g. Requests list → Request detail).
+This guide explains how to implement **query caching** with **TanStack Query** for the **Predesigned Cookies** collection. The goal is:
 
-DO NOT include code snippets in your output. Focus on structure, intent, and configuration.
+- Fetch all predesigned cookies once.
+- Reuse that data for list and detail views.
+- Only fetch a specific cookie if the user lands directly on its detail URL and it isn’t in cache.
+- 404 if the cookie still isn’t found after a detail fetch.
 
----
-
-## Goal
-
-- Prevent duplicate API calls when navigating from a list view to a detail view
-- Reuse already-fetched list data for instant detail rendering
-- Allow background refetching when data becomes stale
-- Replace the old “Redux to avoid refetching” pattern with modern query caching
-- Work cleanly in a **Next.js App Router dashboard app**
+We’ll later reuse this exact pattern for **classes**.
 
 ---
 
-## High-Level Approach
+## 1. Overall Flow
 
-- Use **TanStack Query** as the single source of truth for server state
-- Treat backend data as _cached queries_, not global UI state
-- Share cached data automatically across routes
-- Let the cache control freshness instead of manual state plumbing
+**Data path**
 
----
+Browser → TanStack Query cache → Next.js `/api` routes → Shopify Storefront API (private token).
 
-## Required Architecture Changes
+**Behavior**
 
-### 1. Add a Global Query Client Provider
+- Navigating from **Predesigned list → Cookie detail**:
+  - Should **not** require a new network call.
+  - Detail page renders from the cached list data.
 
-- Create a single Query Client instance for the dashboard app
-- Wrap the dashboard’s root layout in a provider so all routes share the same cache
-- Ensure the Query Client is created once per browser session (not per render)
-- Document exactly where this lives (file paths) so the provider does not get duplicated.
-
-Global defaults to configure:
-
-- Disable refetch on window focus
-- Allow refetch on reconnect
-- Set a reasonable stale time (e.g. ~60 seconds)
-- Keep cache around for several minutes (e.g. ~10 minutes)
-- Limit retry behavior to avoid noisy failures
+- Going directly to a cookie URL (deep link):
+  - Check cache first.
+  - If missing:
+    - Fetch the **individual cookie**.
+    - If still not found → render a **404**.
 
 ---
 
-## Query Key Strategy (Critical)
+## 2. Query Keys (Critical)
 
-Define stable, consistent query keys:
+Use stable, consistent keys:
 
-- List query:  
-  `["requests"]`
+- Predesigned list query:  
+  `["products", "predesigned"]`
 
-- Detail query:  
-  `["request", requestId]`
+- Predesigned detail query:  
+  `["product", cookieHandle]`  
+  Example: `["product", "love-bugs-gift-box"]`
 
-These keys must be used consistently across the app.
-
----
-
-## List Page Behavior (Requests List)
-
-On the list page:
-
-- Fetch all requests using the list query key
-- After data is successfully loaded:
-  - Seed the query cache for each individual request
-  - Store each request under its corresponding detail query key
-
-Important rules:
-
-- Do not overwrite detail cache entries if they already exist
-- Treat list data as a “preview” of detail data
-- This step ensures the detail page can render instantly without refetching
+These keys must be used everywhere: list page, detail page, any prefetch/seed logic.
 
 ---
 
-## Detail Page Behavior (Request Detail)
+## 3. Global Query Client Provider
 
-On the detail page:
+Create a **single TanStack QueryClient** for the Rose & Sugar frontend and wrap the site with it.
 
-- Fetch request data using the detail query key
-- Do NOT refetch immediately on mount if cached data exists
-- Allow background refetching if data becomes stale
-- Render instantly from cache when navigating from the list page
+**Requirements**
 
-Expected behavior:
+- Lives in a single provider component (for example: `QueryProvider`).
+- `QueryProvider` is mounted once in the app’s root layout (for example: `app/(site)/layout.tsx`).
+- QueryClient is created once per browser session (not per render).
 
-- If user clicks from list → detail, page renders immediately
-- If user lands directly on detail URL, data is fetched normally
-- If backend data changed recently, it refreshes silently in background
+**Recommended defaults**
 
----
-
-## Refetch Rules (Important)
-
-- Disable automatic refetch on route change for detail pages
-- Disable refetch on window focus globally
-- Allow refetch when data becomes stale or when manually triggered
-- This avoids the “every click = API call” problem
+- `refetchOnWindowFocus`: false
+- `refetchOnReconnect`: true
+- `staleTime`: between 60 and 300 seconds for products
+- `cacheTime`: between 10 and 30 minutes
+- Retry: at most 1–2 times on failure
 
 ---
 
-## API Layer Expectations
+## 4. API Layer Expectations
 
-- Use a shared API helper for all network requests
-- Handle JSON parsing and error handling in one place
-- Use credentials consistently if cookie-based auth is used
-- Do NOT scatter raw fetch logic across components
-- Call out the canonical location for this helper (file path) and ensure all list/detail pages use it.
+All Shopify calls must go through a **single server-side helper** that knows about:
 
----
+- `SHOPIFY_STORE_DOMAIN`
+- `SHOPIFY_PRIVATE_TOKEN`
 
-## Error & Loading State Guidance
+On top of that helper, expose two `/api` routes for predesigned cookies:
 
-- List pages: show a lightweight loading state while fetching, but keep partial UI visible.
-- Detail pages: if cached data exists, render immediately and avoid a blank state.
-- Handle errors with clear, user-facing messages and allow retry without a full refresh.
+1. **List endpoint** – e.g.  
+   `/api/shopify/predesigned`  
+   Returns the full collection of predesigned cookies with everything the frontend needs for both list and detail pages:
+   - id, title, handle
+   - description
+   - productType or category
+   - tags
+   - price (normalized)
+   - primary image (url + alt)
+   - anything needed for SEO/meta if possible (page title, meta description, etc.)
 
----
+2. **Detail endpoint** – e.g.  
+   `/api/shopify/predesigned/[handle]`  
+   Returns a single cookie by handle (same shape as above).  
+   If Shopify doesn’t have a product with that handle, return a 404-style response the frontend can detect.
 
-## What This Solves
-
-- No duplicate “list → detail” API calls
-- No blank loading states when navigating internally
-- No need for Redux or global stores for server data
-- Cleaner separation between UI state and server state
-- Predictable, debuggable data flow
-
----
-
-## What NOT To Do
-
-- Do NOT use Redux or Zustand to store server data
-- Do NOT pass full objects through the router
-- Do NOT refetch detail data immediately on navigation if cache exists
-- Do NOT couple list and detail components via props
+All raw Shopify fetch + error handling happens **inside** the helper, not inside React components.
 
 ---
 
-## Mental Model for the Agent
+## 5. Predesigned List Page Behavior
 
-- TanStack Query replaces Redux for server data
-- Query keys are the cache
-- Lists populate the cache
-- Detail pages read from the cache
-- Refetching is controlled by staleness, not navigation
+This is the **Predesigned Cookies index** page.
+
+**Query**
+
+- Use TanStack Query with key: `["products", "predesigned"]`.
+- Hit `/api/shopify/predesigned`.
+
+**After successful fetch**
+
+- Seed the cache for each cookie detail entry:
+  - For each product from the list data:
+    - Put it into the cache under key `["product", handle]`.
+  - If a detail entry already exists for that handle, do **not** overwrite it.
+
+**Result**
+
+- From this point on, the detail page can render any cookie from that collection without having to refetch.
+
+**Loading & error behavior**
+
+- Show a lightweight loading state while the list is fetching.
+- On error, show a user-friendly message and a retry button.
 
 ---
 
-## Expected Outcome
+## 6. Predesigned Detail Page Behavior
 
-After implementation:
+This is for pages like `/predesigned/[handle]`.
 
-- Navigating between dashboard pages feels instant
-- Backend load is reduced
-- Code is simpler and more maintainable
-- The dashboard behaves like a real application, not a static site
+**Step 1 – Read from cache**
+
+- Use TanStack Query with key: `["product", handle]`.
+- Before making a network request, check if this key already has data:
+  - If yes: render immediately from cache, no “blocking” spinner.
+
+**Step 2 – Fetch if not found**
+
+- If there is **no cached data** for `["product", handle]`:
+  - Call the **detail API** route `/api/shopify/predesigned/[handle]` for that handle.
+  - If the API returns data:
+    - Store it in the cache under `["product", handle]`.
+    - Render from that data.
+  - If the API responds “not found” or equivalent:
+    - Render a **404** (or use Next’s notFound helper).
+
+**Background refetching**
+
+- If there is cached data but it’s stale (older than `staleTime`):
+  - Allow TanStack Query to refetch in the background.
+  - The page should continue rendering cached data while the refetch happens.
+  - Optionally show a subtle “updating…” indicator.
+
+**Key point**
+
+- **List navigation**: no new fetch because the detail is already cached from the list.
+- **Direct link**: one detail fetch for that cookie; no need to fetch the entire collection.
 
 ---
 
-If additional entities exist (invoices, clients, projects), repeat the same pattern:
+## 7. Refetch Rules
 
-- One list query
-- One detail query
-- Seed cache from list
-- Reuse cache on detail pages
+Global / per-query rules to avoid hammering Shopify:
+
+- Do **not** refetch simply because the route changed.
+- `refetchOnWindowFocus`: disabled globally.
+- It is okay to refetch when:
+  - Data is stale (based on `staleTime`).
+  - The user manually triggers a refetch (e.g. “Refresh cookies” button).
+
+This keeps Shopify calls low while giving Megan reasonably fresh data.
+
+---
+
+## 8. 404 Logic for Direct Detail Links
+
+For a user going directly to `/predesigned/[handle]`:
+
+1. Check cache for `["product", handle]`.
+2. If missing, call `/api/shopify/predesigned/[handle]`.
+3. If the API response is “not found”:
+   - Render a **404** page (notFound).
+4. If found:
+   - Cache the product under `["product", handle]` and render.
+
+This ensures:
+
+- Existing cookies always resolve.
+- Mistyped or deleted cookie slugs return a proper 404.
+
+---
+
+## 9. What This Gives Us
+
+- Predesigned cookies list fetched once, cached, and reused.
+- Detail pages render instantly when navigated from the list.
+- Direct links to cookie pages still work via one detail fetch.
+- Great UX with fewer Shopify and API calls.
+- A clean pattern we can **copy/paste for classes** later by:
+  - Using keys like `["products", "classes"]` and `["class", handle]`.
+  - Adding corresponding list and detail `/api` routes.
+
+---
+
+## 10. Cache Invalidation Strategy (New Cookies)
+
+Because Megan does not add new cookies frequently, use a **time-based lazy invalidation** approach:
+
+- Set TanStack Query `staleTime` to ~1 hour for the predesigned list query.
+- Set the Next.js API route / Shopify helper `revalidate` to ~1 hour as well.
+- New cookies will appear automatically on the index page once stale + refetch occurs.
+- Direct links to new cookie detail pages work immediately (detail fetch has no dependency on list cache).

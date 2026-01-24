@@ -29,10 +29,10 @@ const ClassProductCard = ({
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
 
-  const variant = node.variants.edges[0]?.node;
-  const image = node.images.edges[0]?.node;
+  const variant = node.variants?.edges?.[0]?.node;
+  const image = node.images?.edges?.[0]?.node;
   const imageSrc = imageOverride || image?.url || "/openDefault.webp";
-  const price = parseFloat(node.priceRange.minVariantPrice.amount);
+  const price = parseFloat(node.priceRange?.minVariantPrice?.amount || "0");
   const isAvailable = variant?.availableForSale ?? true;
 
   // Extract date from title (e.g., "Spring Cookie Decorating Class - June 12")
