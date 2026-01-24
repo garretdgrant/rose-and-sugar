@@ -12,7 +12,7 @@ import {
   Plus,
   Check,
 } from "lucide-react";
-import { ShopifyProduct } from "@/lib/shopify";
+import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore, CartItem } from "@/stores/cartStore";
 
 interface ClassProductCardProps {

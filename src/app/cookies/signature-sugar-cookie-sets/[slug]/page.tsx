@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { fetchProductByHandle } from "@/lib/shopify";
+import { getMockProductByHandle } from "@/data/shopifyMocks";
 import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import {
@@ -20,7 +20,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const product = await fetchProductByHandle(slug).catch(() => null);
+  const product = getMockProductByHandle(slug);
   return buildPageMetadata({
     title: product ? `${product.title} | Rose & Sugar` : "Product",
     description:
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props) {
 
 const Page = async ({ params }: Props) => {
   const { slug } = await params;
-  const product = await fetchProductByHandle(slug).catch(() => null);
+  const product = getMockProductByHandle(slug);
 
   if (!product) {
     return (

@@ -9,23 +9,42 @@ export type PredesignedCookie = {
 
 export const predesignedCookies: PredesignedCookie[] = [
   {
-    slug: "pretty-pastel-rose",
-    name: "Pretty Pastel Rose",
+    slug: "buttercream-dreams",
+    name: "Buttercream Dreams",
     shortDescription:
-      "Hand-painted rose cookie with pastel watercolor shading.",
-    price: 6,
-    images: ["/predesigned/pretty-pastel-rose-1.jpg"],
+      "Pastel blooms with whipped buttercream textures and gilded accents.",
+    price: 6.5,
+    images: ["/predesigned/buttercream-dreams.webp"],
     details:
-      "A delicate hand-piped rose with soft pastel gradients. Perfect for showers and spring tablescapes.",
+      "A light and airy set featuring buttercream flowers, delicate ruffles, and a touch of shimmer for spring celebrations.",
   },
   {
-    slug: "sugar-petal-heart",
-    name: "Sugar Petal Heart",
-    shortDescription: "Layered heart cookie with gold dust accents.",
+    slug: "floral-bundle",
+    name: "Floral Bundle",
+    shortDescription: "Garden-inspired roses, vines, and watercolor blooms.",
     price: 7,
-    images: ["/predesigned/sugar-petal-heart-1.jpg"],
+    images: ["/predesigned/floral-bundle.webp"],
     details:
-      "Sweet heart shape with shimmered edges and a satin finish. Great for gifts and favours.",
+      "A romantic collection with layered petals, textured vines, and blush-to-berry gradients ideal for weddings or bridal showers.",
+  },
+  {
+    slug: "welcome-home",
+    name: "Welcome Home",
+    shortDescription:
+      "Warm neutrals and cheerful greetings for new homeowners.",
+    price: 8,
+    images: ["/predesigned/welcome-home.webp"],
+    details:
+      "Modern lettering, mini houses, and tiny florals come together in this feel-good bundle made for housewarmings.",
+  },
+  {
+    slug: "gift-for-mom",
+    name: "Gift for Mom",
+    shortDescription: "Soft pinks, gold foil, and heartfelt details.",
+    price: 7.25,
+    images: ["/predesigned/gift-for-mom.webp"],
+    details:
+      "Elegant blooms and meaningful messages mix with gold-dusted edges in this sentimental set curated for Mother's Day and beyond.",
   },
 ];
 

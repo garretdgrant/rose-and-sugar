@@ -2,7 +2,21 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { ShopifyProduct, createStorefrontCheckout } from "@/lib/shopify";
+import type { ShopifyProduct } from "@/types/shopify";
+
+const buildMockCheckoutUrl = (
+  items: Array<{ variantId: string; quantity: number }>,
+) => {
+  if (items.length === 0) {
+    return "/checkout";
+  }
+
+  const serializedItems = items
+    .map((item) => `${item.variantId}:${item.quantity}`)
+    .join(",");
+
+  return `/checkout?items=${encodeURIComponent(serializedItems)}`;
+};
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -99,7 +113,7 @@ export const useCartStore = create<CartStore>()(
 
         setLoading(true);
         try {
-          const checkoutUrl = await createStorefrontCheckout(
+          const checkoutUrl = buildMockCheckoutUrl(
             items.map((item) => ({
               variantId: item.variantId,
               quantity: item.quantity,
@@ -112,7 +126,7 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: "shopify-cart",
+      name: "rose-sugar-cart",
       storage: createJSONStorage(() => localStorage),
     },
   ),

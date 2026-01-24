@@ -1,4 +1,4 @@
-import { ShopifyProduct } from "@/lib/shopify";
+import type { ShopifyProduct } from "@/types/shopify";
 import ShopifyCookieCard from "./ShopifyCookieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";

@@ -1,8 +1,8 @@
-import type { ShopifyProduct } from "@/lib/shopify";
+import type { ShopifyProductNode } from "@/types/shopify";
 
 export type ClassDetail = {
   slug: string;
-  product: ShopifyProduct["node"];
+  product: ShopifyProductNode;
   dateLabel: string;
   dateISO: string;
   time: string;

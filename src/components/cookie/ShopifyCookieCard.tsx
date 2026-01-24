@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Check } from "lucide-react";
-import { ShopifyProduct } from "@/lib/shopify";
+import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { useState } from "react";
 import Link from "next/link";

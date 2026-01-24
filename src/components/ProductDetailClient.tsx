@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Check, Minus, Plus } from "lucide-react";
-import type { ShopifyProduct } from "@/lib/shopify";
+import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore } from "@/stores/cartStore";
 
 export default function ProductDetailClient({
@@ -12,7 +12,7 @@ export default function ProductDetailClient({
   addedLabel = "Added to Cart!",
   addedLabelSingular,
   addedLabelPlural,
-  helperText = "Secure checkout powered by Shopify",
+  helperText = "Checkout opens in a new tab.",
 }: {
   product: ShopifyProduct["node"];
   actionLabel?: string;

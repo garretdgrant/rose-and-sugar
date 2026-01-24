@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
 import ShopifyCookieGrid from "@/components/cookie/ShopifyCookieGrid";
 import FAQAccordion from "@/components/FAQAccordion";
-import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
+import { mockShopifyCookies } from "@/data/shopifyMocks";
 import { cookieCategories } from "@/data/cookieCategories";
 import {
   Search,
@@ -17,9 +17,9 @@ import {
 type SortOption = "featured" | "price-low" | "price-high" | "name-az";
 
 const ShopifyPreDesignedClient = () => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const products = mockShopifyCookies;
+  const isLoading = false;
+  const loadError = null;
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("featured");
@@ -31,26 +31,7 @@ const ShopifyPreDesignedClient = () => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      setLoadError(null);
-      try {
-        const cookieProducts = await fetchProducts(
-          50,
-          'product_type:"Pre-Designed Cookies"',
-        );
-        setProducts(cookieProducts);
-      } catch (error) {
-        console.error("Error loading products:", error);
-        setLoadError("We couldn't load the cookie collection right now.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
+  // Data is static for now, so no loading effect is required.
 
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...products];

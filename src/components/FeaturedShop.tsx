@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,7 +13,8 @@ import {
   Calendar,
   Users,
 } from "lucide-react";
-import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
+import { mockShopifyClasses, mockShopifyCookies } from "@/data/shopifyMocks";
+import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore } from "@/stores/cartStore";
 
 const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
@@ -277,50 +278,8 @@ const FeaturedCookieCard = ({
 };
 
 const FeaturedShop = () => {
-  const [featuredClass, setFeaturedClass] = useState<ShopifyProduct | null>(
-    null,
-  );
-  const [featuredCookies, setFeaturedCookies] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const [classes, cookies] = await Promise.all([
-          fetchProducts(2, 'product_type:"Cookie Decorating Class"'),
-          fetchProducts(4, 'product_type:"Pre-Designed Cookies"'),
-        ]);
-
-        if (classes.length > 0) {
-          setFeaturedClass(classes[0]);
-        }
-        setFeaturedCookies(cookies.slice(0, 4));
-      } catch (error) {
-        console.error("Failed to load featured products:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <section className="section-padding bg-gradient-to-br from-bakery-cream via-bakery-offWhite to-bakery-peach/30">
-        <div className="container-custom">
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-12 h-12 rounded-full border-4 border-bakery-pink-light border-t-bakery-pink-dark animate-spin" />
-              <p className="font-poppins text-gray-500">
-                Loading featured items...
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const featuredClass = mockShopifyClasses[0] ?? null;
+  const featuredCookies = mockShopifyCookies.slice(0, 4);
 
   if (!featuredClass && featuredCookies.length === 0) {
     return null;

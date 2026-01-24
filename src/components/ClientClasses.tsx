@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ClassProductCard from "@/components/ClassProductCard";
-import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
+import { mockShopifyClasses } from "@/data/shopifyMocks";
 import {
   Check,
   Users,
@@ -19,10 +19,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ClientClasses = () => {
-  const [upcomingClasses, setUpcomingClasses] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const upcomingClasses = mockShopifyClasses;
+  const isLoading = false;
+  const loadError = null;
 
   const classFeatures = [
     "Hands-on instruction perfect for all skill levels",
@@ -58,24 +58,6 @@ const ClientClasses = () => {
 
   useEffect(() => {
     setMounted(true);
-    const loadClasses = async () => {
-      setIsLoading(true);
-      setLoadError(null);
-      try {
-        const products = await fetchProducts(
-          20,
-          'product_type:"Cookie Decorating Class"',
-        );
-        setUpcomingClasses(products);
-      } catch (error) {
-        console.error("Failed to load classes:", error);
-        setLoadError("We couldn't load upcoming classes right now.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadClasses();
   }, []);
 
   return (
