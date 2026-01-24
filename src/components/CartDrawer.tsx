@@ -155,6 +155,10 @@ const CartDrawer = () => {
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {items.map((item, index) => {
                   const imageNode = item.product.node.images?.edges?.[0]?.node;
+                  const cartImageSrc = item.imageOverride || imageNode?.url;
+                  const cartImageAlt = item.imageOverride
+                    ? item.product.node.title
+                    : imageNode?.altText || item.product.node.title;
                   return (
                     <div
                       key={item.variantId}
@@ -174,10 +178,10 @@ const CartDrawer = () => {
                       <div className="flex gap-4">
                         {/* Product image */}
                         <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-bakery-cream/50">
-                          {imageNode?.url ? (
+                          {cartImageSrc ? (
                             <Image
-                              src={imageNode.url}
-                              alt={imageNode.altText || item.product.node.title}
+                              src={cartImageSrc}
+                              alt={cartImageAlt}
                               fill
                               sizes="80px"
                               className="object-cover"

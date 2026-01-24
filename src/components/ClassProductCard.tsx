@@ -17,9 +17,13 @@ import { useCartStore, CartItem } from "@/stores/cartStore";
 
 interface ClassProductCardProps {
   product: ShopifyProduct;
+  imageOverride?: string;
 }
 
-const ClassProductCard = ({ product }: ClassProductCardProps) => {
+const ClassProductCard = ({
+  product,
+  imageOverride,
+}: ClassProductCardProps) => {
   const addItem = useCartStore((state) => state.addItem);
   const { node } = product;
   const [quantity, setQuantity] = useState(1);
@@ -27,6 +31,7 @@ const ClassProductCard = ({ product }: ClassProductCardProps) => {
 
   const variant = node.variants.edges[0]?.node;
   const image = node.images.edges[0]?.node;
+  const imageSrc = imageOverride || image?.url || "/openDefault.webp";
   const price = parseFloat(node.priceRange.minVariantPrice.amount);
   const isAvailable = variant?.availableForSale ?? true;
 
@@ -45,6 +50,7 @@ const ClassProductCard = ({ product }: ClassProductCardProps) => {
       price: variant.price,
       quantity,
       selectedOptions: variant.selectedOptions || [],
+      imageOverride,
     };
 
     addItem(cartItem);
@@ -62,7 +68,7 @@ const ClassProductCard = ({ product }: ClassProductCardProps) => {
         className="relative h-52 overflow-hidden block"
       >
         <Image
-          src={image?.url || "/openDefault.webp"}
+          src={imageSrc}
           alt={image?.altText || node.title}
           fill
           sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"

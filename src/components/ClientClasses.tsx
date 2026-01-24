@@ -433,10 +433,13 @@ const ClientClasses = () => {
                       : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                 }`}
               >
-                {upcomingClasses.map((classItem) => (
+                {upcomingClasses.map((classItem, index) => (
                   <ClassProductCard
                     key={classItem.node.id}
                     product={classItem}
+                    imageOverride={
+                      index === 0 ? "/singleCookie.webp" : undefined
+                    }
                   />
                 ))}
               </div>

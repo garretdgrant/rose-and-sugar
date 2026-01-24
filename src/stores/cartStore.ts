@@ -17,6 +17,7 @@ export interface CartItem {
     name: string;
     value: string;
   }>;
+  imageOverride?: string;
 }
 
 interface CartStore {

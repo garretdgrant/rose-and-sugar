@@ -78,14 +78,14 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
       </Link>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         <Link href={`/cookies/signature-sugar-cookie-sets/${node.handle}`}>
-          <h3 className="font-bebas text-xl text-gray-800 mb-1.5 leading-tight tracking-wide group-hover:text-bakery-pink-dark transition-colors">
+          <h3 className="font-bebas text-lg sm:text-xl text-gray-800 mb-1.5 leading-tight tracking-wide group-hover:text-bakery-pink-dark transition-colors">
             {node.title}
           </h3>
         </Link>
 
-        <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 font-poppins">
+        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4 font-poppins">
           {node.description ||
             "Handcrafted decorated sugar cookies, perfect for any celebration."}
         </p>
@@ -94,7 +94,7 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
         <Button
           type="button"
           onClick={(e) => handleAddToCart(e)}
-          className={`w-full rounded-xl py-5 text-sm font-medium transition-all duration-300 ${
+          className={`w-full rounded-xl py-4 sm:py-5 text-xs sm:text-sm font-medium transition-all duration-300 ${
             isAdded
               ? "bg-green-500 hover:bg-green-500 text-white"
               : "bg-bakery-pink hover:bg-bakery-pink-dark text-white"
