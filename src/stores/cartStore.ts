@@ -32,7 +32,7 @@ interface CartStore {
   removeItem: (variantId: string) => void;
   clearCart: () => void;
   setCartId: (cartId: string) => void;
-  setCheckoutUrl: (url: string) => void;
+  setCheckoutUrl: (url: string | null) => void;
   setLoading: (loading: boolean) => void;
   setIsOpen: (isOpen: boolean) => void;
   createCheckout: () => Promise<void>;
