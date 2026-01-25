@@ -226,8 +226,10 @@ const ShopifyPreDesignedClient = () => {
               </span>
             </div>
 
-            <h1 className="font-bebas text-5xl md:text-6xl lg:text-7xl text-gray-800 tracking-wide mb-4">
-              Signature Sets
+            <h1 className="font-bebas text-5xl md:text-6xl lg:text-7xl tracking-wide mb-4">
+              <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+                Signature Sets
+              </span>
             </h1>
 
             <p className="font-poppins text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">

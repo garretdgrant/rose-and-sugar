@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ClassProductCard from "@/components/ClassProductCard";
-import { mockShopifyClasses } from "@/data/shopifyMocks";
+import WaitlistModal from "@/components/WaitlistModal";
+import { useQuery } from "@tanstack/react-query";
+import {
+  fetchClassesList,
+  mapClassToShopifyProduct,
+  classesListQueryKey,
+} from "@/lib/shopifyClasses";
 import {
   Check,
   Users,
@@ -20,9 +26,19 @@ import Image from "next/image";
 
 const ClientClasses = () => {
   const [mounted, setMounted] = useState(false);
-  const upcomingClasses = mockShopifyClasses;
-  const isLoading = false;
-  const loadError = null;
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const {
+    data: apiClasses,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: classesListQueryKey,
+    queryFn: fetchClassesList,
+  });
+  const loadError =
+    isError && (!apiClasses || apiClasses.length === 0)
+      ? "We couldn't load classes right now."
+      : null;
 
   const classFeatures = [
     "Hands-on instruction perfect for all skill levels",
@@ -59,6 +75,18 @@ const ClientClasses = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const upcomingClasses = useMemo(() => {
+    const toTime = (value?: string | null) => {
+      if (!value) return Number.POSITIVE_INFINITY;
+      const parsed = Date.parse(value);
+      return Number.isNaN(parsed) ? Number.POSITIVE_INFINITY : parsed;
+    };
+    const sorted = [...(apiClasses || [])].sort(
+      (a, b) => toTime(a.eventStartDateTime) - toTime(b.eventStartDateTime),
+    );
+    return sorted.map(mapClassToShopifyProduct);
+  }, [apiClasses]);
 
   return (
     <main className="relative overflow-hidden">
@@ -315,7 +343,6 @@ const ClientClasses = () => {
           }
         `}</style>
       </section>
-
       {/* ===== HIGHLIGHTS SECTION ===== */}
       <section className="relative py-16 md:py-24 bg-white overflow-hidden">
         {/* Subtle background pattern */}
@@ -415,13 +442,10 @@ const ClientClasses = () => {
                       : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                 }`}
               >
-                {upcomingClasses.map((classItem, index) => (
+                {upcomingClasses.map((classItem) => (
                   <ClassProductCard
                     key={classItem.node.id}
                     product={classItem}
-                    imageOverride={
-                      index === 0 ? "/singleCookie.webp" : undefined
-                    }
                   />
                 ))}
               </div>
@@ -446,17 +470,22 @@ const ClientClasses = () => {
                         </p>
                       </div>
                     </div>
-                    <Link
-                      href="/contact"
+                    <button
+                      type="button"
+                      onClick={() => setIsWaitlistOpen(true)}
                       className="group inline-flex items-center gap-3 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white px-8 py-4 rounded-full font-poppins font-semibold shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
                     >
                       Join Waitlist
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
+            <WaitlistModal
+              open={isWaitlistOpen}
+              onOpenChange={setIsWaitlistOpen}
+            />
           </div>
         </div>
       </section>

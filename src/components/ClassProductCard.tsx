@@ -34,11 +34,73 @@ const ClassProductCard = ({
   const imageSrc = imageOverride || image?.url || "/openDefault.webp";
   const price = parseFloat(node.priceRange?.minVariantPrice?.amount || "0");
   const isAvailable = variant?.availableForSale ?? true;
+  const seatsLeft = node.quantityAvailable ?? null;
+  const maxSeats = seatsLeft && seatsLeft > 0 ? Math.min(seatsLeft, 10) : 10;
 
   // Extract date from title (e.g., "Spring Cookie Decorating Class - June 12")
   const dateMatch = node.title.match(/- ([A-Za-z]+)\s+(\d{1,2})/);
   const month = dateMatch?.[1] || "";
   const day = dateMatch?.[2] || "";
+  const startDateTime = node.eventStartDateTime
+    ? new Date(node.eventStartDateTime)
+    : null;
+  const endDateTime = node.eventEndDateTime
+    ? new Date(node.eventEndDateTime)
+    : null;
+  const validStartDate =
+    startDateTime && !Number.isNaN(startDateTime.getTime())
+      ? startDateTime
+      : null;
+  const validEndDate =
+    endDateTime && !Number.isNaN(endDateTime.getTime()) ? endDateTime : null;
+  const startMonth = validStartDate
+    ? new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        timeZone: "America/Los_Angeles",
+      }).format(validStartDate)
+    : month;
+  const startDay = validStartDate
+    ? new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        timeZone: "America/Los_Angeles",
+      }).format(validStartDate)
+    : day;
+  const durationMinutes =
+    validStartDate && validEndDate
+      ? Math.max(0, (validEndDate.getTime() - validStartDate.getTime()) / 60000)
+      : null;
+  const durationLabel = durationMinutes
+    ? durationMinutes % 60 === 0
+      ? `${durationMinutes / 60} hours`
+      : `${(durationMinutes / 60).toFixed(1)} hours`
+    : "2 hours";
+  const formatTime = (date: Date) => {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "America/Los_Angeles",
+    }).formatToParts(date);
+    const hour = parts.find((part) => part.type === "hour")?.value;
+    const minute = parts.find((part) => part.type === "minute")?.value;
+    const dayPeriod = parts.find((part) => part.type === "dayPeriod")?.value;
+    if (!hour || !dayPeriod) return "";
+    if (!minute || minute === "00") return `${hour} ${dayPeriod}`;
+    return `${hour}:${minute} ${dayPeriod}`;
+  };
+  const timeRangeLabel =
+    validStartDate && validEndDate
+      ? `${formatTime(validStartDate)} - ${formatTime(validEndDate)}`
+      : validStartDate
+        ? formatTime(validStartDate)
+        : null;
+  const timeLabel = timeRangeLabel || durationLabel;
+  const locationLabel =
+    node.location?.name || node.location?.address?.city || "Folsom, CA";
+  const seatsLabel =
+    seatsLeft !== null
+      ? `${seatsLeft} seat${seatsLeft === 1 ? "" : "s"} left`
+      : "Limited seats";
 
   const handleAddToCart = () => {
     if (!variant || !isAvailable || isAdded) return;
@@ -76,14 +138,16 @@ const ClassProductCard = ({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-        {month && day && (
+        {startMonth && startDay && (
           <div className="absolute top-4 left-4 z-10">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden w-16">
               <div className="bg-bakery-pink-dark text-white text-center py-1 font-bebas text-sm tracking-widest uppercase">
-                {month.slice(0, 3)}
+                {startMonth.slice(0, 3)}
               </div>
               <div className="bg-white text-center py-2">
-                <span className="font-bebas text-3xl text-gray-900">{day}</span>
+                <span className="font-bebas text-3xl text-gray-900">
+                  {startDay}
+                </span>
               </div>
             </div>
           </div>
@@ -115,18 +179,16 @@ const ClassProductCard = ({
         <div className="mt-4 space-y-2">
           <div className="flex items-center gap-2 text-gray-600">
             <Clock className="w-4 h-4 text-bakery-pink" />
-            <span className="text-sm font-poppins">2 hours</span>
+            <span className="text-sm font-poppins">{timeLabel}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-600">
             <MapPin className="w-4 h-4 text-bakery-pink" />
-            <span className="text-sm font-poppins">Folsom, CA</span>
+            <span className="text-sm font-poppins">{locationLabel}</span>
           </div>
-          {isAvailable && (
-            <div className="flex items-center gap-2 text-gray-600">
-              <Users className="w-4 h-4 text-bakery-pink" />
-              <span className="text-sm font-poppins">Limited seats</span>
-            </div>
-          )}
+          <div className="flex items-center gap-2 text-gray-600">
+            <Users className="w-4 h-4 text-bakery-pink" />
+            <span className="text-sm font-poppins">{seatsLabel}</span>
+          </div>
         </div>
 
         <p className="mt-4 text-gray-600 text-sm font-poppins leading-relaxed line-clamp-2">
@@ -152,8 +214,8 @@ const ClassProductCard = ({
             </span>
             <button
               type="button"
-              onClick={() => setQuantity((q) => Math.min(q + 1, 10))}
-              disabled={quantity >= 10 || !isAvailable}
+              onClick={() => setQuantity((q) => Math.min(q + 1, maxSeats))}
+              disabled={quantity >= maxSeats || !isAvailable}
               className="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 hover:bg-white hover:text-bakery-pink-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               aria-label="Increase quantity"
             >

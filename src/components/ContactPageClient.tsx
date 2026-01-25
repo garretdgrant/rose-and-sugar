@@ -26,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { isValidPhone } from "@/lib/validations";
+import { referralSourceOptions } from "@/lib/referralSources";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -35,6 +36,7 @@ const formSchema = z.object({
   }),
   message: z.string().min(10, "Please provide your message"),
   referralSource: z.string().optional(),
+  referralDetails: z.string().optional(),
   company: z.string().optional(),
 });
 
@@ -53,7 +55,8 @@ const ContactPageClient = () => {
       email: "",
       phone: "",
       message: "",
-      referralSource: "",
+      referralSource: "Google",
+      referralDetails: "",
       company: "",
     },
   });
@@ -62,16 +65,31 @@ const ContactPageClient = () => {
     setMounted(true);
   }, []);
 
+  const referralValue = form.watch("referralSource");
+
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
     try {
+      const referralSource = data.referralSource?.trim() ?? "";
+      const referralDetails = data.referralDetails?.trim() ?? "";
+      const normalizedReferral =
+        referralSource === "Other (describe below)" && referralDetails
+          ? `Other: ${referralDetails}`
+          : referralSource;
+
       const response = await fetch("/api/contact/general", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: data.message,
+          referralSource: normalizedReferral,
+        }),
       });
 
       if (!response.ok) {
@@ -258,11 +276,36 @@ const ContactPageClient = () => {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              How did you hear about us? (optional)
+                              How did you hear about us? (Select One)
                             </FormLabel>
                             <FormControl>
+                              <select
+                                {...field}
+                                className="flex h-10 w-full rounded-md border border-bakery-pink-light/40 bg-background px-3 py-2 text-base text-gray-700 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bakery-pink/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                              >
+                                {referralSourceOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    {referralValue === "Other (describe below)" && (
+                      <FormField
+                        control={form.control}
+                        name="referralDetails"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Please describe (optional)</FormLabel>
+                            <FormControl>
                               <Input
-                                placeholder="Instagram, friend, Google, etc."
+                                placeholder="Tell us where you heard about us"
                                 {...field}
                               />
                             </FormControl>
@@ -270,7 +313,7 @@ const ContactPageClient = () => {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    )}
 
                     <FormField
                       control={form.control}

@@ -1,572 +1,696 @@
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
-import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
-import ProductDetailClient from "@/components/ProductDetailClient";
-import { getClassBySlug } from "@/data/classDetails";
 import {
+  Calendar,
   ChevronRight,
   Clock,
   MapPin,
-  Sparkles,
-  Leaf,
-  Award,
-  Heart,
   Users,
-  ChevronDown,
-  Calendar,
+  Sparkles,
+  ArrowLeft,
+  Heart,
+  Cookie,
+  Quote,
+  Star,
 } from "lucide-react";
+import { buildPageMetadata } from "@/lib/metadata";
+import FAQAccordion from "@/components/FAQAccordion";
+import ProductDetailClient from "@/components/ProductDetailClient";
+import { buildClassNode, fetchClassByHandle } from "@/lib/shopifyClasses";
 
 type Props = { params: Promise<{ slug: string }> };
 
+const formatTime = (date: Date) => {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "America/Los_Angeles",
+  }).formatToParts(date);
+  const hour = parts.find((part) => part.type === "hour")?.value;
+  const minute = parts.find((part) => part.type === "minute")?.value;
+  const dayPeriod = parts.find((part) => part.type === "dayPeriod")?.value;
+  if (!hour || !dayPeriod) return "";
+  if (!minute || minute === "00") return `${hour} ${dayPeriod}`;
+  return `${hour}:${minute} ${dayPeriod}`;
+};
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "America/Los_Angeles",
+  }).format(date);
+};
+
+const formatDateParts = (date: Date) => {
+  const month = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    timeZone: "America/Los_Angeles",
+  }).format(date);
+  const day = new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    timeZone: "America/Los_Angeles",
+  }).format(date);
+  const weekday = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    timeZone: "America/Los_Angeles",
+  }).format(date);
+  return { month, day, weekday };
+};
+
+const getDurationLabel = (start: Date, end: Date) => {
+  const durationMinutes = Math.max(
+    0,
+    (end.getTime() - start.getTime()) / 60000,
+  );
+  if (durationMinutes % 60 === 0) {
+    const hours = durationMinutes / 60;
+    return `${hours} hour${hours !== 1 ? "s" : ""}`;
+  }
+  return `${(durationMinutes / 60).toFixed(1)} hours`;
+};
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const classDetail = getClassBySlug(slug);
-  const title = classDetail
-    ? `${classDetail.product.title} | Rose & Sugar`
-    : "Class";
-  const description =
-    classDetail?.product.description ??
-    "Join a hands-on cookie decorating class with Rose & Sugar.";
-  const imagePath =
-    classDetail?.product.images?.edges?.[0]?.node.url ??
-    "/roseSugarClassCropped.webp";
+  const classItem = await fetchClassByHandle(slug);
+
+  if (!classItem) {
+    return buildPageMetadata({
+      title: "Class",
+      description: "Join a hands-on cookie decorating class with Rose & Sugar.",
+      path: `/classes/${slug}`,
+      imagePath: "/roseSugarClassCropped.webp",
+    });
+  }
 
   return buildPageMetadata({
-    title,
-    description,
+    title: classItem.seo?.title || `${classItem.title} | Rose & Sugar`,
+    description:
+      classItem.seo?.description ||
+      classItem.description ||
+      "Join a hands-on cookie decorating class with Rose & Sugar.",
     path: `/classes/${slug}`,
-    imagePath,
+    imagePath: classItem.image?.url || "/roseSugarClassCropped.webp",
   });
 }
 
-const ClassDetailPage = async ({ params }: Props) => {
+export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const classDetail = getClassBySlug(slug);
+  const classItem = await fetchClassByHandle(slug);
 
-  if (!classDetail) {
+  if (!classItem) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-bakery-pink-light/20 via-white to-bakery-cream/30">
-        <div className="max-w-md p-12 text-center">
-          <div className="w-20 h-20 bg-bakery-pink-light/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Users className="w-10 h-10 text-bakery-pink-dark" />
+      <main className="min-h-screen relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-peach/30" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/40 to-transparent blur-3xl" />
+
+        <div className="relative z-10 min-h-screen flex items-center justify-center px-6">
+          <div className="max-w-md text-center">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
+              <Cookie className="w-10 h-10 text-bakery-pink-dark" />
+            </div>
+            <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
+              Class Not Found
+            </h2>
+            <p className="mt-4 font-poppins text-gray-600 leading-relaxed">
+              This class may have ended or the link might be incorrect. Check
+              out our upcoming classes for new opportunities!
+            </p>
+            <Link
+              href="/classes"
+              className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white font-poppins font-semibold rounded-full shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              View All Classes
+            </Link>
           </div>
-          <h2 className="font-bebas text-3xl text-gray-800 mb-3">
-            Class Not Found
-          </h2>
-          <p className="text-gray-600 font-poppins mb-8">
-            We couldn&apos;t find this class. Check our upcoming sessions for
-            new dates.
-          </p>
-          <Link
-            href="/classes"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-bakery-pink-dark text-white rounded-full font-medium hover:bg-bakery-pink-dark/90 transition-colors shadow-lg shadow-bakery-pink-dark/20"
-          >
-            <Sparkles className="w-4 h-4" />
-            View Classes
-          </Link>
         </div>
       </main>
     );
   }
 
-  const { product } = classDetail;
-  const imageUrl = product.images?.edges?.[0]?.node.url ?? "/openDefault.webp";
-  const gallery = (product.images?.edges || [])
-    .map((e) => e.node.url)
-    .slice(0, 4);
-  const price = product.priceRange?.minVariantPrice?.amount ?? "0";
-  const tags = (product.tags || []).map((tag) => tag.toLowerCase());
+  const imageUrl = classItem.image?.url || "/openDefault.webp";
+  const imageAlt = classItem.image?.altText || classItem.title;
+  const price = parseFloat(classItem.price || "0");
+  const productNode = buildClassNode(classItem);
+  const startDate = classItem.eventStartDateTime
+    ? new Date(classItem.eventStartDateTime)
+    : null;
+  const endDate = classItem.eventEndDateTime
+    ? new Date(classItem.eventEndDateTime)
+    : null;
+  const validStart = startDate && !Number.isNaN(startDate.getTime());
+  const validEnd = endDate && !Number.isNaN(endDate.getTime());
 
-  const isSeasonal = tags.includes("seasonal");
-  const isBeginner = tags.includes("beginner");
-  const isSignature = tags.includes("signature");
-  const isNew = tags.includes("new");
+  const dateLabel = validStart ? formatDate(startDate) : "Date TBD";
+  const dateParts = validStart ? formatDateParts(startDate) : null;
+  const timeLabel = validStart
+    ? validEnd
+      ? `${formatTime(startDate)} – ${formatTime(endDate)}`
+      : formatTime(startDate)
+    : "Time TBD";
+  const durationLabel =
+    validStart && validEnd ? getDurationLabel(startDate, endDate) : null;
 
-  const structuredData = {
-    "@context": "https://schema.org/",
-    "@type": "Event",
-    name: product.title,
-    image: gallery.length ? gallery : [imageUrl],
-    description: product.description || undefined,
-    startDate: classDetail.dateISO,
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    location: {
-      "@type": "Place",
-      name: "Rose & Sugar",
-      address: classDetail.location,
+  const address = classItem.location?.address;
+  const locationName = classItem.location?.name || "Location TBD";
+  const locationDetails = [address?.address1, address?.city, address?.zip]
+    .filter(Boolean)
+    .join(", ");
+  const hasLocation =
+    Boolean(classItem.location?.name) || Boolean(locationDetails);
+  const locationSummary = hasLocation
+    ? `${locationName}${locationDetails ? ` (${locationDetails})` : ""}.`
+    : "Location details will be shared after booking.";
+
+  const seatsLeft = classItem.quantityAvailable ?? null;
+  const seatsLabel =
+    seatsLeft !== null && seatsLeft !== undefined
+      ? seatsLeft === 0
+        ? "Sold Out"
+        : `${seatsLeft} seat${seatsLeft === 1 ? "" : "s"} remaining`
+      : "Limited availability";
+  const isLowStock = seatsLeft !== null && seatsLeft > 0 && seatsLeft <= 5;
+  const isSoldOut = seatsLeft === 0;
+  const durationSummary = durationLabel || "About 1.5–2 hours";
+
+  const faqs = [
+    {
+      question: "What is included in the class?",
+      answer:
+        "All supplies are provided, including cookies, icing, tools, and take-home packaging. You'll leave with your decorated cookies.",
     },
-    offers: {
-      "@type": "Offer",
-      price: parseFloat(price).toFixed(2),
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-      url: `https://roseandsugar.com/classes/${product.handle}`,
+    {
+      question: "How long does the class last?",
+      answer: durationSummary,
     },
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: buildCanonicalUrl("/"),
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Classes",
-        item: buildCanonicalUrl("/classes"),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: product.title,
-        item: buildCanonicalUrl(`/classes/${product.handle}`),
-      },
-    ],
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: classDetail.faq.map((faq) => ({
-      "@type": "Question",
-      name: faq.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.a,
-      },
-    })),
-  };
+    {
+      question: "Where is the class held?",
+      answer: locationSummary,
+    },
+    {
+      question: "Is the class beginner friendly?",
+      answer:
+        "Yes! Classes are designed for all skill levels with step-by-step instruction.",
+    },
+    {
+      question: "What if I need to cancel or reschedule?",
+      answer: (
+        <>
+          Please reach out as soon as possible and we&apos;ll do our best to
+          help.{" "}
+          <Link
+            className="text-bakery-pink-dark underline underline-offset-4 hover:text-bakery-pink"
+            href="/contact"
+          >
+            Contact us here
+          </Link>
+          .
+        </>
+      ),
+    },
+  ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-bakery-pink-light/10 via-white to-bakery-cream/20">
-      <Script
-        id="event-jsonld-class"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-      <Script
-        id="breadcrumbs-jsonld-class"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <Script
-        id="faq-jsonld-class"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      {/* Decorative background elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-40 -left-20 w-80 h-80 bg-bakery-peach/20 rounded-full blur-3xl" />
-        <div className="absolute top-96 -right-32 w-96 h-96 bg-bakery-pink-light/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-40 left-1/4 w-64 h-64 bg-bakery-pink/10 rounded-full blur-3xl" />
-      </div>
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Layered background with organic shapes */}
+      <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-pink-light/30" />
 
-      <div className="relative z-10">
-        {/* Breadcrumbs */}
-        <nav className="pt-28 pb-6 md:pt-32">
-          <div className="max-w-4xl mx-auto px-4 md:px-6">
-            <div className="flex items-center gap-2 text-sm font-poppins">
-              <Link
-                href="/"
-                className="text-gray-500 hover:text-bakery-pink-dark transition-colors"
-              >
-                Home
-              </Link>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-              <Link
-                href="/classes"
-                className="text-gray-500 hover:text-bakery-pink-dark transition-colors"
-              >
-                Classes
-              </Link>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-800 font-medium truncate max-w-[200px]">
-                {product.title}
-              </span>
-            </div>
+      {/* Large decorative blob - top right */}
+      <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-bakery-pink-light/50 to-bakery-peach/30 blur-3xl" />
+
+      {/* Medium blob - bottom left */}
+      <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-bakery-peach/40 to-bakery-pink-light/20 blur-3xl" />
+
+      {/* Floating accent shapes */}
+      <div
+        className="absolute top-1/4 right-[15%] w-4 h-4 rounded-full bg-bakery-pink-dark/40"
+        style={{ animation: "float 4s ease-in-out infinite" }}
+      />
+      <div
+        className="absolute top-1/2 left-[10%] w-3 h-3 rounded-full bg-bakery-brown/40"
+        style={{ animation: "float 5s ease-in-out infinite 0.5s" }}
+      />
+      <div
+        className="absolute bottom-1/4 right-1/4 w-2 h-2 rounded-full bg-bakery-pink/50"
+        style={{ animation: "float 3.5s ease-in-out infinite 1s" }}
+      />
+
+      <div className="relative z-10 pt-28 md:pt-32">
+        <nav className="container-custom mb-6" aria-label="Breadcrumb">
+          <div className="flex items-center gap-2 text-sm font-poppins text-gray-500">
+            <Link
+              href="/"
+              className="hover:text-bakery-pink-dark transition-colors"
+            >
+              Home
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <Link
+              href="/classes"
+              className="hover:text-bakery-pink-dark transition-colors"
+            >
+              Classes
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <span className="text-gray-800 font-medium truncate max-w-[240px]">
+              {classItem.title}
+            </span>
           </div>
         </nav>
 
-        {/* Main Class Section */}
-        <section className="pb-16 md:pb-24">
-          <div className="max-w-4xl mx-auto px-4 md:px-6">
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-              {/* Left: Image Gallery */}
-              <div className="space-y-4">
-                {/* Main Image */}
-                <div className="relative group">
-                  <div className="absolute -inset-3 bg-gradient-to-br from-bakery-pink-light/40 via-bakery-peach/30 to-bakery-pink-light/40 rounded-3xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
-                  <div className="relative bg-white rounded-2xl overflow-hidden shadow-xl">
-                    <div className="relative aspect-square">
-                      <Image
-                        src={imageUrl}
-                        alt={product.title}
-                        fill
-                        priority
-                        className="object-cover"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
+        {/* Hero Section with Editorial Layout */}
+        <section className="container-custom py-12 lg:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:items-stretch">
+            {/* Left Column - Image + Content */}
+            <div className="lg:col-span-7 space-y-8">
+              {/* Image Container */}
+              <div className="relative">
+                {/* Background decorative shape */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-bakery-peach via-bakery-pink-light/60 to-bakery-cream rounded-[2.5rem] transform rotate-2 hidden lg:block" />
 
-                      {/* Badges */}
-                      <div className="absolute top-4 left-4 flex flex-col gap-2">
-                        {isBeginner && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg">
-                            <Users className="w-3.5 h-3.5" />
-                            Beginner Friendly
+                {/* Main image container */}
+                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-bakery-pink/20 transform lg:-rotate-1 hover:rotate-0 transition-transform duration-500">
+                  <div className="relative aspect-[4/3] lg:aspect-[16/10]">
+                    <Image
+                      src={imageUrl}
+                      alt={imageAlt}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      className="object-cover"
+                    />
+                    {/* Subtle gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  </div>
+
+                  {/* Date badge - floating on image */}
+                  {dateParts && (
+                    <div className="absolute top-6 left-6 z-10">
+                      <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-20 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <div className="bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white text-center py-1.5 font-bebas text-sm tracking-widest uppercase">
+                          {dateParts.month}
+                        </div>
+                        <div className="bg-white text-center py-3">
+                          <span className="font-bebas text-4xl text-gray-900">
+                            {dateParts.day}
                           </span>
-                        )}
-                        {isNew && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-bakery-pink-dark text-white text-xs font-semibold rounded-full shadow-lg">
-                            <Sparkles className="w-3.5 h-3.5" />
-                            New
-                          </span>
-                        )}
-                        {isSeasonal && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 text-white text-xs font-semibold rounded-full shadow-lg">
-                            <Leaf className="w-3.5 h-3.5" />
-                            Seasonal
-                          </span>
-                        )}
-                        {isSignature && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white text-xs font-semibold rounded-full shadow-lg">
-                            <Award className="w-3.5 h-3.5" />
-                            Signature
-                          </span>
-                        )}
+                        </div>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Status badge - sold out or low stock */}
+                  {(isSoldOut || isLowStock) && (
+                    <div className="absolute top-6 right-6 z-10">
+                      <span
+                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-poppins font-semibold shadow-lg ${
+                          isSoldOut
+                            ? "bg-gray-900 text-white"
+                            : "bg-amber-500 text-white"
+                        }`}
+                      >
+                        <span
+                          className={`w-2 h-2 rounded-full ${isSoldOut ? "bg-gray-400" : "bg-white animate-pulse"}`}
+                        />
+                        {isSoldOut ? "Sold Out" : `Only ${seatsLeft} left!`}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Floating elements around image */}
+                <div
+                  className="absolute -bottom-4 -right-4 md:bottom-8 md:-right-8 bg-white rounded-2xl shadow-xl p-4 transform rotate-3 hidden md:block z-20"
+                  style={{ animation: "float 5s ease-in-out infinite" }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-bakery-pink-dark" />
+                    </div>
+                    <div>
+                      <p className="font-bebas text-xl text-gray-800">
+                        Hands-On
+                      </p>
+                      <p className="font-poppins text-xs text-gray-500">
+                        Learning Experience
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Thumbnail Gallery */}
-                {gallery.length > 1 && (
-                  <div className="grid grid-cols-4 gap-3">
-                    {gallery.map((src, i) => (
-                      <button
-                        key={src}
-                        className={`relative aspect-square rounded-xl overflow-hidden bg-white shadow-md hover:shadow-lg transition-shadow ring-2 ring-offset-2 ${
-                          i === 0
-                            ? "ring-bakery-pink-dark"
-                            : "ring-transparent hover:ring-bakery-pink-light"
-                        }`}
-                      >
-                        <Image
-                          src={src}
-                          alt={`${product.title} view ${i + 1}`}
-                          fill
-                          className="object-cover"
-                          sizes="150px"
-                        />
-                      </button>
-                    ))}
+                {/* Cookie takeaway badge */}
+                <div
+                  className="absolute -bottom-2 left-8 md:-bottom-6 md:left-12 bg-gradient-to-br from-bakery-pink-dark to-bakery-pink text-white rounded-2xl shadow-xl p-4 transform -rotate-3 hidden md:block z-20"
+                  style={{ animation: "float 6s ease-in-out infinite 1s" }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Cookie className="w-5 h-5" />
+                    <span className="font-poppins font-semibold text-sm">
+                      Take Home Your Creations
+                    </span>
                   </div>
-                )}
+                </div>
               </div>
 
-              {/* Right: Class Details */}
-              <div className="lg:sticky lg:top-32 space-y-6">
-                {/* Title & Price */}
-                <div>
-                  <h1 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-wide leading-tight mb-3">
-                    {product.title}
-                  </h1>
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-3xl font-semibold text-bakery-pink-dark">
-                      ${parseFloat(price).toFixed(2)}
-                    </span>
-                    <span className="text-gray-500 font-poppins text-sm">
-                      per seat
-                    </span>
+              {/* What's Included - Below Image on Desktop */}
+              <div className="hidden lg:block bg-white/70 backdrop-blur-sm rounded-[2rem] p-8 shadow-lg shadow-bakery-pink/5 border border-bakery-pink-light/20 mt-16">
+                <h3 className="font-bebas text-3xl text-gray-900 mb-6">
+                  What&apos;s{" "}
+                  <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+                    Included
+                  </span>
+                </h3>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="text-center p-5 rounded-2xl bg-gradient-to-br from-bakery-cream/60 to-white border border-bakery-pink-light/20 hover:shadow-lg hover:shadow-bakery-pink/10 transition-all duration-300">
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
+                      <Cookie className="w-7 h-7 text-bakery-pink-dark" />
+                    </div>
+                    <h4 className="font-bebas text-lg text-gray-800 mb-1">
+                      Cookie Decorating
+                    </h4>
+                    <p className="font-poppins text-xs text-gray-600">
+                      Themed cookies to take home
+                    </p>
                   </div>
+                  <div className="text-center p-5 rounded-2xl bg-gradient-to-br from-bakery-cream/60 to-white border border-bakery-pink-light/20 hover:shadow-lg hover:shadow-bakery-pink/10 transition-all duration-300">
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
+                      <Sparkles className="w-7 h-7 text-bakery-pink-dark" />
+                    </div>
+                    <h4 className="font-bebas text-lg text-gray-800 mb-1">
+                      All Supplies
+                    </h4>
+                    <p className="font-poppins text-xs text-gray-600">
+                      Everything you need provided
+                    </p>
+                  </div>
+                  <div className="text-center p-5 rounded-2xl bg-gradient-to-br from-bakery-cream/60 to-white border border-bakery-pink-light/20 hover:shadow-lg hover:shadow-bakery-pink/10 transition-all duration-300">
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center">
+                      <Heart className="w-7 h-7 text-bakery-pink-dark" />
+                    </div>
+                    <h4 className="font-bebas text-lg text-gray-800 mb-1">
+                      Sweet Experience
+                    </h4>
+                    <p className="font-poppins text-xs text-gray-600">
+                      Refreshments & fun atmosphere
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial - Below What's Included on Desktop */}
+              <div className="hidden lg:block bg-gradient-to-br from-bakery-pink-light/40 to-bakery-peach/30 backdrop-blur-sm rounded-[2rem] p-8 border border-bakery-pink-light/40">
+                <div className="flex items-start gap-5">
+                  <div className="flex-shrink-0">
+                    <Quote className="w-10 h-10 text-bakery-pink-dark/50 transform rotate-180" />
+                  </div>
+                  <div>
+                    <p className="font-playfair text-xl text-gray-700 italic leading-relaxed">
+                      &ldquo;Such a fun girls night out! Megan is an amazing
+                      teacher and made everyone feel comfortable. Can&apos;t
+                      wait to book another class!&rdquo;
+                    </p>
+                    <div className="mt-5 flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-bakery-pink to-bakery-pink-dark flex items-center justify-center">
+                        <span className="font-poppins font-bold text-white">
+                          SK
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-poppins font-medium text-gray-800">
+                          Sarah K.
+                        </p>
+                        <div className="flex items-center gap-0.5 mt-0.5">
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <Star
+                              key={i}
+                              className="w-4 h-4 fill-amber-400 text-amber-400"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Browse All Classes Link - Desktop */}
+              <div className="hidden lg:block text-center">
+                <Link
+                  href="/classes"
+                  className="inline-flex items-center gap-2 font-poppins text-bakery-pink-dark font-medium hover:text-bakery-pink transition-colors"
+                >
+                  Browse all upcoming classes
+                  <ArrowLeft className="w-4 h-4 rotate-180" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column - Sticky Booking Card Only */}
+            <div className="lg:col-span-5 lg:flex lg:items-stretch">
+              <div className="bg-white/80 backdrop-blur-sm rounded-[2rem] p-6 md:p-8 shadow-xl shadow-bakery-pink/10 border border-bakery-pink-light/30 lg:flex-1 lg:h-full">
+                {/* Category tag */}
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bakery-pink-light/50 border border-bakery-pink-light mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-bakery-pink-dark animate-pulse" />
+                  <span className="text-xs font-poppins font-medium text-bakery-pink-dark uppercase tracking-wider">
+                    Cookie Decorating Class
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h1 className="font-bebas text-4xl md:text-5xl lg:text-4xl xl:text-5xl text-gray-900 leading-[0.95] tracking-tight">
+                  {classItem.title}
+                </h1>
+
+                {/* Price */}
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className="font-bebas text-4xl bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+                    ${price.toFixed(0)}
+                  </span>
+                  <span className="font-poppins text-sm text-gray-500">
+                    per person
+                  </span>
                 </div>
 
                 {/* Description */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-bakery-pink-light/20">
-                  <p className="text-gray-700 font-poppins leading-relaxed">
-                    {product.description ||
-                      "Hands-on cookie decorating class with step-by-step instruction, all supplies included, and plenty of time to practice."}
-                  </p>
+                <p className="mt-5 font-poppins text-gray-600 leading-relaxed">
+                  {classItem.description ||
+                    "Join us for a hands-on cookie decorating experience where you'll learn professional techniques and take home your delicious creations!"}
+                </p>
+
+                {/* Divider */}
+                <div className="my-6 h-px bg-gradient-to-r from-transparent via-bakery-pink-light to-transparent" />
+
+                {/* Event Details - Vertical Stack */}
+                <div className="grid grid-cols-1 gap-3">
+                  {/* Date */}
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-bakery-cream/50 border border-bakery-pink-light/20">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                      <Calendar className="w-4 h-4 text-bakery-pink-dark" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-poppins text-xs font-medium text-gray-800 truncate">
+                        {dateParts
+                          ? `${dateParts.month} ${dateParts.day}`
+                          : dateLabel}
+                      </p>
+                      <p className="font-poppins text-[10px] text-gray-500">
+                        {dateParts?.weekday || "Date"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Time */}
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-bakery-cream/50 border border-bakery-pink-light/20">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-4 h-4 text-bakery-pink-dark" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-poppins text-xs font-medium text-gray-800 truncate">
+                        {timeLabel}
+                      </p>
+                      <p className="font-poppins text-[10px] text-gray-500">
+                        {durationLabel || "Duration"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Location */}
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-bakery-cream/50 border border-bakery-pink-light/20">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-4 h-4 text-bakery-pink-dark" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-poppins text-xs font-medium text-gray-800 truncate">
+                        {locationName}
+                      </p>
+                      <p className="font-poppins text-[10px] text-gray-500 truncate">
+                        {address?.city || "Location"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Availability */}
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-bakery-cream/50 border border-bakery-pink-light/20">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                      <Users className="w-4 h-4 text-bakery-pink-dark" />
+                    </div>
+                    <div className="min-w-0">
+                      <p
+                        className={`font-poppins text-xs font-medium truncate ${isSoldOut ? "text-gray-500" : isLowStock ? "text-amber-600" : "text-gray-800"}`}
+                      >
+                        {seatsLabel}
+                      </p>
+                      <p className="font-poppins text-[10px] text-gray-500">
+                        Small group
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Quick Info Cards */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-bakery-offWhite rounded-xl p-4 flex items-start gap-3">
-                    <div className="w-10 h-10 bg-bakery-pink-light/50 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Calendar className="w-5 h-5 text-bakery-pink-dark" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800 text-sm">
-                        Date
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        {classDetail.dateLabel}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-bakery-offWhite rounded-xl p-4 flex items-start gap-3">
-                    <div className="w-10 h-10 bg-bakery-pink-light/50 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-5 h-5 text-bakery-pink-dark" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800 text-sm">
-                        Duration
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        {classDetail.duration}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-bakery-offWhite rounded-xl p-4 flex items-start gap-3">
-                    <div className="w-10 h-10 bg-bakery-pink-light/50 rounded-full flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-bakery-pink-dark" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800 text-sm">
-                        Location
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        {classDetail.location}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-bakery-offWhite rounded-xl p-4 flex items-start gap-3">
-                    <div className="w-10 h-10 bg-bakery-pink-light/50 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Users className="w-5 h-5 text-bakery-pink-dark" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800 text-sm">
-                        Level
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        {classDetail.level}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                {/* Divider */}
+                <div className="my-6 h-px bg-gradient-to-r from-transparent via-bakery-pink-light to-transparent" />
 
-                {/* Book a Seat */}
+                {/* Booking Section */}
                 <ProductDetailClient
-                  product={product}
-                  actionLabel="Book Seat"
-                  addedLabelSingular="Seat added to cart"
-                  addedLabelPlural="Seats added to cart"
-                  helperText="Reserve your spot and checkout when ready"
+                  product={productNode}
+                  actionLabel="Book Your Seat"
+                  addedLabel="Seat Added!"
+                  addedLabelSingular="Seat Added!"
+                  addedLabelPlural="Seats Added!"
+                  helperText="Secure checkout • Take home your cookies"
                 />
 
-                {/* Trust Signals */}
-                <div className="flex items-center justify-center gap-6 pt-4 border-t border-bakery-pink-light/30">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Sparkles className="w-4 h-4 text-bakery-pink-dark" />
-                    <span>Hands-on</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Heart className="w-4 h-4 text-bakery-pink-dark" />
-                    <span>All supplies</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Award className="w-4 h-4 text-bakery-pink-dark" />
-                    <span>Small groups</span>
-                  </div>
+                {/* Additional Links */}
+                <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href="/contact"
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white border-2 border-bakery-pink-light text-bakery-pink-dark font-poppins font-medium text-sm hover:bg-bakery-pink-light/30 hover:border-bakery-pink transition-all duration-300"
+                  >
+                    <Heart className="w-4 h-4" />
+                    Request Private Class
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Details Section */}
-        <section className="py-16 bg-white/60 backdrop-blur-sm border-y border-bakery-pink-light/20">
-          <div className="max-w-4xl mx-auto px-4 md:px-6">
-            <div className="grid lg:grid-cols-3 gap-12">
-              {/* Main Content */}
-              <div className="lg:col-span-2 space-y-10">
-                {/* What's Included */}
+        {/* What's Included Section - Mobile Only */}
+        <section className="container-custom pb-16 lg:hidden">
+          <div className="bg-white/60 backdrop-blur-sm rounded-[2rem] p-8 shadow-lg shadow-bakery-pink/5 border border-bakery-pink-light/20">
+            <h2 className="font-bebas text-3xl text-gray-900 text-center mb-6">
+              What&apos;s{" "}
+              <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+                Included
+              </span>
+            </h2>
+
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-bakery-cream/50 to-white border border-bakery-pink-light/20">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                  <Cookie className="w-6 h-6 text-bakery-pink-dark" />
+                </div>
                 <div>
-                  <h2 className="font-bebas text-2xl md:text-3xl text-gray-800 mb-4 tracking-wide">
-                    What&apos;s Included
-                  </h2>
-                  <div className="bg-bakery-offWhite rounded-2xl p-6">
-                    <ul className="space-y-3 font-poppins text-gray-700">
-                      {classDetail.includes.map((item) => (
-                        <li key={item} className="flex items-start gap-3">
-                          <span className="w-6 h-6 bg-bakery-pink-light rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <span className="text-bakery-pink-dark text-sm font-semibold">
-                              ✓
-                            </span>
-                          </span>
-                          {item}
-                        </li>
+                  <h3 className="font-bebas text-lg text-gray-800">
+                    Cookie Decorating
+                  </h3>
+                  <p className="font-poppins text-xs text-gray-600">
+                    Themed cookies to take home
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-bakery-cream/50 to-white border border-bakery-pink-light/20">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-6 h-6 text-bakery-pink-dark" />
+                </div>
+                <div>
+                  <h3 className="font-bebas text-lg text-gray-800">
+                    All Supplies
+                  </h3>
+                  <p className="font-poppins text-xs text-gray-600">
+                    Everything provided
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-bakery-cream/50 to-white border border-bakery-pink-light/20">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-6 h-6 text-bakery-pink-dark" />
+                </div>
+                <div>
+                  <h3 className="font-bebas text-lg text-gray-800">
+                    Sweet Experience
+                  </h3>
+                  <p className="font-poppins text-xs text-gray-600">
+                    Light refreshments & fun atmosphere
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial on mobile */}
+            <div className="mt-6 p-5 rounded-xl bg-gradient-to-br from-bakery-pink-light/30 to-bakery-peach/20 border border-bakery-pink-light/40">
+              <div className="flex gap-3">
+                <Quote className="w-6 h-6 text-bakery-pink-dark/60 transform rotate-180 flex-shrink-0" />
+                <div>
+                  <p className="font-playfair text-sm text-gray-700 italic leading-relaxed">
+                    &ldquo;Such a fun girls night out! Megan is an amazing
+                    teacher.&rdquo;
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="font-poppins text-xs font-medium text-gray-800">
+                      Sarah K.
+                    </span>
+                    <div className="flex items-center gap-0.5">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Star
+                          key={i}
+                          className="w-2.5 h-2.5 fill-amber-400 text-amber-400"
+                        />
                       ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Class Highlights */}
-                <div>
-                  <h2 className="font-bebas text-2xl md:text-3xl text-gray-800 mb-4 tracking-wide">
-                    Class Highlights
-                  </h2>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {classDetail.highlights.map((highlight) => (
-                      <div
-                        key={highlight}
-                        className="bg-bakery-offWhite rounded-xl px-4 py-3 font-poppins text-gray-700 text-sm"
-                      >
-                        {highlight}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="mt-4 text-sm text-gray-500 font-poppins">
-                    <strong>Time:</strong> {classDetail.time}
-                  </p>
-                </div>
-
-                {/* FAQ Accordion */}
-                <div>
-                  <h2 className="font-bebas text-2xl md:text-3xl text-gray-800 mb-4 tracking-wide">
-                    Frequently Asked Questions
-                  </h2>
-                  <div className="space-y-3">
-                    {classDetail.faq.map((faq) => (
-                      <details
-                        key={faq.q}
-                        className="group bg-bakery-offWhite rounded-xl overflow-hidden"
-                      >
-                        <summary className="flex items-center justify-between p-4 cursor-pointer font-medium text-gray-800 hover:bg-bakery-pink-light/20 transition-colors">
-                          <span className="font-poppins">{faq.q}</span>
-                          <ChevronDown className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" />
-                        </summary>
-                        <div className="px-4 pb-4">
-                          <p className="text-gray-600 font-poppins text-sm leading-relaxed">
-                            {faq.a}
-                          </p>
-                        </div>
-                      </details>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Sidebar */}
-              <aside className="space-y-6">
-                {/* Class Info Card */}
-                <div className="bg-gradient-to-br from-bakery-pink-light/40 to-bakery-peach/30 rounded-2xl p-6">
-                  <h3 className="font-bebas text-xl text-gray-800 mb-4 tracking-wide">
-                    Class Information
-                  </h3>
-                  <ul className="space-y-3 font-poppins text-sm text-gray-700">
-                    <li className="flex justify-between">
-                      <span>Price</span>
-                      <span className="font-semibold text-bakery-pink-dark">
-                        ${parseFloat(price).toFixed(2)}
-                      </span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Date</span>
-                      <span>{classDetail.dateLabel}</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Time</span>
-                      <span>{classDetail.time}</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Location</span>
-                      <span>{classDetail.location}</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Level</span>
-                      <span>{classDetail.level}</span>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Private Class CTA */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-bakery-pink-light/20">
-                  <h3 className="font-bebas text-xl text-gray-800 mb-2 tracking-wide">
-                    Want a Private Class?
-                  </h3>
-                  <p className="text-gray-600 font-poppins text-sm mb-4">
-                    Book a private session for birthdays, teams, or
-                    celebrations.
-                  </p>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 w-full justify-center px-5 py-3 bg-bakery-pink-dark text-white rounded-xl font-medium hover:bg-bakery-pink-dark/90 transition-colors shadow-md"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    Inquire About Private Classes
-                  </Link>
-                </div>
-
-                {/* Contact Card */}
-                <div className="bg-bakery-offWhite rounded-2xl p-6">
-                  <h3 className="font-bebas text-xl text-gray-800 mb-2 tracking-wide">
-                    Have Questions?
-                  </h3>
-                  <p className="text-gray-600 font-poppins text-sm mb-4">
-                    We&apos;re happy to help you find the right class.
-                  </p>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 w-full justify-center px-5 py-3 border-2 border-bakery-pink text-bakery-pink-dark rounded-xl font-medium hover:bg-bakery-pink-light/30 transition-colors"
-                  >
-                    Contact Us
-                  </Link>
-                </div>
-              </aside>
+            <div className="mt-6 text-center">
+              <Link
+                href="/classes"
+                className="inline-flex items-center gap-2 font-poppins text-bakery-pink-dark font-medium hover:text-bakery-pink transition-colors"
+              >
+                Browse all classes
+                <ArrowLeft className="w-4 h-4 rotate-180" />
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* Bottom CTA Banner */}
-        <section className="py-16 md:py-20">
-          <div className="max-w-4xl mx-auto px-4 md:px-6">
-            <div className="relative bg-gradient-to-r from-bakery-pink-light/60 via-bakery-peach/40 to-bakery-pink-light/60 rounded-3xl p-8 md:p-12 overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-white/30 rounded-full -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-16 w-32 h-32 bg-white/20 rounded-full translate-y-1/2" />
-
-              <div className="relative z-10 text-center">
-                <h2 className="font-bebas text-3xl md:text-4xl text-gray-800 mb-3 tracking-wide">
-                  Explore More Classes
-                </h2>
-                <p className="text-gray-700 font-poppins mb-6 max-w-xl mx-auto">
-                  Browse upcoming cookie decorating classes and reserve your
-                  spot.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    href="/classes"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-bakery-pink-dark text-white rounded-full font-semibold hover:bg-bakery-pink-dark/90 transition-all shadow-xl shadow-bakery-pink-dark/30 hover:shadow-2xl hover:-translate-y-0.5"
-                  >
-                    View All Classes
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-bakery-pink-dark rounded-full font-semibold hover:bg-bakery-offWhite transition-all shadow-lg"
-                  >
-                    Ask a Question
-                  </Link>
-                </div>
-              </div>
+        {/* FAQ Section */}
+        <section className="container-custom pb-20">
+          <div className="rounded-[2rem] bg-white/80 backdrop-blur-sm border border-bakery-pink-light/30 shadow-xl p-8 md:p-10">
+            <div className="text-center mb-8">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-bakery-pink-light/50 text-bakery-pink-dark font-poppins text-xs font-medium tracking-wide mb-4">
+                Class FAQs
+              </span>
+              <h2 className="font-bebas text-3xl md:text-4xl text-gray-800">
+                Your Questions, Answered
+              </h2>
+              <p className="mt-3 font-poppins text-gray-600 max-w-2xl mx-auto">
+                Quick details to help you plan your cookie decorating
+                experience.
+              </p>
             </div>
+            <FAQAccordion faqs={faqs} initiallyOpenIndex={0} />
           </div>
         </section>
       </div>
-
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
     </main>
   );
-};
-
-export default ClassDetailPage;
+}

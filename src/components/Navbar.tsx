@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Home,
   ArrowRight,
+  User,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -131,6 +132,15 @@ const Navbar = () => {
         {/* Mobile Actions */}
         <div className="md:hidden flex items-center gap-3">
           <CartDrawer />
+          <a
+            href="https://account.roseandsugar.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="relative p-3 rounded-2xl bg-white border border-bakery-pink-light/50 text-gray-700 hover:bg-bakery-pink-light/30 hover:border-bakery-pink-light shadow-sm hover:shadow-md transition-all duration-300 group"
+            aria-label="Open account portal in a new tab"
+          >
+            <User className="h-5 w-5 group-hover:scale-110 transition-transform" />
+          </a>
           <button
             ref={mobileMenuButtonRef}
             type="button"
@@ -206,7 +216,18 @@ const Navbar = () => {
           {/* Divider */}
           <div className="w-px h-6 bg-bakery-pink-light/60 mx-2" />
 
-          <CartDrawer />
+          <div className="flex items-center gap-3">
+            <CartDrawer />
+            <a
+              href="https://account.roseandsugar.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="relative p-3 rounded-2xl bg-white border border-bakery-pink-light/50 text-gray-700 hover:bg-bakery-pink-light/30 hover:border-bakery-pink-light shadow-sm hover:shadow-md transition-all duration-300 group"
+              aria-label="Open account portal in a new tab"
+            >
+              <User className="h-5 w-5 group-hover:scale-110 transition-transform" />
+            </a>
+          </div>
         </nav>
 
         {/* Mobile Navigation - Full Screen Overlay */}

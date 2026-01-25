@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,12 +12,31 @@ import {
   Sparkles,
   Calendar,
   Users,
+  Mail,
 } from "lucide-react";
-import { mockShopifyClasses, mockShopifyCookies } from "@/data/shopifyMocks";
+import { useQuery } from "@tanstack/react-query";
+import WaitlistModal from "@/components/WaitlistModal";
+import {
+  fetchPredesignedList,
+  mapPredesignedToShopifyProduct,
+  predesignedListQueryKey,
+} from "@/lib/predesignedCookies";
+import {
+  classesListQueryKey,
+  fetchClassesList,
+  mapClassToShopifyProduct,
+  type ClassesApiProduct,
+} from "@/lib/shopifyClasses";
 import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore } from "@/stores/cartStore";
 
-const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
+const FeaturedClassCard = ({
+  product,
+  onWaitlist,
+}: {
+  product: ShopifyProduct;
+  onWaitlist?: () => void;
+}) => {
   const addItem = useCartStore((state) => state.addItem);
   const [isAdded, setIsAdded] = useState(false);
   const { node } = product;
@@ -26,14 +45,21 @@ const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
   const image = node.images?.edges?.[0]?.node;
   const price = parseFloat(node.priceRange?.minVariantPrice?.amount || "0");
   const isAvailable = variant?.availableForSale ?? true;
+  const seatsLeft = node.quantityAvailable;
+  const isSoldOut =
+    typeof seatsLeft === "number" ? seatsLeft <= 0 : !isAvailable;
 
   // Extract date from title
   const dateMatch = node.title.match(/- ([A-Za-z]+)\s+(\d{1,2})/);
   const month = dateMatch?.[1] || "";
   const day = dateMatch?.[2] || "";
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handlePrimaryAction = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (isSoldOut) {
+      onWaitlist?.();
+      return;
+    }
     if (!variant || !isAvailable || isAdded) return;
 
     addItem({
@@ -143,11 +169,11 @@ const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
 
           <button
             type="button"
-            onClick={handleAddToCart}
-            disabled={!isAvailable || isAdded}
+            onClick={handlePrimaryAction}
+            disabled={(!isAvailable && !isSoldOut) || isAdded}
             className={`w-full py-4 px-6 rounded-2xl font-poppins font-semibold text-base transition-all duration-300 ${
-              !isAvailable
-                ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+              isSoldOut
+                ? "bg-white text-bakery-pink-dark border border-bakery-pink-light hover:bg-bakery-pink-light/40"
                 : isAdded
                   ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
                   : "bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white shadow-lg shadow-bakery-pink-dark/30 hover:shadow-xl hover:shadow-bakery-pink-dark/40 hover:-translate-y-0.5"
@@ -159,8 +185,11 @@ const FeaturedClassCard = ({ product }: { product: ShopifyProduct }) => {
                   <Check className="w-5 h-5" />
                   Added to Cart
                 </>
-              ) : !isAvailable ? (
-                "Sold Out"
+              ) : isSoldOut ? (
+                <>
+                  <Mail className="w-5 h-5" />
+                  Join Waitlist
+                </>
               ) : (
                 <>
                   <Calendar className="w-5 h-5" />
@@ -278,8 +307,44 @@ const FeaturedCookieCard = ({
 };
 
 const FeaturedShop = () => {
-  const featuredClass = mockShopifyClasses[0] ?? null;
-  const featuredCookies = mockShopifyCookies.slice(0, 4);
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const { data: predesignedProducts } = useQuery({
+    queryKey: predesignedListQueryKey,
+    queryFn: fetchPredesignedList,
+  });
+  const { data: classProducts } = useQuery({
+    queryKey: classesListQueryKey,
+    queryFn: fetchClassesList,
+  });
+  const featuredClass = useMemo(() => {
+    if (!classProducts || classProducts.length === 0) return null;
+    const toTime = (value?: string | null) => {
+      if (!value) return Number.POSITIVE_INFINITY;
+      const parsed = Date.parse(value);
+      return Number.isNaN(parsed) ? Number.POSITIVE_INFINITY : parsed;
+    };
+    const now = Date.now();
+    const sorted = [...classProducts].sort(
+      (a, b) => toTime(a.eventStartDateTime) - toTime(b.eventStartDateTime),
+    );
+    const upcoming = sorted.filter(
+      (item) => toTime(item.eventStartDateTime) >= now,
+    );
+    const candidates = upcoming.length > 0 ? upcoming : sorted;
+    const isSoldOut = (item: ClassesApiProduct) => {
+      const seatsLeft = item.quantityAvailable;
+      return typeof seatsLeft === "number" ? seatsLeft <= 0 : false;
+    };
+    const nextAvailable = candidates.find((item) => !isSoldOut(item));
+    const fallback = candidates[0] ?? null;
+    const selected = nextAvailable ?? fallback;
+    return selected ? mapClassToShopifyProduct(selected) : null;
+  }, [classProducts]);
+  const featuredCookies = useMemo(() => {
+    return (predesignedProducts || [])
+      .map(mapPredesignedToShopifyProduct)
+      .slice(0, 4);
+  }, [predesignedProducts]);
 
   if (!featuredClass && featuredCookies.length === 0) {
     return null;
@@ -343,7 +408,10 @@ const FeaturedShop = () => {
                 </Link>
               </div>
               <div className="h-[calc(100%-2.5rem)]">
-                <FeaturedClassCard product={featuredClass} />
+                <FeaturedClassCard
+                  product={featuredClass}
+                  onWaitlist={() => setIsWaitlistOpen(true)}
+                />
               </div>
             </div>
           )}
@@ -427,6 +495,7 @@ const FeaturedShop = () => {
           </div>
         </div>
       </div>
+      <WaitlistModal open={isWaitlistOpen} onOpenChange={setIsWaitlistOpen} />
     </section>
   );
 };

@@ -11,6 +11,15 @@ export type ShopifyImageConnection = {
   edges: ShopifyImageEdge[];
 };
 
+export type ShopifyLocation = {
+  name?: string | null;
+  address?: {
+    address1?: string | null;
+    city?: string | null;
+    zip?: string | null;
+  } | null;
+};
+
 export type ShopifyVariantNode = {
   id: string;
   title: string;
@@ -40,6 +49,10 @@ export type ShopifyProductNode = {
   handle: string;
   productType?: string;
   tags?: string[];
+  eventStartDateTime?: string | null;
+  eventEndDateTime?: string | null;
+  location?: ShopifyLocation | null;
+  quantityAvailable?: number | null;
   priceRange?: {
     minVariantPrice: {
       amount: string;

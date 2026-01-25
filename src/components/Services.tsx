@@ -161,7 +161,7 @@ const Services = () => {
               {/* Top image section */}
               <div className="relative h-48 overflow-hidden">
                 <Image
-                  src="/openDefault.webp"
+                  src="/cookie-class.webp"
                   alt="Cookie decorating class in action"
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
