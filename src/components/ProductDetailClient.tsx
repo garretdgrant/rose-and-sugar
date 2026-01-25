@@ -25,13 +25,14 @@ export default function ProductDetailClient({
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const firstVariant = product.variants?.edges?.[0]?.node;
+  const isAvailable = firstVariant?.availableForSale ?? true;
   const addedLabelText =
     quantity === 1
       ? addedLabelSingular || addedLabel
       : addedLabelPlural || addedLabel;
 
   const handleAdd = async () => {
-    if (!firstVariant || isAdded) return;
+    if (!firstVariant || isAdded || !isAvailable) return;
 
     addItem({
       product: { node: product },
@@ -87,14 +88,19 @@ export default function ProductDetailClient({
       {/* Add to Cart Button */}
       <Button
         onClick={handleAdd}
-        disabled={!firstVariant || isAdded}
+        disabled={!firstVariant || isAdded || !isAvailable}
         className={`w-full py-6 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg ${
           isAdded
             ? "bg-emerald-500 hover:bg-emerald-500 text-white shadow-emerald-500/30"
             : "bg-bakery-pink-dark hover:bg-bakery-pink-dark/90 text-white shadow-bakery-pink-dark/30 hover:shadow-xl hover:-translate-y-0.5"
         }`}
       >
-        {isAdded ? (
+        {!isAvailable ? (
+          <>
+            <ShoppingCart className="mr-2 h-5 w-5" />
+            Sold Out
+          </>
+        ) : isAdded ? (
           <>
             <Check className="mr-2 h-5 w-5" />
             {addedLabelText}

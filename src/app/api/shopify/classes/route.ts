@@ -1,4 +1,4 @@
-// app/api/shopify/pre-designed/route.ts
+// app/api/shopify/classes/route.ts
 import { NextResponse } from "next/server";
 import { shopifyFetch } from "@/lib/shopify";
 
@@ -9,22 +9,11 @@ type ShopifyImage = {
 
 type MediaNode = {
   previewImage?: ShopifyImage | null;
-  image?: ShopifyImage | null;
 };
 
 type VariantNode = {
   id: string;
-  title?: string | null;
-  availableForSale?: boolean;
-  price?: {
-    amount?: string;
-    currencyCode?: string;
-  };
-  selectedOptions?: Array<{
-    name?: string | null;
-    value?: string | null;
-  }>;
-  [key: string]: unknown;
+  quantityAvailable?: number | null;
 };
 
 type ProductNode = {
@@ -46,6 +35,9 @@ type ProductNode = {
     title?: string | null;
     description?: string | null;
   } | null;
+  eventDateTime?: {
+    value?: string | null;
+  } | null;
   media?: {
     edges?: { node: MediaNode }[];
   };
@@ -59,7 +51,7 @@ const getErrorMessage = (error: unknown) => {
 };
 
 const QUERY = `
-  query PreDesignedByCollection(
+  query ClassesByCollection(
     $handle: String!
     $first: Int!
     $mediaFirst: Int!
@@ -75,20 +67,11 @@ const QUERY = `
             productType
             description
             tags
-            variants(first: 25) {
+            variants(first: 1) {
               edges {
                 node {
                   id
-                  title
-                  availableForSale
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  selectedOptions {
-                    name
-                    value
-                  }
+                  quantityAvailable
                 }
               }
             }
@@ -100,6 +83,9 @@ const QUERY = `
             seo {
               title
               description
+            }
+            eventDateTime: metafield(namespace: "custom", key: "event_date_time") {
+              value
             }
             media(first: $mediaFirst) {
               edges {
@@ -127,7 +113,7 @@ export async function GET() {
         products: { edges: { node: ProductNode }[] };
       } | null;
     }>(QUERY, {
-      handle: "pre-designed",
+      handle: "classes",
       first: 50,
       mediaFirst: 1,
     });
@@ -145,26 +131,26 @@ export async function GET() {
       products: data.collection.products.edges.map((edge) => {
         const product = edge.node;
         const mediaEdge = product.media?.edges?.[0]?.node;
-        const imageUrl = mediaEdge?.image?.url || mediaEdge?.previewImage?.url;
-        const altText =
-          mediaEdge?.image?.altText ||
-          mediaEdge?.previewImage?.altText ||
-          product.title;
-        const variants =
-          product.variants?.edges?.map((edge) => edge.node) ?? [];
+        const imageUrl = mediaEdge?.previewImage?.url;
+        const altText = mediaEdge?.previewImage?.altText || product.title;
+        const firstVariant = product.variants?.edges?.[0]?.node;
+        const variantId = firstVariant?.id ?? null;
+        const quantityAvailable = firstVariant?.quantityAvailable ?? null;
+        const eventDateTime = product.eventDateTime?.value ?? null;
 
         const {
           media: _media,
           priceRange,
           variants: _variants,
+          eventDateTime: _eventDateTime,
           ...rest
         } = product;
         return {
           ...rest,
-          variants,
-          price: {
-            amount: priceRange?.minVariantPrice?.amount ?? "0",
-          },
+          variantId,
+          quantityAvailable,
+          eventDateTime,
+          price: priceRange?.minVariantPrice?.amount ?? "0",
           image: imageUrl
             ? {
                 url: imageUrl,
@@ -175,7 +161,7 @@ export async function GET() {
       }),
     });
   } catch (err: unknown) {
-    console.error("[SHOPIFY_PRE_DESIGNED_ERROR]", err);
+    console.error("[SHOPIFY_CLASSES_ERROR]", err);
     return NextResponse.json(
       { ok: false, error: getErrorMessage(err) },
       { status: 500 },

@@ -13,6 +13,31 @@ if (!SHOPIFY_TOKEN) {
 
 const GRAPHQL_ENDPOINT = `https://${SHOPIFY_DOMAIN}/api/2025-01/graphql.json`;
 
+type CartLineInput = {
+  quantity: number;
+  merchandiseId: string;
+};
+
+type CartCreateResponse = {
+  cartCreate: {
+    cart: {
+      checkoutUrl: string | null;
+    } | null;
+    userErrors: Array<{
+      message: string;
+    }>;
+  };
+};
+
+type ShopifyGraphQLError = {
+  message?: string;
+};
+
+type ShopifyGraphQLResponse<T> = {
+  data: T;
+  errors?: ShopifyGraphQLError[];
+};
+
 export async function shopifyFetch<T>(
   query: string,
   variables?: Record<string, unknown>,
@@ -31,12 +56,55 @@ export async function shopifyFetch<T>(
     throw new Error(`Shopify request failed: ${res.status} ${res.statusText}`);
   }
 
-  const json = (await res.json()) as { data: T; errors?: unknown };
+  const json = (await res.json()) as ShopifyGraphQLResponse<T>;
 
-  if (json.errors) {
+  if (json.errors?.length) {
+    const message = json.errors
+      .map((error) => error.message)
+      .filter((errorMessage): errorMessage is string => Boolean(errorMessage))
+      .join(", ");
+    const errorMessage = message || "Shopify GraphQL returned errors";
     console.error("Shopify GraphQL errors:", json.errors);
-    throw new Error("Shopify GraphQL returned errors");
+    throw new Error(errorMessage);
   }
 
   return json.data;
+}
+
+const CART_CREATE_MUTATION = `
+  mutation cartCreate($lines: [CartLineInput!]!) {
+    cartCreate(input: { lines: $lines }) {
+      cart {
+        checkoutUrl
+      }
+      userErrors {
+        message
+      }
+    }
+  }
+`;
+
+export async function createShopifyCart(
+  items: Array<{ variantId: string; quantity: number }>,
+) {
+  const lines: CartLineInput[] = items.map((item) => ({
+    quantity: item.quantity,
+    merchandiseId: item.variantId,
+  }));
+
+  const data = await shopifyFetch<CartCreateResponse>(CART_CREATE_MUTATION, {
+    lines,
+  });
+
+  const errors = data.cartCreate.userErrors;
+  if (errors.length > 0) {
+    throw new Error(errors.map((error) => error.message).join(", "));
+  }
+
+  const checkoutUrl = data.cartCreate.cart?.checkoutUrl;
+  if (!checkoutUrl) {
+    throw new Error("Missing checkout URL from Shopify");
+  }
+
+  return checkoutUrl;
 }

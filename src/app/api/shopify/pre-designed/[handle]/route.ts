@@ -12,6 +12,21 @@ type MediaNode = {
   image?: ShopifyImage | null;
 };
 
+type VariantNode = {
+  id: string;
+  title?: string | null;
+  availableForSale?: boolean;
+  price?: {
+    amount?: string;
+    currencyCode?: string;
+  };
+  selectedOptions?: Array<{
+    name?: string | null;
+    value?: string | null;
+  }>;
+  [key: string]: unknown;
+};
+
 type ProductNode = {
   id: string;
   title: string;
@@ -19,6 +34,9 @@ type ProductNode = {
   productType?: string;
   description?: string;
   tags?: string[];
+  variants?: {
+    edges?: { node: VariantNode }[];
+  };
   priceRange?: {
     minVariantPrice?: {
       amount?: string;
@@ -49,6 +67,23 @@ const QUERY = `
       productType
       description
       tags
+      variants(first: 10) {
+        edges {
+          node {
+            title
+            id
+            availableForSale
+            price {
+              amount
+              currencyCode
+            }
+            selectedOptions {
+              name
+              value
+            }
+          }
+        }
+      }
       priceRange {
         minVariantPrice {
           amount
@@ -100,12 +135,14 @@ export async function GET(
       mediaEdge?.image?.altText ||
       mediaEdge?.previewImage?.altText ||
       product.title;
+    const variants = product.variants?.edges?.map((edge) => edge.node) ?? [];
 
-    const { media: _media, priceRange, ...rest } = product;
+    const { media: _media, priceRange, variants: _variants, ...rest } = product;
     return NextResponse.json({
       ok: true,
       product: {
         ...rest,
+        variants,
         price: {
           amount: priceRange?.minVariantPrice?.amount ?? "0",
         },

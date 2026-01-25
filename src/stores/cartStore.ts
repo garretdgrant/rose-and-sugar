@@ -4,20 +4,6 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { ShopifyProduct } from "@/types/shopify";
 
-const buildMockCheckoutUrl = (
-  items: Array<{ variantId: string; quantity: number }>,
-) => {
-  if (items.length === 0) {
-    return "/checkout";
-  }
-
-  const serializedItems = items
-    .map((item) => `${item.variantId}:${item.quantity}`)
-    .join(",");
-
-  return `/checkout?items=${encodeURIComponent(serializedItems)}`;
-};
-
 export interface CartItem {
   product: ShopifyProduct;
   variantId: string;
@@ -112,14 +98,32 @@ export const useCartStore = create<CartStore>()(
         if (items.length === 0) return;
 
         setLoading(true);
+        setCheckoutUrl(null);
         try {
-          const checkoutUrl = buildMockCheckoutUrl(
-            items.map((item) => ({
-              variantId: item.variantId,
-              quantity: item.quantity,
-            })),
-          );
-          setCheckoutUrl(checkoutUrl);
+          const response = await fetch("/api/shopify/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              items: items.map((item) => ({
+                variantId: item.variantId,
+                quantity: item.quantity,
+              })),
+            }),
+          });
+
+          const payload = (await response.json()) as {
+            ok?: boolean;
+            checkoutUrl?: string;
+            error?: string;
+          };
+
+          if (!response.ok || !payload.ok || !payload.checkoutUrl) {
+            const errorMessage =
+              payload.error || "Failed to create checkout session.";
+            throw new Error(errorMessage);
+          }
+
+          setCheckoutUrl(payload.checkoutUrl);
         } finally {
           setLoading(false);
         }

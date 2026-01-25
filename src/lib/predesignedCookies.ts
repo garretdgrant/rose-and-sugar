@@ -1,6 +1,20 @@
 import { buildCanonicalUrl } from "@/lib/metadata";
 import type { ShopifyProduct, ShopifyProductNode } from "@/types/shopify";
 
+export type PredesignedApiVariant = {
+  id: string;
+  title?: string | null;
+  availableForSale?: boolean;
+  price?: {
+    amount?: string;
+    currencyCode?: string;
+  };
+  selectedOptions?: Array<{
+    name?: string | null;
+    value?: string | null;
+  }>;
+};
+
 export type PredesignedApiProduct = {
   id: string;
   title: string;
@@ -19,6 +33,7 @@ export type PredesignedApiProduct = {
     url: string;
     altText?: string | null;
   } | null;
+  variants?: PredesignedApiVariant[];
 };
 
 type PredesignedListResponse = {
@@ -90,6 +105,46 @@ export const buildPredesignedNode = (
   const amount = product.price?.amount || "0";
   const imageUrl = product.image?.url;
   const imageAlt = product.image?.altText || product.title;
+  const variantEdges =
+    product.variants?.map((variant) => {
+      const optionValues =
+        variant.selectedOptions
+          ?.filter((option) => option.name && option.value)
+          .map((option) => ({
+            name: option.name as string,
+            value: option.value as string,
+          })) || [];
+      return {
+        node: {
+          id: variant.id,
+          title: variant.title || product.title,
+          price: {
+            amount: variant.price?.amount || amount,
+            currencyCode: variant.price?.currencyCode || "USD",
+          },
+          availableForSale: variant.availableForSale ?? true,
+          selectedOptions: optionValues,
+        },
+      };
+    }) || [];
+
+  const optionMap = new Map<string, Set<string>>();
+  variantEdges.forEach(({ node }) => {
+    node.selectedOptions?.forEach((option) => {
+      if (!option.name || !option.value) return;
+      if (!optionMap.has(option.name)) {
+        optionMap.set(option.name, new Set());
+      }
+      optionMap.get(option.name)?.add(option.value);
+    });
+  });
+  const options =
+    optionMap.size > 0
+      ? Array.from(optionMap.entries()).map(([name, values]) => ({
+          name,
+          values: Array.from(values),
+        }))
+      : [{ name: "Set", values: ["Signature"] }];
 
   return {
     id: product.id,
@@ -117,22 +172,9 @@ export const buildPredesignedNode = (
         }
       : { edges: [] },
     variants: {
-      edges: [
-        {
-          node: {
-            id: `${product.id}-variant`,
-            title: "Signature Set",
-            price: {
-              amount,
-              currencyCode: "USD",
-            },
-            availableForSale: true,
-            selectedOptions: [{ name: "Set", value: "Signature" }],
-          },
-        },
-      ],
+      edges: variantEdges,
     },
-    options: [{ name: "Set", values: ["Signature"] }],
+    options,
   };
 };
 

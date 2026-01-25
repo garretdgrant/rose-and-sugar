@@ -20,13 +20,14 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
   const imageNode = node.images?.edges?.[0]?.node;
   const price = node.priceRange?.minVariantPrice;
   const firstVariant = node.variants?.edges?.[0]?.node;
+  const isAvailable = firstVariant?.availableForSale ?? true;
 
   const handleAddToCart = (e?: React.MouseEvent<HTMLButtonElement>) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
-    if (!firstVariant || isAdded) return;
+    if (!firstVariant || isAdded || !isAvailable) return;
 
     addItem({
       product,
@@ -99,9 +100,14 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
               ? "bg-green-500 hover:bg-green-500 text-white"
               : "bg-bakery-pink hover:bg-bakery-pink-dark text-white"
           }`}
-          disabled={!firstVariant}
+          disabled={!firstVariant || !isAvailable}
         >
-          {isAdded ? (
+          {!isAvailable ? (
+            <>
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Sold Out
+            </>
+          ) : isAdded ? (
             <>
               <Check className="h-4 w-4 mr-2" />
               Added to Cart
