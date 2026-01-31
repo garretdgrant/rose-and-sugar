@@ -172,7 +172,7 @@ const Services = () => {
                 {/* Floating badge */}
                 <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
                   <span className="font-poppins font-semibold text-sm text-bakery-brown">
-                    Starting at $55
+                    Classes start at $65
                   </span>
                 </div>
               </div>

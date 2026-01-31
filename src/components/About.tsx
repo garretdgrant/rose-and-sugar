@@ -14,7 +14,7 @@ const About = () => {
   const stats = [
     { icon: Heart, value: "200+", label: "Happy Customers" },
     { icon: Award, value: "5", label: "Years Crafting" },
-    { icon: Users, value: "50+", label: "Classes Taught" },
+    { icon: Users, value: "25+", label: "Classes Taught" },
   ];
 
   return (

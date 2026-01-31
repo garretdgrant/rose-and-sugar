@@ -222,7 +222,7 @@ const Hero = () => {
               >
                 <div className="text-center">
                   <p className="font-bebas text-3xl text-bakery-pink-dark">
-                    100+
+                    15+
                   </p>
                   <p className="text-xs font-poppins text-gray-600">
                     Unique Designs

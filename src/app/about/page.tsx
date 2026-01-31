@@ -23,7 +23,7 @@ const About = () => {
   const stats = [
     { icon: Heart, value: "200+", label: "Happy Customers" },
     { icon: Award, value: "5", label: "Years Crafting" },
-    { icon: Users, value: "50+", label: "Classes Taught" },
+    { icon: Users, value: "25+", label: "Classes Taught" },
   ];
 
   const faqs = [
@@ -341,7 +341,7 @@ const About = () => {
             <h2 className="font-bebas text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight">
               <span className="text-gray-800">The Story of</span>{" "}
               <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-                Megan Guerra
+                Megan D&apos;Angelo
               </span>
             </h2>
           </div>
@@ -420,7 +420,7 @@ const About = () => {
                       </div>
                       <div>
                         <p className="font-poppins font-medium text-gray-900">
-                          Megan Guerra
+                          Megan D&apos;Angelo
                         </p>
                         <p className="text-sm text-gray-500">
                           Founder & Cookie Artist

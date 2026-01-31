@@ -57,7 +57,7 @@ const defaultTrustIndicators: TrustIndicator[] = [
 const defaultHeadline = (
   <>
     &ldquo;Megan&apos;s cookies are{" "}
-    <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
+    <span className="inline-block bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent px-1 pb-1">
       pure magic
     </span>
     !&rdquo;

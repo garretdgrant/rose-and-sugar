@@ -118,9 +118,9 @@ const customOrderFaqs = [
     question: "What are the payment and pickup options?",
     answer: (
       <>
-        We accept Zelle, cash, or Venmo. Payment is required at least two weeks
-        before pickup to confirm your order. Pickup is available in Folsom, with
-        preferred times on Saturdays. A $10 weekday pickup fee applies.{" "}
+        We accept Venmo, Zelle, and major credit cards. Payment is required at
+        least two weeks before pickup to confirm your order. Pickup is available
+        in Folsom, with preferred times on Saturdays.{" "}
         <Link className="text-bakery-pink-dark hover:underline" href="/contact">
           Contact us
         </Link>{" "}
@@ -404,12 +404,12 @@ const CustomOrderClient = () => {
               {
                 icon: MapPin,
                 title: "Folsom Pickup",
-                desc: "Saturdays preferred, weekdays +$10",
+                desc: "Saturdays preferred",
               },
               {
                 icon: CreditCard,
                 title: "Easy Payment",
-                desc: "Zelle, Venmo, or cash accepted",
+                desc: "Venmo, Zelle, and credit cards accepted",
               },
             ].map((item, idx) => (
               <div

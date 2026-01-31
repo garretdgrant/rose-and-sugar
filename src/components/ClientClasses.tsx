@@ -57,7 +57,7 @@ const ClientClasses = () => {
     },
     {
       icon: Clock,
-      title: "1.5-2 Hours",
+      title: "1.5-2.5 Hours",
       desc: "Relaxed pace with plenty of creative time",
     },
     {
@@ -233,10 +233,10 @@ const ClientClasses = () => {
                 <div className="w-px h-10 bg-bakery-pink-light" />
                 <div className="text-center">
                   <p className="font-bebas text-3xl text-bakery-pink-dark">
-                    $55
+                    $65
                   </p>
                   <p className="font-poppins text-sm text-gray-500">
-                    Starting At
+                    Minimum Price
                   </p>
                 </div>
               </div>
@@ -570,11 +570,11 @@ const ClientClasses = () => {
                 </p>
 
                 <p className="text-gray-700 font-poppins text-lg leading-relaxed">
-                  Classes typically run for 1.5-2 hours, giving you plenty of
+                  Classes typically run for 1.5-2.5 hours, giving you plenty of
                   time to practice your skills and decorate 3-5 cookies that
                   you&apos;ll take home in a beautiful box. We keep our classes
                   small (maximum 15 people) to ensure everyone receives personal
-                  attention.
+                  attention, and pricing starts at $65 per person.
                 </p>
 
                 <p className="text-gray-700 font-poppins text-lg leading-relaxed">

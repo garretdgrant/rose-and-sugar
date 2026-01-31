@@ -48,6 +48,10 @@ const FeaturedClassCard = ({
   const seatsLeft = node.quantityAvailable;
   const isSoldOut =
     typeof seatsLeft === "number" ? seatsLeft <= 0 : !isAvailable;
+  const seatsLabel =
+    typeof seatsLeft === "number"
+      ? `${seatsLeft} seat${seatsLeft === 1 ? "" : "s"} left`
+      : "Seats available";
 
   // Extract date from title
   const dateMatch = node.title.match(/- ([A-Za-z]+)\s+(\d{1,2})/);
@@ -158,7 +162,7 @@ const FeaturedClassCard = ({
                 <Users className="w-4 h-4 text-bakery-pink-dark" />
               </div>
               <span className="text-sm font-poppins font-medium">
-                Limited seats
+                {seatsLabel}
               </span>
             </div>
           </div>
