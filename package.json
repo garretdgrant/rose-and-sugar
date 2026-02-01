@@ -10,7 +10,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "prettier": "prettier . --write",
     "preprod": "pnpm prettier && git add . && pnpm build && git status"
   },
@@ -53,11 +53,11 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
-    "next": "15.3.8",
+    "next": "16.1.6",
     "next-themes": "^0.3.0",
-    "react": "^18.3.1",
+    "react": "19.2.4",
     "react-day-picker": "^8.10.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "19.2.4",
     "react-hook-form": "^7.69.0",
     "react-resizable-panels": "^2.1.9",
     "react-router-dom": "^6.30.2",
@@ -72,16 +72,15 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^22.19.3",
-    "@types/react": "^18.3.27",
-    "@types/react-dom": "^18.3.7",
+    "@types/react": "19.2.10",
+    "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react-swc": "^3.11.0",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.2",
-    "eslint-config-next": "15.3.1",
+    "eslint-config-next": "16.1.6",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.26",
     "globals": "^15.15.0",
@@ -91,5 +90,11 @@
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.51.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.10",
+      "@types/react-dom": "19.2.3"
+    }
   }
 }
