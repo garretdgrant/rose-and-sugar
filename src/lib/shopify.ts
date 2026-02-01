@@ -16,6 +16,10 @@ const GRAPHQL_ENDPOINT = `https://${SHOPIFY_DOMAIN}/api/2025-01/graphql.json`;
 type CartLineInput = {
   quantity: number;
   merchandiseId: string;
+  attributes?: Array<{
+    key: string;
+    value: string;
+  }>;
 };
 
 type CartCreateResponse = {
@@ -85,11 +89,16 @@ const CART_CREATE_MUTATION = `
 `;
 
 export async function createShopifyCart(
-  items: Array<{ variantId: string; quantity: number }>,
+  items: Array<{
+    variantId: string;
+    quantity: number;
+    attributes?: Array<{ key: string; value: string }>;
+  }>,
 ) {
   const lines: CartLineInput[] = items.map((item) => ({
     quantity: item.quantity,
     merchandiseId: item.variantId,
+    attributes: item.attributes,
   }));
 
   const data = await shopifyFetch<CartCreateResponse>(CART_CREATE_MUTATION, {

@@ -141,14 +141,61 @@ export const useCartStore = create<CartStore>()(
         setLoading(true);
         setCheckoutUrl(null);
         try {
+          const formatEventDate = (value: string | null | undefined) => {
+            if (!value) return "";
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return value;
+            const time = new Intl.DateTimeFormat("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true,
+              timeZone: "America/Los_Angeles",
+            }).format(date);
+            const datePart = new Intl.DateTimeFormat("en-US", {
+              month: "2-digit",
+              day: "2-digit",
+              year: "2-digit",
+              timeZone: "America/Los_Angeles",
+            }).format(date);
+            return `${time} PST ${datePart}`;
+          };
+
+          const checkoutItems = items.map((item) => {
+            const productType = item.product.node.productType?.toLowerCase();
+            const tags =
+              item.product.node.tags?.map((tag) => tag.toLowerCase()) || [];
+            const isClass = productType === "class" || tags.includes("class");
+            const startDate = formatEventDate(
+              item.product.node.eventStartDateTime,
+            );
+            const endDate = formatEventDate(item.product.node.eventEndDateTime);
+            const attributes = isClass
+              ? [
+                  {
+                    key: "Event Start",
+                    value: startDate,
+                  },
+                  {
+                    key: "Event End",
+                    value: endDate,
+                  },
+                  {
+                    key: "location",
+                    value: item.product.node.location || "",
+                  },
+                ].filter((attr) => attr.value.trim().length > 0)
+              : undefined;
+            return {
+              variantId: item.variantId,
+              quantity: item.quantity,
+              attributes,
+            };
+          });
           const response = await fetch("/api/shopify/checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              items: items.map((item) => ({
-                variantId: item.variantId,
-                quantity: item.quantity,
-              })),
+              items: checkoutItems,
             }),
           });
 

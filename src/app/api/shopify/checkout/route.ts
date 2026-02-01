@@ -5,6 +5,10 @@ import { createShopifyCart } from "@/lib/shopify";
 type CheckoutItem = {
   variantId: string;
   quantity: number;
+  attributes?: Array<{
+    key: string;
+    value: string;
+  }>;
 };
 
 const getErrorMessage = (error: unknown) => {
@@ -16,11 +20,30 @@ const getErrorMessage = (error: unknown) => {
 
 const isValidItem = (item: unknown): item is CheckoutItem => {
   if (!item || typeof item !== "object") return false;
-  const record = item as { variantId?: unknown; quantity?: unknown };
+  const record = item as {
+    variantId?: unknown;
+    quantity?: unknown;
+    attributes?: unknown;
+  };
   const hasVariantId =
     typeof record.variantId === "string" && record.variantId.trim().length > 0;
   const hasQuantity =
     Number.isInteger(record.quantity) && (record.quantity as number) > 0;
+  if (record.attributes !== undefined) {
+    if (!Array.isArray(record.attributes)) return false;
+    const validAttributes = record.attributes.every((entry) => {
+      if (!entry || typeof entry !== "object") return false;
+      const attr = entry as { key?: unknown; value?: unknown };
+      return (
+        typeof attr.key === "string" &&
+        attr.key.trim().length > 0 &&
+        typeof attr.value === "string" &&
+        attr.value.trim().length > 0
+      );
+    });
+    if (!validAttributes) return false;
+  }
+
   return hasVariantId && hasQuantity;
 };
 
@@ -65,9 +88,16 @@ export async function POST(request: Request) {
   try {
     const normalizedItems = items.map((item) => {
       const validItem = item as CheckoutItem;
+      const attributes = validItem.attributes
+        ? validItem.attributes.map((attr) => ({
+            key: attr.key.trim(),
+            value: attr.value.trim(),
+          }))
+        : undefined;
       return {
         variantId: validItem.variantId.trim(),
         quantity: validItem.quantity,
+        attributes,
       };
     });
     const checkoutUrl = await createShopifyCart(normalizedItems);
