@@ -1,5 +1,6 @@
 import {
   Bebas_Neue,
+  Cookie,
   Fraunces,
   Playfair_Display,
   Poppins,
@@ -31,4 +32,11 @@ export const fraunces = Fraunces({
   weight: ["500", "700", "900"],
   display: "swap",
   variable: "--font-fraunces",
+});
+
+export const cookie = Cookie({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-cookie",
 });

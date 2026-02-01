@@ -102,6 +102,74 @@ export async function POST(req: NextRequest) {
 }
 ```
 
+## Resend SDK (Project Pattern)
+
+This project uses the Resend SDK directly inside the App Router `route.ts` file.
+Keep the client unaware of the provider and send mail server-side only.
+
+Pattern used in this repo (example):
+
+```ts
+import { Resend } from "resend";
+import { NextRequest } from "next/server";
+import { isSpamHoneypot } from "@/lib/spam";
+import { isValidEmail, isValidPhone } from "@/lib/validations";
+
+export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const body = await req.json();
+  const { name, email, phone, message, company } = body;
+
+  if (isSpamHoneypot(company)) {
+    return new Response(JSON.stringify({ success: false, spam: true }), {
+      status: 400,
+    });
+  }
+
+  if (!name || !email || !phone || !message) {
+    return new Response(
+      JSON.stringify({ success: false, error: "Missing required fields." }),
+      { status: 400 },
+    );
+  }
+
+  if (!isValidEmail(email) || !isValidPhone(phone)) {
+    return new Response(
+      JSON.stringify({ success: false, error: "Invalid contact details." }),
+      { status: 400 },
+    );
+  }
+
+  const { data, error } = await resend.emails.send({
+    from: "leads@your-domain.com",
+    to: "contact@your-domain.com",
+    subject: `New contact form submission — ${name}`,
+    html: `
+      <div>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\\n/g, "<br>")}</p>
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return Response.json({ success: true, data });
+}
+```
+
+Notes:
+
+- Instantiate `Resend` inside the route handler with `process.env.RESEND_API_KEY`.
+- Use `resend.emails.send` and check the `{ data, error }` result.
+- Keep `from` and `to` server-only (prefer environment variables).
+- This pattern pairs with the honeypot check before validation and sending.
+
 ## Security and Anti-Spam
 
 - Honeypot field: add a hidden input (ex: `company`) and reject if it has a

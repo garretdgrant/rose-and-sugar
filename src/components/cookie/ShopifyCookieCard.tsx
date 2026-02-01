@@ -7,6 +7,7 @@ import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { useState } from "react";
 import Link from "next/link";
+import { getPredesignedSizeLabel } from "@/lib/predesignedCookies";
 
 interface ShopifyCookieCardProps {
   product: ShopifyProduct;
@@ -21,6 +22,7 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
   const price = node.priceRange?.minVariantPrice;
   const firstVariant = node.variants?.edges?.[0]?.node;
   const isAvailable = firstVariant?.availableForSale ?? true;
+  const sizeLabel = getPredesignedSizeLabel(node.tags) || "set";
 
   const handleAddToCart = (e?: React.MouseEvent<HTMLButtonElement>) => {
     if (e) {
@@ -72,9 +74,12 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
 
         {/* Price Badge */}
         <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-md">
-          <span className="text-bakery-pink-dark font-semibold text-sm">
+          <div className="text-bakery-pink-dark font-semibold text-sm leading-tight">
             ${parseFloat(price?.amount || "0").toFixed(2)}
-          </span>
+            <span className="ml-1 text-[10px] font-medium text-gray-500">
+              per {sizeLabel}
+            </span>
+          </div>
         </div>
       </Link>
 

@@ -50,30 +50,71 @@ export const useCartStore = create<CartStore>()(
       addItem: (item) => {
         const { items } = get();
         const existingItem = items.find((i) => i.variantId === item.variantId);
+        const maxQuantity =
+          typeof item.product.node.quantityAvailable === "number"
+            ? Math.max(0, item.product.node.quantityAvailable)
+            : null;
 
         if (existingItem) {
+          const proposedQuantity = existingItem.quantity + item.quantity;
+          const nextQuantity =
+            maxQuantity === null
+              ? proposedQuantity
+              : Math.min(proposedQuantity, maxQuantity);
+
+          if (nextQuantity === existingItem.quantity) {
+            set({ isOpen: true });
+            return;
+          }
+
           set({
             items: items.map((i) =>
               i.variantId === item.variantId
-                ? { ...i, quantity: i.quantity + item.quantity }
+                ? { ...i, quantity: nextQuantity }
                 : i,
             ),
             isOpen: true,
           });
         } else {
-          set({ items: [...items, item], isOpen: true });
+          const nextQuantity =
+            maxQuantity === null
+              ? item.quantity
+              : Math.min(item.quantity, maxQuantity);
+          if (nextQuantity <= 0) {
+            set({ isOpen: true });
+            return;
+          }
+
+          set({
+            items: [...items, { ...item, quantity: nextQuantity }],
+            isOpen: true,
+          });
         }
       },
 
       updateQuantity: (variantId, quantity) => {
-        if (quantity <= 0) {
+        const currentItem = get().items.find(
+          (item) => item.variantId === variantId,
+        );
+        if (!currentItem) return;
+
+        const maxQuantity =
+          typeof currentItem.product.node.quantityAvailable === "number"
+            ? Math.max(0, currentItem.product.node.quantityAvailable)
+            : null;
+        const nextQuantity =
+          maxQuantity === null ? quantity : Math.min(quantity, maxQuantity);
+
+        if (nextQuantity <= 0) {
           get().removeItem(variantId);
           return;
         }
 
         set({
           items: get().items.map((item) =>
-            item.variantId === variantId ? { ...item, quantity } : item,
+            item.variantId === variantId
+              ? { ...item, quantity: nextQuantity }
+              : item,
           ),
         });
       },

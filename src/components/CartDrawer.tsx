@@ -159,6 +159,12 @@ const CartDrawer = () => {
                   const cartImageAlt = item.imageOverride
                     ? item.product.node.title
                     : imageNode?.altText || item.product.node.title;
+                  const maxQuantity =
+                    typeof item.product.node.quantityAvailable === "number"
+                      ? Math.max(0, item.product.node.quantityAvailable)
+                      : null;
+                  const isAtMax =
+                    maxQuantity !== null && item.quantity >= maxQuantity;
                   return (
                     <div
                       key={item.variantId}
@@ -234,8 +240,9 @@ const CartDrawer = () => {
                             onClick={() =>
                               updateQuantity(item.variantId, item.quantity + 1)
                             }
-                            className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-white hover:text-bakery-pink-dark transition-all duration-200"
+                            className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-white hover:text-bakery-pink-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-gray-600"
                             aria-label="Increase quantity"
+                            disabled={isAtMax}
                           >
                             <Plus className="w-4 h-4" />
                           </button>

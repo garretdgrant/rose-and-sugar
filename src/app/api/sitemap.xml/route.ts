@@ -9,6 +9,7 @@ export const revalidate = 3600;
 const staticPaths = [
   "/",
   "/corporate-team-building",
+  "/private-cookie-classes-folsom-sacramento",
   "/cookies/signature-sugar-cookie-sets",
   "/cookies/order-custom-sugar-cookies",
   "/classes",

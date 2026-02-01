@@ -27,6 +27,7 @@ import {
   ArrowLeft,
   Loader2,
 } from "lucide-react";
+import { getPredesignedSizeLabel } from "@/lib/predesignedCookies";
 
 const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
   const queryClient = useQueryClient();
@@ -113,7 +114,9 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
     .map((e) => e.node.url)
     .slice(0, 4);
   const price = product.priceRange?.minVariantPrice?.amount ?? "0";
-  const tags = (product.tags || []).map((t) => t.toLowerCase());
+  const rawTags = product.tags || [];
+  const tags = rawTags.map((t) => t.toLowerCase());
+  const sizeLabel = getPredesignedSizeLabel(rawTags) || "set";
 
   const isSeasonal = tags.includes("seasonal");
   const isSignature = tags.includes("signature");
@@ -469,7 +472,7 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
                     ${parseFloat(price).toFixed(2)}
                   </span>
                   <span className="font-poppins text-sm text-gray-500">
-                    per set
+                    per {sizeLabel}
                   </span>
                 </div>
 

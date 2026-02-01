@@ -642,19 +642,19 @@ const ClientClasses = () => {
               </span>
             </div>
             <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-tight">
-              Host a Private Class
+              Plan a Private Cookie Class
             </h2>
             <p className="mt-6 text-lg text-white/90 font-poppins max-w-xl mx-auto">
-              Looking for a unique activity for a bridal shower, team building,
-              or birthday celebration? Private classes are tailored to your
-              event with a minimum of 8 guests at $55 per person.
+              Planning a birthday, shower, or team celebration? Private classes
+              are customized for your group and available across Folsom and the
+              greater Sacramento area.
             </p>
             <div className="mt-10">
               <Link
-                href="/contact"
+                href="/private-cookie-classes-folsom-sacramento"
                 className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-bakery-pink-dark font-poppins font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
               >
-                Inquire About Private Classes
+                Explore Private Classes
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

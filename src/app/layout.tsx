@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import QueryProvider from "@/components/QueryProvider";
 import Script from "next/script";
-import { bebasNeue, fraunces, playfairDisplay, poppins } from "./fonts";
+import { bebasNeue, cookie, fraunces, playfairDisplay, poppins } from "./fonts";
 
 const metadataBase =
   process.env.NODE_ENV === "development"
@@ -110,7 +110,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${bebasNeue.variable} ${playfairDisplay.variable} ${fraunces.variable}`}
+      className={`${poppins.variable} ${bebasNeue.variable} ${playfairDisplay.variable} ${fraunces.variable} ${cookie.variable}`}
     >
       <body className="antialiased">
         <a

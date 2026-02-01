@@ -183,3 +183,9 @@ export const mapPredesignedToShopifyProduct = (
 ): ShopifyProduct => {
   return { node: buildPredesignedNode(product) };
 };
+
+export const getPredesignedSizeLabel = (tags?: string[] | null) => {
+  if (!tags || tags.length === 0) return null;
+  const tag = tags.find((item) => item.toLowerCase() !== "pre-designed");
+  return tag ? tag.replace(/-/g, " ") : null;
+};

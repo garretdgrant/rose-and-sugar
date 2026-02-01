@@ -13,6 +13,7 @@ import {
   Home,
   ArrowRight,
   User,
+  Heart,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -28,6 +29,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreExpanded, setMoreExpanded] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const hasMounted = useRef(false);
@@ -84,7 +86,12 @@ const Navbar = () => {
   ];
 
   const moreLinks = [
-    { name: "Sweet Bakes", path: "/sweet-bakes/pre-designed", icon: Gift },
+    {
+      name: "Private Classes",
+      path: "/private-cookie-classes-folsom-sacramento",
+      icon: Gift,
+    },
+    { name: "Free Cookies", path: "/kind-cookie-program", icon: Heart },
     { name: "Corporate Events", path: "/corporate-team-building", icon: Users },
     { name: "About", path: "/about", icon: Home },
     { name: "Contact", path: "/contact", icon: MessageCircle },
@@ -180,12 +187,14 @@ const Navbar = () => {
           ))}
 
           {/* More dropdown */}
-          <DropdownMenu>
+          <DropdownMenu open={moreOpen} onOpenChange={setMoreOpen}>
             <DropdownMenuTrigger asChild>
               <button
                 type="button"
                 className="relative px-4 py-2 font-poppins text-gray-700 font-medium text-sm rounded-full hover:text-bakery-pink-dark transition-all duration-300 flex items-center gap-1.5 group focus:outline-none"
                 aria-label="More menu"
+                onMouseEnter={() => setMoreOpen(true)}
+                onMouseLeave={() => setMoreOpen(false)}
               >
                 <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
                 <span className="relative z-10">More</span>
@@ -199,6 +208,8 @@ const Navbar = () => {
               align="end"
               sideOffset={8}
               className="bg-white/95 backdrop-blur-md border border-bakery-pink-light/40 rounded-2xl shadow-xl shadow-bakery-pink/10 p-2 min-w-[180px]"
+              onMouseEnter={() => setMoreOpen(true)}
+              onMouseLeave={() => setMoreOpen(false)}
             >
               {moreLinks.map((link) => (
                 <DropdownMenuItem key={link.name} asChild>

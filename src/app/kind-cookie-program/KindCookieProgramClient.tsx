@@ -328,7 +328,7 @@ const KindCookieProgramClient = () => {
                 icon: MapPin,
                 title: "Free Delivery",
                 description:
-                  "Free delivery offered within Folsom for nominees in Sacramento and surrounding areas. Think of it as a cookie gram without any embarrassing singing!",
+                  "Free delivery offered within Folsom for nominees in Folsom and surrounding areas. Think of it as a cookie gram without any embarrassing singing!",
                 emoji: "🚗",
               },
             ].map((item, idx) => (
@@ -388,10 +388,9 @@ const KindCookieProgramClient = () => {
                   Want to show someone your appreciation?
                 </h3>
                 <p className="font-poppins text-gray-700 leading-relaxed">
-                  I will do this every week for the foreseeable future, and if
-                  it goes well, I might officially add this to my website!
-                  Anybody can submit a nominee in Sacramento/surrounding areas
-                  with free delivery offered within Folsom.
+                  This is an ongoing weekly giveaway, so you can nominate
+                  someone anytime. Anyone can submit a nominee in Folsom or the
+                  surrounding areas, with free delivery offered within Folsom.
                 </p>
               </div>
             </div>
@@ -639,7 +638,7 @@ const KindCookieProgramClient = () => {
                             </FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="Street address or general area (e.g., 'Folsom Elementary School' or 'Downtown Sacramento')"
+                                placeholder="General area (e.g., 'Temple Coffee Folsom')"
                                 className="border-bakery-pink-light/50 focus:border-bakery-pink focus:ring-bakery-pink/30 rounded-xl py-6 text-base"
                                 {...field}
                               />
