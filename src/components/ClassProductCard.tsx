@@ -95,8 +95,7 @@ const ClassProductCard = ({
         ? formatTime(validStartDate)
         : null;
   const timeLabel = timeRangeLabel || durationLabel;
-  const locationLabel =
-    node.location?.name || node.location?.address?.city || "Folsom, CA";
+  const locationLabel = node.location || "Folsom, CA";
   const seatsLabel =
     seatsLeft !== null
       ? `${seatsLeft} seat${seatsLeft === 1 ? "" : "s"} left`

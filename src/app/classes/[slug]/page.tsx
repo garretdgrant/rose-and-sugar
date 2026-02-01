@@ -156,15 +156,10 @@ export default async function Page({ params }: Props) {
   const durationLabel =
     validStart && validEnd ? getDurationLabel(startDate, endDate) : null;
 
-  const address = classItem.location?.address;
-  const locationName = classItem.location?.name || "Location TBD";
-  const locationDetails = [address?.address1, address?.city, address?.zip]
-    .filter(Boolean)
-    .join(", ");
-  const hasLocation =
-    Boolean(classItem.location?.name) || Boolean(locationDetails);
+  const locationName = classItem.location || "Location TBD";
+  const hasLocation = Boolean(classItem.location);
   const locationSummary = hasLocation
-    ? `${locationName}${locationDetails ? ` (${locationDetails})` : ""}.`
+    ? `${locationName}.`
     : "Location details will be shared after booking.";
 
   const seatsLeft = classItem.quantityAvailable ?? null;
@@ -529,7 +524,7 @@ export default async function Page({ params }: Props) {
                         {locationName}
                       </p>
                       <p className="font-poppins text-[10px] text-gray-500 truncate">
-                        {address?.city || "Location"}
+                        {locationName || "Location"}
                       </p>
                     </div>
                   </div>

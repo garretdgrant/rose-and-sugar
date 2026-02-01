@@ -1,14 +1,7 @@
 import { buildCanonicalUrl } from "@/lib/metadata";
 import type { ShopifyProduct, ShopifyProductNode } from "@/types/shopify";
 
-export type ClassesApiLocation = {
-  name?: string | null;
-  address?: {
-    address1?: string | null;
-    city?: string | null;
-    zip?: string | null;
-  } | null;
-};
+export type ClassesApiLocation = string | null;
 
 export type ClassesApiProduct = {
   id: string;
@@ -23,7 +16,7 @@ export type ClassesApiProduct = {
   } | null;
   variantId?: string | null;
   quantityAvailable?: number | null;
-  location?: ClassesApiLocation | null;
+  location?: ClassesApiLocation;
   eventStartDateTime?: string | null;
   eventEndDateTime?: string | null;
   price?: string;

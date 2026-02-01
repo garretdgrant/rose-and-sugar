@@ -11,14 +11,7 @@ export type ShopifyImageConnection = {
   edges: ShopifyImageEdge[];
 };
 
-export type ShopifyLocation = {
-  name?: string | null;
-  address?: {
-    address1?: string | null;
-    city?: string | null;
-    zip?: string | null;
-  } | null;
-};
+export type ShopifyLocation = string | null;
 
 export type ShopifyVariantNode = {
   id: string;

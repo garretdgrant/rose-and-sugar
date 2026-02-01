@@ -14,23 +14,6 @@ type MediaNode = {
 type VariantNode = {
   id: string;
   quantityAvailable?: number | null;
-  storeAvailability?: {
-    edges?: Array<{
-      node: {
-        available?: boolean | null;
-        quantityAvailable?: number | null;
-        pickUpTime?: string | null;
-        location?: {
-          name?: string | null;
-          address?: {
-            address1?: string | null;
-            city?: string | null;
-            zip?: string | null;
-          } | null;
-        } | null;
-      };
-    }>;
-  };
 };
 
 type ProductNode = {
@@ -56,6 +39,9 @@ type ProductNode = {
     value?: string | null;
   } | null;
   eventEndDateTime?: {
+    value?: string | null;
+  } | null;
+  classLocation?: {
     value?: string | null;
   } | null;
   media?: {
@@ -92,23 +78,6 @@ const QUERY = `
                 node {
                   id
                   quantityAvailable
-                  storeAvailability(first: 5) {
-                    edges {
-                      node {
-                        available
-                        quantityAvailable
-                        pickUpTime
-                        location {
-                          name
-                          address {
-                            address1
-                            city
-                            zip
-                          }
-                        }
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -125,6 +94,9 @@ const QUERY = `
               value
             }
             eventEndDateTime: metafield(namespace: "custom", key: "event_end_datetime") {
+              value
+            }
+            classLocation: metafield(namespace: "custom", key: "class_location") {
               value
             }
             media(first: $mediaFirst) {
@@ -176,11 +148,9 @@ export async function GET() {
         const firstVariant = product.variants?.edges?.[0]?.node;
         const variantId = firstVariant?.id ?? null;
         const quantityAvailable = firstVariant?.quantityAvailable ?? null;
-        const firstAvailability =
-          firstVariant?.storeAvailability?.edges?.[0]?.node;
-        const location = firstAvailability?.location ?? null;
         const eventStartDateTime = product.eventStartDateTime?.value ?? null;
         const eventEndDateTime = product.eventEndDateTime?.value ?? null;
+        const classLocation = product.classLocation?.value ?? null;
 
         const {
           media: _media,
@@ -188,13 +158,14 @@ export async function GET() {
           variants: _variants,
           eventStartDateTime: _eventStartDateTime,
           eventEndDateTime: _eventEndDateTime,
+          classLocation: _classLocation,
           ...rest
         } = product;
         return {
           ...rest,
           variantId,
           quantityAvailable,
-          location,
+          location: classLocation,
           eventStartDateTime,
           eventEndDateTime,
           price: priceRange?.minVariantPrice?.amount ?? "0",

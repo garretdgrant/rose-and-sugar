@@ -83,6 +83,7 @@ const Navbar = () => {
       path: "/cookies/order-custom-sugar-cookies",
       icon: Sparkles,
     },
+    { name: "Free Cookies", path: "/kind-cookie-program", icon: Heart },
   ];
 
   const moreLinks = [
@@ -91,7 +92,6 @@ const Navbar = () => {
       path: "/private-cookie-classes-folsom-sacramento",
       icon: Gift,
     },
-    { name: "Free Cookies", path: "/kind-cookie-program", icon: Heart },
     { name: "Corporate Events", path: "/corporate-team-building", icon: Users },
     { name: "About", path: "/about", icon: Home },
     { name: "Contact", path: "/contact", icon: MessageCircle },
