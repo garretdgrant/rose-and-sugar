@@ -193,17 +193,6 @@ This ensures the check only runs once per page load/session.
 
 ---
 
-## Optional UX improvement (recommended)
-
-If `checkoutUrl` exists in localStorage:
-
-- Show a subtle message in the cart drawer:
-  “If you completed checkout, your cart will clear when you return.”
-
-This reduces confusion during rollout.
-
----
-
 ## Final Result
 
 - Cart is NOT cleared on checkout click
