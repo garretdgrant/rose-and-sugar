@@ -22,9 +22,15 @@ type CartLineInput = {
   }>;
 };
 
+type CartAttributeInput = {
+  key: string;
+  value: string;
+};
+
 type CartCreateResponse = {
   cartCreate: {
     cart: {
+      id: string;
       checkoutUrl: string | null;
     } | null;
     userErrors: Array<{
@@ -76,9 +82,10 @@ export async function shopifyFetch<T>(
 }
 
 const CART_CREATE_MUTATION = `
-  mutation cartCreate($lines: [CartLineInput!]!) {
-    cartCreate(input: { lines: $lines }) {
+  mutation cartCreate($lines: [CartLineInput!]!, $attributes: [AttributeInput!]) {
+    cartCreate(input: { lines: $lines, attributes: $attributes }) {
       cart {
+        id
         checkoutUrl
       }
       userErrors {
@@ -94,15 +101,23 @@ export async function createShopifyCart(
     quantity: number;
     attributes?: Array<{ key: string; value: string }>;
   }>,
+  clientCartId: string,
 ) {
   const lines: CartLineInput[] = items.map((item) => ({
     quantity: item.quantity,
     merchandiseId: item.variantId,
     attributes: item.attributes,
   }));
+  const cartAttributes: CartAttributeInput[] = [
+    {
+      key: "client_cart_id",
+      value: clientCartId,
+    },
+  ];
 
   const data = await shopifyFetch<CartCreateResponse>(CART_CREATE_MUTATION, {
     lines,
+    attributes: cartAttributes,
   });
 
   const errors = data.cartCreate.userErrors;
@@ -110,10 +125,13 @@ export async function createShopifyCart(
     throw new Error(errors.map((error) => error.message).join(", "));
   }
 
-  const checkoutUrl = data.cartCreate.cart?.checkoutUrl;
-  if (!checkoutUrl) {
+  const cart = data.cartCreate.cart;
+  if (!cart?.id) {
+    throw new Error("Missing cart id from Shopify");
+  }
+  if (!cart.checkoutUrl) {
     throw new Error("Missing checkout URL from Shopify");
   }
 
-  return checkoutUrl;
+  return { checkoutUrl: cart.checkoutUrl, cartId: cart.id };
 }

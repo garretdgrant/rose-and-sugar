@@ -22,6 +22,8 @@ export type PredesignedApiProduct = {
   productType?: string;
   description?: string;
   tags?: string[];
+  cookieSoldOut?: boolean | null;
+  cookieLeadDays?: number | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -153,6 +155,8 @@ export const buildPredesignedNode = (
     productType: product.productType,
     description: product.description,
     tags: product.tags || [],
+    cookieSoldOut: product.cookieSoldOut ?? null,
+    cookieLeadDays: product.cookieLeadDays ?? null,
     priceRange: {
       minVariantPrice: {
         amount,

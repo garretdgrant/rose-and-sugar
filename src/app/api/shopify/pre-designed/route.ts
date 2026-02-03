@@ -46,6 +46,12 @@ type ProductNode = {
     title?: string | null;
     description?: string | null;
   } | null;
+  cookieLeadDays?: {
+    value?: string | null;
+  } | null;
+  cookieSoldOut?: {
+    value?: string | null;
+  } | null;
   media?: {
     edges?: { node: MediaNode }[];
   };
@@ -101,6 +107,12 @@ const QUERY = `
               title
               description
             }
+            cookieLeadDays: metafield(namespace: "custom", key: "cookie_lead_days") {
+              value
+            }
+            cookieSoldOut: metafield(namespace: "custom", key: "cookie_sold_out") {
+              value
+            }
             media(first: $mediaFirst) {
               edges {
                 node {
@@ -152,16 +164,26 @@ export async function GET() {
           product.title;
         const variants =
           product.variants?.edges?.map((edge) => edge.node) ?? [];
+        // Extract custom metafields
+        const cookieLeadDays = product.cookieLeadDays?.value
+          ? parseInt(product.cookieLeadDays.value, 10)
+          : 10;
+        const cookieSoldOutValue = product.cookieSoldOut?.value;
+        const cookieSoldOut = cookieSoldOutValue === "true";
 
         const {
           media: _media,
           priceRange,
           variants: _variants,
+          cookieLeadDays: _cookieLeadDays,
+          cookieSoldOut: _cookieSoldOut,
           ...rest
         } = product;
         return {
           ...rest,
           variants,
+          cookieLeadDays,
+          cookieSoldOut,
           price: {
             amount: priceRange?.minVariantPrice?.amount ?? "0",
           },

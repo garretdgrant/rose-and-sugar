@@ -17,8 +17,25 @@ const Hero = () => {
       className="relative min-h-screen overflow-hidden"
       aria-labelledby="hero-heading"
     >
-      {/* Layered background with organic shapes */}
-      <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-peach/30" />
+      {/* Hero Background Image with Beautiful Cookies */}
+      <div
+        className={`absolute inset-0 transition-all duration-1000 ${
+          mounted ? "opacity-100 scale-100" : "opacity-0 scale-105"
+        }`}
+      >
+        <Image
+          src="/cookies.webp"
+          alt="Rose and Sugar decorated cookies background"
+          fill
+          priority
+          sizes="100vw"
+          quality={90}
+          className="object-cover object-center"
+        />
+        {/* Layered overlay to maintain design aesthetic and readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream/70 via-white/60 to-bakery-peach/60" />
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]" />
+      </div>
 
       {/* Large decorative blob - top right */}
       <div
@@ -272,7 +289,8 @@ const Hero = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         @keyframes scrollBounce {
           0%,
           100% {
@@ -292,7 +310,17 @@ const Hero = () => {
             transform: rotate(360deg);
           }
         }
-      `}</style>
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+      `}
+      </style>
     </section>
   );
 };

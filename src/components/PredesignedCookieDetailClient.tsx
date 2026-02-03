@@ -117,6 +117,9 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
   const rawTags = product.tags || [];
   const tags = rawTags.map((t) => t.toLowerCase());
   const sizeLabel = getPredesignedSizeLabel(rawTags) || "set";
+  const leadDays =
+    typeof product.cookieLeadDays === "number" ? product.cookieLeadDays : null;
+  const isSoldOut = product.cookieSoldOut === true;
 
   const isSeasonal = tags.includes("seasonal");
   const isSignature = tags.includes("signature");
@@ -463,11 +466,18 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
                   </span>
                 </div>
 
-                <h1 className="font-bebas text-4xl md:text-5xl lg:text-4xl xl:text-5xl text-gray-900 leading-[0.95] tracking-tight">
-                  {product.title}
-                </h1>
+                <div className="flex items-start justify-between gap-4">
+                  <h1 className="font-bebas text-4xl md:text-5xl lg:text-4xl xl:text-5xl text-gray-900 leading-[0.95] tracking-tight flex-1">
+                    {product.title}
+                  </h1>
+                  {isSoldOut && (
+                    <div className="inline-flex items-center rounded-full bg-gray-800/95 backdrop-blur-sm px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-lg border border-white/10 flex-shrink-0">
+                      Sold Out
+                    </div>
+                  )}
+                </div>
 
-                <div className="mt-4 flex items-baseline gap-2">
+                <div className="mt-4 flex flex-wrap items-center gap-3">
                   <span className="font-bebas text-4xl bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
                     ${parseFloat(price).toFixed(2)}
                   </span>
@@ -475,6 +485,15 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
                     per {sizeLabel}
                   </span>
                 </div>
+
+                {leadDays !== null && (
+                  <div className="mt-3 inline-flex items-center gap-2 bg-bakery-cream/60 px-3.5 py-2 rounded-full border border-bakery-pink-light/30 shadow-sm">
+                    <Clock className="w-3.5 h-3.5 text-bakery-pink-dark" />
+                    <span className="font-poppins text-xs font-semibold text-gray-700">
+                      {leadDays} day{leadDays === 1 ? "" : "s"} lead time
+                    </span>
+                  </div>
+                )}
 
                 <p className="mt-5 font-poppins text-gray-600 leading-relaxed">
                   {product.description ||

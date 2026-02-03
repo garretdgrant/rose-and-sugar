@@ -66,10 +66,19 @@ export async function POST(request: Request) {
     );
   }
 
-  const items = (payload as { items?: unknown }).items;
+  const { items, clientCartId } = payload as {
+    items?: unknown;
+    clientCartId?: unknown;
+  };
   if (!Array.isArray(items) || items.length === 0) {
     return NextResponse.json(
       { ok: false, error: "Checkout items are required." },
+      { status: 400 },
+    );
+  }
+  if (typeof clientCartId !== "string" || clientCartId.trim().length === 0) {
+    return NextResponse.json(
+      { ok: false, error: "clientCartId is required." },
       { status: 400 },
     );
   }
@@ -100,8 +109,15 @@ export async function POST(request: Request) {
         attributes,
       };
     });
-    const checkoutUrl = await createShopifyCart(normalizedItems);
-    return NextResponse.json({ ok: true, checkoutUrl });
+    const checkout = await createShopifyCart(
+      normalizedItems,
+      clientCartId.trim(),
+    );
+    return NextResponse.json({
+      ok: true,
+      checkoutUrl: checkout.checkoutUrl,
+      cartId: checkout.cartId,
+    });
   } catch (error: unknown) {
     const errorMessage = getErrorMessage(error);
     console.error("[SHOPIFY_CHECKOUT_ERROR]", error);

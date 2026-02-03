@@ -42,6 +42,8 @@ export type ShopifyProductNode = {
   handle: string;
   productType?: string;
   tags?: string[];
+  cookieSoldOut?: boolean | null;
+  cookieLeadDays?: number | null;
   eventStartDateTime?: string | null;
   eventEndDateTime?: string | null;
   location?: ShopifyLocation | null;

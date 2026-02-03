@@ -20,8 +20,16 @@ export interface CartItem {
   imageOverride?: string;
 }
 
+const generateClientCartId = () => {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  return `cart_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+};
+
 interface CartStore {
   items: CartItem[];
+  clientCartId: string;
   cartId: string | null;
   checkoutUrl: string | null;
   isLoading: boolean;
@@ -31,6 +39,7 @@ interface CartStore {
   updateQuantity: (variantId: string, quantity: number) => void;
   removeItem: (variantId: string) => void;
   clearCart: () => void;
+  setClientCartId: (clientCartId: string) => void;
   setCartId: (cartId: string) => void;
   setCheckoutUrl: (url: string | null) => void;
   setLoading: (loading: boolean) => void;
@@ -42,6 +51,7 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      clientCartId: generateClientCartId(),
       cartId: null,
       checkoutUrl: null,
       isLoading: false,
@@ -126,16 +136,29 @@ export const useCartStore = create<CartStore>()(
       },
 
       clearCart: () => {
-        set({ items: [], cartId: null, checkoutUrl: null });
+        set({
+          items: [],
+          cartId: null,
+          checkoutUrl: null,
+          clientCartId: generateClientCartId(),
+        });
       },
 
+      setClientCartId: (clientCartId) => set({ clientCartId }),
       setCartId: (cartId) => set({ cartId }),
       setCheckoutUrl: (checkoutUrl) => set({ checkoutUrl }),
       setLoading: (isLoading) => set({ isLoading }),
       setIsOpen: (isOpen) => set({ isOpen }),
 
       createCheckout: async () => {
-        const { items, setLoading, setCheckoutUrl } = get();
+        const {
+          items,
+          clientCartId,
+          setClientCartId,
+          setLoading,
+          setCheckoutUrl,
+          setCartId,
+        } = get();
         if (items.length === 0) return;
 
         setLoading(true);
@@ -191,17 +214,24 @@ export const useCartStore = create<CartStore>()(
               attributes,
             };
           });
+          let activeClientCartId = clientCartId;
+          if (!activeClientCartId) {
+            activeClientCartId = generateClientCartId();
+            setClientCartId(activeClientCartId);
+          }
           const response = await fetch("/api/shopify/checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               items: checkoutItems,
+              clientCartId: activeClientCartId,
             }),
           });
 
           const payload = (await response.json()) as {
             ok?: boolean;
             checkoutUrl?: string;
+            cartId?: string;
             error?: string;
           };
 
@@ -212,6 +242,9 @@ export const useCartStore = create<CartStore>()(
           }
 
           setCheckoutUrl(payload.checkoutUrl);
+          if (payload.cartId) {
+            setCartId(payload.cartId);
+          }
         } finally {
           setLoading(false);
         }

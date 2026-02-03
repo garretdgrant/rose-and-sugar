@@ -25,7 +25,8 @@ export default function ProductDetailClient({
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const firstVariant = product.variants?.edges?.[0]?.node;
-  const isAvailable = firstVariant?.availableForSale ?? true;
+  const isSoldOut = product.cookieSoldOut === true;
+  const isAvailable = !isSoldOut && (firstVariant?.availableForSale ?? true);
   const addedLabelText =
     quantity === 1
       ? addedLabelSingular || addedLabel
@@ -64,7 +65,7 @@ export default function ProductDetailClient({
           <button
             type="button"
             onClick={decrementQuantity}
-            disabled={quantity <= 1}
+            disabled={quantity <= 1 || !isAvailable}
             className="w-10 h-10 flex items-center justify-center rounded-lg text-gray-600 hover:bg-white hover:text-bakery-pink-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             aria-label="Decrease quantity"
           >
@@ -76,7 +77,7 @@ export default function ProductDetailClient({
           <button
             type="button"
             onClick={incrementQuantity}
-            disabled={quantity >= 10}
+            disabled={quantity >= 10 || !isAvailable}
             className="w-10 h-10 flex items-center justify-center rounded-lg text-gray-600 hover:bg-white hover:text-bakery-pink-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             aria-label="Increase quantity"
           >

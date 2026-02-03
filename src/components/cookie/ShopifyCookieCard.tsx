@@ -21,8 +21,11 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
   const imageNode = node.images?.edges?.[0]?.node;
   const price = node.priceRange?.minVariantPrice;
   const firstVariant = node.variants?.edges?.[0]?.node;
-  const isAvailable = firstVariant?.availableForSale ?? true;
+  const isSoldOut = node.cookieSoldOut === true;
+  const isAvailable = !isSoldOut && (firstVariant?.availableForSale ?? true);
   const sizeLabel = getPredesignedSizeLabel(node.tags) || "set";
+  const leadDays =
+    typeof node.cookieLeadDays === "number" ? node.cookieLeadDays : null;
 
   const handleAddToCart = (e?: React.MouseEvent<HTMLButtonElement>) => {
     if (e) {
@@ -72,8 +75,15 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
         {/* Quick Add Overlay - visible on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
+        {/* Sold Out Badge - Refined styling */}
+        {isSoldOut && (
+          <div className="absolute top-3 left-3 bg-gray-800/95 backdrop-blur-sm text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-lg border border-white/10">
+            Sold Out
+          </div>
+        )}
+
         {/* Price Badge */}
-        <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-md">
+        <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-md border border-bakery-pink-light/20">
           <div className="text-bakery-pink-dark font-semibold text-sm leading-tight">
             ${parseFloat(price?.amount || "0").toFixed(2)}
             <span className="ml-1 text-[10px] font-medium text-gray-500">
@@ -86,10 +96,19 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
       {/* Content */}
       <div className="p-4 sm:p-5">
         <Link href={`/cookies/signature-sugar-cookie-sets/${node.handle}`}>
-          <h3 className="font-bebas text-lg sm:text-xl text-gray-800 mb-1.5 leading-tight tracking-wide group-hover:text-bakery-pink-dark transition-colors">
+          <h3 className="font-bebas text-lg sm:text-xl text-gray-800 mb-2 leading-tight tracking-wide group-hover:text-bakery-pink-dark transition-colors">
             {node.title}
           </h3>
         </Link>
+
+        {leadDays !== null && (
+          <div className="inline-flex items-center gap-1.5 bg-bakery-cream/50 px-2.5 py-1 rounded-full mb-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-bakery-pink-dark animate-pulse" />
+            <p className="text-[11px] font-poppins font-medium text-gray-600">
+              {leadDays} day{leadDays === 1 ? "" : "s"} lead time
+            </p>
+          </div>
+        )}
 
         <p className="text-gray-500 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4 font-poppins">
           {node.description ||
@@ -100,18 +119,17 @@ const ShopifyCookieCard = ({ product }: ShopifyCookieCardProps) => {
         <Button
           type="button"
           onClick={(e) => handleAddToCart(e)}
-          className={`w-full rounded-xl py-4 sm:py-5 text-xs sm:text-sm font-medium transition-all duration-300 ${
-            isAdded
-              ? "bg-green-500 hover:bg-green-500 text-white"
-              : "bg-bakery-pink hover:bg-bakery-pink-dark text-white"
+          className={`w-full rounded-xl py-4 sm:py-5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
+            !isAvailable
+              ? "bg-gray-100 hover:bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200"
+              : isAdded
+                ? "bg-green-500 hover:bg-green-500 text-white shadow-lg shadow-green-500/30"
+                : "bg-bakery-pink hover:bg-bakery-pink-dark text-white shadow-md shadow-bakery-pink/20 hover:shadow-lg hover:shadow-bakery-pink-dark/30"
           }`}
           disabled={!firstVariant || !isAvailable}
         >
           {!isAvailable ? (
-            <>
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Sold Out
-            </>
+            <span className="flex items-center justify-center">Sold Out</span>
           ) : isAdded ? (
             <>
               <Check className="h-4 w-4 mr-2" />
