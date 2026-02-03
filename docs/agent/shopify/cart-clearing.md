@@ -1,163 +1,213 @@
-# Headless Shopify Cart Clearing (Webhook-Based) — Implementation Steps
+# Headless Shopify Cart Clearing — Steps 5–7 (Upstash Redis REST)
 
-## Goal
+You have already:
 
-Clear the client-side cart **only after an order is successfully created**, using Shopify webhooks, for a **guest-only headless checkout flow**.
+- Added `@upstash/redis`
+- Added `UPSTASH_REDIS_REST_URL`
+- Added `UPSTASH_REDIS_REST_TOKEN`
+- Confirmed `client_cart_id` arrives correctly in the `orders/create` webhook
 
----
-
-## High-Level Strategy
-
-- Generate and persist a **clientCartId** in the headless app
-- Attach that ID to the **Shopify cart as a cart-level attribute**
-- Listen for **Shopify `orders/create` webhook**
-- Mark the cart as completed server-side
-- Clear Zustand + localStorage **on the user’s next visit**
+The following steps assume **Upstash Redis REST** (no TCP connections).
 
 ---
 
-## Step 1: Persist a `clientCartId` in the cart store
+## Step 5 — Write a “completion flag” to Redis (Upstash REST)
 
-**Location:** `src/stores/cartStore.ts`
+**Goal:** When the `orders/create` webhook fires, persist a short-lived marker that says  
+“this `clientCartId` completed an order.”
 
-- Add a new persisted field: `clientCartId: string`
-- On store initialization or first item add:
-  - If `clientCartId` does not exist, generate a UUID
-- Persist it with the rest of the cart under `rose-sugar-cart`
+### 5.1 Redis connection method
 
-**Rules**
+- Use **Upstash REST** (not TCP).
+- Initialize Redis using environment variables only:
+  - `UPSTASH_REDIS_REST_URL`
+  - `UPSTASH_REDIS_REST_TOKEN`
+- Do NOT use a read-only token — this flow requires writes.
 
-- One `clientCartId` per shopping session
-- Do NOT regenerate unless the cart is cleared
-
----
-
-## Step 2: Return and store Shopify `cart.id`
-
-**Current issue:** `cartId` exists in state but is never set
-
-### Update Shopify `cartCreate` mutation
-
-- Modify the GraphQL selection set to request:
-  - `cart { id checkoutUrl }`
-
-### After checkout creation
-
-- Store the returned `cart.id` using `setCartId(cartId)`
-
-**Result**
-
-- `cartId` is now available for debugging, retries, and observability
+This works perfectly in serverless environments (Vercel, edge, etc.).
 
 ---
 
-## Step 3: Attach `clientCartId` to the Shopify cart (CRITICAL)
+### 5.2 Key namespacing (important)
 
-**Where:** `createShopifyCart()` in `src/lib/shopify.ts`
+Because this Redis instance is shared with another project, **namespace your keys**.
 
-- Add a **cart-level attribute** (not line attribute):
-  - key: `client_cart_id`
-  - value: `<clientCartId>`
+Recommended key format:
 
-### Important rules
+- `rose-sugar:cart:completed:<clientCartId>`
 
-- Attribute MUST be set **before redirecting to checkout**
-- Prefer cart-level attributes over line-level attributes
-- This attribute must survive into the Order object
+This prevents collisions and makes debugging easier.
 
 ---
 
-## Step 4: Create Shopify webhook subscription
+### 5.3 What to store
 
-**Webhook topic:** `orders/create`
+Store only minimal, non-PII metadata:
 
-**How**
+- orderId
+- orderNumber
+- completedAt (ISO timestamp)
 
-- Shopify Admin → Settings → Notifications → Webhooks  
-  OR
-- Create via Admin API (recommended for prod)
+Do NOT store:
 
-**Webhook endpoint**
-
-- POST `/api/shopify/webhooks/orders-create`
-
----
-
-## Step 5: Webhook handler logic
-
-**Location:** backend API route
-
-### On webhook receipt:
-
-1. Verify Shopify HMAC signature (mandatory)
-2. Parse order payload
-3. Extract `client_cart_id` from order attributes / note_attributes
-4. Persist completion state:
-
-```
-clientCartId -> {
-orderId,
-completedAt,
-status: “completed”
-}
-```
-
-(Store in DB / Redis / Supabase — any server-side store)
+- email
+- customer name
+- full webhook payload
 
 ---
 
-## Step 6: Expose cart-status endpoint
+### 5.4 TTL (auto-cleanup)
 
-**Endpoint:** `GET /api/cart-status?clientCartId=...`
+Set a TTL on every completion key.
 
-### Response
+Recommended:
 
-- `{ completed: true | false }`
+- **48 hours**
+- Acceptable range: 24–72 hours
 
----
+Reason:
 
-## Step 7: Clear cart on next app load
-
-**Where:** app bootstrap or cart drawer open
-
-### Flow
-
-1. Read `clientCartId` from Zustand
-2. Call `/api/cart-status`
-3. If `completed === true`:
-   - Clear `items`
-   - Clear `checkoutUrl`
-   - Clear `cartId`
-   - Generate a NEW `clientCartId`
-
-**Result**
-
-- Cart appears empty after purchase
-- No premature clearing on checkout click
+- Gives buyers time to return to the headless site
+- Prevents Redis from growing unbounded
+- Requires no cleanup jobs
 
 ---
 
-## Step 8 (Optional but Recommended): Thank You Page Link
+### 5.5 Webhook write behavior
 
-- Add “Continue shopping” link on Shopify Thank You / Order Status page
-- Link back to headless site
-- This triggers immediate cart clearing instead of waiting for next visit
+Inside the `orders/create` webhook handler:
+
+- After:
+  - HMAC verification
+  - topic verification
+  - `client_cart_id` extraction
+- Write the Redis key with TTL
+- Respond **200 immediately**
+
+Important:
+
+- The webhook handler must be **idempotent**
+- Writing the same key multiple times must be safe (Upstash SET is fine)
+
+---
+
+## Step 6 — Add a cart-status endpoint (read-only)
+
+**Goal:** Allow the headless frontend to ask  
+“has this cart completed an order?”
 
 ---
 
-## What NOT to do
+### 6.1 Endpoint contract
 
-- ❌ Do NOT clear cart on checkout button click
-- ❌ Do NOT rely on time-based assumptions alone
-- ❌ Do NOT attach correlation ID only to line items
+Create a GET endpoint with this shape:
+
+- `GET /api/cart-status?clientCartId=<uuid>`
+
+This endpoint is safe to call from the browser.
+
+---
+
+### 6.2 Input validation
+
+- Require `clientCartId`
+- If missing or empty:
+  - Return 400 with a clear error
+- Do NOT infer or generate IDs here
 
 ---
 
-## Final Outcome
+### 6.3 Redis lookup logic
 
-- Cart clears correctly after successful orders
-- Abandoned checkouts retain cart
-- Works for guest users
-- Fully deterministic and production-safe
+- Build the Redis key:
+  - `rose-sugar:cart:completed:<clientCartId>`
+- Check for existence:
+  - If the key exists → `{ completed: true }`
+  - If not → `{ completed: false }`
+
+You may optionally return stored metadata, but **a boolean is sufficient**.
 
 ---
+
+### 6.4 Security boundaries
+
+This endpoint:
+
+- Must NOT expose secrets
+- Must NOT return PII
+- Must NOT query Shopify APIs
+
+It should only reflect Redis state.
+
+---
+
+## Step 7 — Clear the cart on the next page load (frontend)
+
+**Goal:** Clear Zustand + localStorage **only after Shopify confirms an order**.
+
+---
+
+### 7.1 Where to run the check
+
+Recommended options (choose one):
+
+- App boot in a top-level client component (best)
+- When the cart drawer opens
+- Both (safe, but guard against duplicates)
+
+---
+
+### 7.2 When to call `/api/cart-status`
+
+To avoid unnecessary network calls, only check when:
+
+- `clientCartId` exists AND
+- (`checkoutUrl` exists OR cart has items)
+
+This prevents calls when the cart is already empty.
+
+---
+
+### 7.3 Clear behavior
+
+If `/api/cart-status` returns `completed: true`:
+
+- Call `clearCart()`
+- Confirm `clearCart()`:
+  - empties items
+  - clears checkoutUrl
+  - regenerates a new `clientCartId`
+
+This resets the shopping session cleanly.
+
+---
+
+### 7.4 Prevent repeated calls
+
+Add a simple guard such as:
+
+- `completionCheckedThisSession` boolean, OR
+- `lastCompletionCheckAt` timestamp
+
+This ensures the check only runs once per page load/session.
+
+---
+
+## Optional UX improvement (recommended)
+
+If `checkoutUrl` exists in localStorage:
+
+- Show a subtle message in the cart drawer:
+  “If you completed checkout, your cart will clear when you return.”
+
+This reduces confusion during rollout.
+
+---
+
+## Final Result
+
+- Cart is NOT cleared on checkout click
+- Cart IS cleared after confirmed order (via webhook + Redis)
+- Works for guest checkout
+- Safe in serverless environments
+- No Admin API calls required at runtime
