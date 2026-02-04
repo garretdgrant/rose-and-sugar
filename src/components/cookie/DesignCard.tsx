@@ -134,7 +134,7 @@ const DesignCard = ({
 };
 
 const WrappedDesignCard = (props: DesignCardProps) => {
-  const base = props.hrefBase ?? "/sweet-bakes/pre-designed";
+  const base = props.hrefBase ?? "/cookies/signature-sugar-cookie-sets";
   // Ensure no trailing slash on base
   const normalizedBase = base.endsWith("/") ? base.slice(0, -1) : base;
   return (

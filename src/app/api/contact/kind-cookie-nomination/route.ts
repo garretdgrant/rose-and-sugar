@@ -5,10 +5,21 @@ import { isValidEmail, isValidPhone } from "@/lib/validations";
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
+  const senderEmail = process.env.SENDER_EMAIL;
   const receiverEmail = process.env.RECEIVER_EMAIL;
   const googleWebApp = process.env.GOOGLE_WEB_APP;
 
   try {
+    if (!senderEmail || !receiverEmail) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Email configuration is missing.",
+        }),
+        { status: 500 },
+      );
+    }
+
     const body = await req.json();
     const {
       yourName,
@@ -63,8 +74,8 @@ export async function POST(req: NextRequest) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "leads@edcwebdesign.com",
-      to: `${receiverEmail}`,
+      from: senderEmail,
+      to: receiverEmail,
       subject: `💗 NEW Kind Cookie Nomination: ${nomineeName}`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #fff5f7; color: #333;">
