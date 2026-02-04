@@ -119,8 +119,8 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center group relative">
             <div
-              className={`absolute -inset-3 rounded-2xl bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/30 transition-all duration-300 ${
-                isScrolled ? "scale-100" : "scale-95"
+              className={`absolute -inset-3 rounded-2xl bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/30 transition-all duration-300 scale-100 ${
+                isScrolled ? "md:scale-100" : "md:scale-95"
               }`}
             />
             <Image
@@ -134,7 +134,7 @@ const Navbar = () => {
               className={`relative transition-all duration-300 ${
                 isScrolled
                   ? "h-14 md:h-16 w-auto max-h-16"
-                  : "h-16 md:h-20 w-auto max-h-20"
+                  : "h-14 md:h-20 w-auto max-h-20"
               }`}
             />
           </Link>

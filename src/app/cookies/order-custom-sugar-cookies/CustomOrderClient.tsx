@@ -386,59 +386,6 @@ const CustomOrderClient = () => {
         </div>
       </section>
 
-      {/* ===== HIGHLIGHTS SECTION ===== */}
-      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: DollarSign,
-                title: "Starting at $65/dz",
-                desc: "Custom cookies with up to 5 colors",
-              },
-              {
-                icon: Clock,
-                title: "2 Week Lead Time",
-                desc: "Rush orders available on request",
-              },
-              {
-                icon: MapPin,
-                title: "Folsom Pickup",
-                desc: "Saturdays preferred",
-              },
-              {
-                icon: CreditCard,
-                title: "Easy Payment",
-                desc: "Venmo, Zelle, and credit cards accepted",
-              },
-            ].map((item, idx) => (
-              <div
-                key={item.title}
-                className={`group relative transition-all duration-500 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${100 + idx * 100}ms` }}
-              >
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-bakery-pink-light via-bakery-peach to-bakery-pink-light rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
-                <div className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-bakery-pink-light/20 group-hover:border-transparent text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-bakery-pink-light/50 to-bakery-peach/30 mb-4 group-hover:scale-110 group-hover:from-bakery-pink-dark group-hover:to-bakery-pink transition-all duration-300">
-                    <item.icon className="w-6 h-6 text-bakery-pink-dark group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <h3 className="font-bebas text-xl text-gray-900 tracking-wide">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-600 font-poppins">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ===== FORM SECTION ===== */}
       <section className="relative py-16 md:py-24 overflow-hidden">
         {/* Background gradient */}
@@ -1069,6 +1016,59 @@ const CustomOrderClient = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== HIGHLIGHTS SECTION ===== */}
+      <section className="relative py-16 md:py-20 bg-white overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: DollarSign,
+                title: "Starting at $65/dz",
+                desc: "Custom cookies with up to 5 colors",
+              },
+              {
+                icon: Clock,
+                title: "2 Week Lead Time",
+                desc: "Rush orders available on request",
+              },
+              {
+                icon: MapPin,
+                title: "Folsom Pickup",
+                desc: "Saturdays preferred",
+              },
+              {
+                icon: CreditCard,
+                title: "Easy Payment",
+                desc: "Venmo, Zelle, and credit cards accepted",
+              },
+            ].map((item, idx) => (
+              <div
+                key={item.title}
+                className={`group relative transition-all duration-500 ${
+                  mounted
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: `${100 + idx * 100}ms` }}
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-bakery-pink-light via-bakery-peach to-bakery-pink-light rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
+                <div className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-bakery-pink-light/20 group-hover:border-transparent text-center">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-bakery-pink-light/50 to-bakery-peach/30 mb-4 group-hover:scale-110 group-hover:from-bakery-pink-dark group-hover:to-bakery-pink transition-all duration-300">
+                    <item.icon className="w-6 h-6 text-bakery-pink-dark group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="font-bebas text-xl text-gray-900 tracking-wide">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-600 font-poppins">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
