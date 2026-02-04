@@ -81,6 +81,7 @@ export default {
         playfair: ["var(--font-playfair)", "serif"],
         bebas: ["var(--font-bebas)", "sans-serif"],
         poppins: ["var(--font-poppins)", "sans-serif"],
+        cookie: ["var(--font-cookie)", "cursive"],
       },
       keyframes: {
         "accordion-down": {

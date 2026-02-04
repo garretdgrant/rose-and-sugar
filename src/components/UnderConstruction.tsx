@@ -59,7 +59,7 @@ const UnderConstruction = () => {
             Say hello
           </Link>
           <Link
-            href="/cookies/custom-orders"
+            href="/cookies/order-custom-sugar-cookies"
             className="rounded-full border border-bakery-pink-dark px-6 py-3 text-sm font-semibold uppercase tracking-wide text-bakery-pink-dark transition hover:border-bakery-pink-light hover:bg-bakery-pink-light/30"
           >
             Explore custom cookies

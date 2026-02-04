@@ -1,137 +1,192 @@
-import { Instagram, Home, Phone, Mail } from "lucide-react";
+import { Instagram, MapPin, Phone, Mail, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 const Footer = () => {
-  return (
-    <footer className="bg-bakery-cream py-12 relative z-10">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Column 1: Logo and Info */}
-          <div className="text-center md:text-left">
-            <Link href="/" className="inline-block mb-4">
-              <span className="font-bebas text-2xl text-bakery-pink-dark">
-                Rose <span className="text-gray-700">&</span> Sugar
-              </span>
-            </Link>
-            <p className="text-gray-600 mb-4">
-              Bringing sweetness and creativity to every celebration.
-            </p>
-            <a
-              href="https://www.instagram.com/roseandsugarcookies/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-bakery-pink-dark hover:text-bakery-pink transition-colors"
-            >
-              <Instagram size={20} className="mr-2" aria-hidden="true" />
-              <span>@roseandsugarcookies</span>
-            </a>
-          </div>
+  const currentYear = new Date().getFullYear();
 
-          {/* Column 2: Contact Info */}
-          <div className="text-center">
-            <h3 className="font-bebas text-xl mb-4 text-gray-800 tracking-wide">
-              Contact
-            </h3>
-            <div className="space-y-3">
-              <div className="flex items-center justify-center">
-                <Home
-                  size={18}
-                  className="mr-2 text-bakery-pink-dark"
-                  aria-hidden="true"
-                />
-                <p className="text-gray-600">
-                  Serving Folsom & Surrounding Areas
-                </p>
-              </div>
-              <div className="flex items-center justify-center">
-                <Phone
-                  size={18}
-                  className="mr-2 text-bakery-pink-dark"
-                  aria-hidden="true"
-                />
-                <p className="text-gray-600">916-337-8880</p>
-              </div>
-              <div className="flex items-center justify-center">
-                <Mail
-                  size={18}
-                  className="mr-2 text-bakery-pink-dark"
-                  aria-hidden="true"
-                />
-                <p className="text-gray-600">roseandsugarcookies@gmail.com</p>
+  const quickLinks = [
+    { href: "/about", label: "About" },
+    { href: "/classes/locations", label: "Classes" },
+    {
+      href: "/private-cookie-classes-folsom-sacramento",
+      label: "Private Classes",
+    },
+    { href: "/cookies/signature-sugar-cookie-sets", label: "Shop Cookies" },
+    { href: "/cookies/order-custom-sugar-cookies", label: "Custom Orders" },
+  ];
+
+  const supportLinks = [
+    { href: "/contact", label: "Contact" },
+    { href: "/corporate-team-building", label: "Team Building" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+  ];
+
+  return (
+    <footer className="relative z-10">
+      {/* Main Footer Content */}
+      <div className="bg-gradient-to-b from-bakery-cream to-bakery-peach/40 pt-16 pb-12">
+        {/* Decorative top border */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-bakery-pink-light via-bakery-pink to-bakery-pink-light" />
+
+        <div className="container-custom">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1.3fr] gap-10 lg:gap-8">
+            {/* Brand Column */}
+            <div className="lg:col-span-1">
+              <Link href="/" className="inline-block mb-5 group">
+                <span className="font-bebas text-3xl tracking-wide">
+                  <span className="text-bakery-pink-dark group-hover:text-bakery-pink transition-colors">
+                    Rose
+                  </span>
+                  <span className="text-gray-400 mx-1">&</span>
+                  <span className="text-gray-700 group-hover:text-gray-600 transition-colors">
+                    Sugar
+                  </span>
+                </span>
+              </Link>
+              <p className="text-gray-600 font-poppins text-sm leading-relaxed mb-6 max-w-xs">
+                Handcrafted custom cookies and decorating classes that bring
+                sweetness and creativity to every celebration.
+              </p>
+              <a
+                href="https://www.instagram.com/roseandsugarcookies/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-orange-400 text-white font-poppins text-sm font-medium hover:shadow-lg hover:shadow-pink-500/25 hover:-translate-y-0.5 transition-all duration-300"
+              >
+                <Instagram size={18} aria-hidden="true" />
+                <span>@roseandsugarcookies</span>
+              </a>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="font-bebas text-lg text-gray-800 tracking-widest uppercase mb-5">
+                Shop & Learn
+              </h3>
+              <ul className="space-y-3">
+                {quickLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center text-gray-600 font-poppins text-sm hover:text-bakery-pink-dark transition-colors"
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-bakery-pink-dark mr-0 group-hover:mr-2 transition-all duration-300" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Support Links */}
+            <div>
+              <h3 className="font-bebas text-lg text-gray-800 tracking-widest uppercase mb-5">
+                Support
+              </h3>
+              <ul className="space-y-3">
+                {supportLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center text-gray-600 font-poppins text-sm hover:text-bakery-pink-dark transition-colors"
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-bakery-pink-dark mr-0 group-hover:mr-2 transition-all duration-300" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <h3 className="font-bebas text-lg text-gray-800 tracking-widest uppercase mb-5">
+                Get in Touch
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-bakery-pink-light/60 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <MapPin
+                      size={14}
+                      className="text-bakery-pink-dark"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <p className="text-gray-600 font-poppins text-sm leading-relaxed">
+                    Serving Folsom
+                    <br />& Surrounding Areas
+                  </p>
+                </div>
+                <a
+                  href="tel:916-337-8880"
+                  className="flex items-center gap-3 group"
+                >
+                  <div className="w-8 h-8 rounded-full bg-bakery-pink-light/60 flex items-center justify-center flex-shrink-0 group-hover:bg-bakery-pink-light transition-colors">
+                    <Phone
+                      size={14}
+                      className="text-bakery-pink-dark"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <p className="text-gray-600 font-poppins text-sm group-hover:text-bakery-pink-dark transition-colors">
+                    916-337-8880
+                  </p>
+                </a>
+                <a
+                  href="mailto:roseandsugarcookies@gmail.com"
+                  className="flex items-center gap-3 group"
+                >
+                  <div className="w-8 h-8 rounded-full bg-bakery-pink-light/60 flex items-center justify-center flex-shrink-0 group-hover:bg-bakery-pink-light transition-colors">
+                    <Mail
+                      size={14}
+                      className="text-bakery-pink-dark"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <p className="text-gray-600 font-poppins text-sm group-hover:text-bakery-pink-dark transition-colors whitespace-nowrap">
+                    roseandsugarcookies@gmail.com
+                  </p>
+                </a>
               </div>
             </div>
           </div>
-
-          {/* Column 3: Quick Links */}
-          <div className="text-center md:text-right">
-            <h3 className="font-bebas text-xl mb-4 text-gray-800 tracking-wide">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/corporate-team-building"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  Team-Building
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy-policy"
-                  className="text-gray-600 hover:text-bakery-pink-dark transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
+      </div>
 
-        <div className="border-t border-gray-200 mt-8 pt-8 text-center">
-          <div className="flex flex-col items-center space-y-2">
-            <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Rose &amp; Sugar. All rights
-              reserved.
+      {/* Bottom Bar - Dark section for EDC branding */}
+      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 py-6">
+        <div className="container-custom">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <p className="text-gray-400 font-poppins text-sm order-2 md:order-1">
+              © {currentYear} Rose & Sugar. All rights reserved.
             </p>
+
+            {/* EDC Attribution */}
             <a
               href="https://www.edcwebdesign.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-3 group transition-colors"
+              className="group flex items-center gap-4 order-1 md:order-2 hover:opacity-90 transition-opacity"
             >
-              <span className="inline-flex items-center justify-center rounded-full bg-black p-0 shadow-sm">
-                <Image
-                  src="https://www.edcwebdesign.com/logo.png"
-                  alt="EDC Web Design Logo"
-                  width={180}
-                  height={48}
-                  sizes="180px"
-                  quality={70}
-                  unoptimized
-                  className="h-12 w-auto"
+              <Image
+                src="https://www.edcwebdesign.com/logo.png"
+                alt="EDC Web Design"
+                width={220}
+                height={56}
+                sizes="220px"
+                quality={80}
+                unoptimized
+                className="h-14 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              />
+              <span className="flex items-center gap-1 text-gray-400 font-poppins text-xs group-hover:text-gray-300 transition-colors">
+                Website by EDC
+                <ArrowUpRight
+                  size={12}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity"
                 />
               </span>
-              <p className="text-gray-600 font-medium text-sm group-hover:text-pink-500 transition-colors">
-                Designed by EDC Web Design
-              </p>
             </a>
           </div>
         </div>

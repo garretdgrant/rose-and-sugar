@@ -3,6 +3,17 @@ import type { Metadata } from "next";
 const PRODUCTION_URL = "https://www.roseandsugar.com";
 
 export const getMetadataBase = () => {
+  const vercelUrl =
+    process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
+  if (vercelUrl) {
+    return new URL(`https://${vercelUrl}`);
+  }
+
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (envUrl) {
+    return new URL(envUrl);
+  }
+
   return process.env.NODE_ENV === "development"
     ? new URL("http://localhost:3000")
     : new URL(PRODUCTION_URL);

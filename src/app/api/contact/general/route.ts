@@ -5,7 +5,19 @@ import { isValidEmail, isValidPhone } from "@/lib/validations";
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
+  const senderEmail = process.env.SENDER_EMAIL;
+  const receiverEmail = process.env.RECEIVER_EMAIL;
   try {
+    if (!senderEmail || !receiverEmail) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Email configuration is missing.",
+        }),
+        { status: 500 },
+      );
+    }
+
     const body = await req.json();
     const { name, email, phone, message, company, referralSource } = body;
     console.log("Received form submission:", body);
@@ -42,8 +54,8 @@ export async function POST(req: NextRequest) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "leads@edcwebdesign.com",
-      to: "roseandsugarcookies@gmail.com",
+      from: senderEmail,
+      to: receiverEmail,
       subject: `🚨 NEW GENERAL 🍪 Inquiry: Message from ${name} via Website Contact Form`,
       html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; color: #333;">
