@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import {
   Calendar,
   ChevronRight,
@@ -210,8 +211,60 @@ export default async function Page({ params }: Props) {
     },
   ];
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is included in the class?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "All supplies are provided, including cookies, icing, tools, and take-home packaging. You'll leave with your decorated cookies.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How long does the class last?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: durationSummary,
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where is the class held?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: locationSummary,
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is the class beginner friendly?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Classes are designed for all skill levels with step-by-step instruction.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What if I need to cancel or reschedule?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Please reach out as soon as possible and we'll do our best to help. Contact us for assistance.",
+        },
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen relative overflow-hidden">
+      <Script
+        id="faq-jsonld-class-detail"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Layered background with organic shapes */}
       <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-pink-light/30" />
 

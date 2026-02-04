@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Script from "next/script";
 import Hero from "@/components/Hero";
 
 const About = dynamic(() => import("@/components/About"), {
@@ -109,6 +110,69 @@ const faqs = [
   },
 ];
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Do you ship?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. We cannot legally ship cookies under California Cottage Laws. Please reach out via our contact page for pickup details.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you deliver?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Not at this time. You must pick up your order at the specified location in Folsom (on Old Town side) sent via email. If you have questions, contact us.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How far in advance should I order?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We are currently booking one month out depending on the time of year. It's never too early to order. Sometimes we have cancellations, but it's not guaranteed. For custom orders, start on the Custom Cookie Orders page.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I pay?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We accept cash, check, Venmo, Zelle, or Apple Cash. If you need an invoice, reach out.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you have to put a deposit down?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We require full payment to secure your order. Full payment is requested two weeks prior to pickup.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I refrigerate my cookies?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Refrigeration is not recommended. Cookies will remain fresh for up to 2 weeks at room temp in the packaging. You can freeze the cookies for up to 3 months. Each order will come with Cookie Care instructions.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you have gluten-free or keto friendly options?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Right now, we only offer cookies made with gluten-free flour. They are not certified gluten free cookies so they are not recommended for serious gluten allergies. Contact us with any dietary questions.",
+      },
+    },
+  ],
+};
+
 const galleryItems = [
   {
     src: "/gallery/easter.jpg",
@@ -145,6 +209,11 @@ const galleryItems = [
 export default function Home() {
   return (
     <main className="page-transition">
+      <Script
+        id="faq-jsonld-home"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero - Full screen dramatic intro */}
       <Hero />
 

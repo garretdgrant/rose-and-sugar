@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import FAQAccordion from "@/components/FAQAccordion";
 import {
   Heart,
@@ -106,8 +107,52 @@ const About = () => {
     },
   ];
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Where are you located?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Rose & Sugar is based in Folsom, CA and serves the greater Sacramento area. See our class locations.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How far in advance should I place an order?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "We recommend ordering at least 2-3 weeks in advance. Seasonal demand may require more lead time. Start with Custom Cookie Orders.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you offer classes for beginners?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Classes are beginner-friendly and include all supplies, step-by-step instruction, and take-home packaging. View upcoming classes.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can you match a theme or invitation?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Absolutely. We specialize in custom designs and can match colors, themes, and event details. Request a custom order.",
+        },
+      },
+    ],
+  };
+
   return (
     <main className="relative overflow-hidden">
+      <Script
+        id="faq-jsonld-about"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* ===== HERO SECTION ===== */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden">
         {/* Layered background */}
