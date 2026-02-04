@@ -163,6 +163,15 @@ const CartDrawer = () => {
                     typeof item.product.node.quantityAvailable === "number"
                       ? Math.max(0, item.product.node.quantityAvailable)
                       : null;
+                  const tags =
+                    item.product.node.tags?.map((tag) => tag.toLowerCase()) ||
+                    [];
+                  const isPredesign = tags.includes("pre-designed");
+                  const leadDays =
+                    isPredesign &&
+                    typeof item.product.node.cookieLeadDays === "number"
+                      ? item.product.node.cookieLeadDays
+                      : null;
                   const isAtMax =
                     maxQuantity !== null && item.quantity >= maxQuantity;
                   return (
@@ -204,6 +213,15 @@ const CartDrawer = () => {
                           <h4 className="font-poppins font-medium text-sm text-gray-800 line-clamp-2 leading-snug">
                             {item.product.node.title}
                           </h4>
+                          {leadDays !== null && (
+                            <div className="inline-flex items-center gap-1.5 bg-bakery-cream/50 px-2.5 py-1 rounded-full mt-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-bakery-pink-dark animate-pulse" />
+                              <p className="text-[11px] font-poppins font-medium text-gray-600">
+                                {leadDays} day{leadDays === 1 ? "" : "s"} lead
+                                time
+                              </p>
+                            </div>
+                          )}
                           {item.variantTitle &&
                             item.variantTitle !== "Default Title" && (
                               <p className="font-poppins text-xs text-gray-500 mt-0.5">

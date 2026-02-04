@@ -188,11 +188,16 @@ export const useCartStore = create<CartStore>()(
             const tags =
               item.product.node.tags?.map((tag) => tag.toLowerCase()) || [];
             const isClass = productType === "class" || tags.includes("class");
+            const isPredesign = tags.includes("pre-designed");
+            const leadDays =
+              typeof item.product.node.cookieLeadDays === "number"
+                ? item.product.node.cookieLeadDays
+                : null;
             const startDate = formatEventDate(
               item.product.node.eventStartDateTime,
             );
             const endDate = formatEventDate(item.product.node.eventEndDateTime);
-            const attributes = isClass
+            const classAttributes = isClass
               ? [
                   {
                     key: "Event Start",
@@ -207,7 +212,20 @@ export const useCartStore = create<CartStore>()(
                     value: item.product.node.location || "",
                   },
                 ].filter((attr) => attr.value.trim().length > 0)
-              : undefined;
+              : [];
+            const leadTimeAttribute =
+              isPredesign && leadDays !== null
+                ? [
+                    {
+                      key: "cookie lead time",
+                      value: `${leadDays} days`,
+                    },
+                  ]
+                : [];
+            const attributes =
+              classAttributes.length > 0 || leadTimeAttribute.length > 0
+                ? [...classAttributes, ...leadTimeAttribute]
+                : undefined;
             return {
               variantId: item.variantId,
               quantity: item.quantity,

@@ -150,9 +150,12 @@ export async function GET(
     const variants = product.variants?.edges?.map((edge) => edge.node) ?? [];
 
     // Extract custom metafields
-    const cookieLeadDays = product.cookieLeadDays?.value
-      ? parseInt(product.cookieLeadDays.value, 10)
-      : 10;
+    const cookieLeadDaysValue = product.cookieLeadDays?.value;
+    const parsedLeadDays = cookieLeadDaysValue
+      ? parseInt(cookieLeadDaysValue, 10)
+      : null;
+    const cookieLeadDays =
+      parsedLeadDays && !Number.isNaN(parsedLeadDays) ? parsedLeadDays : 7;
     const cookieSoldOutValue = product.cookieSoldOut?.value;
     const cookieSoldOut = cookieSoldOutValue === "true";
 
