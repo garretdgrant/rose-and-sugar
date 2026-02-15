@@ -182,7 +182,7 @@ const Footer = () => {
                 className="h-14 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               />
               <span className="flex items-center gap-1 text-gray-400 font-poppins text-xs group-hover:text-gray-300 transition-colors">
-                Website by EDC
+                Website by EDC Web Design
                 <ArrowUpRight
                   size={12}
                   className="opacity-0 group-hover:opacity-100 transition-opacity"
