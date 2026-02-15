@@ -22,6 +22,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const RENDER_CUTOFF_TIMESTAMP = Date.now();
 
@@ -171,6 +179,31 @@ const ClientPreviousClasses = () => {
         />
 
         <div className="container-custom relative z-10 py-32 md:py-40">
+          <div
+            className={`mb-8 transition-all duration-700 ${
+              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+          >
+            <Breadcrumb className="justify-start">
+              <BreadcrumbList className="justify-start">
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/classes">Classes</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Previous Classes</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left - Content */}
             <div

@@ -1,5 +1,6 @@
 import ClientPreviousClasses from "@/components/ClientPreviousClasses";
-import { buildPageMetadata } from "@/lib/metadata";
+import Script from "next/script";
+import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata() {
   return buildPageMetadata({
@@ -12,7 +13,41 @@ export async function generateMetadata() {
 }
 
 const PreviousClassesPage = async () => {
-  return <ClientPreviousClasses />;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: buildCanonicalUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Classes",
+        item: buildCanonicalUrl("/classes"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Previous Classes",
+        item: buildCanonicalUrl("/classes/previous-classes"),
+      },
+    ],
+  };
+
+  return (
+    <>
+      <Script
+        id="breadcrumbs-jsonld-previous-classes"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <ClientPreviousClasses />
+    </>
+  );
 };
 
 export default PreviousClassesPage;
