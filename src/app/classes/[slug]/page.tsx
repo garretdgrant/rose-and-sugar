@@ -146,6 +146,12 @@ export default async function Page({ params }: Props) {
     : null;
   const validStart = startDate && !Number.isNaN(startDate.getTime());
   const validEnd = endDate && !Number.isNaN(endDate.getTime());
+  const pastClassCutoff = validEnd
+    ? endDate.getTime()
+    : validStart
+      ? startDate.getTime()
+      : null;
+  const isPastClass = pastClassCutoff !== null && pastClassCutoff < Date.now();
 
   const dateLabel = validStart ? formatDate(startDate) : "Date TBD";
   const dateParts = validStart ? formatDateParts(startDate) : null;
@@ -163,7 +169,7 @@ export default async function Page({ params }: Props) {
     ? `${locationName}.`
     : "Location details will be shared after booking.";
 
-  const seatsLeft = classItem.quantityAvailable ?? null;
+  const seatsLeft = isPastClass ? 0 : (classItem.quantityAvailable ?? null);
   const seatsLabel =
     seatsLeft !== null && seatsLeft !== undefined
       ? seatsLeft === 0
@@ -171,7 +177,25 @@ export default async function Page({ params }: Props) {
         : `${seatsLeft} seat${seatsLeft === 1 ? "" : "s"} remaining`
       : "Limited availability";
   const isLowStock = seatsLeft !== null && seatsLeft > 0 && seatsLeft <= 5;
-  const isSoldOut = seatsLeft === 0;
+  const isSoldOut = isPastClass || seatsLeft === 0;
+  const soldOutVariantEdges =
+    productNode.variants?.edges.map((edge) => ({
+      ...edge,
+      node: {
+        ...edge.node,
+        availableForSale: false,
+      },
+    })) ?? [];
+  const bookingProductNode = isSoldOut
+    ? {
+        ...productNode,
+        cookieSoldOut: true,
+        quantityAvailable: 0,
+        variants: {
+          edges: soldOutVariantEdges,
+        },
+      }
+    : productNode;
   const durationSummary = durationLabel || "About 1.5–2 hours";
 
   const faqs = [
@@ -605,13 +629,24 @@ export default async function Page({ params }: Props) {
 
                 {/* Booking Section */}
                 <ProductDetailClient
-                  product={productNode}
+                  product={bookingProductNode}
                   actionLabel="Book Your Seat"
                   addedLabel="Seat Added!"
                   addedLabelSingular="Seat Added!"
                   addedLabelPlural="Seats Added!"
                   helperText="Secure checkout • Take home your cookies"
                 />
+                {isSoldOut && (
+                  <div className="mt-4 text-center">
+                    <Link
+                      href="/classes/previous-classes"
+                      className="inline-flex items-center gap-2 font-poppins text-bakery-pink-dark font-medium hover:text-bakery-pink transition-colors"
+                    >
+                      View previous classes
+                      <ArrowLeft className="w-4 h-4 rotate-180" />
+                    </Link>
+                  </div>
+                )}
 
                 {/* Additional Links */}
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">

@@ -8,6 +8,7 @@ const Footer = () => {
   const quickLinks = [
     { href: "/about", label: "About" },
     { href: "/classes/locations", label: "Classes" },
+    { href: "/classes/previous-classes", label: "Previous Classes" },
     {
       href: "/private-cookie-classes-folsom-sacramento",
       label: "Private Classes",

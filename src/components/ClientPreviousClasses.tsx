@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ClassProductCard from "@/components/ClassProductCard";
-import WaitlistModal from "@/components/WaitlistModal";
 import { useQuery } from "@tanstack/react-query";
 import {
   fetchClassesList,
@@ -17,18 +16,17 @@ import {
   Package,
   Heart,
   Calendar,
-  Mail,
   Loader2,
   ArrowRight,
+  History,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 const RENDER_CUTOFF_TIMESTAMP = Date.now();
 
-const ClientClasses = () => {
+const ClientPreviousClasses = () => {
   const [mounted, setMounted] = useState(false);
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const {
     data: apiClasses,
     isLoading,
@@ -78,7 +76,7 @@ const ClientClasses = () => {
     setMounted(true);
   }, []);
 
-  const upcomingClasses = useMemo(() => {
+  const previousClasses = useMemo(() => {
     const toTimestamp = (value?: string | null) => {
       if (!value) return null;
       const parsed = Date.parse(value);
@@ -90,17 +88,37 @@ const ClientClasses = () => {
         const eventStart = toTimestamp(classItem.eventStartDateTime);
         const cutoff = eventEnd ?? eventStart;
 
-        if (cutoff === null) return true;
-        return cutoff >= RENDER_CUTOFF_TIMESTAMP;
+        if (cutoff === null) return false;
+        return cutoff < RENDER_CUTOFF_TIMESTAMP;
       })
       .sort((a, b) => {
         const aTime =
-          toTimestamp(a.eventStartDateTime) ?? Number.POSITIVE_INFINITY;
+          toTimestamp(a.eventStartDateTime) ?? Number.NEGATIVE_INFINITY;
         const bTime =
-          toTimestamp(b.eventStartDateTime) ?? Number.POSITIVE_INFINITY;
-        return aTime - bTime;
+          toTimestamp(b.eventStartDateTime) ?? Number.NEGATIVE_INFINITY;
+        return bTime - aTime; // Reverse sort - most recent first
       });
-    return sorted.map(mapClassToShopifyProduct);
+    return sorted.map((classItem) => {
+      const product = mapClassToShopifyProduct(classItem);
+      const soldOutVariantEdges =
+        product.node.variants?.edges.map((edge) => ({
+          ...edge,
+          node: {
+            ...edge.node,
+            availableForSale: false,
+          },
+        })) ?? [];
+      return {
+        ...product,
+        node: {
+          ...product.node,
+          quantityAvailable: 0,
+          variants: {
+            edges: soldOutVariantEdges,
+          },
+        },
+      };
+    });
   }, [apiClasses]);
 
   return (
@@ -170,9 +188,9 @@ const ClientClasses = () => {
                     : "opacity-0 translate-y-4"
                 }`}
               >
-                <Sparkles className="w-4 h-4 text-bakery-pink-dark" />
+                <History className="w-4 h-4 text-bakery-pink-dark" />
                 <span className="text-sm font-poppins font-medium text-gray-700">
-                  Learn Cookie Decorating
+                  Past Cookie Decorating Classes
                 </span>
               </div>
 
@@ -184,7 +202,7 @@ const ClientClasses = () => {
                     : "opacity-0 translate-y-4"
                 }`}
               >
-                <span className="block text-gray-800">Cookie Decorating</span>
+                <span className="block text-gray-800">Previous</span>
                 <span className="block bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
                   Classes
                 </span>
@@ -198,9 +216,8 @@ const ClientClasses = () => {
                     : "opacity-0 translate-y-4"
                 }`}
               >
-                Join Megan for a fun, creative cookie decorating experience.
-                Small-group classes designed for all skill levels in a warm,
-                supportive environment.
+                Explore our collection of past cookie decorating classes and the
+                creative designs from our small-group workshops led by Megan.
               </p>
 
               {/* CTA */}
@@ -211,13 +228,13 @@ const ClientClasses = () => {
                     : "opacity-0 translate-y-4"
                 }`}
               >
-                <a
-                  href="#book-class"
+                <Link
+                  href="/classes"
                   className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white font-poppins font-semibold rounded-full shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   View Upcoming Classes
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </div>
 
               {/* Stats */}
@@ -392,9 +409,9 @@ const ClientClasses = () => {
         </div>
       </section>
 
-      {/* ===== BOOK A CLASS SECTION ===== */}
+      {/* ===== PREVIOUS CLASSES SECTION ===== */}
       <section
-        id="book-class"
+        id="previous-classes"
         className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-white via-bakery-cream/50 to-bakery-pink-light/40"
       >
         {/* Decorative blobs */}
@@ -406,20 +423,19 @@ const ClientClasses = () => {
             {/* Section header */}
             <div className="text-center mb-14">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6">
-                <Calendar className="w-4 h-4 text-bakery-pink-dark" />
+                <History className="w-4 h-4 text-bakery-pink-dark" />
                 <span className="text-sm font-poppins font-medium text-gray-700">
-                  Upcoming Sessions
+                  Past Sessions
                 </span>
               </div>
               <h2 className="font-bebas text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight">
-                <span className="text-gray-800">Book a</span>{" "}
+                <span className="text-gray-800">Previous</span>{" "}
                 <span className="bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-                  Decorating Class
+                  Decorating Classes
                 </span>
               </h2>
               <p className="mt-6 font-poppins text-lg text-gray-600 max-w-xl mx-auto">
-                Select from our upcoming cookie decorating classes and reserve
-                your spot today
+                Browse through our collection of past cookie decorating classes
               </p>
             </div>
 
@@ -437,90 +453,43 @@ const ClientClasses = () => {
               <div className="text-center py-16 bg-white/70 backdrop-blur-sm rounded-3xl border border-bakery-pink-light/30 shadow-lg">
                 <p className="text-gray-600 font-poppins">{loadError}</p>
               </div>
-            ) : upcomingClasses.length === 0 ? (
+            ) : previousClasses.length === 0 ? (
               <div className="text-center py-16 bg-white/70 backdrop-blur-sm rounded-3xl border border-bakery-pink-light/30 shadow-lg">
                 <Calendar className="w-12 h-12 text-bakery-pink-light mx-auto mb-4" />
                 <p className="text-gray-600 font-poppins text-lg">
-                  No upcoming classes at the moment.
+                  No previous classes to display yet.
                 </p>
                 <p className="text-gray-500 font-poppins mt-2">
-                  Check back soon for new dates!
+                  Check our upcoming classes to join future sessions!
                 </p>
                 <div className="mt-6">
                   <Link
-                    href="/classes/previous-classes"
-                    className="inline-flex items-center gap-2 font-poppins text-bakery-pink-dark font-medium hover:text-bakery-pink transition-colors"
+                    href="/classes"
+                    className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white font-poppins font-semibold rounded-full shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300"
                   >
-                    View previous classes
-                    <ArrowRight className="w-4 h-4" />
+                    View Upcoming Classes
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
             ) : (
-              <div>
-                <div
-                  className={`grid gap-6 lg:gap-8 ${
-                    upcomingClasses.length === 1
-                      ? "grid-cols-1 max-w-md mx-auto"
-                      : upcomingClasses.length === 2
-                        ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto"
-                        : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  }`}
-                >
-                  {upcomingClasses.map((classItem) => (
-                    <ClassProductCard
-                      key={classItem.node.id}
-                      product={classItem}
-                    />
-                  ))}
-                </div>
-                <div className="mt-8 text-center">
-                  <Link
-                    href="/classes/previous-classes"
-                    className="inline-flex items-center gap-2 font-poppins text-bakery-pink-dark font-medium hover:text-bakery-pink transition-colors"
-                  >
-                    Looking for past themes? View previous classes
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
+              <div
+                className={`grid gap-6 lg:gap-8 ${
+                  previousClasses.length === 1
+                    ? "grid-cols-1 max-w-md mx-auto"
+                    : previousClasses.length === 2
+                      ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto"
+                      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                }`}
+              >
+                {previousClasses.map((classItem) => (
+                  <ClassProductCard
+                    key={classItem.node.id}
+                    product={classItem}
+                  />
+                ))}
               </div>
             )}
-
-            {/* Waitlist CTA */}
-            <div className="mt-16">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-bakery-pink-light via-bakery-peach to-bakery-pink-light rounded-3xl blur-sm" />
-                <div className="relative bg-white rounded-2xl p-8 md:p-10 shadow-lg">
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-6 h-6 text-bakery-pink-dark" />
-                      </div>
-                      <div className="text-center md:text-left">
-                        <p className="font-bebas text-2xl text-gray-900 tracking-wide">
-                          Don&apos;t Miss Out
-                        </p>
-                        <p className="text-gray-600 font-poppins">
-                          Get notified when new classes are added
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setIsWaitlistOpen(true)}
-                      className="group inline-flex items-center gap-3 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white px-8 py-4 rounded-full font-poppins font-semibold shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
-                    >
-                      Join Waitlist
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <WaitlistModal
-              open={isWaitlistOpen}
-              onOpenChange={setIsWaitlistOpen}
-            />
           </div>
         </div>
       </section>
@@ -700,4 +669,4 @@ const ClientClasses = () => {
   );
 };
 
-export default ClientClasses;
+export default ClientPreviousClasses;

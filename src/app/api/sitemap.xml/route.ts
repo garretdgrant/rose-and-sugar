@@ -16,6 +16,7 @@ const staticPaths = [
   "/cookies/thank-you",
   "/classes",
   "/classes/locations",
+  "/classes/previous-classes",
   "/classes/folsom-sugar-cookie-decorating-class",
   "/classes/loomis-sugar-cookie-decorating-class",
   "/classes/sacramento-sugar-cookie-decorating-class",

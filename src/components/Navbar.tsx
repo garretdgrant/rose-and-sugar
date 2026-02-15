@@ -93,6 +93,11 @@ const Navbar = () => {
       path: "/private-cookie-classes-folsom-sacramento",
       icon: Gift,
     },
+    {
+      name: "Previous Classes",
+      path: "/classes/previous-classes",
+      icon: Calendar,
+    },
     { name: "Corporate Events", path: "/corporate-team-building", icon: Users },
     { name: "About", path: "/about", icon: Home },
     { name: "Contact", path: "/contact", icon: MessageCircle },
