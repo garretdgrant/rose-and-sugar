@@ -4,6 +4,7 @@ import {
   Menu,
   X,
   Cookie,
+  BookOpen,
   ChevronDown,
   Sparkles,
   Calendar,
@@ -80,14 +81,19 @@ const Navbar = () => {
       icon: Cookie,
     },
     {
+      name: "Secret Recipe",
+      path: "/shop/no-spread-sugar-cookie-recipe",
+      icon: BookOpen,
+    },
+    {
       name: "Custom Cookies",
       path: "/cookies/order-custom-sugar-cookies",
       icon: Sparkles,
     },
-    { name: "Free Cookies", path: "/kind-cookie-program", icon: Heart },
   ];
 
   const moreLinks = [
+    { name: "Free Cookies", path: "/kind-cookie-program", icon: Heart },
     {
       name: "Private Classes",
       path: "/private-cookie-classes-folsom-sacramento",

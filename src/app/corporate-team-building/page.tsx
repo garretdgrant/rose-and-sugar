@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
 import {
   Users,
   Palette,
@@ -198,7 +197,7 @@ const CorporateTeamBuilding = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-bakery-cream/40 via-white to-bakery-pink-light/30">
-      <Script
+      <script
         id="faq-jsonld-corporate"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

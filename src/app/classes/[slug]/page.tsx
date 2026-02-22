@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import {
   Calendar,
   ChevronRight,
@@ -284,7 +283,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <main className="min-h-screen relative overflow-hidden">
-      <Script
+      <script
         id="faq-jsonld-class-detail"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

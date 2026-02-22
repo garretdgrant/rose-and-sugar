@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import Script from "next/script";
 import Hero from "@/components/Hero";
+import FAQAccordion from "@/components/FAQAccordion";
 
 const About = dynamic(() => import("@/components/About"), {
   loading: () => null,
@@ -21,10 +21,6 @@ const Gallery = dynamic(() => import("@/components/Gallery"), {
 const CallToAction = dynamic(() => import("@/components/CallToAction"), {
   loading: () => null,
 });
-const FAQAccordion = dynamic(() => import("@/components/FAQAccordion"), {
-  loading: () => null,
-});
-
 const faqs = [
   {
     question: "Do you ship?",
@@ -209,7 +205,7 @@ const galleryItems = [
 export default function Home() {
   return (
     <main className="page-transition">
-      <Script
+      <script
         id="faq-jsonld-home"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

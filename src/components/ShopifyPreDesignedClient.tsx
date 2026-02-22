@@ -150,6 +150,8 @@ const ShopifyPreDesignedClient = () => {
   const faqs = [
     {
       question: "What are Signature Sets?",
+      answerText:
+        "Signature Sets are ready-to-order cookie collections with curated designs and color palettes. If you need something tailored, request a custom order.",
       answer: (
         <>
           Signature Sets are ready-to-order cookie collections with curated
@@ -166,6 +168,8 @@ const ShopifyPreDesignedClient = () => {
     },
     {
       question: "Can I change colors or designs?",
+      answerText:
+        "Signature Sets are pre-designed, but we can create a custom set for you. Use the Custom Cookie Orders form to request changes.",
       answer: (
         <>
           Signature Sets are pre-designed, but we can create a custom set for
@@ -182,6 +186,8 @@ const ShopifyPreDesignedClient = () => {
     },
     {
       question: "How far in advance should I order?",
+      answerText:
+        "We typically book one month out. Ordering early helps secure your preferred pickup date. For timing questions, contact us.",
       answer: (
         <>
           We typically book one month out. Ordering early helps secure your
@@ -195,6 +201,8 @@ const ShopifyPreDesignedClient = () => {
     },
     {
       question: "Do you ship Signature Sets?",
+      answerText:
+        "At this time we do not ship. Pickup details are shared after your order is confirmed. For pickup info, contact us.",
       answer: (
         <>
           At this time we do not ship. Pickup details are shared after your
@@ -208,8 +216,26 @@ const ShopifyPreDesignedClient = () => {
     },
   ];
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answerText,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-bakery-pink-light/20 via-white to-bakery-cream/30">
+      <script
+        id="faq-jsonld-signature-sets"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero Section */}
       <div className="relative pt-28 pb-12 md:pt-36 md:pb-16 overflow-hidden">
         {/* Decorative elements */}
@@ -457,21 +483,19 @@ const ShopifyPreDesignedClient = () => {
           )}
 
           {/* FAQ */}
-          {!isLoading && !loadError && (
-            <section className="mt-20">
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20 max-w-4xl mx-auto">
-                <div className="text-center mb-8">
-                  <h2 className="font-bebas text-3xl md:text-4xl text-gray-800">
-                    Signature Sets FAQ
-                  </h2>
-                  <p className="mt-3 text-gray-600 font-poppins">
-                    Quick answers about ordering, timing, and customization.
-                  </p>
-                </div>
-                <FAQAccordion faqs={faqs} />
+          <section className="mt-20">
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20 max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="font-bebas text-3xl md:text-4xl text-gray-800">
+                  Signature Sets FAQ
+                </h2>
+                <p className="mt-3 text-gray-600 font-poppins">
+                  Quick answers about ordering, timing, and customization.
+                </p>
               </div>
-            </section>
-          )}
+              <FAQAccordion faqs={faqs} />
+            </div>
+          </section>
         </div>
       </main>
     </div>

@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
 import CustomOrderClient from "./CustomOrderClient";
 
@@ -86,12 +85,12 @@ const CustomOrderPage = () => {
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumbs-jsonld-custom-orders"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <Script
+      <script
         id="faq-jsonld-custom-orders"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

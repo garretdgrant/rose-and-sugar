@@ -14,6 +14,7 @@ const staticPaths = [
   "/cookies/signature-sugar-cookie-sets",
   "/cookies/order-custom-sugar-cookies",
   "/cookies/thank-you",
+  "/shop/no-spread-sugar-cookie-recipe",
   "/classes",
   "/classes/locations",
   "/classes/previous-classes",

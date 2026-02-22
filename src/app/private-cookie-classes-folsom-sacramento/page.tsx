@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { buildPageMetadata } from "@/lib/metadata";
 import PrivateCookieClassesClient from "./PrivateCookieClassesClient";
 
@@ -54,7 +53,7 @@ const PrivateCookieClassesPage = () => {
 
   return (
     <>
-      <Script
+      <script
         id="faq-jsonld-private-classes"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

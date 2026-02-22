@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
 import FAQAccordion from "@/components/FAQAccordion";
 import {
   Heart,
@@ -148,7 +147,7 @@ const About = () => {
 
   return (
     <main className="relative overflow-hidden">
-      <Script
+      <script
         id="faq-jsonld-about"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

@@ -7,13 +7,15 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const product = await fetchPredesignedByHandle(slug);
-  const title =
-    product?.seo?.title ||
-    (product ? `${product.title} | Rose & Sugar` : "Product");
+  const fallbackTitle = product
+    ? `${product.title} Signature Sugar Cookies | Rose & Sugar`
+    : "Signature Sugar Cookie Set | Rose & Sugar";
+  const fallbackDescription = product
+    ? `Order the ${product.title} signature sugar cookie set from Rose & Sugar in Folsom, CA. Hand-decorated cookies for gifting, parties, and special events.`
+    : "Order handcrafted signature sugar cookie sets from Rose & Sugar in Folsom, CA for gifting, parties, and celebrations.";
+  const title = product?.seo?.title || fallbackTitle;
   const description =
-    product?.seo?.description ||
-    product?.description ||
-    "Discover Rose & Sugar's signature cookie sets and seasonal designs.";
+    product?.seo?.description || product?.description || fallbackDescription;
 
   return buildPageMetadata({
     title,

@@ -1,4 +1,3 @@
-import Script from "next/script";
 import ClassLocationPage from "@/components/classes/ClassLocationPage";
 import { buildPageMetadata } from "@/lib/metadata";
 import { buildClassLocationFaqs } from "@/data/classLocationFaqs";
@@ -37,12 +36,12 @@ const RosevilleClassesPage = () => {
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumbs-jsonld-roseville"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <Script
+      <script
         id="faq-jsonld-roseville"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

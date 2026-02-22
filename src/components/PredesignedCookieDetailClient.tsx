@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import { useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import ProductDetailClient from "@/components/ProductDetailClient";
+import FAQAccordion from "@/components/FAQAccordion";
 import {
   buildPredesignedNode,
   fetchPredesignedByHandle,
@@ -147,6 +147,9 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
       a: "These are signature sets, but we'd love to create custom cookies for you! Visit our Custom Orders page to get started.",
     },
   ];
+  const productUrl = buildCanonicalUrl(
+    `/cookies/signature-sugar-cookie-sets/${product.handle}`,
+  );
 
   const structuredData = {
     "@context": "https://schema.org/",
@@ -155,12 +158,23 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
     image: gallery.length ? gallery : [imageUrl],
     description: product.description || undefined,
     category: "Baked Goods",
+    brand: {
+      "@type": "Brand",
+      name: "Rose & Sugar",
+    },
+    seller: {
+      "@type": "Organization",
+      name: "Rose & Sugar",
+      url: buildCanonicalUrl("/"),
+    },
+    sku: product.id,
+    url: productUrl,
     offers: {
       "@type": "Offer",
       price: parseFloat(price).toFixed(2),
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
-      url: `https://roseandsugar.com/cookies/signature-sugar-cookie-sets/${product.handle}`,
+      url: productUrl,
     },
   };
 
@@ -237,17 +251,17 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
 
   return (
     <main className="min-h-screen relative overflow-hidden">
-      <Script
+      <script
         id="product-jsonld-cookie"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Script
+      <script
         id="breadcrumbs-jsonld-cookie"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <Script
+      <script
         id="faq-jsonld-cookie"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -681,16 +695,12 @@ const PredesignedCookieDetailClient = ({ handle }: { handle: string }) => {
               <h2 className="font-bebas text-3xl text-gray-800 mb-6 text-center">
                 Frequently Asked Questions
               </h2>
-              <div className="space-y-6">
-                {faqs.map((faq) => (
-                  <div key={faq.q} className="border-b border-gray-100 pb-6">
-                    <h3 className="font-poppins font-semibold text-bakery-pink-dark mb-2">
-                      {faq.q}
-                    </h3>
-                    <p className="font-poppins text-gray-600">{faq.a}</p>
-                  </div>
-                ))}
-              </div>
+              <FAQAccordion
+                faqs={faqs.map((faq) => ({
+                  question: faq.q,
+                  answer: faq.a,
+                }))}
+              />
             </div>
           </div>
         </section>

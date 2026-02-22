@@ -1,10 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "./ui/accordion";
+import { cn } from "@/lib/utils";
 
 export type FAQ = {
   question: string;
@@ -21,26 +16,31 @@ const FAQAccordion = ({
   faqs,
   initiallyOpenIndex = -1,
   className = "",
-}: FAQAccordionProps) => (
-  <Accordion
-    type="single"
-    collapsible
-    className={`w-full max-w-3xl mx-auto border-none ${className}`}
-    defaultValue={
-      initiallyOpenIndex >= 0 ? String(initiallyOpenIndex) : undefined
-    }
-  >
-    {faqs.map((faq, idx) => (
-      <AccordionItem key={idx} value={String(idx)}>
-        <AccordionTrigger className="text-lg font-medium text-bakery-pink-dark [&[data-state=open]]:text-bakery-pink">
-          {faq.question}
-        </AccordionTrigger>
-        <AccordionContent className="text-base text-gray-700 bg-bakery-pink-light/10 rounded-b px-4 py-2">
-          {faq.answer}
-        </AccordionContent>
-      </AccordionItem>
-    ))}
-  </Accordion>
-);
+}: FAQAccordionProps) => {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto space-y-4", className)}>
+      {faqs.map((faq, idx) => {
+        const isFeatured =
+          initiallyOpenIndex >= 0 && initiallyOpenIndex === idx;
+        return (
+          <article
+            key={`${faq.question}-${idx}`}
+            className={cn(
+              "rounded-2xl border border-bakery-pink-light/30 bg-white p-5 md:p-6 shadow-sm",
+              isFeatured && "ring-2 ring-bakery-pink-light/60",
+            )}
+          >
+            <h3 className="font-poppins text-lg font-semibold text-bakery-pink-dark">
+              {faq.question}
+            </h3>
+            <div className="mt-3 font-poppins text-base leading-relaxed text-gray-700">
+              {faq.answer}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
+};
 
 export default FAQAccordion;
