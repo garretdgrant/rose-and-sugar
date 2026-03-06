@@ -6,56 +6,15 @@ import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import type { ShopifyProduct } from "@/types/shopify";
 
-const recipePrice = "12.00";
-const recipePriceLabel = "$12";
-
-const mockRecipeProduct: ShopifyProduct = {
-  node: {
-    id: "gid://shopify/Product/mock-no-spread-recipe",
-    title: "Megan's Secret No-Spread Sugar Cookie Recipe (Digital Download)",
-    description:
-      "Mock product used for cart testing until Shopify product syncing is connected.",
-    handle: "no-spread-sugar-cookie-recipe",
-    productType: "Digital Recipe",
-    tags: ["recipe", "digital-download", "mock-product"],
-    quantityAvailable: 999,
-    priceRange: {
-      minVariantPrice: {
-        amount: recipePrice,
-        currencyCode: "USD",
-      },
-    },
-    images: {
-      edges: [
-        {
-          node: {
-            url: "/cookie-class.webp",
-            altText: "Rose & Sugar sugar cookie recipe product photo",
-          },
-        },
-      ],
-    },
-    variants: {
-      edges: [
-        {
-          node: {
-            id: "gid://shopify/ProductVariant/mock-no-spread-recipe-default",
-            title: "PDF Download",
-            price: {
-              amount: recipePrice,
-              currencyCode: "USD",
-            },
-            availableForSale: true,
-            selectedOptions: [{ name: "Format", value: "PDF Download" }],
-          },
-        },
-      ],
-    },
-    options: [{ name: "Format", values: ["PDF Download"] }],
-  },
+const toPriceLabel = (amount?: string | null) => {
+  const parsed = amount ? Number.parseFloat(amount) : Number.NaN;
+  if (Number.isNaN(parsed)) return "$0";
+  return `$${parsed.toFixed(parsed % 1 === 0 ? 0 : 2)}`;
 };
 
 type RecipeAddToCartButtonProps = {
+  product: ShopifyProduct | null;
+  preferredVariantId?: string;
   className?: string;
   compact?: boolean;
   label?: string;
@@ -65,6 +24,8 @@ type RecipeAddToCartButtonProps = {
 };
 
 const RecipeAddToCartButton = ({
+  product,
+  preferredVariantId,
   className,
   compact = false,
   label,
@@ -74,18 +35,34 @@ const RecipeAddToCartButton = ({
 }: RecipeAddToCartButtonProps) => {
   const addItem = useCartStore((state) => state.addItem);
   const [isAdded, setIsAdded] = useState(false);
-  const variant = mockRecipeProduct.node.variants?.edges?.[0]?.node;
+  const variants =
+    product?.node.variants?.edges?.map((edge) => edge.node) || [];
+  const firstAvailableVariant = variants.find(
+    (entry) => entry.availableForSale !== false,
+  );
+  const variant =
+    (preferredVariantId
+      ? variants.find((entry) => entry.id === preferredVariantId)
+      : null) ||
+    firstAvailableVariant ||
+    variants[0];
+  const isUnavailable =
+    !product || !variant || variant.availableForSale === false;
+  const priceLabel = toPriceLabel(
+    variant?.price.amount || product?.node.priceRange?.minVariantPrice?.amount,
+  );
 
   const handleAddToCart = () => {
-    if (!variant || isAdded) return;
+    if (!product || !variant || isAdded || isUnavailable) return;
 
     addItem({
-      product: mockRecipeProduct,
+      product,
       variantId: variant.id,
       variantTitle: variant.title,
       price: variant.price,
       quantity: 1,
       selectedOptions: variant.selectedOptions || [],
+      imageOverride: "/cookie-class.webp",
     });
 
     setIsAdded(true);
@@ -93,8 +70,8 @@ const RecipeAddToCartButton = ({
   };
 
   const activeLabel = compact
-    ? compactLabel || `Get Recipe - ${recipePriceLabel}`
-    : label || "Add to Cart - Get the Recipe Instantly";
+    ? compactLabel || `Get Recipe - ${priceLabel}`
+    : label || `Add to Cart - ${priceLabel}`;
   const activeSuccessLabel = compact
     ? compactSuccessLabel || "Added"
     : successLabel || "Added to Cart";
@@ -103,13 +80,19 @@ const RecipeAddToCartButton = ({
     <button
       type="button"
       onClick={handleAddToCart}
-      disabled={!variant || isAdded}
-      title="Adds a mock recipe product to cart. Shopify product wiring comes later."
+      disabled={isUnavailable || isAdded}
+      title={
+        isUnavailable
+          ? "Recipe is unavailable right now."
+          : "Add recipe to cart."
+      }
       className={cn(
         "inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 font-poppins font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:hover:translate-y-0",
         isAdded
           ? "bg-emerald-500 shadow-emerald-500/30"
-          : "bg-gradient-to-r from-bakery-pink-dark to-bakery-pink shadow-bakery-pink/35 hover:shadow-xl hover:shadow-bakery-pink/40",
+          : isUnavailable
+            ? "bg-gray-300 shadow-none"
+            : "bg-gradient-to-r from-bakery-pink-dark to-bakery-pink shadow-bakery-pink/35 hover:shadow-xl hover:shadow-bakery-pink/40",
         compact ? "px-5 py-3 text-sm" : "text-base",
         className,
       )}
@@ -127,7 +110,7 @@ const RecipeAddToCartButton = ({
       )}
       {!compact && (
         <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
-          {recipePriceLabel}
+          {priceLabel}
         </span>
       )}
     </button>

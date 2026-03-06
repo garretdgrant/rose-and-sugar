@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import FAQAccordion from "@/components/FAQAccordion";
 import RecipeAddToCartButton from "@/components/shop/RecipeAddToCartButton";
 import { buildCanonicalUrl, buildOgImageUrl } from "@/lib/metadata";
+import {
+  fetchRecipeByHandle,
+  mapRecipeToShopifyProduct,
+} from "@/lib/shopifyRecipes";
 
 const pagePath = "/sugar-cookie-recipe";
 const pageUrl = buildCanonicalUrl(pagePath);
@@ -15,10 +19,17 @@ const productImageUrl = buildOgImageUrl(
   "/images/sugar-cookie-recipe-product.jpg",
 );
 
+const recipeHandle = "sugar-cookie-recipe";
 const recipePriceLabel = "$12";
 const recipePriceValue = "12.00";
 const publishDate = "2026-03-06";
 const priceValidUntil = "2027-03-06";
+
+const toPriceLabel = (amount: string) => {
+  const parsed = Number.parseFloat(amount);
+  if (Number.isNaN(parsed)) return recipePriceLabel;
+  return `$${parsed.toFixed(parsed % 1 === 0 ? 0 : 2)}`;
+};
 
 const trustBadges = [
   "Instant PDF Download",
@@ -43,68 +54,43 @@ const meganStats = [
 
 type FaqItem = {
   question: string;
-  answerText: string;
-  answer: ReactNode;
+  answer: string;
 };
 
 const faqItems: FaqItem[] = [
   {
     question:
       "What makes this sugar cookie recipe different from free recipes online?",
-    answerText:
-      "This is the exact recipe Megan uses for Rose & Sugar's custom cookie orders and decorating classes. It's been tested hundreds of times in real production, not just a blog recipe. The cookies hold their shape perfectly for detailed cookie cutter designs and are specifically formulated to pair with royal icing decoration. You're getting a professional cookie artist's working recipe, not a home baker's experiment.",
     answer:
       "This is the exact recipe Megan uses for Rose & Sugar's custom cookie orders and decorating classes. It's been tested hundreds of times in real production, not just a blog recipe. The cookies hold their shape perfectly for detailed cookie cutter designs and are specifically formulated to pair with royal icing decoration. You're getting a professional cookie artist's working recipe, not a home baker's experiment.",
   },
   {
     question: "Is this recipe gluten-free?",
-    answerText:
-      "Yes! The recipe includes instructions for a 1:1 gluten-free flour substitute that works seamlessly. Megan has tested the gluten-free version extensively and it produces the same results: cookies that hold their shape, taste delicious, and decorate beautifully.",
     answer:
       "Yes! The recipe includes instructions for a 1:1 gluten-free flour substitute that works seamlessly. Megan has tested the gluten-free version extensively and it produces the same results: cookies that hold their shape, taste delicious, and decorate beautifully.",
   },
   {
     question: "Will these cookies hold their shape with cookie cutters?",
-    answerText:
-      "Absolutely. This recipe was specifically developed for cut-out cookies that maintain crisp, clean edges. The combination of chilling the dough and the precise butter-to-flour ratio ensures your cookies come out exactly the shape you cut them every single time. This is the same recipe used for Rose & Sugar's detailed custom cookie orders.",
     answer:
       "Absolutely. This recipe was specifically developed for cut-out cookies that maintain crisp, clean edges. The combination of chilling the dough and the precise butter-to-flour ratio ensures your cookies come out exactly the shape you cut them every single time. This is the same recipe used for Rose & Sugar's detailed custom cookie orders.",
   },
   {
     question: "What do I get when I purchase?",
-    answerText:
-      "You'll receive an instant PDF download of the complete Rose & Sugar sugar cookie recipe card. It includes the full ingredient list with both volume and gram measurements, step-by-step instructions, the gluten-free substitution guide, optional flavor variations (almond, lemon, and maple), and Megan's professional tips for perfect cookies every time.",
     answer:
       "You'll receive an instant PDF download of the complete Rose & Sugar sugar cookie recipe card. It includes the full ingredient list with both volume and gram measurements, step-by-step instructions, the gluten-free substitution guide, optional flavor variations (almond, lemon, and maple), and Megan's professional tips for perfect cookies every time.",
   },
   {
     question: "Can I use this recipe for my cookie business?",
-    answerText:
+    answer:
       "The recipe is sold for personal use. If you're starting a cookie business and want hands-on training, Rose & Sugar offers private cookie decorating classes and corporate events where Megan teaches her techniques in person. Visit our Classes page to learn more.",
-    answer: (
-      <>
-        The recipe is sold for personal use. If you&apos;re starting a cookie
-        business and want hands-on training, Rose & Sugar offers private cookie
-        decorating classes and corporate events where Megan teaches her
-        techniques in person. Visit our{" "}
-        <Link href="/classes" className="text-bakery-pink-dark underline">
-          Classes page
-        </Link>{" "}
-        to learn more.
-      </>
-    ),
   },
   {
     question: "How many cookies does this recipe make?",
-    answerText:
-      "The recipe yields approximately 24 cookies using a 3.5-inch cookie cutter. Smaller cutters will yield more cookies, and larger cutters will yield fewer. A standard baking sheet can hold about 12 cookies at a time.",
     answer:
       "The recipe yields approximately 24 cookies using a 3.5-inch cookie cutter. Smaller cutters will yield more cookies, and larger cutters will yield fewer. A standard baking sheet can hold about 12 cookies at a time.",
   },
   {
     question: "Why do my sugar cookies spread when baking?",
-    answerText:
-      "Cookie spreading is usually caused by butter that's too warm, not enough chilling time, or too much sugar relative to flour. This recipe addresses all three issues: it specifies room temperature (not warm) butter, requires at least one hour of refrigerator chilling, and includes an optional 30-minute freeze step before baking for extra insurance against spreading.",
     answer:
       "Cookie spreading is usually caused by butter that's too warm, not enough chilling time, or too much sugar relative to flour. This recipe addresses all three issues: it specifies room temperature (not warm) butter, requires at least one hour of refrigerator chilling, and includes an optional 30-minute freeze step before baking for extra insurance against spreading.",
   },
@@ -143,7 +129,23 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const SugarCookieRecipePage = () => {
+const SugarCookieRecipePage = async () => {
+  let checkoutProduct = null;
+  try {
+    const recipeProduct = await fetchRecipeByHandle(recipeHandle);
+    checkoutProduct = recipeProduct
+      ? mapRecipeToShopifyProduct(recipeProduct)
+      : null;
+  } catch {
+    checkoutProduct = null;
+  }
+
+  const checkoutPriceValue =
+    checkoutProduct?.node.variants?.edges?.[0]?.node.price.amount ||
+    checkoutProduct?.node.priceRange?.minVariantPrice.amount ||
+    recipePriceValue;
+  const checkoutPriceLabel = toPriceLabel(checkoutPriceValue);
+
   const recipeJsonLd = {
     "@context": "https://schema.org/",
     "@type": "Recipe",
@@ -233,7 +235,7 @@ const SugarCookieRecipePage = () => {
       "@type": "Offer",
       url: pageUrl,
       priceCurrency: "USD",
-      price: recipePriceValue,
+      price: checkoutPriceValue,
       availability: "https://schema.org/InStock",
       priceValidUntil,
       seller: {
@@ -256,7 +258,7 @@ const SugarCookieRecipePage = () => {
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answerText,
+        text: faq.answer,
       },
     })),
   };
@@ -329,8 +331,9 @@ const SugarCookieRecipePage = () => {
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <RecipeAddToCartButton
+                product={checkoutProduct}
                 className="w-full sm:w-auto"
-                label="Get the Recipe - $12"
+                label={`Get the Recipe - ${checkoutPriceLabel}`}
               />
             </div>
 
@@ -495,8 +498,9 @@ const SugarCookieRecipePage = () => {
 
             <div className="mt-6">
               <RecipeAddToCartButton
+                product={checkoutProduct}
                 className="w-full"
-                label="Download the Full Recipe - $12"
+                label={`Download the Full Recipe - ${checkoutPriceLabel}`}
               />
             </div>
           </div>
@@ -568,22 +572,7 @@ const SugarCookieRecipePage = () => {
           <h2 className="text-center font-bebas text-4xl text-gray-900 md:text-5xl">
             Common Questions
           </h2>
-          <div className="mx-auto mt-8 max-w-4xl space-y-4">
-            {faqItems.map((faq, index) => (
-              <details
-                key={faq.question}
-                className="rounded-2xl border border-bakery-pink-light/45 bg-white p-5"
-                open={index === 0}
-              >
-                <summary className="cursor-pointer list-none font-poppins text-lg font-semibold text-gray-900">
-                  {faq.question}
-                </summary>
-                <div className="mt-3 font-poppins leading-relaxed text-gray-700">
-                  {faq.answer}
-                </div>
-              </details>
-            ))}
-          </div>
+          <FAQAccordion faqs={faqItems} className="mt-8 max-w-4xl" />
         </div>
       </section>
 
@@ -601,10 +590,11 @@ const SugarCookieRecipePage = () => {
             artist, tested hundreds of times in real production.
           </p>
           <p className="mt-6 font-bebas text-4xl text-bakery-pink-dark md:text-5xl">
-            {recipePriceLabel} - Instant PDF Download
+            {checkoutPriceLabel} - Instant PDF Download
           </p>
           <div className="mt-7 flex justify-center">
             <RecipeAddToCartButton
+              product={checkoutProduct}
               className="w-full max-w-md"
               label="Get the Recipe Now"
             />
