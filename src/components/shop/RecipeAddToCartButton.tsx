@@ -29,8 +29,8 @@ const mockRecipeProduct: ShopifyProduct = {
       edges: [
         {
           node: {
-            url: "/openDefault.webp",
-            altText: "PDF digital download for secret sugar cookie recipe",
+            url: "/cookie-class.webp",
+            altText: "Rose & Sugar sugar cookie recipe product photo",
           },
         },
       ],
@@ -58,11 +58,19 @@ const mockRecipeProduct: ShopifyProduct = {
 type RecipeAddToCartButtonProps = {
   className?: string;
   compact?: boolean;
+  label?: string;
+  compactLabel?: string;
+  successLabel?: string;
+  compactSuccessLabel?: string;
 };
 
 const RecipeAddToCartButton = ({
   className,
   compact = false,
+  label,
+  compactLabel,
+  successLabel,
+  compactSuccessLabel,
 }: RecipeAddToCartButtonProps) => {
   const addItem = useCartStore((state) => state.addItem);
   const [isAdded, setIsAdded] = useState(false);
@@ -84,6 +92,13 @@ const RecipeAddToCartButton = ({
     setTimeout(() => setIsAdded(false), 2000);
   };
 
+  const activeLabel = compact
+    ? compactLabel || `Get Recipe - ${recipePriceLabel}`
+    : label || "Add to Cart - Get the Recipe Instantly";
+  const activeSuccessLabel = compact
+    ? compactSuccessLabel || "Added"
+    : successLabel || "Added to Cart";
+
   return (
     <button
       type="button"
@@ -102,16 +117,12 @@ const RecipeAddToCartButton = ({
       {isAdded ? (
         <>
           <Check className="h-4 w-4" />
-          <span>{compact ? "Added" : "Added to Cart"}</span>
+          <span>{activeSuccessLabel}</span>
         </>
       ) : (
         <>
           <ShoppingCart className="h-4 w-4" />
-          <span>
-            {compact
-              ? `Get Recipe - ${recipePriceLabel}`
-              : "Add to Cart - Get the Recipe Instantly"}
-          </span>
+          <span>{activeLabel}</span>
         </>
       )}
       {!compact && (

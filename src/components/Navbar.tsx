@@ -30,7 +30,9 @@ import CartCompletionWatcher from "@/components/CartCompletionWatcher";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [recipesExpanded, setRecipesExpanded] = useState(false);
   const [moreExpanded, setMoreExpanded] = useState(false);
+  const [recipesOpen, setRecipesOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
@@ -69,8 +71,18 @@ const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setRecipesExpanded(false);
+    setMoreExpanded(false);
+  };
+
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+    if (mobileMenuOpen) {
+      closeMobileMenu();
+      return;
+    }
+    setMobileMenuOpen(true);
   };
 
   const navLinks = [
@@ -81,14 +93,17 @@ const Navbar = () => {
       icon: Cookie,
     },
     {
-      name: "Secret Recipe",
-      path: "/shop/no-spread-sugar-cookie-recipe",
-      icon: BookOpen,
-    },
-    {
       name: "Custom Cookies",
       path: "/cookies/order-custom-sugar-cookies",
       icon: Sparkles,
+    },
+  ];
+
+  const recipeLinks = [
+    {
+      name: "Sugar Cookie Recipe",
+      path: "/sugar-cookie-recipe",
+      icon: BookOpen,
     },
   ];
 
@@ -192,7 +207,56 @@ const Navbar = () => {
             className="hidden md:flex items-center gap-1"
             aria-label="Primary"
           >
-            {navLinks.map((link) => (
+            {navLinks.slice(0, 2).map((link) => (
+              <Link
+                key={link.name}
+                href={link.path}
+                className="relative px-4 py-2 font-poppins text-gray-700 font-medium text-sm rounded-full hover:text-bakery-pink-dark transition-all duration-300 group"
+              >
+                <span className="relative z-10">{link.name}</span>
+                <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
+              </Link>
+            ))}
+
+            {/* Recipes dropdown */}
+            <DropdownMenu open={recipesOpen} onOpenChange={setRecipesOpen}>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="relative px-4 py-2 font-poppins text-gray-700 font-medium text-sm rounded-full hover:text-bakery-pink-dark transition-all duration-300 flex items-center gap-1.5 group focus:outline-none"
+                  aria-label="Recipes menu"
+                  onMouseEnter={() => setRecipesOpen(true)}
+                  onMouseLeave={() => setRecipesOpen(false)}
+                >
+                  <span className="absolute inset-0 rounded-full bg-bakery-pink-light/0 group-hover:bg-bakery-pink-light/50 transition-all duration-300 scale-90 group-hover:scale-100" />
+                  <span className="relative z-10">Recipes</span>
+                  <ChevronDown
+                    className="w-3.5 h-3.5 relative z-10 transition-transform duration-200 group-data-[state=open]:rotate-180"
+                    aria-hidden="true"
+                  />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                sideOffset={8}
+                className="bg-white/95 backdrop-blur-md border border-bakery-pink-light/40 rounded-2xl shadow-xl shadow-bakery-pink/10 p-2 min-w-[220px]"
+                onMouseEnter={() => setRecipesOpen(true)}
+                onMouseLeave={() => setRecipesOpen(false)}
+              >
+                {recipeLinks.map((link) => (
+                  <DropdownMenuItem key={link.name} asChild>
+                    <Link
+                      href={link.path}
+                      className="font-poppins text-sm px-4 py-2.5 rounded-xl block hover:bg-bakery-pink-light/40 text-gray-700 hover:text-bakery-pink-dark transition-colors cursor-pointer"
+                    >
+                      {link.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {navLinks.slice(2).map((link) => (
               <Link
                 key={link.name}
                 href={link.path}
@@ -266,7 +330,7 @@ const Navbar = () => {
                 : "opacity-0 pointer-events-none"
             }`}
             style={{ top: "0" }}
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={closeMobileMenu}
             aria-hidden="true"
           />
 
@@ -299,7 +363,7 @@ const Navbar = () => {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                   className="p-2.5 rounded-xl bg-gray-100 text-gray-600 hover:bg-bakery-pink-light hover:text-bakery-pink-dark transition-all duration-300"
                   aria-label="Close menu"
                 >
@@ -311,13 +375,75 @@ const Navbar = () => {
               <div className="flex-1 p-5">
                 {/* Primary Navigation Links */}
                 <div className="space-y-2">
-                  {navLinks.map((link, index) => (
+                  {navLinks.slice(0, 2).map((link, index) => (
                     <Link
                       key={link.name}
                       href={link.path}
                       className="flex items-center gap-4 font-poppins text-gray-800 font-medium py-4 px-5 rounded-2xl bg-white hover:bg-bakery-pink-light/40 border border-gray-100 hover:border-bakery-pink-light shadow-sm hover:shadow-md transition-all duration-300 group"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={closeMobileMenu}
                       ref={index === 0 ? firstMobileLinkRef : undefined}
+                    >
+                      <span className="w-10 h-10 rounded-xl bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors">
+                        <link.icon className="w-5 h-5 text-bakery-pink-dark" />
+                      </span>
+                      <span className="flex-1">{link.name}</span>
+                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-bakery-pink-dark group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  ))}
+
+                  <button
+                    type="button"
+                    onClick={() => setRecipesExpanded(!recipesExpanded)}
+                    className="flex items-center justify-between w-full font-poppins text-gray-800 font-medium py-4 px-5 rounded-2xl bg-white hover:bg-bakery-pink-light/40 border border-gray-100 hover:border-bakery-pink-light shadow-sm transition-all duration-300"
+                    aria-expanded={recipesExpanded}
+                    aria-controls="mobile-recipe-links"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="w-10 h-10 rounded-xl bg-bakery-pink-light/50 flex items-center justify-center">
+                        <BookOpen className="w-5 h-5 text-bakery-pink-dark" />
+                      </span>
+                      <span>Recipes</span>
+                    </div>
+                    <ChevronDown
+                      className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
+                        recipesExpanded ? "rotate-180" : ""
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <div
+                    id="mobile-recipe-links"
+                    className={`overflow-hidden transition-all duration-300 ${
+                      recipesExpanded
+                        ? "max-h-64 opacity-100 mt-2"
+                        : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="space-y-2 pl-4">
+                      {recipeLinks.map((link) => (
+                        <Link
+                          key={link.name}
+                          href={link.path}
+                          className="flex items-center gap-3 font-poppins text-gray-700 py-3 px-4 rounded-xl bg-bakery-cream/30 hover:bg-bakery-pink-light/40 border border-transparent hover:border-bakery-pink-light/50 transition-all duration-300"
+                          onClick={closeMobileMenu}
+                        >
+                          <span className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm">
+                            <link.icon className="w-4 h-4 text-bakery-brown" />
+                          </span>
+                          <span className="font-medium text-gray-800 text-sm">
+                            {link.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {navLinks.slice(2).map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.path}
+                      className="flex items-center gap-4 font-poppins text-gray-800 font-medium py-4 px-5 rounded-2xl bg-white hover:bg-bakery-pink-light/40 border border-gray-100 hover:border-bakery-pink-light shadow-sm hover:shadow-md transition-all duration-300 group"
+                      onClick={closeMobileMenu}
                     >
                       <span className="w-10 h-10 rounded-xl bg-bakery-pink-light/50 flex items-center justify-center group-hover:bg-bakery-pink-light transition-colors">
                         <link.icon className="w-5 h-5 text-bakery-pink-dark" />
@@ -365,7 +491,7 @@ const Navbar = () => {
                           key={link.name}
                           href={link.path}
                           className="flex items-center gap-3 font-poppins text-gray-700 py-3 px-4 rounded-xl bg-bakery-cream/30 hover:bg-bakery-pink-light/40 border border-transparent hover:border-bakery-pink-light/50 transition-all duration-300"
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={closeMobileMenu}
                         >
                           <span className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm">
                             <link.icon className="w-4 h-4 text-bakery-brown" />
@@ -385,7 +511,7 @@ const Navbar = () => {
                 <Link
                   href="/classes"
                   className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white font-poppins font-semibold rounded-2xl shadow-lg shadow-bakery-pink/30 hover:shadow-xl hover:shadow-bakery-pink/40 hover:-translate-y-0.5 transition-all duration-300"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   <Calendar className="w-5 h-5" />
                   Book a Class
