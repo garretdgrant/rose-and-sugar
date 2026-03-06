@@ -11,7 +11,7 @@ import {
 
 const pagePath = "/sugar-cookie-recipe";
 const pageUrl = buildCanonicalUrl(pagePath);
-const ogImageUrl = buildOgImageUrl("/images/sugar-cookie-recipe-og.jpg");
+const ogImageUrl = buildOgImageUrl("/recipe/recipe.webp");
 const recipeImage1x1 = buildOgImageUrl("/images/sugar-cookie-recipe-1x1.jpg");
 const recipeImage4x3 = buildOgImageUrl("/images/sugar-cookie-recipe-4x3.jpg");
 const recipeImage16x9 = buildOgImageUrl("/images/sugar-cookie-recipe-16x9.jpg");
@@ -364,9 +364,9 @@ const SugarCookieRecipePage = async () => {
             <div className="overflow-hidden rounded-[2rem] border border-bakery-pink-light/45 bg-white p-3 shadow-xl shadow-bakery-pink/10">
               <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
                 <Image
-                  src="/cookies.webp"
-                  alt="Rose & Sugar cut-out sugar cookies decorated with royal icing on a red baking mat"
-                  title="Rose & Sugar professional sugar cookies for decorating"
+                  src="/recipe/recipe.webp"
+                  alt="Rose & Sugar sugar cookie recipe hero image with decorated cookies"
+                  title="Rose & Sugar sugar cookie recipe"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 38vw"
