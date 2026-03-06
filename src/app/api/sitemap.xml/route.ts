@@ -2,34 +2,13 @@
 import { type NextRequest } from "next/server";
 import { getMetadataBase } from "@/lib/metadata";
 import { shopifyFetch } from "@/lib/shopify";
+import {
+  dynamicTemplateLastmod,
+  staticSitemapEntries,
+} from "./generated-entries";
 
 export const runtime = "edge";
 export const revalidate = 3600;
-
-const staticPaths = [
-  "/",
-  "/corporate-team-building",
-  "/private-cookie-classes-folsom-sacramento",
-  "/kind-cookie-program",
-  "/cookies/signature-sugar-cookie-sets",
-  "/cookies/order-custom-sugar-cookies",
-  "/cookies/thank-you",
-  "/sugar-cookie-recipe",
-  "/classes",
-  "/classes/locations",
-  "/classes/previous-classes",
-  "/classes/folsom-sugar-cookie-decorating-class",
-  "/classes/loomis-sugar-cookie-decorating-class",
-  "/classes/sacramento-sugar-cookie-decorating-class",
-  "/classes/el-dorado-hills-sugar-cookie-decorating-class",
-  "/classes/roseville-sugar-cookie-decorating-class",
-  "/classes/thank-you",
-  "/about",
-  "/contact",
-  "/privacy-policy",
-];
-
-const lastModDate = new Date().toISOString().split("T")[0];
 
 const COOKIE_QUERY = `
   query PredesignedCollectionSitemap($handle: String!, $first: Int!) {
@@ -68,14 +47,16 @@ const buildEntry = ({
   changefreq = "monthly",
 }: {
   loc: string;
-  lastmod: string;
+  lastmod?: string | null;
   priority: string;
   changefreq?: string;
 }) => {
+  const lastmodTag = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : "";
+
   return `
   <url>
     <loc>${loc}</loc>
-    <lastmod>${lastmod}</lastmod>
+    ${lastmodTag}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
@@ -84,13 +65,13 @@ const buildEntry = ({
 export async function GET(_req: NextRequest) {
   const baseUrl = getMetadataBase().toString().replace(/\/$/, "");
 
-  const staticEntries = staticPaths
-    .map((path) =>
+  const staticEntries = staticSitemapEntries
+    .map((entry) =>
       buildEntry({
-        loc: `${baseUrl}${path}`,
-        lastmod: lastModDate,
-        changefreq: "monthly",
-        priority: path === "/" ? "1.0" : "0.7",
+        loc: `${baseUrl}${entry.path}`,
+        lastmod: entry.lastmod,
+        changefreq: entry.changefreq,
+        priority: entry.priority,
       }),
     )
     .join("");
@@ -118,7 +99,7 @@ export async function GET(_req: NextRequest) {
         if (!handle) return "";
         const updatedAt = edge.node.updatedAt
           ? edge.node.updatedAt.split("T")[0]
-          : lastModDate;
+          : dynamicTemplateLastmod.cookiesProduct;
         return buildEntry({
           loc: `${baseUrl}/cookies/signature-sugar-cookie-sets/${encodeURIComponent(handle)}`,
           lastmod: updatedAt,
@@ -152,7 +133,7 @@ export async function GET(_req: NextRequest) {
         if (!handle) return "";
         const updatedAt = edge.node.updatedAt
           ? edge.node.updatedAt.split("T")[0]
-          : lastModDate;
+          : dynamicTemplateLastmod.classProduct;
         return buildEntry({
           loc: `${baseUrl}/classes/${encodeURIComponent(handle)}`,
           lastmod: updatedAt,
