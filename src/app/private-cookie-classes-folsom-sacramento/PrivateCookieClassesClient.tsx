@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -25,10 +26,8 @@ const PrivateCookieClassesClient = () => {
       icon: Gift,
       title: "Kids & Adult Birthday Parties",
       description:
-        "Celebrate your next birthday with a hands-on cookie decorating party. Kids and adults alike love creating edible art they can take home — it's a birthday activity everyone remembers.",
+        "Celebrate your next birthday with a hands-on cookie decorating party. Kids and adults alike love creating edible art they can take home; it's a birthday activity everyone remembers.",
       emoji: "🎂",
-      imagePlaceholder:
-        "Image placeholder: Kids cookie decorating birthday party with colorful royal icing designs",
     },
     {
       icon: Heart,
@@ -36,17 +35,13 @@ const PrivateCookieClassesClient = () => {
       description:
         "Grab your crew for a creative night out. Laugh, decorate, and make beautiful sugar cookies together with step-by-step guidance from a professional cookie artist.",
       emoji: "💕",
-      imagePlaceholder:
-        "Image placeholder: Friends decorating cookies together at a private Rose & Sugar class",
     },
     {
       icon: Sparkles,
       title: "Bridal Showers & Baby Showers",
       description:
-        "Add a unique, elegant activity to your shower celebration. Custom cookie themes can match your event colors, motifs, and style — a perfect icebreaker for guests of all ages.",
+        "Add a unique, elegant activity to your shower celebration. Custom cookie themes can match your event colors, motifs, and style: a perfect icebreaker for guests of all ages.",
       emoji: "👰",
-      imagePlaceholder:
-        "Image placeholder: Bridal shower cookie decorating class with elegant custom cookie designs",
     },
     {
       icon: Users,
@@ -62,7 +57,7 @@ const PrivateCookieClassesClient = () => {
         <>
           Looking for a team building activity in the Sacramento area
           that&apos;s actually fun? Cookie decorating classes encourage
-          creativity, collaboration, and conversation — no trust falls required.
+          creativity, collaboration, and conversation, no trust falls required.
           Perfect for office holiday parties, department outings, and client
           appreciation events. Learn more about our{" "}
           <Link
@@ -75,8 +70,6 @@ const PrivateCookieClassesClient = () => {
         </>
       ),
       emoji: "🏢",
-      imagePlaceholder:
-        "Image placeholder: Corporate team building cookie decorating event led by Rose & Sugar",
     },
     {
       icon: Calendar,
@@ -90,7 +83,7 @@ const PrivateCookieClassesClient = () => {
   const inclusions = [
     "Professionally baked vanilla sugar cookies (3-5 per person, depending on design complexity)",
     "Custom-colored royal icing in piping bags, ready to use",
-    "All decorating tools and supplies — nothing extra to buy or bring",
+    "All decorating tools and supplies, nothing extra to buy or bring",
     "Step-by-step instruction on techniques like outlining, flooding, and wet-on-wet design",
     "A beautiful take-home box for each guest's decorated cookies",
     "Custom themes available upon request to match your event or celebration",
@@ -129,9 +122,9 @@ const PrivateCookieClassesClient = () => {
     },
     {
       icon: Heart,
-      title: "Beginner-Friendly — No Experience Required",
+      title: "Beginner-Friendly: No Experience Required",
       description:
-        "Never decorated a cookie before? That's exactly who this class is for. We break down every technique into simple, easy steps — just show up, have fun, and create something beautiful.",
+        "Never decorated a cookie before? That's exactly who this class is for. We break down every technique into simple, easy steps: just show up, have fun, and create something beautiful.",
     },
   ];
 
@@ -167,8 +160,8 @@ const PrivateCookieClassesClient = () => {
       answer: (
         <>
           Kids as young as 5 can participate with a parent or guardian&apos;s
-          help. Our classes are designed to be fun for all ages — we regularly
-          host mixed groups of kids and adults together.
+          help. Our classes are designed to be fun for all ages, and we
+          regularly host mixed groups of kids and adults together.
         </>
       ),
     },
@@ -177,7 +170,7 @@ const PrivateCookieClassesClient = () => {
       answer: (
         <>
           Absolutely. Sports teams, birthday themes, holiday designs, brand
-          logos, wedding colors, baby shower motifs — you name it. Custom themes
+          logos, wedding colors, baby shower motifs; you name it. Custom themes
           are one of our specialties, and we can coordinate with your event
           details and{" "}
           <Link
@@ -194,7 +187,7 @@ const PrivateCookieClassesClient = () => {
       question: "Do you travel to my location for private classes?",
       answer: (
         <>
-          Yes — we offer on-site private cookie decorating classes throughout
+          Yes, we offer on-site private cookie decorating classes throughout
           Folsom, Sacramento, El Dorado Hills, Roseville, Granite Bay, and the
           surrounding area. We bring all the supplies; you just provide the
           space and the guests.
@@ -323,7 +316,7 @@ const PrivateCookieClassesClient = () => {
               Looking for a fun, hands-on private cookie decorating experience
               for your next celebration? Rose & Sugar offers beginner-friendly
               private classes for birthdays, team events, girls&apos; nights,
-              showers, and more — led by Megan, an experienced local cookie
+              showers, and more, led by Megan, an experienced local cookie
               artist in the greater Sacramento area. Every guest leaves with
               beautifully decorated sugar cookies and memories to match.
             </p>
@@ -346,7 +339,7 @@ const PrivateCookieClassesClient = () => {
             </p>
 
             <div
-              className={`flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 delay-700 ${
+              className={`flex flex-col items-center justify-center gap-3 transition-all duration-700 delay-700 ${
                 mounted
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-4"
@@ -359,7 +352,7 @@ const PrivateCookieClassesClient = () => {
                 Request a Private Class
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <div className="inline-flex items-center gap-2 text-sm font-poppins text-gray-600">
+              <div className="inline-flex items-center gap-2 text-sm font-poppins text-gray-600 text-center">
                 <MapPin className="h-4 w-4 text-bakery-pink-dark" />
                 Serving Folsom, Sacramento, El Dorado Hills, Roseville, Granite
                 Bay & surrounding areas
@@ -367,17 +360,20 @@ const PrivateCookieClassesClient = () => {
             </div>
 
             <div
-              className={`mt-10 mx-auto max-w-3xl border-2 border-dashed border-rose-300/70 rounded-2xl bg-white/80 p-5 text-left transition-all duration-700 delay-700 ${
+              className={`mt-10 mx-auto max-w-3xl rounded-2xl overflow-hidden border border-rose-200/70 shadow-lg transition-all duration-700 delay-700 ${
                 mounted
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-4"
               }`}
             >
-              <p className="font-poppins text-sm text-gray-700">
-                Image placeholder: Private cookie decorating class in Folsom —
-                guests decorating sugar cookies with royal icing at a Rose &
-                Sugar event
-              </p>
+              <Image
+                src="/cookie-class.webp"
+                alt="Private cookie decorating class in Folsom with guests decorating sugar cookies with royal icing"
+                width={1200}
+                height={800}
+                className="w-full h-auto"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -437,14 +433,6 @@ const PrivateCookieClassesClient = () => {
                   <p className="font-poppins text-gray-600 leading-relaxed">
                     {occasion.description}
                   </p>
-
-                  {occasion.imagePlaceholder && (
-                    <div className="mt-5 rounded-2xl border-2 border-dashed border-rose-300/70 bg-white/80 p-3">
-                      <p className="font-poppins text-xs text-gray-600 leading-relaxed">
-                        {occasion.imagePlaceholder}
-                      </p>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
@@ -543,21 +531,6 @@ const PrivateCookieClassesClient = () => {
                   </Link>
                   .
                 </p>
-
-                <div className="grid gap-4 md:grid-cols-2 mt-8">
-                  <div className="rounded-2xl border-2 border-dashed border-rose-300/70 bg-white/80 p-4">
-                    <p className="font-poppins text-xs text-gray-600 leading-relaxed">
-                      Image placeholder: Beautifully decorated sugar cookies
-                      made at a Rose & Sugar private class in Sacramento
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border-2 border-dashed border-rose-300/70 bg-white/80 p-4">
-                    <p className="font-poppins text-xs text-gray-600 leading-relaxed">
-                      Image placeholder: Cookie decorating class supplies
-                      including piping bags, royal icing, and sugar cookies
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -601,7 +574,7 @@ const PrivateCookieClassesClient = () => {
               </ul>
               <p className="font-poppins text-gray-600 leading-relaxed mb-8">
                 We tailor every experience to fit your event, so you get exactly
-                what you need — nothing more, nothing less.
+                what you need: nothing more, nothing less.
               </p>
               <div className="inline-flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-rose-50 via-bakery-pink-light/30 to-rose-50 rounded-full border-2 border-bakery-pink-light/50">
                 <MapPin className="h-5 w-5 text-bakery-pink-dark" />
@@ -794,7 +767,7 @@ const PrivateCookieClassesClient = () => {
                 <p className="font-poppins text-xl text-gray-700 leading-relaxed mb-10 max-w-2xl mx-auto">
                   Ready to plan a private cookie class in Folsom, Sacramento, or
                   the surrounding area? Whether it&apos;s a birthday party,
-                  bridal shower, team outing, or just a fun night with friends —
+                  bridal shower, team outing, or just a fun night with friends,
                   we&apos;ll help you create a sweet, unforgettable experience.
                 </p>
                 <Link

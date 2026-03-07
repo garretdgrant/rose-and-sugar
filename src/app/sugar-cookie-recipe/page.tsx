@@ -333,7 +333,7 @@ const SugarCookieRecipePage = async () => {
               <RecipeAddToCartButton
                 product={checkoutProduct}
                 className="w-full sm:w-auto"
-                label={`Get the Recipe - ${checkoutPriceLabel}`}
+                label="Get the Recipe"
               />
             </div>
 
@@ -500,7 +500,7 @@ const SugarCookieRecipePage = async () => {
               <RecipeAddToCartButton
                 product={checkoutProduct}
                 className="w-full"
-                label={`Download the Full Recipe - ${checkoutPriceLabel}`}
+                label="Download the Full Recipe"
               />
             </div>
           </div>
@@ -590,7 +590,7 @@ const SugarCookieRecipePage = async () => {
             artist, tested hundreds of times in real production.
           </p>
           <p className="mt-6 font-bebas text-4xl text-bakery-pink-dark md:text-5xl">
-            {checkoutPriceLabel} - Instant PDF Download
+            Instant PDF Download
           </p>
           <div className="mt-7 flex justify-center">
             <RecipeAddToCartButton

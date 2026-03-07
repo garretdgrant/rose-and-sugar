@@ -80,3 +80,16 @@
 - Validate updated schema in https://validator.schema.org
 - Submit `/private-cookie-classes-folsom-sacramento` in Google Search Console for re-indexing
 - Monitor impressions/clicks/CTR and FAQ rich results performance for 30/60/90-day checkpoints
+
+## 4) Image Placement Map (Code Locations)
+
+- File to update: `src/app/private-cookie-classes-folsom-sacramento/PrivateCookieClassesClient.tsx`
+- Hero image: already implemented in hero CTA area (`/cookie-class.webp`) in the first section of the page.
+- Occasion card images: add an image slot inside each card in the "CELEBRATE ANY OCCASION WITH A COOKIE DECORATING PARTY" grid.
+- Target cards for first image pass:
+  - Kids & Adult Birthday Parties
+  - Girls' Nights & Friend Get-Togethers
+  - Bridal Showers & Baby Showers
+  - Corporate Team Building & Work Events
+- What&apos;s Included supporting images: add a 2-column image row near the end of the "EVERYTHING YOU NEED TO DECORATE WITH CONFIDENCE" card, after the two descriptive paragraphs and before the section closes.
+- OG/Twitter image path for metadata: `public/images/private-cookie-class-og.jpg` (used by page metadata in `src/app/private-cookie-classes-folsom-sacramento/page.tsx`).
