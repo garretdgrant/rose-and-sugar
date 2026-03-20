@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -98,6 +99,34 @@ const steps = [
   { id: 2, title: "Order Details", icon: Cookie },
   { id: 3, title: "Flavors & Packaging", icon: Package },
   { id: 4, title: "Your Vision", icon: MessageSquare },
+];
+
+const customCookieGallery = [
+  {
+    src: "/gallery/catCookies.jpg",
+    alt: "Custom cat-themed sugar cookies by Rose & Sugar",
+    label: "Playful custom themes",
+  },
+  {
+    src: "/gallery/weddingCookies.jpg",
+    alt: "Custom wedding sugar cookies by Rose & Sugar",
+    label: "Wedding details",
+  },
+  {
+    src: "/gallery/wedding3.jpg",
+    alt: "Decorated wedding sugar cookies by Rose & Sugar",
+    label: "Elegant florals",
+  },
+  {
+    src: "/gallery/insects.jpg",
+    alt: "Custom insect-themed sugar cookies by Rose & Sugar",
+    label: "Detailed custom designs",
+  },
+  {
+    src: "/cookies.webp",
+    alt: "Assorted decorated sugar cookies by Rose & Sugar",
+    label: "Signature assortment",
+  },
 ];
 
 const CustomOrderClient = () => {
@@ -1284,32 +1313,30 @@ const CustomOrderClient = () => {
                 Custom Cookie Gallery
               </h2>
               <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
-                Placeholder image blocks are shown below until final optimized
-                photos are provided for this page.
+                A few favorite custom cookie designs from across the Rose &
+                Sugar collection.
               </p>
             </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {[
-                "Custom birthday sugar cookies with colorful royal icing by Rose & Sugar",
-                "Pastel baby shower sugar cookies decorated with florals by Rose & Sugar",
-                "Elegant bridal shower cookie set with hand-painted details by Rose & Sugar",
-                "Custom logo cookies for corporate events by Rose & Sugar, Folsom CA",
-                "Heat-sealed custom sugar cookies packaged for freshness by Rose & Sugar",
-              ].map((label) => (
-                <div
-                  key={label}
-                  className="flex min-h-[220px] items-center justify-center rounded-[2rem] border-2 border-dashed border-bakery-pink-light/50 bg-white/80 p-6 text-center shadow-sm"
+              {customCookieGallery.map((image) => (
+                <figure
+                  key={image.src}
+                  className="overflow-hidden rounded-[2rem] border border-bakery-pink-light/30 bg-white shadow-lg shadow-bakery-pink/5"
                 >
-                  <div>
-                    <p className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] text-bakery-pink-dark">
-                      Image Placeholder
-                    </p>
-                    <p className="mt-3 font-poppins text-sm leading-relaxed text-gray-600">
-                      {label}
-                    </p>
+                  <div className="relative aspect-[4/3]">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                    />
                   </div>
-                </div>
+                  <figcaption className="border-t border-bakery-pink-light/20 px-5 py-4 font-poppins text-sm text-gray-700">
+                    {image.label}
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </div>
