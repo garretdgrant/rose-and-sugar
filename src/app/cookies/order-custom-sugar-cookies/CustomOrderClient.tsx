@@ -57,11 +57,12 @@ const formSchema = z.object({
         "gf",
         "maple",
         "chocolate-chip",
-        "undecided",
       ]),
     )
     .min(1, "Please select at least one flavor"),
-  packaging: z.enum(["sealed", "ribbon", "undecided"]),
+  packaging: z.enum(["sealed", "ribbon"], {
+    errorMap: () => ({ message: "Please select a packaging option" }),
+  }),
   referralSource: z.string().min(1, "Please tell us how you heard about us"),
   message: z.string().min(10, "Please provide details about your request"),
   dyefree: z.boolean(),
@@ -155,7 +156,6 @@ const flavorOptions: {
   { label: "GF Flour (+$6/dozen)", value: "gf" },
   { label: "Maple", value: "maple" },
   { label: "Chocolate Chip", value: "chocolate-chip" },
-  { label: "Decide Later", value: "undecided" },
 ];
 
 const steps = [
@@ -184,8 +184,7 @@ const CustomOrderClient = () => {
       phone: "",
       eventDate: "",
       quantity: "2",
-      flavorPreference: ["undecided"],
-      packaging: "sealed",
+      flavorPreference: [],
       referralSource: "",
       message: "",
       dyefree: false,
@@ -235,15 +234,7 @@ const CustomOrderClient = () => {
     currentValues: FormValues["flavorPreference"],
   ) => {
     if (isChecked) {
-      let updatedValues = [...currentValues, value];
-
-      if (value !== "undecided") {
-        updatedValues = updatedValues.filter((v) => v !== "undecided");
-      } else {
-        updatedValues = ["undecided"];
-      }
-
-      return updatedValues;
+      return [...currentValues, value];
     } else {
       return currentValues.filter((v) => v !== value);
     }
@@ -849,11 +840,6 @@ const CustomOrderClient = () => {
                                   value: "ribbon",
                                   label: "Ribbon-Tied",
                                   desc: "+$6/dozen",
-                                },
-                                {
-                                  value: "undecided",
-                                  label: "Decide Later",
-                                  desc: "We'll discuss",
                                 },
                               ].map((option) => (
                                 <label

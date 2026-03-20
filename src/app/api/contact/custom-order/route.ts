@@ -3,6 +3,18 @@ import { NextRequest } from "next/server";
 import { isSpamHoneypot } from "@/lib/spam";
 import { isValidEmail, isValidPhone } from "@/lib/validations";
 
+const validFlavorPreferences = new Set([
+  "vanilla",
+  "lemon",
+  "almond",
+  "confetti",
+  "gf",
+  "maple",
+  "chocolate-chip",
+]);
+
+const validPackagingOptions = new Set(["sealed", "ribbon"]);
+
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const senderEmail = process.env.SENDER_EMAIL;
@@ -73,6 +85,31 @@ export async function POST(req: NextRequest) {
     if (!isValidPhone(phone)) {
       return new Response(
         JSON.stringify({ success: false, error: "Invalid phone number" }),
+        { status: 400 },
+      );
+    }
+
+    if (
+      !Array.isArray(flavorPreference) ||
+      flavorPreference.some(
+        (flavor: string) => !validFlavorPreferences.has(flavor),
+      )
+    ) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Please select at least one valid flavor preference.",
+        }),
+        { status: 400 },
+      );
+    }
+
+    if (!validPackagingOptions.has(packaging)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Please select a valid packaging option.",
+        }),
         { status: 400 },
       );
     }

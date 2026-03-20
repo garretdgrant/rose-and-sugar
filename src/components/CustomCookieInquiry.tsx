@@ -38,11 +38,12 @@ const formSchema = z.object({
         "gf",
         "maple",
         "chocolate-chip",
-        "undecided",
       ]),
     )
     .min(1, "Please select at least one flavor"),
-  packaging: z.enum(["sealed", "ribbon", "undecided"]),
+  packaging: z.enum(["sealed", "ribbon"], {
+    errorMap: () => ({ message: "Please select a packaging option" }),
+  }),
   referralSource: z.string().optional(),
   message: z.string().min(10, "Please provide details about your request"),
   dyefree: z.boolean(),
@@ -65,7 +66,6 @@ const CustomInquiryForm = () => {
     { label: "GF Flour (+$6/dozen)", value: "gf" },
     { label: "Maple", value: "maple" },
     { label: "Chocolate Chip", value: "chocolate-chip" },
-    { label: "Decide Later", value: "undecided" },
   ];
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -75,8 +75,7 @@ const CustomInquiryForm = () => {
       phone: "",
       eventDate: "",
       quantity: "2",
-      flavorPreference: ["undecided"],
-      packaging: "sealed",
+      flavorPreference: [],
       referralSource: "",
       message: "",
       dyefree: false,
@@ -125,19 +124,8 @@ const CustomInquiryForm = () => {
     currentValues: FormValues["flavorPreference"],
   ) => {
     if (isChecked) {
-      let updatedValues = [...currentValues, value];
-
-      if (value !== "undecided") {
-        // If a real flavor is selected, remove "undecided"
-        updatedValues = updatedValues.filter((v) => v !== "undecided");
-      } else {
-        // If "undecided" is selected, remove all other flavors
-        updatedValues = ["undecided"];
-      }
-
-      return updatedValues;
+      return [...currentValues, value];
     } else {
-      // If unchecked, remove that flavor
       return currentValues.filter((v) => v !== value);
     }
   };
@@ -378,27 +366,6 @@ const CustomInquiryForm = () => {
                     )}
                   </span>
                   <span>Ribbon-Tied (+$6)</span>
-                </label>
-                <label className="flex items-center cursor-pointer">
-                  <input
-                    type="radio"
-                    className="sr-only"
-                    value="undecided"
-                    checked={field.value === "undecided"}
-                    onChange={() => field.onChange("undecided")}
-                  />
-                  <span
-                    className={`w-4 h-4 border rounded-full mr-2 flex items-center justify-center ${
-                      field.value === "undecided"
-                        ? "border-bakery-pink bg-bakery-pink"
-                        : "border-gray-300"
-                    }`}
-                  >
-                    {field.value === "undecided" && (
-                      <span className="w-2 h-2 rounded-full bg-white"></span>
-                    )}
-                  </span>
-                  <span>Decide Later</span>
                 </label>
               </div>
               <FormMessage />
