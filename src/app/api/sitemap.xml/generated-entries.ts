@@ -30,7 +30,7 @@ export const staticSitemapEntries: StaticSitemapEntry[] = [
     sourceFile: "src/app/private-cookie-classes-folsom-sacramento/page.tsx",
     priority: "0.7",
     changefreq: "monthly",
-    lastmod: "2026-02-22",
+    lastmod: "2026-03-07",
   },
   {
     path: "/kind-cookie-program",
@@ -65,7 +65,7 @@ export const staticSitemapEntries: StaticSitemapEntry[] = [
     sourceFile: "src/app/sugar-cookie-recipe/page.tsx",
     priority: "0.7",
     changefreq: "monthly",
-    lastmod: "2026-03-06",
+    lastmod: "2026-03-07",
   },
   {
     path: "/classes",

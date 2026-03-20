@@ -17,9 +17,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import FAQAccordion from "@/components/FAQAccordion";
+import { customOrderFaqs } from "./content";
 import {
   ArrowRight,
   Sparkles,
@@ -70,80 +79,6 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-const customOrderFaqs = [
-  {
-    question: "How far in advance should I order custom cookies?",
-    answer: (
-      <>
-        We recommend placing your order at least 2-3 weeks in advance. Rush
-        orders may be available for an additional fee, but cannot be guaranteed.
-        For timing questions,{" "}
-        <Link className="text-bakery-pink-dark hover:underline" href="/contact">
-          contact us
-        </Link>
-        .
-      </>
-    ),
-  },
-  {
-    question: "What's included in the base price per dozen?",
-    answer: (
-      <>
-        Starting at $65 per dozen, each order includes up to five colors and
-        basic to intermediate detail. Character cookies and logos start at $70
-        per dozen. Additional colors, airbrushing, and intricate designs may
-        increase pricing. For a custom quote,{" "}
-        <Link className="text-bakery-pink-dark hover:underline" href="/contact">
-          reach out
-        </Link>
-        .
-      </>
-    ),
-  },
-  {
-    question: "Do you accommodate dietary restrictions?",
-    answer: (
-      <>
-        Our cookies contain wheat, milk, eggs, and soy (in sprinkles). While we
-        cannot guarantee allergen-free cookies, we&apos;re happy to discuss your
-        specific needs.{" "}
-        <Link className="text-bakery-pink-dark hover:underline" href="/contact">
-          Contact us
-        </Link>{" "}
-        for details.
-      </>
-    ),
-  },
-  {
-    question: "What are the payment and pickup options?",
-    answer: (
-      <>
-        We accept Venmo, Zelle, and major credit cards. Payment is required at
-        least two weeks before pickup to confirm your order. Pickup is available
-        in Folsom, with preferred times on Saturdays.{" "}
-        <Link className="text-bakery-pink-dark hover:underline" href="/contact">
-          Contact us
-        </Link>{" "}
-        for scheduling.
-      </>
-    ),
-  },
-  {
-    question: "How are the cookies packaged?",
-    answer: (
-      <>
-        Cookies come individually heat-sealed for freshness at no additional
-        cost. Ribbon-tied packaging is available for an additional charge per
-        dozen. For packaging add-ons,{" "}
-        <Link className="text-bakery-pink-dark hover:underline" href="/contact">
-          reach out
-        </Link>
-        .
-      </>
-    ),
-  },
-];
 
 const flavorOptions: {
   label: string;
@@ -302,6 +237,32 @@ const CustomOrderClient = () => {
         />
 
         <div className="container-custom relative z-10 py-28 md:py-36">
+          <div
+            className={`mb-8 mt-2 md:mt-0 transition-all duration-700 ${
+              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+          >
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/cookies">Cookies</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Order Custom Sugar Cookies</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
             <div
@@ -339,8 +300,13 @@ const CustomOrderClient = () => {
                   : "opacity-0 translate-y-4"
               }`}
             >
-              Make your celebration extra sweet with custom-designed sugar
-              cookies. Every set is handcrafted and tailored to your vision.
+              Make your celebration unforgettable with custom-designed sugar
+              cookies from Rose & Sugar. Every set is handcrafted by Megan in
+              Folsom, CA and tailored to your vision — whether you&apos;re
+              planning a birthday party, baby shower, bridal shower, wedding,
+              graduation, or corporate event. With over five years of experience
+              and hundreds of happy customers across the Sacramento area, we
+              bring artistry, flavor, and care to every cookie we create.
             </p>
 
             {/* CTAs */}
@@ -1006,6 +972,302 @@ const CustomOrderClient = () => {
         </div>
       </section>
 
+      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(232,173,193,0.12),_transparent_35%),radial-gradient(circle_at_bottom_left,_rgba(253,225,211,0.18),_transparent_35%)]" />
+        <div className="container-custom relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="max-w-3xl">
+              <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
+                Why Choose Rose & Sugar for Your Custom Cookies?
+              </h2>
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-[1.4fr_0.6fr]">
+              <div className="space-y-5 rounded-[2rem] border border-bakery-pink-light/20 bg-white p-8 shadow-lg shadow-bakery-pink/5">
+                <p className="font-poppins text-base leading-relaxed text-gray-700">
+                  When you order custom decorated sugar cookies from Rose &
+                  Sugar, you&apos;re getting more than a sweet treat —
+                  you&apos;re getting edible art made with intention. Each
+                  cookie is hand-rolled, hand-cut, and decorated with royal
+                  icing using a floral-inspired style that&apos;s become our
+                  signature. We use real butter, pure vanilla, and high-quality
+                  ingredients because we believe every detail matters.
+                </p>
+                <p className="font-poppins text-base leading-relaxed text-gray-700">
+                  Our custom cookie process is simple: tell us about your event,
+                  share your color palette or theme inspiration, and we&apos;ll
+                  design a set that brings your vision to life. From elegant
+                  bridal shower favors with hand-painted florals to playful
+                  birthday party cookies in bold colors, we treat every order as
+                  a collaboration. You&apos;ll receive a design mockup and
+                  personalized quote within 48 hours of submitting your request.
+                </p>
+                <p className="font-poppins text-base leading-relaxed text-gray-700">
+                  Rose & Sugar proudly serves Folsom, Sacramento, El Dorado
+                  Hills, Roseville, Granite Bay, and surrounding communities.
+                  All custom orders are available for local pickup in Folsom —
+                  typically on Saturdays — with flexible scheduling available
+                  upon request. If you want to learn the techniques behind the
+                  details, Megan also offers{" "}
+                  <Link
+                    href="/classes"
+                    className="text-bakery-pink-dark underline-offset-4 hover:underline"
+                  >
+                    cookie decorating classes
+                  </Link>
+                  . You can also learn more{" "}
+                  <Link
+                    href="/about"
+                    className="text-bakery-pink-dark underline-offset-4 hover:underline"
+                  >
+                    about Megan
+                  </Link>{" "}
+                  and the story behind Rose & Sugar.
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] border border-bakery-pink-light/20 bg-gradient-to-br from-bakery-pink-light/20 via-white to-bakery-peach/20 p-6 shadow-lg shadow-bakery-pink/5">
+                <div className="flex h-full flex-col justify-between">
+                  <div>
+                    <span className="inline-flex rounded-full bg-white/80 px-3 py-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] text-bakery-pink-dark">
+                      Local Pickup
+                    </span>
+                    <h3 className="mt-4 font-bebas text-3xl text-gray-800">
+                      Folsom-Made, Sacramento-Area Loved
+                    </h3>
+                    <p className="mt-4 font-poppins text-sm leading-relaxed text-gray-600">
+                      Custom cookie orders are created in Folsom, CA for
+                      celebrations across Sacramento, El Dorado Hills,
+                      Roseville, Granite Bay, and nearby communities.
+                    </p>
+                  </div>
+                  <div className="mt-6 space-y-3">
+                    {[
+                      "Starting at $65 per dozen",
+                      "Minimum order: 2 dozen",
+                      "Preferred pickup on Saturdays",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3"
+                      >
+                        <Check className="h-4 w-4 text-bakery-pink-dark" />
+                        <span className="font-poppins text-sm text-gray-700">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-16 md:py-24 bg-bakery-cream/40 overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
+              Custom Cookies for Every Occasion
+            </h2>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              {[
+                {
+                  title: "Birthday Parties",
+                  body: (
+                    <>
+                      From whimsical themes for kids to elegant designs for
+                      milestone birthdays, custom birthday cookies make the
+                      perfect party addition or take-home favor. Choose from our
+                      variety of flavors including vanilla, lemon, almond,
+                      confetti, chocolate chip, and maple. If you want an
+                      interactive celebration too, a{" "}
+                      <Link
+                        href="/private-cookie-classes-folsom-sacramento"
+                        className="text-bakery-pink-dark underline-offset-4 hover:underline"
+                      >
+                        private cookie decorating class
+                      </Link>{" "}
+                      is a fun add-on for birthdays and showers.
+                    </>
+                  ),
+                },
+                {
+                  title: "Baby Showers",
+                  body: (
+                    <>
+                      Celebrate the mom-to-be with delicate designs featuring
+                      soft pastels, woodland themes, or personalized details
+                      like the baby&apos;s name and due date. We offer dye-free
+                      icing options for a more natural look.
+                    </>
+                  ),
+                },
+                {
+                  title: "Bridal Showers & Weddings",
+                  body: (
+                    <>
+                      Impress your guests with beautifully decorated cookies
+                      that complement your wedding colors and theme. Custom
+                      cookies make memorable bridal shower favors, dessert table
+                      accents, or rehearsal dinner treats.
+                    </>
+                  ),
+                },
+                {
+                  title: "Corporate Events & Client Gifts",
+                  body: (
+                    <>
+                      Make a lasting impression with logo cookies, branded
+                      packaging, or themed sets for team celebrations, product
+                      launches, and client appreciation. We also support{" "}
+                      <Link
+                        href="/corporate-team-building"
+                        className="text-bakery-pink-dark underline-offset-4 hover:underline"
+                      >
+                        corporate team building events
+                      </Link>{" "}
+                      throughout the Sacramento region with polished cookie
+                      experiences and branded gifting.
+                    </>
+                  ),
+                },
+              ].map((item) => (
+                <article
+                  key={item.title}
+                  className="rounded-[2rem] border border-bakery-pink-light/30 bg-white p-8 shadow-lg shadow-bakery-pink/5"
+                >
+                  <h3 className="font-bebas text-3xl text-gray-800">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
+                    {item.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-6 rounded-[2rem] border border-bakery-pink-light/30 bg-white p-8 shadow-lg shadow-bakery-pink/5">
+              <h3 className="font-bebas text-3xl text-gray-800">
+                Graduations, Holidays & More
+              </h3>
+              <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
+                Whatever the milestone, we&apos;ll design a cookie set to match.
+                Just share your vision in our order form above and we&apos;ll
+                take care of the rest.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+              <div className="rounded-[2rem] border border-bakery-pink-light/30 bg-gradient-to-br from-white via-white to-bakery-peach/10 p-8 shadow-lg shadow-bakery-pink/5">
+                <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
+                  Custom Cookie Pricing & What&apos;s Included
+                </h2>
+                <div className="mt-6 space-y-5 font-poppins text-base leading-relaxed text-gray-700">
+                  <p>
+                    Our custom decorated sugar cookies start at{" "}
+                    <strong>$65 per dozen</strong> and include up to five icing
+                    colors with basic to intermediate detail. Character cookies
+                    and logo designs start at <strong>$70 per dozen</strong>.
+                    Additional complexity, airbrushing, or extra colors may
+                    adjust pricing — we&apos;ll always provide a clear quote
+                    before you commit.
+                  </p>
+                  <p>
+                    Every order requires a <strong>minimum of two dozen</strong>{" "}
+                    cookies and a <strong>two-week lead time</strong> to ensure
+                    we deliver our best work. Rush orders may be available for
+                    an additional fee, but cannot be guaranteed.
+                  </p>
+                  <p>
+                    All cookies come individually heat-sealed at no extra charge
+                    for maximum freshness. Ribbon-tied packaging is available as
+                    an upgrade. We accept Venmo, Zelle, and all major credit
+                    cards, with payment due at least two weeks before your
+                    pickup date.
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-bakery-pink-light/30 bg-bakery-cream/60 p-8 shadow-lg shadow-bakery-pink/5">
+                <h3 className="font-bebas text-3xl text-gray-800">
+                  Quick Reference
+                </h3>
+                <div className="mt-6 space-y-4">
+                  {[
+                    ["Starting price", "$65/dozen"],
+                    ["Character or logo sets", "$70+/dozen"],
+                    ["Gluten-free flour option", "+$6/dozen"],
+                    ["Dye-free icing option", "+$10/dozen"],
+                    ["Lead time", "2-3 weeks recommended"],
+                  ].map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-between gap-4 rounded-2xl bg-white px-4 py-4"
+                    >
+                      <span className="font-poppins text-sm text-gray-600">
+                        {label}
+                      </span>
+                      <span className="font-poppins text-sm font-semibold text-gray-800">
+                        {value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-16 md:py-24 bg-bakery-cream/30 overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="max-w-3xl">
+              <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
+                Custom Cookie Gallery
+              </h2>
+              <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
+                Placeholder image blocks are shown below until final optimized
+                photos are provided for this page.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {[
+                "Custom birthday sugar cookies with colorful royal icing by Rose & Sugar",
+                "Pastel baby shower sugar cookies decorated with florals by Rose & Sugar",
+                "Elegant bridal shower cookie set with hand-painted details by Rose & Sugar",
+                "Custom logo cookies for corporate events by Rose & Sugar, Folsom CA",
+                "Heat-sealed custom sugar cookies packaged for freshness by Rose & Sugar",
+              ].map((label) => (
+                <div
+                  key={label}
+                  className="flex min-h-[220px] items-center justify-center rounded-[2rem] border-2 border-dashed border-bakery-pink-light/50 bg-white/80 p-6 text-center shadow-sm"
+                >
+                  <div>
+                    <p className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] text-bakery-pink-dark">
+                      Image Placeholder
+                    </p>
+                    <p className="mt-3 font-poppins text-sm leading-relaxed text-gray-600">
+                      {label}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== HIGHLIGHTS SECTION ===== */}
       <section className="relative py-16 md:py-20 bg-white overflow-hidden">
         <div className="container-custom relative z-10">
@@ -1091,7 +1353,12 @@ const CustomOrderClient = () => {
             </div>
 
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20">
-              <FAQAccordion faqs={customOrderFaqs} />
+              <FAQAccordion
+                faqs={customOrderFaqs.map((faq) => ({
+                  question: faq.question,
+                  answer: faq.answerText,
+                }))}
+              />
             </div>
           </div>
         </div>
