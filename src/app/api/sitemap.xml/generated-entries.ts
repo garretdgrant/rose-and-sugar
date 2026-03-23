@@ -12,154 +12,148 @@ export type StaticSitemapEntry = {
 
 export const staticSitemapEntries: StaticSitemapEntry[] = [
   {
-    path: "/",
-    sourceFile: "src/app/page.tsx",
-    priority: "1.0",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/",
+    "sourceFile": "src/app/page.tsx",
+    "priority": "1.0",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/corporate-team-building",
-    sourceFile: "src/app/corporate-team-building/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/corporate-team-building",
+    "sourceFile": "src/app/corporate-team-building/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/private-cookie-classes-folsom-sacramento",
-    sourceFile: "src/app/private-cookie-classes-folsom-sacramento/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-03-07",
+    "path": "/private-cookie-classes-folsom-sacramento",
+    "sourceFile": "src/app/private-cookie-classes-folsom-sacramento/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-03-07"
   },
   {
-    path: "/kind-cookie-program",
-    sourceFile: "src/app/kind-cookie-program/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-04",
+    "path": "/kind-cookie-program",
+    "sourceFile": "src/app/kind-cookie-program/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-04"
   },
   {
-    path: "/cookies/signature-sugar-cookie-sets",
-    sourceFile: "src/app/cookies/signature-sugar-cookie-sets/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-04",
+    "path": "/cookies/signature-sugar-cookie-sets",
+    "sourceFile": "src/app/cookies/signature-sugar-cookie-sets/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-04"
   },
   {
-    path: "/cookies/order-custom-sugar-cookies",
-    sourceFile: "src/app/cookies/order-custom-sugar-cookies/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/cookies/order-custom-sugar-cookies",
+    "sourceFile": "src/app/cookies/order-custom-sugar-cookies/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-03-20"
   },
   {
-    path: "/cookies/thank-you",
-    sourceFile: "src/app/cookies/thank-you/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-04",
+    "path": "/cookies/thank-you",
+    "sourceFile": "src/app/cookies/thank-you/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-04"
   },
   {
-    path: "/sugar-cookie-recipe",
-    sourceFile: "src/app/sugar-cookie-recipe/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-03-07",
+    "path": "/sugar-cookie-recipe",
+    "sourceFile": "src/app/sugar-cookie-recipe/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-03-07"
   },
   {
-    path: "/classes",
-    sourceFile: "src/app/classes/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-04",
+    "path": "/classes",
+    "sourceFile": "src/app/classes/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-04"
   },
   {
-    path: "/classes/locations",
-    sourceFile: "src/app/classes/locations/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-04",
+    "path": "/classes/locations",
+    "sourceFile": "src/app/classes/locations/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-04"
   },
   {
-    path: "/classes/previous-classes",
-    sourceFile: "src/app/classes/previous-classes/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-15",
+    "path": "/classes/previous-classes",
+    "sourceFile": "src/app/classes/previous-classes/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-15"
   },
   {
-    path: "/classes/folsom-sugar-cookie-decorating-class",
-    sourceFile: "src/app/classes/folsom-sugar-cookie-decorating-class/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/classes/folsom-sugar-cookie-decorating-class",
+    "sourceFile": "src/app/classes/folsom-sugar-cookie-decorating-class/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/classes/loomis-sugar-cookie-decorating-class",
-    sourceFile: "src/app/classes/loomis-sugar-cookie-decorating-class/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/classes/loomis-sugar-cookie-decorating-class",
+    "sourceFile": "src/app/classes/loomis-sugar-cookie-decorating-class/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/classes/sacramento-sugar-cookie-decorating-class",
-    sourceFile:
-      "src/app/classes/sacramento-sugar-cookie-decorating-class/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/classes/sacramento-sugar-cookie-decorating-class",
+    "sourceFile": "src/app/classes/sacramento-sugar-cookie-decorating-class/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/classes/el-dorado-hills-sugar-cookie-decorating-class",
-    sourceFile:
-      "src/app/classes/el-dorado-hills-sugar-cookie-decorating-class/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/classes/el-dorado-hills-sugar-cookie-decorating-class",
+    "sourceFile": "src/app/classes/el-dorado-hills-sugar-cookie-decorating-class/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/classes/roseville-sugar-cookie-decorating-class",
-    sourceFile:
-      "src/app/classes/roseville-sugar-cookie-decorating-class/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/classes/roseville-sugar-cookie-decorating-class",
+    "sourceFile": "src/app/classes/roseville-sugar-cookie-decorating-class/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/classes/thank-you",
-    sourceFile: "src/app/classes/thank-you/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2025-05-02",
+    "path": "/classes/thank-you",
+    "sourceFile": "src/app/classes/thank-you/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2025-05-02"
   },
   {
-    path: "/about",
-    sourceFile: "src/app/about/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-02-22",
+    "path": "/about",
+    "sourceFile": "src/app/about/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-02-22"
   },
   {
-    path: "/contact",
-    sourceFile: "src/app/contact/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2025-12-29",
+    "path": "/contact",
+    "sourceFile": "src/app/contact/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2025-12-29"
   },
   {
-    path: "/privacy-policy",
-    sourceFile: "src/app/privacy-policy/page.tsx",
-    priority: "0.7",
-    changefreq: "monthly",
-    lastmod: "2026-01-02",
-  },
+    "path": "/privacy-policy",
+    "sourceFile": "src/app/privacy-policy/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-01-02"
+  }
 ] as const;
 
-export const dynamicTemplateLastmod: Record<
-  "cookiesProduct" | "classProduct",
-  string | null
-> = {
-  cookiesProduct: "2026-02-22",
-  classProduct: "2026-02-22",
+export const dynamicTemplateLastmod: Record<"cookiesProduct" | "classProduct", string | null> = {
+  "cookiesProduct": "2026-02-22",
+  "classProduct": "2026-02-22"
 } as const;
