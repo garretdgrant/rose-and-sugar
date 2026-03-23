@@ -16,7 +16,6 @@ import {
   Minus,
   Plus,
   Trash2,
-  ExternalLink,
   Loader2,
   Sparkles,
   ShoppingBag,
@@ -49,8 +48,8 @@ const CartDrawer = () => {
       await createCheckout();
       const checkoutUrl = useCartStore.getState().checkoutUrl;
       if (checkoutUrl) {
-        window.open(checkoutUrl, "_blank");
         setIsOpen(false);
+        window.location.assign(checkoutUrl);
       }
     } catch (error) {
       console.error("Checkout failed:", error);
@@ -308,7 +307,6 @@ const CartDrawer = () => {
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-2">
-                      <ExternalLink className="w-5 h-5" />
                       Proceed to Checkout
                       <ArrowRight className="w-4 h-4" />
                     </span>
