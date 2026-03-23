@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,18 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import FAQAccordion from "@/components/FAQAccordion";
-import { customOrderFaqs } from "./content";
 import {
   ArrowRight,
   Sparkles,
@@ -41,10 +29,6 @@ import {
   Mail,
   Phone,
   Check,
-  DollarSign,
-  Clock,
-  MapPin,
-  CreditCard,
 } from "lucide-react";
 
 const formSchema = z.object({
@@ -101,44 +85,11 @@ const steps = [
   { id: 4, title: "Your Vision", icon: MessageSquare },
 ];
 
-const customCookieGallery = [
-  {
-    src: "/gallery/catCookies.jpg",
-    alt: "Custom cat-themed sugar cookies by Rose & Sugar",
-    label: "Playful custom themes",
-  },
-  {
-    src: "/gallery/weddingCookies.jpg",
-    alt: "Custom wedding sugar cookies by Rose & Sugar",
-    label: "Wedding details",
-  },
-  {
-    src: "/gallery/wedding3.jpg",
-    alt: "Decorated wedding sugar cookies by Rose & Sugar",
-    label: "Elegant florals",
-  },
-  {
-    src: "/gallery/insects.jpg",
-    alt: "Custom insect-themed sugar cookies by Rose & Sugar",
-    label: "Detailed custom designs",
-  },
-  {
-    src: "/cookies.webp",
-    alt: "Assorted decorated sugar cookies by Rose & Sugar",
-    label: "Signature assortment",
-  },
-];
-
 const CustomOrderClient = () => {
   const { toast } = useToast();
-  const [mounted, setMounted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -199,9 +150,8 @@ const CustomOrderClient = () => {
   ) => {
     if (isChecked) {
       return [...currentValues, value];
-    } else {
-      return currentValues.filter((v) => v !== value);
     }
+    return currentValues.filter((option) => option !== value);
   };
 
   const nextStep = () => {
@@ -225,1167 +175,558 @@ const CustomOrderClient = () => {
     referralSourceValue.length > 0;
 
   return (
-    <main className="relative overflow-hidden">
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-[55vh] flex items-center overflow-hidden">
-        {/* Layered background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-peach/30" />
-
-        {/* Large decorative blob - top right */}
-        <div
-          className={`absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-bakery-pink-light/60 to-bakery-peach/40 blur-3xl transition-all duration-1000 ${
-            mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}
-        />
-
-        {/* Medium blob - bottom left */}
-        <div
-          className={`absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/50 to-bakery-pink-light/30 blur-2xl transition-all duration-1000 delay-200 ${
-            mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}
-        />
-
-        {/* Floating accent shapes */}
-        <div
-          className={`absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-bakery-pink-dark/60 transition-all duration-700 delay-500 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ animation: "float 4s ease-in-out infinite" }}
-        />
-        <div
-          className={`absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-bakery-brown/50 transition-all duration-700 delay-700 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ animation: "float 5s ease-in-out infinite 0.5s" }}
-        />
-        <div
-          className={`absolute bottom-1/3 right-1/3 w-2 h-2 rounded-full bg-bakery-pink/70 transition-all duration-700 delay-900 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ animation: "float 3.5s ease-in-out infinite 1s" }}
-        />
-
-        <div className="container-custom relative z-10 py-28 md:py-36">
-          <div
-            className={`mb-8 mt-2 md:mt-0 transition-all duration-700 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/cookies">Cookies</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Order Custom Sugar Cookies</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Badge */}
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 transition-all duration-700 delay-200 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <Sparkles className="w-4 h-4 text-bakery-pink-dark" />
-              <span className="text-sm font-poppins font-medium text-gray-700">
-                Custom Orders
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <h1
-              className={`font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-6 transition-all duration-700 delay-300 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <span className="block text-gray-800">Custom</span>
-              <span className="block bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
-                Cookie Orders
-              </span>
-            </h1>
-
-            {/* Subheadline */}
-            <p
-              className={`font-poppins text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed transition-all duration-700 delay-400 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              Make your celebration unforgettable with custom-designed sugar
-              cookies from Rose & Sugar. Every set is handcrafted by Megan in
-              Folsom, CA and tailored to your vision — whether you&apos;re
-              planning a birthday party, baby shower, bridal shower, wedding,
-              graduation, or corporate event. With over five years of experience
-              and hundreds of happy customers across the Sacramento area, we
-              bring artistry, flavor, and care to every cookie we create.
-            </p>
-
-            {/* CTAs */}
-            <div
-              className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-500 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <Link
-                href="/cookies/signature-sugar-cookie-sets"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-800 font-poppins font-semibold rounded-full border-2 border-bakery-pink-light hover:border-bakery-pink hover:bg-bakery-pink-light/30 transition-all duration-300"
+    <>
+      <div
+        className="mb-10 flex items-center justify-center opacity-0 animate-fade-in-up"
+        style={{ animationDelay: "200ms" }}
+      >
+        <div className="flex items-center gap-2 md:gap-4">
+          {steps.map((step, idx) => (
+            <div key={step.id} className="flex items-center">
+              <button
+                type="button"
+                tabIndex={-1}
+                aria-disabled="true"
+                className={`flex items-center gap-2 rounded-full px-3 py-2 font-poppins text-sm font-medium transition-all duration-300 md:px-4 md:py-2.5 ${
+                  currentStep === step.id
+                    ? "bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white shadow-lg shadow-bakery-pink/30"
+                    : currentStep > step.id
+                      ? "bg-bakery-pink-light/50 text-bakery-pink-dark"
+                      : "border border-bakery-pink-light/30 bg-white/80 text-gray-500"
+                } cursor-default`}
               >
-                Looking for Signature Sets?
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                {currentStep > step.id ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <step.icon className="h-4 w-4" />
+                )}
+                <span className="hidden md:inline">{step.title}</span>
+              </button>
+              {idx < steps.length - 1 && (
+                <div
+                  className={`mx-1 h-0.5 w-6 transition-colors duration-300 md:w-10 ${
+                    currentStep > step.id
+                      ? "bg-bakery-pink"
+                      : "bg-bakery-pink-light/30"
+                  }`}
+                />
+              )}
             </div>
-          </div>
+          ))}
         </div>
+      </div>
 
-        {/* SVG wave divider */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
-          <svg
-            className="relative block w-full h-16 md:h-24"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
+      <div
+        className="relative opacity-0 animate-fade-in-up"
+        style={{ animationDelay: "300ms" }}
+      >
+        <div className="absolute -inset-1 rotate-0.5 rounded-[2rem] bg-gradient-to-br from-bakery-pink-light/60 via-bakery-peach/40 to-bakery-pink-light/60" />
 
-      {/* ===== FORM SECTION ===== */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-bakery-cream/40 to-bakery-pink-light/30" />
-
-        {/* Decorative blobs */}
-        <div className="absolute top-20 -left-32 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-bakery-pink-light/30 to-transparent blur-3xl" />
-        <div className="absolute bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-bakery-peach/30 to-transparent blur-3xl" />
-
-        {/* Top wave */}
-        <div className="absolute top-0 left-0 right-0 overflow-hidden leading-none rotate-180">
-          <svg
-            className="relative block w-full h-16 md:h-24"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-
-        <div className="container-custom relative z-10 pt-8">
-          <div className="max-w-4xl mx-auto">
-            {/* Form Header */}
-            <div className="text-center mb-10">
-              <h2
-                className={`font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight transition-all duration-700 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
-                Request a{" "}
-                <span className="bg-gradient-to-r from-bakery-pink-dark to-bakery-pink bg-clip-text text-transparent">
-                  Custom Order
-                </span>
-              </h2>
-              <p
-                className={`mt-3 text-gray-600 font-poppins transition-all duration-700 delay-100 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
-                Tell us about your event and we&apos;ll follow up within 48
-                hours.
-              </p>
-            </div>
-
-            {/* Step Indicator */}
-            <div
-              className={`flex items-center justify-center mb-10 transition-all duration-700 delay-200 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <div className="flex items-center gap-2 md:gap-4">
-                {steps.map((step, idx) => (
-                  <div key={step.id} className="flex items-center">
-                    <button
-                      type="button"
+        <div className="relative rounded-3xl bg-white/95 p-6 shadow-xl backdrop-blur-sm md:p-10">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="company"
+                render={({ field }) => (
+                  <div style={{ display: "none" }}>
+                    <Input
+                      type="text"
+                      autoComplete="off"
                       tabIndex={-1}
-                      aria-disabled="true"
-                      className={`flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-full font-poppins text-sm font-medium transition-all duration-300 cursor-default ${
-                        currentStep === step.id
-                          ? "bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white shadow-lg shadow-bakery-pink/30"
-                          : currentStep > step.id
-                            ? "bg-bakery-pink-light/50 text-bakery-pink-dark"
-                            : "bg-white/80 text-gray-500 border border-bakery-pink-light/30"
-                      }`}
-                    >
-                      {currentStep > step.id ? (
-                        <Check className="w-4 h-4" />
-                      ) : (
-                        <step.icon className="w-4 h-4" />
-                      )}
-                      <span className="hidden md:inline">{step.title}</span>
-                    </button>
-                    {idx < steps.length - 1 && (
-                      <div
-                        className={`w-6 md:w-10 h-0.5 mx-1 transition-colors duration-300 ${
-                          currentStep > step.id
-                            ? "bg-bakery-pink"
-                            : "bg-bakery-pink-light/30"
-                        }`}
-                      />
-                    )}
+                      {...field}
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
+                )}
+              />
 
-            {/* Form Card */}
-            <div
-              className={`relative transition-all duration-700 delay-300 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              {/* Card shadow/border effect */}
-              <div className="absolute -inset-1 bg-gradient-to-br from-bakery-pink-light/60 via-bakery-peach/40 to-bakery-pink-light/60 rounded-[2rem] transform rotate-0.5" />
+              <div
+                className={`space-y-6 ${currentStep === 1 ? "block" : "hidden"}`}
+              >
+                <div className="mb-6 flex items-center gap-3 border-b border-bakery-pink-light/30 pb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink">
+                    <User className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bebas text-2xl text-gray-800">
+                      Your Information
+                    </h3>
+                    <p className="font-poppins text-sm text-gray-500">
+                      How can we reach you?
+                    </p>
+                  </div>
+                </div>
 
-              <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl">
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
-                  >
-                    {/* Honeypot field */}
-                    <FormField
-                      control={form.control}
-                      name="company"
-                      render={({ field }) => (
-                        <div style={{ display: "none" }}>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 font-poppins font-medium text-gray-700">
+                        <User className="h-4 w-4 text-bakery-pink-dark" />
+                        Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Your name"
+                          className="rounded-xl border-bakery-pink-light/40 py-3 focus:border-bakery-pink focus:ring-bakery-pink/20"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 font-poppins font-medium text-gray-700">
+                          <Mail className="h-4 w-4 text-bakery-pink-dark" />
+                          Email
+                        </FormLabel>
+                        <FormControl>
                           <Input
-                            type="text"
-                            autoComplete="off"
-                            tabIndex={-1}
+                            type="email"
+                            placeholder="your.email@example.com"
+                            className="rounded-xl border-bakery-pink-light/40 py-3 focus:border-bakery-pink focus:ring-bakery-pink/20"
                             {...field}
                           />
-                        </div>
-                      )}
-                    />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                    {/* Step 1: Personal Info */}
-                    <div
-                      className={`space-y-6 ${currentStep === 1 ? "block" : "hidden"}`}
-                    >
-                      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-bakery-pink-light/30">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink flex items-center justify-center">
-                          <User className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-bebas text-2xl text-gray-800">
-                            Your Information
-                          </h3>
-                          <p className="text-sm text-gray-500 font-poppins">
-                            How can we reach you?
-                          </p>
-                        </div>
-                      </div>
-
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-gray-700 font-poppins font-medium flex items-center gap-2">
-                              <User className="w-4 h-4 text-bakery-pink-dark" />
-                              Name
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Your name"
-                                className="border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20 rounded-xl py-3"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-gray-700 font-poppins font-medium flex items-center gap-2">
-                                <Mail className="w-4 h-4 text-bakery-pink-dark" />
-                                Email
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="email"
-                                  placeholder="your.email@example.com"
-                                  className="border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20 rounded-xl py-3"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="phone"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-gray-700 font-poppins font-medium flex items-center gap-2">
-                                <Phone className="w-4 h-4 text-bakery-pink-dark" />
-                                Phone Number
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="tel"
-                                  placeholder="(123) 456-7890"
-                                  className="border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20 rounded-xl py-3"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Step 2: Order Details */}
-                    <div
-                      className={`space-y-6 ${currentStep === 2 ? "block" : "hidden"}`}
-                    >
-                      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-bakery-pink-light/30">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink flex items-center justify-center">
-                          <Cookie className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-bebas text-2xl text-gray-800">
-                            Order Details
-                          </h3>
-                          <p className="text-sm text-gray-500 font-poppins">
-                            When and how many?
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FormField
-                          control={form.control}
-                          name="eventDate"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-gray-700 font-poppins font-medium flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-bakery-pink-dark" />
-                                Event Date / When Needed
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="date"
-                                  className="border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20 rounded-xl py-3"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="quantity"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-gray-700 font-poppins font-medium">
-                                How Many Dozen?
-                              </FormLabel>
-                              <FormControl>
-                                <select
-                                  {...field}
-                                  className="w-full rounded-xl border border-bakery-pink-light/40 bg-white px-4 py-3 text-sm focus:border-bakery-pink focus:outline-none focus:ring-2 focus:ring-bakery-pink/20 transition-all"
-                                >
-                                  <option value="" disabled>
-                                    Select quantity
-                                  </option>
-                                  {[
-                                    "2",
-                                    "3",
-                                    "4",
-                                    "5",
-                                    "6",
-                                    "7",
-                                    "8",
-                                    "9",
-                                    "10",
-                                    "11+",
-                                  ].map((num) => (
-                                    <option key={num} value={num}>
-                                      {num} dozen
-                                    </option>
-                                  ))}
-                                </select>
-                              </FormControl>
-                              <FormDescription className="text-xs text-gray-500">
-                                Minimum 2 dozen for custom orders
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
-                      <FormField
-                        control={form.control}
-                        name="dyefree"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-gray-700 font-poppins font-medium">
-                              Dye-Free Icing (+$10/dozen)
-                            </FormLabel>
-                            <div className="flex gap-4 mt-2">
-                              <label
-                                className={`flex-1 flex items-center justify-center gap-3 px-4 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 ${
-                                  field.value
-                                    ? "border-bakery-pink bg-bakery-pink-light/30"
-                                    : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
-                                }`}
-                              >
-                                <input
-                                  type="radio"
-                                  value="true"
-                                  checked={field.value === true}
-                                  onChange={() => field.onChange(true)}
-                                  className="sr-only"
-                                />
-                                <span
-                                  className={`font-poppins font-medium ${
-                                    field.value
-                                      ? "text-bakery-pink-dark"
-                                      : "text-gray-600"
-                                  }`}
-                                >
-                                  Yes, dye-free please
-                                </span>
-                              </label>
-
-                              <label
-                                className={`flex-1 flex items-center justify-center gap-3 px-4 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 ${
-                                  !field.value
-                                    ? "border-bakery-pink bg-bakery-pink-light/30"
-                                    : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
-                                }`}
-                              >
-                                <input
-                                  type="radio"
-                                  value="false"
-                                  checked={field.value === false}
-                                  onChange={() => field.onChange(false)}
-                                  className="sr-only"
-                                />
-                                <span
-                                  className={`font-poppins font-medium ${
-                                    !field.value
-                                      ? "text-bakery-pink-dark"
-                                      : "text-gray-600"
-                                  }`}
-                                >
-                                  Standard colors
-                                </span>
-                              </label>
-                            </div>
-                            <FormDescription className="text-xs text-gray-500 mt-2">
-                              Dye-free colors will be more muted and natural.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    {/* Step 3: Flavors & Packaging */}
-                    <div
-                      className={`space-y-6 ${currentStep === 3 ? "block" : "hidden"}`}
-                    >
-                      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-bakery-pink-light/30">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink flex items-center justify-center">
-                          <Package className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-bebas text-2xl text-gray-800">
-                            Flavors & Packaging
-                          </h3>
-                          <p className="text-sm text-gray-500 font-poppins">
-                            Customize your order
-                          </p>
-                        </div>
-                      </div>
-
-                      <FormField
-                        control={form.control}
-                        name="flavorPreference"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-gray-700 font-poppins font-medium">
-                              Flavor Preferences
-                            </FormLabel>
-                            <FormDescription className="text-xs text-gray-500 mb-3">
-                              Select all that apply
-                            </FormDescription>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                              {flavorOptions.map((option) => {
-                                const isSelected = field.value?.includes(
-                                  option.value,
-                                );
-                                return (
-                                  <label
-                                    key={option.value}
-                                    className={`flex items-center justify-center px-4 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 text-center ${
-                                      isSelected
-                                        ? "border-bakery-pink bg-bakery-pink-light/30"
-                                        : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
-                                    }`}
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      value={option.value}
-                                      checked={isSelected}
-                                      onChange={(e) => {
-                                        const value = e.target
-                                          .value as FormValues["flavorPreference"][number];
-                                        const isChecked = e.target.checked;
-                                        const updatedValues =
-                                          handleFlavorChange(
-                                            value,
-                                            isChecked,
-                                            field.value || [],
-                                          );
-                                        field.onChange(updatedValues);
-                                      }}
-                                      className="sr-only"
-                                    />
-                                    <span
-                                      className={`font-poppins text-sm font-medium ${
-                                        isSelected
-                                          ? "text-bakery-pink-dark"
-                                          : "text-gray-600"
-                                      }`}
-                                    >
-                                      {option.label}
-                                    </span>
-                                  </label>
-                                );
-                              })}
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="packaging"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-gray-700 font-poppins font-medium">
-                              Packaging Preference
-                            </FormLabel>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-                              {[
-                                {
-                                  value: "sealed",
-                                  label: "Heat-Sealed",
-                                  desc: "Individually wrapped",
-                                },
-                                {
-                                  value: "ribbon",
-                                  label: "Ribbon-Tied",
-                                  desc: "+$6/dozen",
-                                },
-                              ].map((option) => (
-                                <label
-                                  key={option.value}
-                                  className={`flex flex-col items-center px-4 py-4 rounded-xl cursor-pointer border-2 transition-all duration-300 ${
-                                    field.value === option.value
-                                      ? "border-bakery-pink bg-bakery-pink-light/30"
-                                      : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
-                                  }`}
-                                >
-                                  <input
-                                    type="radio"
-                                    className="sr-only"
-                                    value={option.value}
-                                    checked={field.value === option.value}
-                                    onChange={() =>
-                                      field.onChange(option.value)
-                                    }
-                                  />
-                                  <span
-                                    className={`font-poppins font-medium ${
-                                      field.value === option.value
-                                        ? "text-bakery-pink-dark"
-                                        : "text-gray-700"
-                                    }`}
-                                  >
-                                    {option.label}
-                                  </span>
-                                  <span className="text-xs text-gray-500 mt-1">
-                                    {option.desc}
-                                  </span>
-                                </label>
-                              ))}
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    {/* Step 4: Message */}
-                    <div
-                      className={`space-y-6 ${currentStep === 4 ? "block" : "hidden"}`}
-                    >
-                      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-bakery-pink-light/30">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink flex items-center justify-center">
-                          <MessageSquare className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-bebas text-2xl text-gray-800">
-                            Share Your Vision
-                          </h3>
-                          <p className="text-sm text-gray-500 font-poppins">
-                            Tell us about your event
-                          </p>
-                        </div>
-                      </div>
-
-                      <FormField
-                        control={form.control}
-                        name="referralSource"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-gray-700 font-poppins font-medium">
-                              How did you hear about us?{" "}
-                              <span className="text-bakery-pink-dark">*</span>
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Instagram, friend, Google, etc."
-                                className="border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20 rounded-xl py-3"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="message"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-gray-700 font-poppins font-medium">
-                              Tell us about your order
-                            </FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="Please share details about your event, design ideas, color themes, or any questions you have. Feel free to describe your vision or link to inspiration images!"
-                                className="min-h-[150px] border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20 rounded-xl"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormDescription className="text-xs text-gray-500">
-                              We can always make updates later. Share your
-                              vision and we&apos;ll work together to bring it to
-                              life!
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    {/* Navigation Buttons */}
-                    <div className="flex items-center justify-between pt-6 border-t border-bakery-pink-light/30">
-                      {currentStep > 1 ? (
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={prevStep}
-                          className="px-6 py-3 rounded-full border-bakery-pink-light hover:bg-bakery-pink-light/20"
-                        >
-                          Back
-                        </Button>
-                      ) : (
-                        <div />
-                      )}
-
-                      {currentStep < 4 ? (
-                        <Button
-                          type="button"
-                          onClick={nextStep}
-                          disabled={
-                            (currentStep === 1 && !canProceedStep1) ||
-                            (currentStep === 2 && !canProceedStep2) ||
-                            (currentStep === 3 && !canProceedStep3)
-                          }
-                          className="px-8 py-3 rounded-full bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white hover:shadow-lg hover:shadow-bakery-pink/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                        >
-                          Continue
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      ) : (
-                        <Button
-                          type="submit"
-                          disabled={isSubmitting || !canSubmit}
-                          className="px-8 py-3 rounded-full bg-gradient-to-r from-bakery-pink-dark to-bakery-pink text-white hover:shadow-lg hover:shadow-bakery-pink/30 disabled:opacity-50 transition-all"
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <span className="animate-pulse">Sending...</span>
-                            </>
-                          ) : (
-                            <>
-                              Submit Inquiry
-                              <Sparkles className="w-4 h-4 ml-2" />
-                            </>
-                          )}
-                        </Button>
-                      )}
-                    </div>
-                  </form>
-                </Form>
-
-                <p className="text-center text-sm text-gray-500 mt-6 font-poppins">
-                  After you submit, Megan will follow up within 48 hours with an
-                  invoice and next steps.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  icon: DollarSign,
-                  title: "Starting at $65/dz",
-                  desc: "Custom cookies with up to 5 colors",
-                },
-                {
-                  icon: Clock,
-                  title: "2 Week Lead Time",
-                  desc: "Rush orders available on request",
-                },
-                {
-                  icon: MapPin,
-                  title: "Folsom Pickup",
-                  desc: "Shipping available on request",
-                },
-                {
-                  icon: CreditCard,
-                  title: "Easy Payment",
-                  desc: "Venmo, Zelle, and credit cards accepted",
-                },
-              ].map((item, idx) => (
-                <div
-                  key={item.title}
-                  className={`group relative h-full transition-all duration-500 ${
-                    mounted
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-8"
-                  }`}
-                  style={{ transitionDelay: `${100 + idx * 100}ms` }}
-                >
-                  <div className="absolute -inset-0.5 bg-gradient-to-br from-bakery-pink-light via-bakery-peach to-bakery-pink-light rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
-                  <div className="relative flex h-full flex-col bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-bakery-pink-light/20 group-hover:border-transparent text-center">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-bakery-pink-light/50 to-bakery-peach/30 mb-4 group-hover:scale-110 group-hover:from-bakery-pink-dark group-hover:to-bakery-pink transition-all duration-300">
-                      <item.icon className="w-6 h-6 text-bakery-pink-dark group-hover:text-white transition-colors duration-300" />
-                    </div>
-                    <h3 className="font-bebas text-xl text-gray-900 tracking-wide">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-600 font-poppins">
-                      {item.desc}
-                    </p>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 font-poppins font-medium text-gray-700">
+                          <Phone className="h-4 w-4 text-bakery-pink-dark" />
+                          Phone Number
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="tel"
+                            placeholder="(123) 456-7890"
+                            className="rounded-xl border-bakery-pink-light/40 py-3 focus:border-bakery-pink focus:ring-bakery-pink/20"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(232,173,193,0.12),_transparent_35%),radial-gradient(circle_at_bottom_left,_rgba(253,225,211,0.18),_transparent_35%)]" />
-        <div className="container-custom relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="max-w-3xl">
-              <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
-                Why Choose Rose & Sugar for Your Custom Cookies?
-              </h2>
-            </div>
-
-            <div className="mt-8 grid gap-6 md:grid-cols-[1.4fr_0.6fr]">
-              <div className="space-y-5 rounded-[2rem] border border-bakery-pink-light/20 bg-white p-8 shadow-lg shadow-bakery-pink/5">
-                <p className="font-poppins text-base leading-relaxed text-gray-700">
-                  When you order custom decorated sugar cookies from Rose &
-                  Sugar, you&apos;re getting more than a sweet treat —
-                  you&apos;re getting edible art made with intention. Each
-                  cookie is hand-rolled, hand-cut, and decorated with royal
-                  icing using a floral-inspired style that&apos;s become our
-                  signature. We use real butter, pure vanilla, and high-quality
-                  ingredients because we believe every detail matters.
-                </p>
-                <p className="font-poppins text-base leading-relaxed text-gray-700">
-                  Our custom cookie process is simple: tell us about your event,
-                  share your color palette or theme inspiration, and we&apos;ll
-                  design a set that brings your vision to life. From elegant
-                  bridal shower favors with hand-painted florals to playful
-                  birthday party cookies in bold colors, we treat every order as
-                  a collaboration. You&apos;ll receive a personalized quote
-                  within 48 hours of submitting your request.
-                </p>
-                <p className="font-poppins text-base leading-relaxed text-gray-700">
-                  Rose & Sugar proudly serves Folsom, Sacramento, El Dorado
-                  Hills, Roseville, Granite Bay, and surrounding communities.
-                  All custom orders are available for local pickup in Folsom —
-                  typically on Saturdays — with flexible scheduling available
-                  upon request. If you want to learn the techniques behind the
-                  details, Megan also offers{" "}
-                  <Link
-                    href="/classes"
-                    className="text-bakery-pink-dark underline-offset-4 hover:underline"
-                  >
-                    cookie decorating classes
-                  </Link>
-                  . You can also learn more{" "}
-                  <Link
-                    href="/about"
-                    className="text-bakery-pink-dark underline-offset-4 hover:underline"
-                  >
-                    about Megan
-                  </Link>{" "}
-                  and the story behind Rose & Sugar.
-                </p>
               </div>
 
-              <div className="rounded-[2rem] border border-bakery-pink-light/20 bg-gradient-to-br from-bakery-pink-light/20 via-white to-bakery-peach/20 p-6 shadow-lg shadow-bakery-pink/5">
-                <div className="flex h-full flex-col justify-between">
+              <div
+                className={`space-y-6 ${currentStep === 2 ? "block" : "hidden"}`}
+              >
+                <div className="mb-6 flex items-center gap-3 border-b border-bakery-pink-light/30 pb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink">
+                    <Cookie className="h-5 w-5 text-white" />
+                  </div>
                   <div>
-                    <span className="inline-flex rounded-full bg-white/80 px-3 py-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] text-bakery-pink-dark">
-                      Local Pickup
-                    </span>
-                    <h3 className="mt-4 font-bebas text-3xl text-gray-800">
-                      Folsom-Made, Sacramento-Area Loved
+                    <h3 className="font-bebas text-2xl text-gray-800">
+                      Order Details
                     </h3>
-                    <p className="mt-4 font-poppins text-sm leading-relaxed text-gray-600">
-                      Custom cookie orders are created in Folsom, CA for
-                      celebrations across Sacramento, El Dorado Hills,
-                      Roseville, Granite Bay, and nearby communities.
+                    <p className="font-poppins text-sm text-gray-500">
+                      When and how many?
                     </p>
                   </div>
-                  <div className="mt-6 space-y-3">
-                    {[
-                      "Starting at $65 per dozen",
-                      "Minimum order: 2 dozen",
-                      "Preferred pickup on Saturdays",
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3"
-                      >
-                        <Check className="h-4 w-4 text-bakery-pink-dark" />
-                        <span className="font-poppins text-sm text-gray-700">
-                          {item}
-                        </span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="eventDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 font-poppins font-medium text-gray-700">
+                          <Calendar className="h-4 w-4 text-bakery-pink-dark" />
+                          Event Date / When Needed
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="date"
+                            className="rounded-xl border-bakery-pink-light/40 py-3 focus:border-bakery-pink focus:ring-bakery-pink/20"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="quantity"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="font-poppins font-medium text-gray-700">
+                          How Many Dozen?
+                        </FormLabel>
+                        <FormControl>
+                          <select
+                            {...field}
+                            className="w-full rounded-xl border border-bakery-pink-light/40 bg-white px-4 py-3 text-sm transition-all focus:border-bakery-pink focus:outline-none focus:ring-2 focus:ring-bakery-pink/20"
+                          >
+                            <option value="" disabled>
+                              Select quantity
+                            </option>
+                            {[
+                              "2",
+                              "3",
+                              "4",
+                              "5",
+                              "6",
+                              "7",
+                              "8",
+                              "9",
+                              "10",
+                              "11+",
+                            ].map((num) => (
+                              <option key={num} value={num}>
+                                {num} dozen
+                              </option>
+                            ))}
+                          </select>
+                        </FormControl>
+                        <FormDescription className="text-xs text-gray-500">
+                          Minimum 2 dozen for custom orders
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="dyefree"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-poppins font-medium text-gray-700">
+                        Dye-Free Icing (+$10/dozen)
+                      </FormLabel>
+                      <div className="mt-2 flex gap-4">
+                        <label
+                          className={`flex flex-1 cursor-pointer items-center justify-center gap-3 rounded-xl border-2 px-4 py-3 transition-all duration-300 ${
+                            field.value
+                              ? "border-bakery-pink bg-bakery-pink-light/30"
+                              : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            value="true"
+                            checked={field.value === true}
+                            onChange={() => field.onChange(true)}
+                            className="sr-only"
+                          />
+                          <span
+                            className={`font-poppins font-medium ${
+                              field.value
+                                ? "text-bakery-pink-dark"
+                                : "text-gray-600"
+                            }`}
+                          >
+                            Yes, dye-free please
+                          </span>
+                        </label>
+
+                        <label
+                          className={`flex flex-1 cursor-pointer items-center justify-center gap-3 rounded-xl border-2 px-4 py-3 transition-all duration-300 ${
+                            !field.value
+                              ? "border-bakery-pink bg-bakery-pink-light/30"
+                              : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            value="false"
+                            checked={field.value === false}
+                            onChange={() => field.onChange(false)}
+                            className="sr-only"
+                          />
+                          <span
+                            className={`font-poppins font-medium ${
+                              !field.value
+                                ? "text-bakery-pink-dark"
+                                : "text-gray-600"
+                            }`}
+                          >
+                            Standard colors
+                          </span>
+                        </label>
                       </div>
-                    ))}
+                      <FormDescription className="mt-2 text-xs text-gray-500">
+                        Dye-free colors will be more muted and natural.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div
+                className={`space-y-6 ${currentStep === 3 ? "block" : "hidden"}`}
+              >
+                <div className="mb-6 flex items-center gap-3 border-b border-bakery-pink-light/30 pb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink">
+                    <Package className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bebas text-2xl text-gray-800">
+                      Flavors & Packaging
+                    </h3>
+                    <p className="font-poppins text-sm text-gray-500">
+                      Customize your order
+                    </p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="relative py-16 md:py-24 bg-bakery-cream/40 overflow-hidden">
-        <div className="container-custom relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
-              Custom Cookies for Every Occasion
-            </h2>
+                <FormField
+                  control={form.control}
+                  name="flavorPreference"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-poppins font-medium text-gray-700">
+                        Flavor Preferences
+                      </FormLabel>
+                      <FormDescription className="mb-3 text-xs text-gray-500">
+                        Select all that apply
+                      </FormDescription>
+                      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                        {flavorOptions.map((option) => {
+                          const isSelected = field.value?.includes(
+                            option.value,
+                          );
+                          return (
+                            <label
+                              key={option.value}
+                              className={`flex cursor-pointer items-center justify-center rounded-xl border-2 px-4 py-3 text-center transition-all duration-300 ${
+                                isSelected
+                                  ? "border-bakery-pink bg-bakery-pink-light/30"
+                                  : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
+                              }`}
+                            >
+                              <input
+                                type="checkbox"
+                                value={option.value}
+                                checked={isSelected}
+                                onChange={(event) => {
+                                  const value = event.target
+                                    .value as FormValues["flavorPreference"][number];
+                                  const isChecked = event.target.checked;
+                                  const updatedValues = handleFlavorChange(
+                                    value,
+                                    isChecked,
+                                    field.value || [],
+                                  );
+                                  field.onChange(updatedValues);
+                                }}
+                                className="sr-only"
+                              />
+                              <span
+                                className={`font-poppins text-sm font-medium ${
+                                  isSelected
+                                    ? "text-bakery-pink-dark"
+                                    : "text-gray-600"
+                                }`}
+                              >
+                                {option.label}
+                              </span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {[
-                {
-                  title: "Birthday Parties",
-                  body: (
-                    <>
-                      From whimsical themes for kids to elegant designs for
-                      milestone birthdays, custom birthday cookies make the
-                      perfect party addition or take-home favor. Choose from our
-                      variety of flavors including vanilla, lemon, almond,
-                      confetti, chocolate chip, and maple. If you want an
-                      interactive celebration too, a{" "}
-                      <Link
-                        href="/private-cookie-classes-folsom-sacramento"
-                        className="text-bakery-pink-dark underline-offset-4 hover:underline"
-                      >
-                        private cookie decorating class
-                      </Link>{" "}
-                      is a fun add-on for birthdays and showers.
-                    </>
-                  ),
-                },
-                {
-                  title: "Baby Showers",
-                  body: (
-                    <>
-                      Celebrate the mom-to-be with delicate designs featuring
-                      soft pastels, woodland themes, or personalized details
-                      like the baby&apos;s name and due date. We offer dye-free
-                      icing options for a more natural look.
-                    </>
-                  ),
-                },
-                {
-                  title: "Bridal Showers & Weddings",
-                  body: (
-                    <>
-                      Impress your guests with beautifully decorated cookies
-                      that complement your wedding colors and theme. Custom
-                      cookies make memorable bridal shower favors, dessert table
-                      accents, or rehearsal dinner treats.
-                    </>
-                  ),
-                },
-                {
-                  title: "Corporate Events & Client Gifts",
-                  body: (
-                    <>
-                      Make a lasting impression with logo cookies, branded
-                      packaging, or themed sets for team celebrations, product
-                      launches, and client appreciation. We also support{" "}
-                      <Link
-                        href="/corporate-team-building"
-                        className="text-bakery-pink-dark underline-offset-4 hover:underline"
-                      >
-                        corporate team building events
-                      </Link>{" "}
-                      throughout the Sacramento region with polished cookie
-                      experiences and branded gifting.
-                    </>
-                  ),
-                },
-              ].map((item) => (
-                <article
-                  key={item.title}
-                  className="rounded-[2rem] border border-bakery-pink-light/30 bg-white p-8 shadow-lg shadow-bakery-pink/5"
-                >
-                  <h3 className="font-bebas text-3xl text-gray-800">
-                    {item.title}
-                  </h3>
-                  <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
-                    {item.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-[2rem] border border-bakery-pink-light/30 bg-white p-8 shadow-lg shadow-bakery-pink/5">
-              <h3 className="font-bebas text-3xl text-gray-800">
-                Graduations, Holidays & More
-              </h3>
-              <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
-                Whatever the milestone, we&apos;ll design a cookie set to match.
-                Just share your vision in our order form above and we&apos;ll
-                take care of the rest.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
-        <div className="container-custom relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-              <div className="rounded-[2rem] border border-bakery-pink-light/30 bg-gradient-to-br from-white via-white to-bakery-peach/10 p-8 shadow-lg shadow-bakery-pink/5">
-                <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
-                  Custom Cookie Pricing & What&apos;s Included
-                </h2>
-                <div className="mt-6 space-y-5 font-poppins text-base leading-relaxed text-gray-700">
-                  <p>
-                    Our custom decorated sugar cookies start at{" "}
-                    <strong>$65 per dozen</strong> and include up to five icing
-                    colors with basic to intermediate detail. Character cookies
-                    and logo designs start at <strong>$70 per dozen</strong>.
-                    Additional complexity, airbrushing, or extra colors may
-                    adjust pricing — we&apos;ll always provide a clear quote
-                    before you commit.
-                  </p>
-                  <p>
-                    Every order requires a <strong>minimum of two dozen</strong>{" "}
-                    cookies and a <strong>two-week lead time</strong> to ensure
-                    we deliver our best work. Rush orders may be available for
-                    an additional fee, but cannot be guaranteed.
-                  </p>
-                  <p>
-                    All cookies come individually heat-sealed at no extra charge
-                    for maximum freshness. Ribbon-tied packaging is available as
-                    an upgrade. We accept Venmo, Zelle, and all major credit
-                    cards, with payment due at least two weeks before your
-                    pickup date.
-                  </p>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="packaging"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-poppins font-medium text-gray-700">
+                        Packaging Preference
+                      </FormLabel>
+                      <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-3">
+                        {[
+                          {
+                            value: "sealed",
+                            label: "Heat-Sealed",
+                            desc: "Individually wrapped",
+                          },
+                          {
+                            value: "ribbon",
+                            label: "Ribbon-Tied",
+                            desc: "+$6/dozen",
+                          },
+                        ].map((option) => (
+                          <label
+                            key={option.value}
+                            className={`flex cursor-pointer flex-col items-center rounded-xl border-2 px-4 py-4 transition-all duration-300 ${
+                              field.value === option.value
+                                ? "border-bakery-pink bg-bakery-pink-light/30"
+                                : "border-bakery-pink-light/40 hover:border-bakery-pink-light"
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              className="sr-only"
+                              value={option.value}
+                              checked={field.value === option.value}
+                              onChange={() => field.onChange(option.value)}
+                            />
+                            <span
+                              className={`font-poppins font-medium ${
+                                field.value === option.value
+                                  ? "text-bakery-pink-dark"
+                                  : "text-gray-700"
+                              }`}
+                            >
+                              {option.label}
+                            </span>
+                            <span className="mt-1 text-xs text-gray-500">
+                              {option.desc}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
-              <div className="rounded-[2rem] border border-bakery-pink-light/30 bg-bakery-cream/60 p-8 shadow-lg shadow-bakery-pink/5">
-                <h3 className="font-bebas text-3xl text-gray-800">
-                  Quick Reference
-                </h3>
-                <div className="mt-6 space-y-4">
-                  {[
-                    ["Starting price", "$65/dozen"],
-                    ["Character or logo sets", "$70+/dozen"],
-                    ["Gluten-free flour option", "+$6/dozen"],
-                    ["Dye-free icing option", "+$10/dozen"],
-                    ["Lead time", "2-3 weeks recommended"],
-                  ].map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between gap-4 rounded-2xl bg-white px-4 py-4"
-                    >
-                      <span className="font-poppins text-sm text-gray-600">
-                        {label}
-                      </span>
-                      <span className="font-poppins text-sm font-semibold text-gray-800">
-                        {value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-16 md:py-24 bg-bakery-cream/30 overflow-hidden">
-        <div className="container-custom relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="max-w-3xl">
-              <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
-                Custom Cookie Gallery
-              </h2>
-              <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
-                A few favorite custom cookie designs from across the Rose &
-                Sugar collection.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {customCookieGallery.map((image) => (
-                <figure
-                  key={image.src}
-                  className="overflow-hidden rounded-[2rem] border border-bakery-pink-light/30 bg-white shadow-lg shadow-bakery-pink/5"
-                >
-                  <div className="relative aspect-[4/3]">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-                    />
+              <div
+                className={`space-y-6 ${currentStep === 4 ? "block" : "hidden"}`}
+              >
+                <div className="mb-6 flex items-center gap-3 border-b border-bakery-pink-light/30 pb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink">
+                    <MessageSquare className="h-5 w-5 text-white" />
                   </div>
-                  <figcaption className="border-t border-bakery-pink-light/20 px-5 py-4 font-poppins text-sm text-gray-700">
-                    {image.label}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+                  <div>
+                    <h3 className="font-bebas text-2xl text-gray-800">
+                      Share Your Vision
+                    </h3>
+                    <p className="font-poppins text-sm text-gray-500">
+                      Tell us about your event
+                    </p>
+                  </div>
+                </div>
 
-      {/* ===== FAQ SECTION ===== */}
-      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
-        {/* Background pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d286a0' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+                <FormField
+                  control={form.control}
+                  name="referralSource"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-poppins font-medium text-gray-700">
+                        How did you hear about us?{" "}
+                        <span className="text-bakery-pink-dark">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Instagram, friend, Google, etc."
+                          className="rounded-xl border-bakery-pink-light/40 py-3 focus:border-bakery-pink focus:ring-bakery-pink/20"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-        {/* Decorative blobs */}
-        <div className="absolute top-20 -right-32 w-[300px] h-[300px] rounded-full bg-gradient-to-bl from-bakery-pink-light/20 to-transparent blur-3xl" />
-        <div className="absolute bottom-20 -left-32 w-[300px] h-[300px] rounded-full bg-gradient-to-tr from-bakery-peach/20 to-transparent blur-3xl" />
-
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bakery-pink-light/30 border border-bakery-pink-light/50 mb-4">
-                <MessageSquare className="w-4 h-4 text-bakery-pink-dark" />
-                <span className="text-sm font-poppins font-medium text-gray-700">
-                  Common Questions
-                </span>
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-poppins font-medium text-gray-700">
+                        Tell us about your order
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Please share details about your event, design ideas, color themes, or any questions you have. Feel free to describe your vision or link to inspiration images!"
+                          className="min-h-[150px] rounded-xl border-bakery-pink-light/40 focus:border-bakery-pink focus:ring-bakery-pink/20"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription className="text-xs text-gray-500">
+                        We can always make updates later. Share your vision and
+                        we&apos;ll work together to bring it to life!
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-              <h2 className="font-bebas text-4xl md:text-5xl text-gray-800 tracking-tight">
-                Frequently{" "}
-                <span className="bg-gradient-to-r from-bakery-pink-dark to-bakery-pink bg-clip-text text-transparent">
-                  Asked Questions
-                </span>
-              </h2>
-            </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-xl shadow-bakery-pink/5 border border-bakery-pink-light/20">
-              <FAQAccordion
-                faqs={customOrderFaqs.map((faq) => ({
-                  question: faq.question,
-                  answer: faq.answerText,
-                }))}
-              />
-            </div>
-          </div>
+              <div className="flex items-center justify-between border-t border-bakery-pink-light/30 pt-6">
+                {currentStep > 1 ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={prevStep}
+                    className="rounded-full border-bakery-pink-light px-6 py-3 hover:bg-bakery-pink-light/20"
+                  >
+                    Back
+                  </Button>
+                ) : (
+                  <div />
+                )}
+
+                {currentStep < 4 ? (
+                  <Button
+                    type="button"
+                    onClick={nextStep}
+                    disabled={
+                      (currentStep === 1 && !canProceedStep1) ||
+                      (currentStep === 2 && !canProceedStep2) ||
+                      (currentStep === 3 && !canProceedStep3)
+                    }
+                    className="rounded-full bg-gradient-to-r from-bakery-pink-dark to-bakery-pink px-8 py-3 text-white transition-all hover:shadow-lg hover:shadow-bakery-pink/30 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Continue
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || !canSubmit}
+                    className="rounded-full bg-gradient-to-r from-bakery-pink-dark to-bakery-pink px-8 py-3 text-white transition-all hover:shadow-lg hover:shadow-bakery-pink/30 disabled:opacity-50"
+                  >
+                    {isSubmitting ? (
+                      <span className="animate-pulse">Sending...</span>
+                    ) : (
+                      <>
+                        Submit Inquiry
+                        <Sparkles className="ml-2 h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </form>
+          </Form>
+
+          <p className="mt-6 text-center font-poppins text-sm text-gray-500">
+            After you submit, Megan will follow up within 48 hours with an
+            invoice and next steps.
+          </p>
         </div>
-      </section>
-    </main>
+      </div>
+    </>
   );
 };
 
