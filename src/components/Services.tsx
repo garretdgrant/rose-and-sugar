@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -14,12 +11,6 @@ import {
 } from "lucide-react";
 
 const Services = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const cookieFeatures = [
     { icon: Palette, text: "Custom Designs & Gift Boxes" },
     { icon: Sparkles, text: "Various Flavor Options" },
@@ -49,24 +40,12 @@ const Services = () => {
       />
 
       {/* Decorative blobs */}
-      <div
-        className={`absolute top-20 -left-32 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-bakery-pink-light/30 to-transparent blur-3xl transition-all duration-1000 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        className={`absolute bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-bakery-peach/30 to-transparent blur-3xl transition-all duration-1000 delay-200 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
-      />
+      <div className="absolute top-20 -left-32 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-bakery-pink-light/30 to-transparent blur-3xl" />
+      <div className="absolute bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-bakery-peach/30 to-transparent blur-3xl" />
 
       <div className="container-custom relative z-10">
         {/* Section header */}
-        <div
-          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-1000 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="text-center max-w-2xl mx-auto mb-16 opacity-0 transition-all duration-1000 animate-fade-in-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bakery-pink-light/30 border border-bakery-pink-light/50 mb-6">
             <Sparkles className="w-4 h-4 text-bakery-pink-dark" />
             <span className="text-sm font-poppins font-medium text-gray-700">
@@ -92,9 +71,8 @@ const Services = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Custom Cookies Card - Takes 7 columns */}
           <div
-            className={`lg:col-span-7 transition-all duration-1000 delay-200 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
+            className="lg:col-span-7 opacity-0 transition-all duration-1000 animate-fade-in-up"
+            style={{ animationDelay: "200ms" }}
           >
             <div className="group h-full bg-gradient-to-br from-bakery-cream via-white to-bakery-pink-light/20 rounded-3xl p-8 md:p-10 shadow-lg shadow-bakery-pink/5 hover:shadow-xl hover:shadow-bakery-pink/10 border border-bakery-pink-light/30 transition-all duration-500 relative overflow-hidden">
               {/* Decorative corner accent */}
@@ -153,9 +131,8 @@ const Services = () => {
 
           {/* Decorating Classes Card - Takes 5 columns */}
           <div
-            className={`lg:col-span-5 transition-all duration-1000 delay-400 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
+            className="lg:col-span-5 opacity-0 transition-all duration-1000 animate-fade-in-up"
+            style={{ animationDelay: "400ms" }}
           >
             <div className="group h-full bg-gradient-to-br from-bakery-peach/40 via-bakery-cream to-white rounded-3xl overflow-hidden shadow-lg shadow-bakery-brown/5 hover:shadow-xl hover:shadow-bakery-brown/10 border border-bakery-peach/30 transition-all duration-500 relative">
               {/* Top image section */}

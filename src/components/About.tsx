@@ -1,16 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import { Heart, Award, Users } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const About = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const stats = [
     { icon: Heart, value: "200+", label: "Happy Customers" },
     { icon: Award, value: "5", label: "Years Crafting" },
@@ -27,39 +18,23 @@ const About = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-bakery-cream/50 to-bakery-pink-light/40" />
 
       {/* Decorative organic shapes */}
-      <div
-        className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-bakery-peach/40 to-transparent blur-3xl transition-all duration-1000 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        className={`absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-pink-light/50 to-transparent blur-3xl transition-all duration-1000 delay-200 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
-      />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-bakery-peach/40 to-transparent blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-pink-light/50 to-transparent blur-3xl" />
 
       {/* Floating accent dots */}
       <div
-        className={`absolute top-1/4 left-[10%] w-3 h-3 rounded-full bg-bakery-pink-dark/40 transition-all duration-700 delay-500 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className="absolute top-1/4 left-[10%] w-3 h-3 rounded-full bg-bakery-pink-dark/40"
         style={{ animation: "float 5s ease-in-out infinite" }}
       />
       <div
-        className={`absolute bottom-1/3 right-[15%] w-2 h-2 rounded-full bg-bakery-brown/50 transition-all duration-700 delay-700 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className="absolute bottom-1/3 right-[15%] w-2 h-2 rounded-full bg-bakery-brown/50"
         style={{ animation: "float 4s ease-in-out infinite 0.5s" }}
       />
 
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Image composition - 5 columns */}
-          <div
-            className={`lg:col-span-5 transition-all duration-1000 ${
-              mounted ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
-            }`}
-          >
+          <div className="lg:col-span-5 opacity-0 transition-all duration-1000 animate-slide-in-left">
             <div className="relative">
               {/* Background decorative shape */}
               <div className="absolute -inset-4 bg-gradient-to-br from-bakery-peach via-bakery-pink-light/60 to-bakery-cream rounded-[2rem] transform rotate-3" />
@@ -81,11 +56,7 @@ const About = () => {
 
               {/* Floating quote card */}
               <div
-                className={`absolute -bottom-6 -right-6 md:bottom-8 md:-right-8 bg-white rounded-2xl shadow-xl p-5 max-w-[200px] transform rotate-3 transition-all duration-700 delay-500 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
+                className="absolute -bottom-6 -right-6 md:bottom-8 md:-right-8 bg-white rounded-2xl shadow-xl p-5 max-w-[200px] transform rotate-3"
                 style={{ animation: "float 6s ease-in-out infinite" }}
               >
                 <p className="font-playfair text-sm italic text-gray-700 leading-relaxed">
@@ -105,17 +76,13 @@ const About = () => {
 
           {/* Content - 7 columns */}
           <div
-            className={`lg:col-span-7 transition-all duration-1000 delay-200 ${
-              mounted ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-            }`}
+            className="lg:col-span-7 opacity-0 transition-all duration-1000 animate-slide-in-right"
+            style={{ animationDelay: "200ms" }}
           >
             {/* Badge */}
             <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 transition-all duration-700 delay-300 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "300ms" }}
             >
               <span className="w-2 h-2 rounded-full bg-bakery-pink-dark animate-pulse" />
               <span className="text-sm font-poppins font-medium text-gray-700">
@@ -125,12 +92,9 @@ const About = () => {
 
             {/* Headline */}
             <h2
-              className={`font-bebas text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6 transition-all duration-700 delay-400 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="font-bebas text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6 opacity-0 transition-all duration-700 animate-fade-in-up"
               id="about-heading"
+              style={{ animationDelay: "400ms" }}
             >
               <span className="text-gray-800">Creating</span>
               <br />
@@ -141,11 +105,8 @@ const About = () => {
 
             {/* Story text */}
             <div
-              className={`space-y-5 transition-all duration-700 delay-500 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="space-y-5 opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "500ms" }}
             >
               <p className="font-poppins text-lg text-gray-600 leading-relaxed">
                 Hi, I&apos;m{" "}
@@ -167,11 +128,8 @@ const About = () => {
 
             {/* Pull quote */}
             <div
-              className={`mt-8 pl-6 border-l-4 border-bakery-pink transition-all duration-700 delay-600 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="mt-8 pl-6 border-l-4 border-bakery-pink opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "600ms" }}
             >
               <p className="font-playfair text-xl italic text-gray-700">
                 &ldquo;I truly believe cookies can make a huge difference in any
@@ -181,11 +139,8 @@ const About = () => {
 
             {/* Stats row */}
             <div
-              className={`mt-10 grid grid-cols-3 gap-6 transition-all duration-700 delay-700 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="mt-10 grid grid-cols-3 gap-6 opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "700ms" }}
             >
               {stats.map((stat, index) => (
                 <div

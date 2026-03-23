@@ -1,26 +1,24 @@
-import dynamic from "next/dynamic";
 import Link from "next/link";
+import About from "@/components/About";
+import CallToAction from "@/components/CallToAction";
+import FeaturedShop from "@/components/FeaturedShop";
 import Hero from "@/components/Hero";
+import Gallery from "@/components/Gallery";
 import FAQAccordion from "@/components/FAQAccordion";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
+import {
+  buildCanonicalUrl,
+  buildOgImageUrl,
+  getMetadataBase,
+} from "@/lib/metadata";
 
-const About = dynamic(() => import("@/components/About"), {
-  loading: () => null,
-});
-const FeaturedShop = dynamic(() => import("@/components/FeaturedShop"), {
-  loading: () => null,
-});
-const Services = dynamic(() => import("@/components/Services"), {
-  loading: () => null,
-});
-const Testimonials = dynamic(() => import("@/components/Testimonials"), {
-  loading: () => null,
-});
-const Gallery = dynamic(() => import("@/components/Gallery"), {
-  loading: () => null,
-});
-const CallToAction = dynamic(() => import("@/components/CallToAction"), {
-  loading: () => null,
-});
+const PAGE_PATH = "/";
+const PAGE_TITLE =
+  "Beautiful Custom Cookies in Folsom | Rose & Sugar Handcrafted Designs";
+const PAGE_DESCRIPTION =
+  "Order custom sugar cookies in Folsom, CA for birthdays, showers, and celebrations. Handcrafted by Rose & Sugar with love and local flair.";
+
 const faqs = [
   {
     question: "Do you ship?",
@@ -203,8 +201,57 @@ const galleryItems = [
 ];
 
 export default function Home() {
+  const metadataBase = getMetadataBase();
+  const siteUrl = metadataBase.toString().replace(/\/$/, "");
+  const pageUrl = buildCanonicalUrl(PAGE_PATH, metadataBase);
+  const ogImageUrl = buildOgImageUrl("/singleCookie.webp", metadataBase);
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    url: siteUrl,
+    name: "Rose & Sugar",
+    description: PAGE_DESCRIPTION,
+    inLanguage: "en-US",
+    publisher: {
+      "@type": "Organization",
+      name: "Rose & Sugar",
+      url: siteUrl,
+    },
+  };
+
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#localbusiness`,
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: ogImageUrl,
+    },
+  };
+
   return (
     <main className="page-transition">
+      <script
+        id="website-jsonld-home"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        id="webpage-jsonld-home"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }}
+      />
       <script
         id="faq-jsonld-home"
         type="application/ld+json"

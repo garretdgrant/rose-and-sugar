@@ -1,28 +1,15 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const Hero = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <section
       className="relative min-h-screen overflow-hidden"
       aria-labelledby="hero-heading"
     >
       {/* Hero Background Image with Beautiful Cookies */}
-      <div
-        className={`absolute inset-0 transition-all duration-1000 ${
-          mounted ? "opacity-100 scale-100" : "opacity-0 scale-105"
-        }`}
-      >
+      <div className="absolute inset-0 opacity-0 transition-all duration-1000 animate-scale-in">
         <Image
           src="/cookies.webp"
           alt="Rose and Sugar decorated cookies background"
@@ -38,36 +25,25 @@ const Hero = () => {
       </div>
 
       {/* Large decorative blob - top right */}
-      <div
-        className={`absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-bakery-pink-light/60 to-bakery-peach/40 blur-3xl transition-all duration-1000 ${
-          mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-        }`}
-      />
+      <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-bakery-pink-light/60 to-bakery-peach/40 blur-3xl opacity-0 transition-all duration-1000 animate-scale-in" />
 
       {/* Medium blob - bottom left */}
       <div
-        className={`absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/50 to-bakery-pink-light/30 blur-2xl transition-all duration-1000 delay-200 ${
-          mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-        }`}
+        className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/50 to-bakery-pink-light/30 blur-2xl opacity-0 transition-all duration-1000 animate-scale-in"
+        style={{ animationDelay: "200ms" }}
       />
 
       {/* Floating accent shapes */}
       <div
-        className={`absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-bakery-pink-dark/60 transition-all duration-700 delay-500 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className="absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-bakery-pink-dark/60"
         style={{ animation: "float 4s ease-in-out infinite" }}
       />
       <div
-        className={`absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-bakery-brown/50 transition-all duration-700 delay-700 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className="absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-bakery-brown/50"
         style={{ animation: "float 5s ease-in-out infinite 0.5s" }}
       />
       <div
-        className={`absolute bottom-1/3 right-1/3 w-2 h-2 rounded-full bg-bakery-pink/70 transition-all duration-700 delay-900 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className="absolute bottom-1/3 right-1/3 w-2 h-2 rounded-full bg-bakery-pink/70"
         style={{ animation: "float 3.5s ease-in-out infinite 1s" }}
       />
 
@@ -82,18 +58,11 @@ const Hero = () => {
       <div className="container-custom relative z-10 min-h-screen flex items-center py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center w-full">
           {/* Left Content */}
-          <div
-            className={`text-center lg:text-left transition-all duration-1000 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
+          <div className="text-center lg:text-left opacity-0 transition-all duration-1000 animate-fade-in-up">
             {/* Badge */}
             <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 mt-6 md:mt-0 transition-all duration-700 delay-200 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 mt-6 md:mt-0 opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "200ms" }}
             >
               <Sparkles className="w-4 h-4 text-bakery-pink-dark" />
               <span className="text-sm font-poppins font-medium text-gray-700">
@@ -103,12 +72,9 @@ const Hero = () => {
 
             {/* Main Headline */}
             <h1
-              className={`font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-6 transition-all duration-700 delay-300 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-6 opacity-0 transition-all duration-700 animate-fade-in-up"
               id="hero-heading"
+              style={{ animationDelay: "300ms" }}
             >
               <span className="block text-gray-800">Where Art</span>
               <span className="block text-gray-800">Meets</span>
@@ -119,11 +85,8 @@ const Hero = () => {
 
             {/* Subheadline */}
             <p
-              className={`font-poppins text-lg md:text-xl text-gray-600 max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed transition-all duration-700 delay-400 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="font-poppins text-lg md:text-xl text-gray-600 max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "400ms" }}
             >
               Custom decorated cookies & hands-on decorating classes for
               celebrations that deserve something extraordinary.
@@ -131,11 +94,8 @@ const Hero = () => {
 
             {/* CTAs */}
             <div
-              className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start transition-all duration-700 delay-500 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "500ms" }}
             >
               <Link
                 href="/cookies/order-custom-sugar-cookies"
@@ -155,11 +115,8 @@ const Hero = () => {
 
             {/* Social proof */}
             <div
-              className={`mt-10 flex items-center gap-4 justify-center lg:justify-start transition-all duration-700 delay-600 ${
-                mounted
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
+              className="mt-10 flex items-center gap-4 justify-center lg:justify-start opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "600ms" }}
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
@@ -194,9 +151,8 @@ const Hero = () => {
 
           {/* Right - Image Composition */}
           <div
-            className={`relative transition-all duration-1000 delay-300 ${
-              mounted ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-            }`}
+            className="relative opacity-0 transition-all duration-1000 animate-slide-in-right"
+            style={{ animationDelay: "300ms" }}
           >
             {/* Decorative ring */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -230,11 +186,7 @@ const Hero = () => {
 
               {/* Floating badge - top right */}
               <div
-                className={`absolute -top-4 -right-4 md:top-4 md:right-0 bg-white rounded-2xl shadow-xl p-4 transform rotate-6 transition-all duration-700 delay-700 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
+                className="absolute -top-4 -right-4 md:top-4 md:right-0 bg-white rounded-2xl shadow-xl p-4 transform rotate-6"
                 style={{ animation: "float 4s ease-in-out infinite" }}
               >
                 <div className="text-center">
@@ -249,11 +201,7 @@ const Hero = () => {
 
               {/* Floating badge - bottom left */}
               <div
-                className={`absolute -bottom-2 -left-2 md:bottom-8 md:-left-8 bg-gradient-to-br from-bakery-pink-dark to-bakery-pink text-white rounded-2xl shadow-xl p-4 transform -rotate-6 transition-all duration-700 delay-800 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
+                className="absolute -bottom-2 -left-2 md:bottom-8 md:-left-8 bg-gradient-to-br from-bakery-pink-dark to-bakery-pink text-white rounded-2xl shadow-xl p-4 transform -rotate-6"
                 style={{ animation: "float 5s ease-in-out infinite 1s" }}
               >
                 <div className="flex items-center gap-2">
@@ -270,9 +218,8 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-700 delay-1000 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 transition-all duration-700 animate-fade-in"
+        style={{ animationDelay: "1000ms" }}
       >
         <div className="flex flex-col items-center gap-2">
           <span className="text-xs font-poppins text-gray-500 uppercase tracking-widest">

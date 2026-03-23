@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Quote, Star } from "lucide-react";
 
 type Testimonial = {
@@ -71,12 +68,6 @@ const Testimonials = ({
   showTrustIndicators = true,
   trustIndicators = defaultTrustIndicators,
 }: TestimonialsProps) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const resolvedTestimonials =
     testimonials.length >= 3 ? testimonials : defaultTestimonials;
   const resolvedTrustIndicators =
@@ -104,40 +95,20 @@ const Testimonials = ({
       <div className="absolute inset-0 bg-gradient-to-b from-bakery-pink-light/40 via-bakery-cream/30 to-white" />
 
       {/* Decorative elements */}
-      <div
-        className={`absolute top-1/4 -left-20 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-bakery-peach/30 to-transparent blur-3xl transition-all duration-1000 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        className={`absolute bottom-1/4 -right-20 w-[350px] h-[350px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl transition-all duration-1000 delay-200 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
-      />
+      <div className="absolute top-1/4 -left-20 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-bakery-peach/30 to-transparent blur-3xl" />
+      <div className="absolute bottom-1/4 -right-20 w-[350px] h-[350px] rounded-full bg-gradient-to-bl from-bakery-pink-light/40 to-transparent blur-3xl" />
 
       {/* Large decorative quote marks */}
-      <div
-        className={`absolute top-20 left-[10%] transition-all duration-1000 delay-300 ${
-          mounted ? "opacity-10" : "opacity-0"
-        }`}
-      >
+      <div className="absolute top-20 left-[10%] opacity-10 transition-all duration-1000">
         <Quote className="w-32 h-32 text-bakery-pink-dark transform -rotate-12" />
       </div>
-      <div
-        className={`absolute bottom-20 right-[10%] transition-all duration-1000 delay-500 ${
-          mounted ? "opacity-10" : "opacity-0"
-        }`}
-      >
+      <div className="absolute bottom-20 right-[10%] opacity-10 transition-all duration-1000">
         <Quote className="w-24 h-24 text-bakery-brown transform rotate-12 scale-x-[-1]" />
       </div>
 
       <div className="container-custom relative z-10">
         {/* Section header */}
-        <div
-          className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-1000 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="text-center max-w-3xl mx-auto mb-16 opacity-0 transition-all duration-1000 animate-fade-in-up">
           <h2
             className="font-playfair text-4xl md:text-5xl lg:text-6xl italic text-gray-800 leading-tight"
             id="testimonials-heading"
@@ -153,9 +124,8 @@ const Testimonials = ({
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
           {/* Featured testimonial - larger */}
           <div
-            className={`md:col-span-7 transition-all duration-1000 delay-200 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
+            className="md:col-span-7 opacity-0 transition-all duration-1000 animate-fade-in-up"
+            style={{ animationDelay: "200ms" }}
           >
             <div className="group h-full bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-xl border border-bakery-pink-light/20 hover:border-bakery-pink-light/50 transition-all duration-500 relative overflow-hidden">
               {/* Decorative accent */}
@@ -208,12 +178,8 @@ const Testimonials = ({
             {resolvedTestimonials.slice(1).map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                className={`transition-all duration-1000 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-12"
-                }`}
-                style={{ transitionDelay: `${400 + index * 200}ms` }}
+                className="opacity-0 transition-all duration-1000 animate-fade-in-up"
+                style={{ animationDelay: `${400 + index * 200}ms` }}
               >
                 <div className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-lg border border-bakery-pink-light/20 hover:border-bakery-pink-light/50 transition-all duration-500">
                   {/* Stars */}
@@ -255,9 +221,8 @@ const Testimonials = ({
         {/* Trust indicators */}
         {showTrustIndicators && (
           <div
-            className={`mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-1000 delay-800 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-0 transition-all duration-1000 animate-fade-in-up"
+            style={{ animationDelay: "800ms" }}
           >
             {resolvedTrustIndicators.map((indicator, index) => (
               <div key={indicator.label} className="flex items-center gap-8">
