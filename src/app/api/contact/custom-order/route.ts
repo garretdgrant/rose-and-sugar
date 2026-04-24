@@ -14,6 +14,26 @@ const validFlavorPreferences = new Set([
 ]);
 
 const validPackagingOptions = new Set(["sealed", "ribbon"]);
+const validTipPercentages = new Set(["15", "18", "20", "none"]);
+
+const TWO_DOZEN_PRICE_PER_DOZEN = 75;
+const STANDARD_PRICE_PER_DOZEN = 70;
+const GLUTEN_FREE_PRICE_PER_DOZEN = 6;
+const DYE_FREE_PRICE_PER_DOZEN = 10;
+const RIBBON_PACKAGING_PRICE_PER_DOZEN = 6;
+
+const formatCurrency = (amount: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(amount);
+
+const getQuantityValue = (quantity: string) =>
+  quantity === "11+" ? 11 : Number(quantity);
+
+const getBasePricePerDozen = (quantity: number) =>
+  quantity === 2 ? TWO_DOZEN_PRICE_PER_DOZEN : STANDARD_PRICE_PER_DOZEN;
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -42,6 +62,7 @@ export async function POST(req: NextRequest) {
       packaging,
       referralSource,
       message,
+      tipPercentage = "none",
       dyefree,
       company,
     } = body;
@@ -114,9 +135,36 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!validTipPercentages.has(tipPercentage)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Please select a valid tip option.",
+        }),
+        { status: 400 },
+      );
+    }
+
     const flavorList = flavorPreference
       .map((flavor: string) => `• ${flavor}`)
       .join("<br>");
+    const quantityValue = getQuantityValue(quantity);
+    const basePricePerDozen = getBasePricePerDozen(quantityValue);
+    const addOnsPerDozen =
+      (flavorPreference.includes("gf") ? GLUTEN_FREE_PRICE_PER_DOZEN : 0) +
+      (dyefree ? DYE_FREE_PRICE_PER_DOZEN : 0) +
+      (packaging === "ribbon" ? RIBBON_PACKAGING_PRICE_PER_DOZEN : 0);
+    const estimatedSubtotal =
+      quantityValue * (basePricePerDozen + addOnsPerDozen);
+    const estimatedTipAmount =
+      tipPercentage === "none"
+        ? 0
+        : estimatedSubtotal * (Number(tipPercentage) / 100);
+    const estimatedTotal = estimatedSubtotal + estimatedTipAmount;
+    const tipLabel =
+      tipPercentage === "none"
+        ? "No tip selected"
+        : `${tipPercentage}% (${formatCurrency(estimatedTipAmount)})`;
 
     const { data, error } = await resend.emails.send({
       from: senderEmail,
@@ -159,6 +207,18 @@ export async function POST(req: NextRequest) {
               <td style="padding: 8px; font-weight: bold;">Referral Source:</td>
               <td style="padding: 8px;">${referralSource || "Not provided"}</td>
             </tr>
+            <tr>
+              <td style="padding: 8px; font-weight: bold;">Estimated Subtotal:</td>
+              <td style="padding: 8px;">${formatCurrency(estimatedSubtotal)}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; font-weight: bold;">Tip:</td>
+              <td style="padding: 8px;">${tipLabel}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; font-weight: bold;">Estimated Total:</td>
+              <td style="padding: 8px;">${formatCurrency(estimatedTotal)}</td>
+            </tr>
           </table>
 
           <h3 style="margin-top: 20px;">🧁 Flavor Preferences:</h3>
@@ -194,6 +254,10 @@ export async function POST(req: NextRequest) {
         dyefree,
         referralSource,
         message,
+        tipPercentage,
+        estimatedSubtotal,
+        estimatedTipAmount,
+        estimatedTotal,
       }),
     });
 

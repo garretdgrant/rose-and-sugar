@@ -6,6 +6,7 @@ Application routes and layouts live in `src/app`, following the Next.js App Rout
 
 ## Build, Test, and Development Commands
 
+- Agents must never run build or lint commands. The user will always run builds, linting, and final verification.
 - `pnpm install` — sync dependencies after cloning or pulling.
 - `pnpm dev` — launch the Turbopack dev server on port 3000.
 - `pnpm build` — create an optimized production bundle; required before deploys.

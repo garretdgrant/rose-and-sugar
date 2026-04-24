@@ -7,7 +7,7 @@ export const customOrderFaqs = [
   {
     question: "How much do custom sugar cookies cost?",
     answerText:
-      "Custom decorated sugar cookies from Rose & Sugar start at $65 per dozen and include up to five icing colors with basic to intermediate detail. Character cookies and logo designs start at $70 per dozen. Additional colors, airbrushing, and intricate designs may increase pricing. All orders require a minimum of 2 dozen cookies. Contact us for a personalized quote.",
+      "Custom decorated sugar cookies from Rose & Sugar start at $70 per dozen and include up to five icing colors with basic to intermediate detail. Character cookies, logo designs, additional colors, airbrushing, and intricate designs may increase pricing. All orders require a minimum of 2 dozen cookies. Contact us for a personalized quote.",
   },
   {
     question: "What areas do you serve for custom cookie pickup?",

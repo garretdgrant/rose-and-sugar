@@ -32,12 +32,12 @@ const PAGE_PATH = "/cookies/order-custom-sugar-cookies";
 const PAGE_TITLE =
   "Order Custom Sugar Cookies in Folsom & Sacramento | Rose & Sugar";
 const PAGE_DESCRIPTION =
-  "Order custom decorated sugar cookies starting at $65/dozen. Handcrafted in Folsom, CA for birthdays, showers, weddings & events. Request your free quote today!";
+  "Order custom decorated sugar cookies starting at $70/dozen. Handcrafted in Folsom, CA for birthdays, showers, weddings & events. Request your free quote today!";
 
 const featureHighlights = [
   {
     icon: DollarSign,
-    title: "Starting at $65/dz",
+    title: "Starting at $70/dz",
     desc: "Custom cookies with up to 5 colors",
   },
   {
@@ -160,7 +160,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "Order Custom Sugar Cookies | Rose & Sugar – Folsom, CA",
       description:
-        "Handcrafted custom decorated sugar cookies starting at $65/dozen. Perfect for birthdays, showers, weddings & corporate events. Serving Folsom & Sacramento.",
+        "Handcrafted custom decorated sugar cookies starting at $70/dozen. Perfect for birthdays, showers, weddings & corporate events. Serving Folsom & Sacramento.",
       url: canonical,
       type: "website",
       siteName: "Rose & Sugar",
@@ -171,7 +171,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Order Custom Sugar Cookies | Rose & Sugar – Folsom, CA",
       description:
-        "Handcrafted custom decorated sugar cookies starting at $65/dozen. Perfect for birthdays, showers, weddings & corporate events. Serving Folsom & Sacramento.",
+        "Handcrafted custom decorated sugar cookies starting at $70/dozen. Perfect for birthdays, showers, weddings & corporate events. Serving Folsom & Sacramento.",
       images: [ogImage],
     },
   };
@@ -601,7 +601,7 @@ const CustomOrderPage = () => {
                     </div>
                     <div className="mt-6 space-y-3">
                       {[
-                        "Starting at $65 per dozen",
+                        "Starting at $70 per dozen",
                         "Minimum order: 2 dozen",
                         "Preferred pickup on Saturdays",
                       ].map((item) => (
@@ -671,12 +671,11 @@ const CustomOrderPage = () => {
                   <div className="mt-6 space-y-5 font-poppins text-base leading-relaxed text-gray-700">
                     <p>
                       Our custom decorated sugar cookies start at{" "}
-                      <strong>$65 per dozen</strong> and include up to five
+                      <strong>$70 per dozen</strong> and include up to five
                       icing colors with basic to intermediate detail. Character
-                      cookies and logo designs start at{" "}
-                      <strong>$70 per dozen</strong>. Additional complexity,
-                      airbrushing, or extra colors may adjust pricing and
-                      we&apos;ll always provide a clear quote before you commit.
+                      cookies, logo designs, additional complexity, airbrushing,
+                      or extra colors may adjust pricing and we&apos;ll always
+                      provide a clear quote before you commit.
                     </p>
                     <p>
                       Every order requires a{" "}
@@ -701,7 +700,7 @@ const CustomOrderPage = () => {
                   </h3>
                   <div className="mt-6 space-y-4">
                     {[
-                      ["Starting price", "$65/dozen"],
+                      ["Starting price", "$70/dozen"],
                       ["Character or logo sets", "$70+/dozen"],
                       ["Gluten-free flour option", "+$6/dozen"],
                       ["Dye-free icing option", "+$10/dozen"],

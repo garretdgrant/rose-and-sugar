@@ -91,13 +91,13 @@ const ThankYou = () => {
                     className="mb-2 font-fraunces text-4xl font-bold leading-tight text-bakery-pink-dark opacity-0 animate-fade-in-up md:text-5xl lg:text-6xl"
                     style={{ animationDelay: "0.2s" }}
                   >
-                    Your Order is
+                    Your Inquiry is
                   </h1>
                   <p
                     className="mb-1 font-cookie text-5xl text-bakery-pink opacity-0 animate-fade-in-up md:text-6xl lg:text-7xl"
                     style={{ animationDelay: "0.4s" }}
                   >
-                    confirmed!
+                    received!
                   </p>
                   <div
                     className="flex justify-center gap-2 opacity-0 animate-fade-in-up"
@@ -128,21 +128,21 @@ const ThankYou = () => {
                         </h2>
                         <div className="space-y-2 text-gray-700">
                           <p className="text-base leading-relaxed">
-                            I&apos;m already excited to start baking your custom
-                            cookies! You&apos;ll receive a{" "}
+                            Thank you for sharing your custom cookie request!
+                            This submission is an{" "}
                             <span className="font-semibold text-bakery-pink-dark">
-                              confirmation email
+                              inquiry, not a confirmed order
                             </span>{" "}
-                            shortly with all your order details.
+                            just yet.
                           </p>
                           <p className="text-base leading-relaxed">
                             I&apos;ll be in touch within{" "}
                             <span className="font-semibold text-bakery-pink-dark">
                               1-2 business days
                             </span>{" "}
-                            to finalize design details, discuss any
-                            customizations, and confirm your pickup or delivery
-                            date.
+                            to review availability, talk through design details,
+                            confirm pricing, and share the next steps for
+                            booking.
                           </p>
                         </div>
                       </div>
@@ -155,8 +155,8 @@ const ThankYou = () => {
                     style={{ animationDelay: "1s" }}
                   >
                     <p className="font-playfair text-lg md:text-xl text-gray-800 italic leading-relaxed mb-1">
-                      &ldquo;I can&apos;t wait to create something beautiful and
-                      delicious for your celebration!&rdquo;
+                      &ldquo;I can&apos;t wait to hear more about your
+                      celebration and see what we can create together!&rdquo;
                     </p>
                     <p className="font-cookie text-2xl md:text-3xl text-bakery-pink-dark">
                       — Megan
@@ -207,7 +207,7 @@ const ThankYou = () => {
                   </Link>
 
                   <p className="text-xs text-gray-500 mt-3">
-                    Browse more designs or learn about our process
+                    Browse more designs while I review your inquiry
                   </p>
                 </div>
               </div>
