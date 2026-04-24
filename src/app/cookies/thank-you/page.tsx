@@ -1,32 +1,36 @@
-"use client";
-
 import Link from "next/link";
 import { Sparkles, Heart, Package, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
+
+const sprinkles = [
+  { left: "8%", top: "18%", color: "#E8ADC1", duration: 4, delay: "0s" },
+  { left: "16%", top: "72%", color: "#FDE1D3", duration: 5, delay: "0.2s" },
+  { left: "24%", top: "38%", color: "#D4B9A4", duration: 6, delay: "0.4s" },
+  { left: "32%", top: "12%", color: "#FFDEE2", duration: 4, delay: "0.6s" },
+  { left: "41%", top: "82%", color: "#E8ADC1", duration: 5, delay: "0.8s" },
+  { left: "49%", top: "24%", color: "#FDE1D3", duration: 6, delay: "1s" },
+  { left: "58%", top: "64%", color: "#D4B9A4", duration: 4, delay: "1.2s" },
+  { left: "66%", top: "16%", color: "#FFDEE2", duration: 5, delay: "1.4s" },
+  { left: "74%", top: "48%", color: "#E8ADC1", duration: 6, delay: "1.6s" },
+  { left: "82%", top: "78%", color: "#FDE1D3", duration: 4, delay: "1.8s" },
+  { left: "89%", top: "28%", color: "#D4B9A4", duration: 5, delay: "2s" },
+  { left: "94%", top: "58%", color: "#FFDEE2", duration: 6, delay: "2.2s" },
+] as const;
 
 const ThankYou = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-bakery-cream via-bakery-peach/30 to-bakery-pink-light/40">
       {/* Decorative floating sprinkles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(12)].map((_, i) => (
+        {sprinkles.map((sprinkle, i) => (
           <div
             key={i}
             className="absolute w-2 h-2 rounded-full opacity-40"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              backgroundColor: ["#E8ADC1", "#FDE1D3", "#D4B9A4", "#FFDEE2"][
-                i % 4
-              ],
-              animation: `sprinkle-dance ${4 + (i % 3)}s ease-in-out infinite`,
-              animationDelay: `${i * 0.2}s`,
+              left: sprinkle.left,
+              top: sprinkle.top,
+              backgroundColor: sprinkle.color,
+              animation: `sprinkle-dance ${sprinkle.duration}s ease-in-out infinite`,
+              animationDelay: sprinkle.delay,
             }}
           />
         ))}
@@ -48,11 +52,7 @@ const ThankYou = () => {
 
               <div className="p-6 md:p-8 lg:p-10">
                 {/* Icon celebration */}
-                <div
-                  className={`flex justify-center gap-4 mb-5 ${
-                    mounted ? "animate-scale-in" : "opacity-0"
-                  }`}
-                >
+                <div className="mb-5 flex justify-center gap-4 opacity-0 animate-scale-in">
                   <div
                     className="cookie-float"
                     style={{ animationDelay: "0s" }}
@@ -88,25 +88,19 @@ const ThankYou = () => {
                 {/* Headline with mixed typography */}
                 <div className="text-center mb-5">
                   <h1
-                    className={`font-fraunces text-4xl md:text-5xl lg:text-6xl font-bold text-bakery-pink-dark mb-2 leading-tight ${
-                      mounted ? "animate-fade-in-up" : "opacity-0"
-                    }`}
+                    className="mb-2 font-fraunces text-4xl font-bold leading-tight text-bakery-pink-dark opacity-0 animate-fade-in-up md:text-5xl lg:text-6xl"
                     style={{ animationDelay: "0.2s" }}
                   >
                     Your Order is
                   </h1>
                   <p
-                    className={`font-cookie text-5xl md:text-6xl lg:text-7xl text-bakery-pink mb-1 ${
-                      mounted ? "animate-fade-in-up" : "opacity-0"
-                    }`}
+                    className="mb-1 font-cookie text-5xl text-bakery-pink opacity-0 animate-fade-in-up md:text-6xl lg:text-7xl"
                     style={{ animationDelay: "0.4s" }}
                   >
                     confirmed!
                   </p>
                   <div
-                    className={`flex justify-center gap-2 ${
-                      mounted ? "animate-fade-in-up" : "opacity-0"
-                    }`}
+                    className="flex justify-center gap-2 opacity-0 animate-fade-in-up"
                     style={{ animationDelay: "0.6s" }}
                   >
                     {[...Array(5)].map((_, i) => (
@@ -121,9 +115,7 @@ const ThankYou = () => {
                 {/* Main content */}
                 <div className="space-y-4 mb-6">
                   <div
-                    className={`bg-gradient-to-br from-bakery-peach/30 to-bakery-pink-light/30 rounded-2xl p-5 md:p-6 border border-bakery-pink-light/50 ${
-                      mounted ? "animate-fade-in-up" : "opacity-0"
-                    }`}
+                    className="rounded-2xl border border-bakery-pink-light/50 bg-gradient-to-br from-bakery-peach/30 to-bakery-pink-light/30 p-5 opacity-0 animate-fade-in-up md:p-6"
                     style={{ animationDelay: "0.8s" }}
                   >
                     <div className="flex items-start gap-3">
@@ -136,15 +128,15 @@ const ThankYou = () => {
                         </h2>
                         <div className="space-y-2 text-gray-700">
                           <p className="text-base leading-relaxed">
-                            I'm already excited to start baking your custom
-                            cookies! You'll receive a{" "}
+                            I&apos;m already excited to start baking your custom
+                            cookies! You&apos;ll receive a{" "}
                             <span className="font-semibold text-bakery-pink-dark">
                               confirmation email
                             </span>{" "}
                             shortly with all your order details.
                           </p>
                           <p className="text-base leading-relaxed">
-                            I'll be in touch within{" "}
+                            I&apos;ll be in touch within{" "}
                             <span className="font-semibold text-bakery-pink-dark">
                               1-2 business days
                             </span>{" "}
@@ -159,14 +151,12 @@ const ThankYou = () => {
 
                   {/* Personal message */}
                   <div
-                    className={`text-center ${
-                      mounted ? "animate-fade-in-up" : "opacity-0"
-                    }`}
+                    className="text-center opacity-0 animate-fade-in-up"
                     style={{ animationDelay: "1s" }}
                   >
                     <p className="font-playfair text-lg md:text-xl text-gray-800 italic leading-relaxed mb-1">
-                      "I can't wait to create something beautiful and delicious
-                      for your celebration!"
+                      &ldquo;I can&apos;t wait to create something beautiful and
+                      delicious for your celebration!&rdquo;
                     </p>
                     <p className="font-cookie text-2xl md:text-3xl text-bakery-pink-dark">
                       — Megan
@@ -185,9 +175,7 @@ const ThankYou = () => {
 
                   {/* Additional info */}
                   <div
-                    className={`text-center ${
-                      mounted ? "animate-fade-in-up" : "opacity-0"
-                    }`}
+                    className="text-center opacity-0 animate-fade-in-up"
                     style={{ animationDelay: "1.2s" }}
                   >
                     <p className="text-sm text-gray-600">
@@ -204,9 +192,7 @@ const ThankYou = () => {
 
                 {/* CTA Button */}
                 <div
-                  className={`text-center ${
-                    mounted ? "animate-fade-in-up" : "opacity-0"
-                  }`}
+                  className="text-center opacity-0 animate-fade-in-up"
                   style={{ animationDelay: "1.4s" }}
                 >
                   <Link
@@ -230,9 +216,7 @@ const ThankYou = () => {
 
           {/* Bottom decorative elements */}
           <div
-            className={`mt-4 text-center ${
-              mounted ? "animate-fade-in" : "opacity-0"
-            }`}
+            className="mt-4 text-center opacity-0 animate-fade-in"
             style={{ animationDelay: "1.6s" }}
           >
             <div className="flex items-center justify-center gap-2 text-bakery-pink-dark/60">

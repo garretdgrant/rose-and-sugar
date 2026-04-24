@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -239,6 +240,38 @@ const CustomOrderClient = () => {
                   </div>
                 )}
               />
+
+              <div className="rounded-2xl border border-bakery-pink/20 bg-gradient-to-br from-bakery-cream via-white to-bakery-pink-light/20 p-5 shadow-sm">
+                <p className="font-poppins text-sm leading-relaxed text-gray-700 md:text-[15px]">
+                  Megan is currently sold out through the end of the month, and
+                  new custom orders are not being accepted until{" "}
+                  <span className="font-semibold text-bakery-pink-dark">
+                    5/22
+                  </span>
+                  . If you&apos;d like a reminder when orders open back up,
+                  please{" "}
+                  <Link
+                    href={{
+                      pathname: "/contact",
+                      query: {
+                        message:
+                          "Hi Megan! Please add me to your email list and send me a reminder when custom orders open back up.",
+                      },
+                    }}
+                    className="font-semibold text-bakery-pink-dark underline decoration-bakery-pink/40 underline-offset-4 transition-colors hover:text-bakery-brown"
+                  >
+                    join the email list here
+                  </Link>
+                  . Looking for something sweet sooner? Megan also has a{" "}
+                  <Link
+                    href="/classes"
+                    className="font-semibold text-bakery-pink-dark underline decoration-bakery-pink/40 underline-offset-4 transition-colors hover:text-bakery-brown"
+                  >
+                    cookie decorating class on May 9
+                  </Link>
+                  .
+                </p>
+              </div>
 
               <div
                 className={`space-y-6 ${currentStep === 1 ? "block" : "hidden"}`}

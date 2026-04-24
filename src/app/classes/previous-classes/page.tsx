@@ -1,6 +1,18 @@
 import ClientPreviousClasses from "@/components/ClientPreviousClasses";
+import ClassesMarketingShell from "@/components/classes/ClassesMarketingShell";
+import QueryProvider from "@/components/QueryProvider";
 import Script from "next/script";
+import { History } from "lucide-react";
 import { buildCanonicalUrl, buildPageMetadata } from "@/lib/metadata";
+import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export async function generateMetadata() {
   return buildPageMetadata({
@@ -45,7 +57,45 @@ const PreviousClassesPage = async () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <ClientPreviousClasses />
+      <ClassesMarketingShell
+        badgeIcon={History}
+        badgeText="Past Cookie Decorating Classes"
+        breadcrumb={
+          <Breadcrumb className="justify-start">
+            <BreadcrumbList className="justify-start">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/classes">Classes</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Previous Classes</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        }
+        ctaHref="/classes"
+        ctaLabel="View Upcoming Classes"
+        description={
+          <>
+            Explore our collection of past cookie decorating classes and the
+            creative designs from our small-group workshops led by Megan.
+          </>
+        }
+        titleLead="Previous"
+        titleAccent="Classes"
+      >
+        <QueryProvider>
+          <ClientPreviousClasses />
+        </QueryProvider>
+      </ClassesMarketingShell>
     </>
   );
 };

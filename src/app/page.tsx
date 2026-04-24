@@ -5,6 +5,7 @@ import FeaturedShop from "@/components/FeaturedShop";
 import Hero from "@/components/Hero";
 import Gallery from "@/components/Gallery";
 import FAQAccordion from "@/components/FAQAccordion";
+import QueryProvider from "@/components/QueryProvider";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import {
@@ -267,7 +268,9 @@ export default function Home() {
       <Services />
 
       {/* Featured Shop - Classes and cookies for purchase */}
-      <FeaturedShop />
+      <QueryProvider>
+        <FeaturedShop />
+      </QueryProvider>
 
       {/* Testimonials - Social proof with editorial quotes */}
       <Testimonials />

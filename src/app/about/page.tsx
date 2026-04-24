@@ -1,9 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import FAQAccordion from "@/components/FAQAccordion";
+import { buildPageMetadata } from "@/lib/metadata";
 import {
   Heart,
   Award,
@@ -13,13 +11,17 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+export async function generateMetadata() {
+  return buildPageMetadata({
+    title: "About Rose & Sugar | Megan D'Angelo Custom Cookies",
+    description:
+      "Meet Megan D'Angelo of Rose & Sugar in Folsom, CA and learn the story behind our handcrafted custom cookies and beginner-friendly decorating classes.",
+    path: "/about",
+    imagePath: "/meganAbout.webp",
+  });
+}
+
 const About = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const stats = [
     { icon: Heart, value: "200+", label: "Happy Customers" },
     { icon: Award, value: "5", label: "Years Crafting" },
@@ -158,36 +160,22 @@ const About = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-bakery-cream via-white to-bakery-peach/30" />
 
         {/* Large decorative blob - top right */}
-        <div
-          className={`absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-bakery-pink-light/60 to-bakery-peach/40 blur-3xl transition-all duration-1000 ${
-            mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}
-        />
+        <div className="absolute -top-32 -right-32 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-bakery-pink-light/60 to-bakery-peach/40 opacity-0 blur-3xl transition-all duration-1000 animate-scale-in" />
 
         {/* Medium blob - bottom left */}
-        <div
-          className={`absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/50 to-bakery-pink-light/30 blur-2xl transition-all duration-1000 delay-200 ${
-            mounted ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}
-        />
+        <div className="absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-bakery-peach/50 to-bakery-pink-light/30 opacity-0 blur-2xl transition-all duration-1000 animate-scale-in animation-delay-200" />
 
         {/* Floating accent shapes */}
         <div
-          className={`absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-bakery-pink-dark/60 transition-all duration-700 delay-500 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute right-1/4 top-1/4 h-4 w-4 rounded-full bg-bakery-pink-dark/60 opacity-0 transition-all duration-700 animate-fade-in animation-delay-500"
           style={{ animation: "float 4s ease-in-out infinite" }}
         />
         <div
-          className={`absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-bakery-brown/50 transition-all duration-700 delay-700 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute left-1/4 top-1/3 h-3 w-3 rounded-full bg-bakery-brown/50 opacity-0 transition-all duration-700 animate-fade-in animation-delay-700"
           style={{ animation: "float 5s ease-in-out infinite 0.5s" }}
         />
         <div
-          className={`absolute bottom-1/3 right-1/3 w-2 h-2 rounded-full bg-bakery-pink/70 transition-all duration-700 delay-900 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute bottom-1/3 right-1/3 h-2 w-2 rounded-full bg-bakery-pink/70 opacity-0 transition-all duration-700 animate-fade-in animation-delay-900"
           style={{ animation: "float 3.5s ease-in-out infinite 1s" }}
         />
 
@@ -202,13 +190,7 @@ const About = () => {
         <div className="container-custom relative z-10 py-32 md:py-40">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left - Image Composition */}
-            <div
-              className={`relative order-2 lg:order-1 transition-all duration-1000 ${
-                mounted
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 -translate-x-8"
-              }`}
-            >
+            <div className="relative order-2 opacity-0 transition-all duration-1000 animate-slide-in-left lg:order-1">
               {/* Background decorative shape */}
               <div className="absolute -inset-4 bg-gradient-to-br from-bakery-peach via-bakery-pink-light/60 to-bakery-cream rounded-[2rem] transform rotate-3" />
 
@@ -230,11 +212,7 @@ const About = () => {
 
               {/* Floating quote card */}
               <div
-                className={`absolute -bottom-6 -right-6 md:bottom-8 md:-right-8 bg-white rounded-2xl shadow-xl p-5 max-w-[220px] transform rotate-3 transition-all duration-700 delay-500 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
+                className="absolute -bottom-6 -right-6 max-w-[220px] rotate-3 rounded-2xl bg-white p-5 opacity-0 shadow-xl transition-all duration-700 animate-fade-in-up animation-delay-500 md:bottom-8 md:-right-8"
                 style={{ animation: "float 6s ease-in-out infinite" }}
               >
                 <p className="font-playfair text-sm italic text-gray-700 leading-relaxed">
@@ -252,11 +230,7 @@ const About = () => {
 
               {/* Badge - top left */}
               <div
-                className={`absolute -top-4 -left-4 md:top-4 md:-left-8 bg-gradient-to-br from-bakery-pink-dark to-bakery-pink text-white rounded-2xl shadow-xl p-4 transform -rotate-6 transition-all duration-700 delay-600 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
+                className="absolute -left-4 -top-4 -rotate-6 rounded-2xl bg-gradient-to-br from-bakery-pink-dark to-bakery-pink p-4 text-white opacity-0 shadow-xl transition-all duration-700 animate-fade-in-up animation-delay-600 md:-left-8 md:top-4"
                 style={{ animation: "float 5s ease-in-out infinite 1s" }}
               >
                 <div className="flex items-center gap-2">
@@ -269,21 +243,9 @@ const About = () => {
             </div>
 
             {/* Right - Content */}
-            <div
-              className={`order-1 lg:order-2 text-center lg:text-left transition-all duration-1000 delay-200 ${
-                mounted
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 translate-x-8"
-              }`}
-            >
+            <div className="order-1 text-center opacity-0 transition-all duration-1000 animate-slide-in-right animation-delay-200 lg:order-2 lg:text-left">
               {/* Badge */}
-              <div
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-bakery-pink-light/50 shadow-sm mb-6 transition-all duration-700 delay-300 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-bakery-pink-light/50 bg-white/80 px-4 py-2 opacity-0 shadow-sm backdrop-blur-sm transition-all duration-700 animate-fade-in-up animation-delay-300">
                 <MapPin className="w-4 h-4 text-bakery-pink-dark" />
                 <span className="text-sm font-poppins font-medium text-gray-700">
                   Folsom, CA
@@ -291,13 +253,7 @@ const About = () => {
               </div>
 
               {/* Main Headline */}
-              <h1
-                className={`font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-6 transition-all duration-700 delay-400 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
+              <h1 className="mb-6 font-bebas text-5xl leading-[0.9] tracking-tight opacity-0 transition-all duration-700 animate-fade-in-up animation-delay-400 sm:text-6xl md:text-7xl lg:text-8xl">
                 <span className="block text-gray-800">About</span>
                 <span className="block bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-brown bg-clip-text text-transparent">
                   Rose &amp; Sugar
@@ -305,25 +261,13 @@ const About = () => {
               </h1>
 
               {/* Subheadline */}
-              <p
-                className={`font-poppins text-lg md:text-xl text-gray-600 max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed transition-all duration-700 delay-500 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
+              <p className="mx-auto mb-8 max-w-md font-poppins text-lg leading-relaxed text-gray-600 opacity-0 transition-all duration-700 animate-fade-in-up animation-delay-500 lg:mx-0 md:text-xl">
                 Where every cookie is crafted with love, decorated with
                 artistry, and made to celebrate life&apos;s sweetest moments.
               </p>
 
               {/* Stats row */}
-              <div
-                className={`grid grid-cols-3 gap-4 transition-all duration-700 delay-600 ${
-                  mounted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
+              <div className="grid grid-cols-3 gap-4 opacity-0 transition-all duration-700 animate-fade-in-up animation-delay-600">
                 {stats.map((stat, index) => (
                   <div
                     key={stat.label}

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CartCompletionWatcher from "@/components/CartCompletionWatcher";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import QueryProvider from "@/components/QueryProvider";
 import Script from "next/script";
 import { bebasNeue, cookie, fraunces, playfairDisplay, poppins } from "./fonts";
 
@@ -125,13 +125,12 @@ export default function RootLayout({
           strategy="beforeInteractive" // ← KEY: SSR-compatible
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <QueryProvider>
-          <Navbar />
-          <main id="main-content" role="main">
-            {children}
-          </main>
-          <Footer />
-        </QueryProvider>
+        <CartCompletionWatcher />
+        <Navbar />
+        <main id="main-content" role="main">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

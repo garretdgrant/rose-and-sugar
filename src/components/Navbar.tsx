@@ -25,7 +25,6 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import CartDrawer from "@/components/CartDrawer";
-import CartCompletionWatcher from "@/components/CartCompletionWatcher";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -126,7 +125,6 @@ const Navbar = () => {
 
   return (
     <>
-      <CartCompletionWatcher />
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
           isScrolled

@@ -1,3 +1,4 @@
+import QueryProvider from "@/components/QueryProvider";
 import ShopifyPreDesignedClient from "@/components/ShopifyPreDesignedClient";
 import { buildPageMetadata } from "@/lib/metadata";
 
@@ -11,7 +12,11 @@ export async function generateMetadata() {
 }
 
 const PreDesignedPage = async () => {
-  return <ShopifyPreDesignedClient />;
+  return (
+    <QueryProvider>
+      <ShopifyPreDesignedClient />
+    </QueryProvider>
+  );
 };
 
 export default PreDesignedPage;

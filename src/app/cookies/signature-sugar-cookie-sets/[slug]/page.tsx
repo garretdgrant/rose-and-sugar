@@ -1,4 +1,5 @@
 import PredesignedCookieDetailClient from "@/components/PredesignedCookieDetailClient";
+import QueryProvider from "@/components/QueryProvider";
 import { buildPageMetadata } from "@/lib/metadata";
 import { fetchPredesignedByHandle } from "@/lib/predesignedCookies";
 
@@ -27,7 +28,11 @@ export async function generateMetadata({ params }: Props) {
 
 const Page = async ({ params }: Props) => {
   const { slug } = await params;
-  return <PredesignedCookieDetailClient handle={slug} />;
+  return (
+    <QueryProvider>
+      <PredesignedCookieDetailClient handle={slug} />
+    </QueryProvider>
+  );
 };
 
 export default Page;
