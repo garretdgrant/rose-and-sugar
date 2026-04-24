@@ -568,7 +568,7 @@ const CustomOrderPage = () => {
                     upon request. If you want to learn the techniques behind the
                     details, Megan also offers{" "}
                     <Link
-                      href="/classes"
+                      href="/classes#book-class"
                       className="text-bakery-pink-dark underline-offset-4 hover:underline"
                     >
                       cookie decorating classes

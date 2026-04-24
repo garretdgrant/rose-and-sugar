@@ -264,7 +264,7 @@ const CustomOrderClient = () => {
                   </Link>
                   . Looking for something sweet sooner? Megan also has a{" "}
                   <Link
-                    href="/classes"
+                    href="/classes#book-class"
                     className="font-semibold text-bakery-pink-dark underline decoration-bakery-pink/40 underline-offset-4 transition-colors hover:text-bakery-brown"
                   >
                     cookie decorating class on May 9

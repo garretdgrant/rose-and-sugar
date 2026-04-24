@@ -12,9 +12,6 @@ import {
 const pagePath = "/sugar-cookie-recipe";
 const pageUrl = buildCanonicalUrl(pagePath);
 const ogImageUrl = buildOgImageUrl("/recipe/recipe.webp");
-const recipeImage1x1 = buildOgImageUrl("/images/sugar-cookie-recipe-1x1.jpg");
-const recipeImage4x3 = buildOgImageUrl("/images/sugar-cookie-recipe-4x3.jpg");
-const recipeImage16x9 = buildOgImageUrl("/images/sugar-cookie-recipe-16x9.jpg");
 const productImageUrl = buildOgImageUrl(
   "/images/sugar-cookie-recipe-product.jpg",
 );
@@ -22,7 +19,6 @@ const productImageUrl = buildOgImageUrl(
 const recipeHandle = "sugar-cookie-recipe";
 const recipePriceLabel = "$12";
 const recipePriceValue = "12.00";
-const publishDate = "2026-03-06";
 const priceValidUntil = "2027-03-06";
 
 const toPriceLabel = (amount: string) => {
@@ -146,80 +142,6 @@ const SugarCookieRecipePage = async () => {
     recipePriceValue;
   const checkoutPriceLabel = toPriceLabel(checkoutPriceValue);
 
-  const recipeJsonLd = {
-    "@context": "https://schema.org/",
-    "@type": "Recipe",
-    name: "Rose & Sugar Professional Sugar Cookie Recipe",
-    mainEntityOfPage: pageUrl,
-    image: [recipeImage1x1, recipeImage4x3, recipeImage16x9],
-    author: {
-      "@type": "Person",
-      name: "Megan",
-      url: buildCanonicalUrl("/about"),
-    },
-    datePublished: publishDate,
-    dateModified: publishDate,
-    description:
-      "The professional sugar cookie recipe used by Rose & Sugar for custom orders and decorating classes. These cut-out cookies hold their shape perfectly and work beautifully with royal icing. Includes a gluten-free option.",
-    recipeCuisine: "American",
-    recipeCategory: "Dessert",
-    keywords:
-      "sugar cookie recipe, cut out sugar cookies, sugar cookies for decorating, professional cookie recipe, bakery sugar cookie recipe, gluten free sugar cookies, sugar cookie recipe that holds shape",
-    prepTime: "PT30M",
-    cookTime: "PT15M",
-    totalTime: "PT2H15M",
-    recipeYield: "24 cookies (3.5-inch size)",
-    suitableForDiet: "https://schema.org/GlutenFreeDiet",
-    recipeIngredient: [
-      "4 and 1/4 cups (600g) all-purpose flour or 1:1 gluten-free flour substitute",
-      "1 tsp baking powder",
-      "1/2 tsp salt",
-      "1 and 1/4 cups (2.5 sticks) unsalted butter, room temperature",
-      "1 and 1/4 cups (300g) granulated sugar",
-      "1/4 cup (45g) light or dark brown sugar",
-      "2 eggs, room temperature",
-      "3 tsp (15g) vanilla extract",
-      "3/4 tsp almond, lemon, or maple extract (optional)",
-    ],
-    recipeInstructions: [
-      {
-        "@type": "HowToStep",
-        name: "Mix dry ingredients",
-        text: "In a medium bowl, whisk together the flour, baking powder, and salt. Set aside.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "Cream butter and sugars",
-        text: "Using a large bowl with a handheld or standing mixer and paddle attachment, beat together the butter and sugars until just combined and creamy with no lumps, about 2.5 minutes. Scrape down as needed. Add the eggs, vanilla, and any optional extract. Beat for about a minute until combined.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "Combine wet and dry",
-        text: "Slowly add the dry ingredients to the wet ingredients, 1/4 cup at a time on slow speed until just combined. Do not overmix.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "Roll and chill dough",
-        text: "Roll out the dough about 1/4 inch thick onto lightly floured parchment paper. Cover with plastic wrap and chill in the refrigerator for at least one hour.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "Cut and arrange cookies",
-        text: "Line baking sheets with parchment paper or baking mats. Remove dough from fridge, remove plastic wrap, and cut out shapes. Place on baking sheet about 3 inches apart. Re-roll scraps as needed.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "Freeze and bake",
-        text: "Optionally chill cutout cookies in the freezer for about 30 minutes to prevent spreading. Preheat oven to 350F. Bake for 13-15 minutes until lightly browned with no signs of rawness in the middle. Let cool for at least one hour before decorating.",
-      },
-    ],
-    nutrition: {
-      "@type": "NutritionInformation",
-      servingSize: "1 cookie (3.5-inch)",
-      calories: "220 calories",
-    },
-  };
-
   const productJsonLd = {
     "@context": "https://schema.org/",
     "@type": "Product",
@@ -284,11 +206,6 @@ const SugarCookieRecipePage = async () => {
 
   return (
     <div className="bg-gradient-to-b from-white via-bakery-cream/25 to-bakery-pink-light/20 pb-16 pt-28 md:pt-36">
-      <script
-        id="recipe-jsonld-sugar-cookie-recipe"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeJsonLd) }}
-      />
       <script
         id="product-jsonld-sugar-cookie-recipe"
         type="application/ld+json"
