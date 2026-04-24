@@ -181,10 +181,10 @@ const ThankYou = () => {
                     <p className="text-sm text-gray-600">
                       Questions in the meantime? Email me at{" "}
                       <a
-                        href="mailto:hello@roseandsugarcookies.com"
+                        href="mailto:roseandsugarcookies@gmail.com"
                         className="text-bakery-pink-dark font-medium hover:underline"
                       >
-                        hello@roseandsugarcookies.com
+                        roseandsugarcookies@gmail.com
                       </a>
                     </p>
                   </div>

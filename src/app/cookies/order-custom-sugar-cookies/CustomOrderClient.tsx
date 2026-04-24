@@ -41,38 +41,62 @@ const DYE_FREE_PRICE_PER_DOZEN = 10;
 const RIBBON_PACKAGING_PRICE_PER_DOZEN = 6;
 const EARLIEST_CUSTOM_ORDER_DATE = "2026-05-22";
 
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please provide a valid email address"),
-  phone: z.string().min(10, "Please provide a valid phone number"),
-  eventDate: z
-    .string()
-    .min(1, "Please provide the date when cookies are needed"),
-  quantity: z.enum(["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"], {
-    errorMap: () => ({ message: "Please select a quantity between 2 and 10" }),
-  }),
-  flavorPreference: z
-    .array(
-      z.enum([
-        "vanilla",
-        "lemon",
-        "almond",
-        "confetti",
-        "gf",
-        "maple",
-        "chocolate-chip",
-      ]),
-    )
-    .min(1, "Please select at least one flavor"),
-  packaging: z.enum(["sealed", "ribbon"], {
-    errorMap: () => ({ message: "Please select a packaging option" }),
-  }),
-  referralSource: z.string().min(1, "Please tell us how you heard about us"),
-  message: z.string().min(10, "Please provide details about your request"),
-  tipPercentage: z.enum(["", "15", "18", "20", "none"]),
-  dyefree: z.boolean(),
-  company: z.string().optional(),
-});
+const formSchema = z
+  .object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Please provide a valid email address"),
+    phone: z.string().min(10, "Please provide a valid phone number"),
+    eventDate: z
+      .string()
+      .min(1, "Please provide the date when cookies are needed"),
+    quantity: z.enum(["2", "3", "4", "5", "6", "7", "8", "9", "10", "11+"], {
+      errorMap: () => ({
+        message: "Please select a quantity between 2 and 10",
+      }),
+    }),
+    flavorPreference: z
+      .array(
+        z.enum([
+          "vanilla",
+          "lemon",
+          "almond",
+          "confetti",
+          "gf",
+          "maple",
+          "chocolate-chip",
+        ]),
+      )
+      .min(1, "Please select at least one flavor"),
+    packaging: z.enum(["sealed", "ribbon"], {
+      errorMap: () => ({ message: "Please select a packaging option" }),
+    }),
+    referralSource: z.string().min(1, "Please tell us how you heard about us"),
+    message: z.string().min(10, "Please provide details about your request"),
+    tipPercentage: z.enum(["", "15", "18", "20", "custom"]),
+    customTipAmount: z.string().optional(),
+    dyefree: z.boolean(),
+    company: z.string().optional(),
+  })
+  .superRefine((values, ctx) => {
+    if (values.tipPercentage !== "custom") {
+      return;
+    }
+
+    const customTipAmount = Number(values.customTipAmount);
+
+    if (
+      values.customTipAmount === undefined ||
+      values.customTipAmount.trim() === "" ||
+      !Number.isFinite(customTipAmount) ||
+      customTipAmount < 0
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["customTipAmount"],
+        message: "Enter a non-negative tip amount.",
+      });
+    }
+  });
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -104,7 +128,7 @@ const tipOptions: {
   { label: "15%", value: "15" },
   { label: "18%", value: "18" },
   { label: "20%", value: "20" },
-  { label: "No tip", value: "none" },
+  { label: "Custom tip", value: "custom" },
 ];
 
 const formatCurrency = (amount: number) =>
@@ -113,6 +137,17 @@ const formatCurrency = (amount: number) =>
     currency: "USD",
     maximumFractionDigits: 2,
   }).format(amount);
+
+const formatTipInputValue = (value: string) => {
+  const sanitized = value.replace(/[^\d.]/g, "");
+  const [dollars = "", ...decimalParts] = sanitized.split(".");
+
+  if (decimalParts.length === 0) {
+    return dollars;
+  }
+
+  return `${dollars}.${decimalParts.join("").slice(0, 2)}`;
+};
 
 const getQuantityValue = (quantity: FormValues["quantity"]) =>
   quantity === "11+" ? 11 : Number(quantity);
@@ -137,9 +172,11 @@ const getEstimatedSubtotal = (values: Partial<FormValues>) => {
 const getEstimatedTipAmount = (
   subtotal: number,
   tipPercentage: FormValues["tipPercentage"],
+  customTipAmount?: string,
 ) => {
-  if (tipPercentage === "none") {
-    return 0;
+  if (tipPercentage === "custom") {
+    const amount = Number(customTipAmount);
+    return Number.isFinite(amount) && amount >= 0 ? amount : 0;
   }
 
   return subtotal * (Number(tipPercentage) / 100);
@@ -163,6 +200,7 @@ const CustomOrderClient = () => {
       referralSource: "Google",
       message: "",
       tipPercentage: "",
+      customTipAmount: "",
       dyefree: false,
       company: "",
     },
@@ -231,6 +269,13 @@ const CustomOrderClient = () => {
   const messageValue = form.watch("message")?.trim() ?? "";
   const referralSourceValue = form.watch("referralSource")?.trim() ?? "";
   const selectedTipPercentage = form.watch("tipPercentage");
+  const selectedCustomTipAmount = form.watch("customTipAmount")?.trim() ?? "";
+  const parsedCustomTipAmount = Number(selectedCustomTipAmount);
+  const hasValidCustomTipAmount =
+    selectedTipPercentage !== "custom" ||
+    (selectedCustomTipAmount !== "" &&
+      Number.isFinite(parsedCustomTipAmount) &&
+      parsedCustomTipAmount >= 0);
   const selectedAddOns = [
     form.watch("flavorPreference")?.includes("gf") ? "Gluten-free flour" : null,
     form.watch("dyefree") ? "Dye-free icing" : null,
@@ -240,18 +285,22 @@ const CustomOrderClient = () => {
   const estimatedTipAmount = getEstimatedTipAmount(
     estimatedSubtotal,
     selectedTipPercentage,
+    selectedCustomTipAmount,
   );
   const estimatedTotal = estimatedSubtotal + estimatedTipAmount;
   const canProceedStep4 =
     Boolean(canProceedStep1 && canProceedStep2 && canProceedStep3) &&
     messageValue.length >= 10 &&
     referralSourceValue.length > 0;
-  const canSubmit = canProceedStep4 && selectedTipPercentage !== "";
+  const canSubmit =
+    canProceedStep4 && selectedTipPercentage !== "" && hasValidCustomTipAmount;
   const selectedTipDescription =
     selectedTipPercentage === ""
       ? "Choose a tip option before submitting."
-      : selectedTipPercentage === "none"
-        ? "No tip will be added to the inquiry."
+      : selectedTipPercentage === "custom"
+        ? hasValidCustomTipAmount
+          ? "Custom tip will be added to the inquiry."
+          : "Enter a non-negative custom tip amount."
         : `Thank you. Your ${selectedTipPercentage}% tip means so much.`;
   const handleFormSubmit = form.handleSubmit((data) => {
     if (currentStep !== steps.length || !canSubmit) {
@@ -858,7 +907,7 @@ const CustomOrderClient = () => {
                           return (
                             <label
                               key={option.value}
-                              className={`relative flex min-h-[104px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 px-4 py-4 text-center transition-all duration-300 ${
+                              className={`relative flex h-[150px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 px-4 py-4 text-center transition-all duration-300 ${
                                 isSelected
                                   ? "border-bakery-pink bg-bakery-pink-light/30"
                                   : isMostCommon
@@ -876,7 +925,19 @@ const CustomOrderClient = () => {
                                 className="sr-only"
                                 value={option.value}
                                 checked={isSelected}
-                                onChange={() => field.onChange(option.value)}
+                                onChange={() => {
+                                  field.onChange(option.value);
+
+                                  if (
+                                    option.value === "custom" &&
+                                    !form.getValues("customTipAmount")?.trim()
+                                  ) {
+                                    form.setValue("customTipAmount", "5", {
+                                      shouldDirty: true,
+                                      shouldValidate: true,
+                                    });
+                                  }
+                                }}
                               />
                               <span
                                 className={`font-poppins text-sm font-semibold ${
@@ -888,10 +949,52 @@ const CustomOrderClient = () => {
                                 {option.label}
                               </span>
                               <span className="mt-1 text-xs text-gray-500">
-                                {option.value === "none"
-                                  ? "No added tip"
+                                {option.value === "custom"
+                                  ? isSelected
+                                    ? "Enter below"
+                                    : "Enter amount"
                                   : formatCurrency(optionTipAmount)}
                               </span>
+                              {option.value === "custom" && isSelected && (
+                                <FormField
+                                  control={form.control}
+                                  name="customTipAmount"
+                                  render={({ field: customTipField }) => (
+                                    <FormItem className="mt-3 w-full">
+                                      <FormControl>
+                                        <div className="relative">
+                                          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-poppins text-sm font-semibold text-gray-500">
+                                            $
+                                          </span>
+                                          <Input
+                                            type="number"
+                                            inputMode="decimal"
+                                            min="0"
+                                            step="1"
+                                            placeholder="0.00"
+                                            className="h-10 rounded-lg border-bakery-pink-light/50 bg-white pl-7 text-center font-poppins text-sm focus:border-bakery-pink focus:ring-bakery-pink/20"
+                                            onClick={(event) =>
+                                              event.stopPropagation()
+                                            }
+                                            value={customTipField.value ?? ""}
+                                            onBlur={customTipField.onBlur}
+                                            name={customTipField.name}
+                                            ref={customTipField.ref}
+                                            onChange={(event) =>
+                                              customTipField.onChange(
+                                                formatTipInputValue(
+                                                  event.target.value,
+                                                ),
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      </FormControl>
+                                      <FormMessage className="text-left text-[11px]" />
+                                    </FormItem>
+                                  )}
+                                />
+                              )}
                             </label>
                           );
                         })}
@@ -940,7 +1043,7 @@ const CustomOrderClient = () => {
                     <p className="flex items-center gap-2 text-lg font-semibold text-bakery-pink-dark">
                       {formatCurrency(estimatedTipAmount)}
                       {selectedTipPercentage !== "" &&
-                      selectedTipPercentage !== "none" ? (
+                      estimatedTipAmount > 0 ? (
                         <Smile className="h-5 w-5" aria-label="Tip selected" />
                       ) : null}
                     </p>
