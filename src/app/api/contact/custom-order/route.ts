@@ -14,7 +14,7 @@ const validFlavorPreferences = new Set([
 ]);
 
 const validPackagingOptions = new Set(["sealed", "ribbon"]);
-const validTipPercentages = new Set(["15", "18", "20", "custom"]);
+const validTipPercentages = new Set(["10", "15", "20", "custom"]);
 
 const TWO_DOZEN_PRICE_PER_DOZEN = 75;
 const STANDARD_PRICE_PER_DOZEN = 70;

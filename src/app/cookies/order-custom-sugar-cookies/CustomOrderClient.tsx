@@ -72,7 +72,7 @@ const formSchema = z
     }),
     referralSource: z.string().min(1, "Please tell us how you heard about us"),
     message: z.string().min(10, "Please provide details about your request"),
-    tipPercentage: z.enum(["", "15", "18", "20", "custom"]),
+    tipPercentage: z.enum(["", "10", "15", "20", "custom"]),
     customTipAmount: z.string().optional(),
     dyefree: z.boolean(),
     company: z.string().optional(),
@@ -125,10 +125,10 @@ const tipOptions: {
   label: string;
   value: Exclude<FormValues["tipPercentage"], "">;
 }[] = [
+  { label: "10%", value: "10" },
   { label: "15%", value: "15" },
-  { label: "18%", value: "18" },
   { label: "20%", value: "20" },
-  { label: "Custom tip", value: "custom" },
+  { label: "Custom/no tip", value: "custom" },
 ];
 
 const formatCurrency = (amount: number) =>
@@ -200,7 +200,7 @@ const CustomOrderClient = () => {
       referralSource: "Google",
       message: "",
       tipPercentage: "",
-      customTipAmount: "",
+      customTipAmount: "0",
       dyefree: false,
       company: "",
     },
@@ -898,7 +898,13 @@ const CustomOrderClient = () => {
                       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                         {tipOptions.map((option) => {
                           const isSelected = field.value === option.value;
-                          const isMostCommon = option.value === "18";
+                          const isMostCommon = option.value === "15";
+                          const optionLabel =
+                            option.value === "custom" && isSelected
+                              ? parsedCustomTipAmount > 0
+                                ? "Custom tip"
+                                : "No tip"
+                              : option.label;
                           const optionTipAmount = getEstimatedTipAmount(
                             estimatedSubtotal,
                             option.value,
@@ -932,7 +938,7 @@ const CustomOrderClient = () => {
                                     option.value === "custom" &&
                                     !form.getValues("customTipAmount")?.trim()
                                   ) {
-                                    form.setValue("customTipAmount", "5", {
+                                    form.setValue("customTipAmount", "0", {
                                       shouldDirty: true,
                                       shouldValidate: true,
                                     });
@@ -946,7 +952,7 @@ const CustomOrderClient = () => {
                                     : "text-gray-700"
                                 }`}
                               >
-                                {option.label}
+                                {optionLabel}
                               </span>
                               <span className="mt-1 text-xs text-gray-500">
                                 {option.value === "custom"
@@ -1041,11 +1047,11 @@ const CustomOrderClient = () => {
                       </p>
                     </div>
                     <p className="flex items-center gap-2 text-lg font-semibold text-bakery-pink-dark">
-                      {formatCurrency(estimatedTipAmount)}
                       {selectedTipPercentage !== "" &&
                       estimatedTipAmount > 0 ? (
                         <Smile className="h-5 w-5" aria-label="Tip selected" />
                       ) : null}
+                      {formatCurrency(estimatedTipAmount)}
                     </p>
                   </div>
                   <div className="mt-4 flex flex-col gap-3 border-t border-bakery-pink-light/40 pt-4 font-poppins text-sm text-gray-700 sm:flex-row sm:items-center sm:justify-between">
