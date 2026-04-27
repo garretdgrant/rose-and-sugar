@@ -118,7 +118,7 @@ const steps = [
   { id: 2, title: "Order Details", icon: Cookie },
   { id: 3, title: "Flavors & Packaging", icon: Package },
   { id: 4, title: "Your Vision", icon: MessageSquare },
-  { id: 5, title: "Tip", icon: HeartHandshake },
+  { id: 5, title: "Quote", icon: HeartHandshake },
 ];
 
 const tipOptions: {
