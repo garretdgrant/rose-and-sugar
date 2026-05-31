@@ -167,7 +167,7 @@ const ClientClasses = () => {
                     onClick={() => setIsWaitlistOpen(true)}
                     className="group inline-flex whitespace-nowrap items-center gap-3 rounded-full bg-gradient-to-r from-bakery-pink-dark to-bakery-pink px-8 py-4 font-poppins font-semibold text-white shadow-lg shadow-bakery-pink/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-bakery-pink/40"
                   >
-                    Join Waitlist
+                    Join Email List
                     <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
