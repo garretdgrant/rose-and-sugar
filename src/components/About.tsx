@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Heart, Award, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Heart, Award, Users } from "lucide-react";
 
 const About = () => {
   const stats = [
@@ -135,6 +136,19 @@ const About = () => {
                 &ldquo;I truly believe cookies can make a huge difference in any
                 celebration & make anyone smile!&rdquo;
               </p>
+            </div>
+
+            <div
+              className="mt-8 opacity-0 transition-all duration-700 animate-fade-in-up"
+              style={{ animationDelay: "650ms" }}
+            >
+              <Link
+                href="/about"
+                className="group inline-flex items-center gap-2 font-poppins font-semibold text-bakery-pink-dark transition-colors hover:text-gray-800"
+              >
+                Read Megan&apos;s Story
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
 
             {/* Stats row */}

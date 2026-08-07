@@ -20,6 +20,7 @@ const Footer = () => {
   const supportLinks = [
     { href: "/contact", label: "Contact" },
     { href: "/corporate-team-building", label: "Team Building" },
+    { href: "/about/our-website", label: "Our Website" },
     { href: "/privacy-policy", label: "Privacy Policy" },
   ];
 

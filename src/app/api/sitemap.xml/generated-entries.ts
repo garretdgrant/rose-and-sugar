@@ -138,6 +138,13 @@ export const staticSitemapEntries: StaticSitemapEntry[] = [
     "lastmod": "2026-04-24"
   },
   {
+    "path": "/about/our-website",
+    "sourceFile": "src/app/about/our-website/page.tsx",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "lastmod": "2026-08-07"
+  },
+  {
     "path": "/contact",
     "sourceFile": "src/app/contact/page.tsx",
     "priority": "0.7",

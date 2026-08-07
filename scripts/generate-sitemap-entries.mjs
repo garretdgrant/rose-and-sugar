@@ -73,6 +73,10 @@ const staticRouteSources = [
     sourceFile: "src/app/classes/thank-you/page.tsx",
   },
   { path: "/about", sourceFile: "src/app/about/page.tsx" },
+  {
+    path: "/about/our-website",
+    sourceFile: "src/app/about/our-website/page.tsx",
+  },
   { path: "/contact", sourceFile: "src/app/contact/page.tsx" },
   { path: "/privacy-policy", sourceFile: "src/app/privacy-policy/page.tsx" },
 ];

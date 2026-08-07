@@ -380,6 +380,19 @@ const About = () => {
                 trusting me and letting me be a part of celebrating your special
                 moments!
               </p>
+
+              <p className="font-poppins text-lg text-gray-600 leading-relaxed">
+                As Rose & Sugar grew to include ready-to-order sets, custom
+                requests, classes, and a digital recipe, the online experience
+                needed to grow with it. Take a behind-the-scenes look at{" "}
+                <Link
+                  href="/about/our-website"
+                  className="font-semibold text-bakery-pink-dark underline decoration-bakery-pink-light decoration-2 underline-offset-4 transition-colors hover:text-gray-800"
+                >
+                  how we built the Rose & Sugar website
+                </Link>
+                .
+              </p>
             </div>
 
             {/* Sidebar - 5 columns */}
