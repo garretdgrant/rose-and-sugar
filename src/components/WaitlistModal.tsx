@@ -184,7 +184,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[540px] bg-transparent border-none p-0 overflow-visible shadow-none">
+      <DialogContent className="max-h-[calc(100dvh-1rem)] w-[calc(100%-1rem)] max-w-[540px] gap-0 overflow-hidden border-none bg-transparent p-0 shadow-none sm:max-h-[calc(100dvh-2rem)] sm:w-full [&>button]:right-3 [&>button]:top-3 [&>button]:z-50 [&>button]:rounded-full [&>button]:bg-white/90 [&>button]:p-2 [&>button]:text-bakery-pink-dark [&>button]:opacity-100 [&>button]:shadow-md">
         {/* Inject keyframes for petal animation */}
         <style jsx global>{`
           @keyframes petalFloat {
@@ -232,7 +232,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
         `}</style>
 
         <div
-          className={`relative bg-white rounded-3xl shadow-2xl overflow-hidden transition-all duration-700 ${
+          className={`relative flex max-h-[calc(100dvh-1rem)] min-h-0 w-full flex-col overflow-hidden rounded-3xl bg-white shadow-2xl transition-all duration-700 sm:max-h-[calc(100dvh-2rem)] ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >
@@ -259,7 +259,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
           </div>
 
           {/* Header with organic shape */}
-          <div className="relative">
+          <div className="relative shrink-0">
             {/* Curved bottom edge */}
             <div
               className="absolute bottom-0 left-0 right-0 h-8 bg-white"
@@ -269,7 +269,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
             />
 
             {/* Header content */}
-            <div className="relative bg-gradient-to-br from-bakery-pink-dark via-bakery-pink to-bakery-peach px-8 pt-8 pb-12">
+            <div className="relative bg-gradient-to-br from-bakery-pink-dark via-bakery-pink to-bakery-peach px-5 pb-9 pt-6 sm:px-8 sm:pb-12 sm:pt-8">
               {/* Subtle pattern overlay */}
               <div
                 className="absolute inset-0 opacity-10"
@@ -295,7 +295,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
               </div>
 
               <DialogTitle
-                className={`text-3xl md:text-4xl font-playfair text-white tracking-wide transition-all duration-700 delay-100 ${
+                className={`pr-10 font-playfair text-2xl tracking-wide text-white transition-all delay-100 duration-700 sm:text-3xl md:text-4xl ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-4"
@@ -304,7 +304,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                 Join Our Waitlist
               </DialogTitle>
               <DialogDescription
-                className={`text-white/90 font-poppins mt-2 text-base transition-all duration-700 delay-200 ${
+                className={`mt-1 pr-8 font-poppins text-sm text-white/90 transition-all delay-200 duration-700 sm:mt-2 sm:pr-0 sm:text-base ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-4"
@@ -316,7 +316,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
           </div>
 
           {/* Form content */}
-          <div className="relative px-8 pt-4 pb-8">
+          <div className="relative min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 pb-5 pt-3 sm:px-8 sm:pb-8 sm:pt-4">
             {/* Success overlay */}
             {showSuccess && (
               <div className="absolute inset-0 bg-white/95 z-20 flex flex-col items-center justify-center">
@@ -361,13 +361,13 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
 
             {/* Intro text */}
             <div
-              className={`flex items-center gap-4 mb-6 p-4 rounded-2xl bg-bakery-cream/50 border border-bakery-pink-light/30 transition-all duration-700 delay-300 ${
+              className={`mb-4 flex items-center gap-3 rounded-2xl border border-bakery-pink-light/30 bg-bakery-cream/50 p-3 transition-all delay-300 duration-700 sm:mb-6 sm:gap-4 sm:p-4 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-4"
               }`}
             >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-bakery-pink-light to-bakery-peach flex items-center justify-center flex-shrink-0">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-bakery-pink-light to-bakery-peach sm:h-12 sm:w-12 sm:rounded-2xl">
                 <RosePetal className="w-6 h-7 text-bakery-pink-dark" />
               </div>
               <p className="text-sm text-gray-600 font-poppins leading-relaxed">
@@ -379,7 +379,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-5"
+                className="space-y-4 sm:space-y-5"
               >
                 {/* Name field */}
                 <div
@@ -401,7 +401,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                         <FormControl>
                           <Input
                             placeholder="Your name"
-                            className="h-12 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light"
+                            className="h-11 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light sm:h-12"
                             {...field}
                           />
                         </FormControl>
@@ -432,7 +432,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                           <Input
                             type="email"
                             placeholder="your.email@example.com"
-                            className="h-12 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light"
+                            className="h-11 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light sm:h-12"
                             {...field}
                           />
                         </FormControl>
@@ -463,7 +463,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                           <Input
                             type="tel"
                             placeholder="(123) 456-7890"
-                            className="h-12 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light"
+                            className="h-11 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light sm:h-12"
                             {...field}
                           />
                         </FormControl>
@@ -493,7 +493,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                         <FormControl>
                           <select
                             {...field}
-                            className="flex h-12 w-full rounded-xl border border-bakery-pink-light/40 bg-bakery-cream/20 px-4 py-2 font-poppins text-base text-gray-700 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bakery-pink/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300 hover:border-bakery-pink-light cursor-pointer"
+                            className="flex h-11 w-full cursor-pointer rounded-xl border border-bakery-pink-light/40 bg-bakery-cream/20 px-4 py-2 font-poppins text-base text-gray-700 ring-offset-background transition-all duration-300 hover:border-bakery-pink-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bakery-pink/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:h-12"
                           >
                             {referralSourceOptions.map((option) => (
                               <option key={option} value={option}>
@@ -522,7 +522,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                           <FormControl>
                             <Input
                               placeholder="Tell us where you heard about us"
-                              className="h-12 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light"
+                              className="h-11 rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light sm:h-12"
                               {...field}
                             />
                           </FormControl>
@@ -553,7 +553,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                         <FormControl>
                           <Textarea
                             placeholder="Let us know which classes you're interested in..."
-                            className="min-h-[100px] rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 focus:border-bakery-pink focus:ring-bakery-pink/20 transition-all duration-300 hover:border-bakery-pink-light resize-none"
+                            className="min-h-20 resize-none rounded-xl border-bakery-pink-light/40 bg-bakery-cream/20 font-poppins placeholder:text-gray-400 transition-all duration-300 hover:border-bakery-pink-light focus:border-bakery-pink focus:ring-bakery-pink/20 sm:min-h-[100px]"
                             {...field}
                           />
                         </FormControl>
@@ -574,7 +574,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
                 >
                   <Button
                     type="submit"
-                    className="w-full h-14 rounded-2xl text-base font-poppins font-semibold bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-pink-dark bg-[length:200%_100%] text-white shadow-lg shadow-bakery-pink/25 hover:shadow-xl hover:shadow-bakery-pink/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 hover:bg-right"
+                    className="h-12 w-full rounded-2xl bg-gradient-to-r from-bakery-pink-dark via-bakery-pink to-bakery-pink-dark bg-[length:200%_100%] font-poppins text-base font-semibold text-white shadow-lg shadow-bakery-pink/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-right hover:shadow-xl hover:shadow-bakery-pink/35 active:translate-y-0 sm:h-14"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (

@@ -24,8 +24,8 @@ import {
 import {
   classesListQueryKey,
   fetchClassesList,
+  getUpcomingClasses,
   mapClassToShopifyProduct,
-  type ClassesApiProduct,
 } from "@/lib/shopifyClasses";
 import type { ShopifyProduct } from "@/types/shopify";
 import { useCartStore } from "@/stores/cartStore";
@@ -311,46 +311,37 @@ const FeaturedCookieCard = ({
 };
 
 const FeaturedShop = () => {
+  const [cutoffTimestamp] = useState(() => Date.now());
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const { data: predesignedProducts } = useQuery({
     queryKey: predesignedListQueryKey,
     queryFn: fetchPredesignedList,
   });
-  const { data: classProducts } = useQuery({
+  const {
+    data: classProducts,
+    isLoading: areClassesLoading,
+    isError: didClassesError,
+  } = useQuery({
     queryKey: classesListQueryKey,
     queryFn: fetchClassesList,
   });
   const featuredClass = useMemo(() => {
-    if (!classProducts || classProducts.length === 0) return null;
-    const toTime = (value?: string | null) => {
-      if (!value) return Number.POSITIVE_INFINITY;
-      const parsed = Date.parse(value);
-      return Number.isNaN(parsed) ? Number.POSITIVE_INFINITY : parsed;
-    };
-    const now = Date.now();
-    const sorted = [...classProducts].sort(
-      (a, b) => toTime(a.eventStartDateTime) - toTime(b.eventStartDateTime),
-    );
-    const upcoming = sorted.filter(
-      (item) => toTime(item.eventStartDateTime) >= now,
-    );
-    const candidates = upcoming.length > 0 ? upcoming : sorted;
-    const isSoldOut = (item: ClassesApiProduct) => {
-      const seatsLeft = item.quantityAvailable;
-      return typeof seatsLeft === "number" ? seatsLeft <= 0 : false;
-    };
-    const nextAvailable = candidates.find((item) => !isSoldOut(item));
-    const fallback = candidates[0] ?? null;
-    const selected = nextAvailable ?? fallback;
-    return selected ? mapClassToShopifyProduct(selected) : null;
-  }, [classProducts]);
+    const nextClass = getUpcomingClasses(
+      classProducts || [],
+      cutoffTimestamp,
+    )[0];
+    return nextClass ? mapClassToShopifyProduct(nextClass) : null;
+  }, [classProducts, cutoffTimestamp]);
   const featuredCookies = useMemo(() => {
     return (predesignedProducts || [])
       .map(mapPredesignedToShopifyProduct)
       .slice(0, 4);
   }, [predesignedProducts]);
 
-  if (!featuredClass && featuredCookies.length === 0) {
+  const showWaitlistPrompt =
+    !areClassesLoading && !didClassesError && !featuredClass;
+
+  if (!featuredClass && !showWaitlistPrompt && featuredCookies.length === 0) {
     return null;
   }
 
@@ -416,6 +407,47 @@ const FeaturedShop = () => {
                   product={featuredClass}
                   onWaitlist={() => setIsWaitlistOpen(true)}
                 />
+              </div>
+            </div>
+          )}
+
+          {showWaitlistPrompt && (
+            <div className="animate-fade-in h-full">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="font-bebas text-2xl text-gray-800 tracking-wide">
+                  Upcoming Classes
+                </h3>
+                <Link
+                  href="/classes"
+                  className="inline-flex items-center gap-2 text-bakery-pink-dark font-poppins font-medium text-sm hover:gap-3 transition-all duration-300 group"
+                >
+                  Explore Classes
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+              <div className="relative h-[calc(100%-2.5rem)] overflow-hidden rounded-3xl border border-bakery-pink-light/30 bg-white p-8 shadow-lg md:p-10">
+                <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-bakery-pink-light/30 blur-3xl" />
+                <div className="relative flex h-full min-h-80 flex-col items-center justify-center text-center">
+                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-bakery-pink-light to-bakery-peach">
+                    <Mail className="h-7 w-7 text-bakery-pink-dark" />
+                  </div>
+                  <h4 className="font-bebas text-3xl tracking-wide text-gray-900 md:text-4xl">
+                    New Classes Coming Soon
+                  </h4>
+                  <p className="mt-3 max-w-sm font-poppins leading-relaxed text-gray-600">
+                    There are no upcoming class dates right now. Join the
+                    waitlist and we&apos;ll let you know when the next class
+                    opens.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setIsWaitlistOpen(true)}
+                    className="mt-7 inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-bakery-pink-dark to-bakery-pink px-8 py-4 font-poppins font-semibold text-white shadow-lg shadow-bakery-pink-dark/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-bakery-pink-dark/40"
+                  >
+                    <Mail className="h-5 w-5" />
+                    Join Class Waitlist
+                  </button>
+                </div>
               </div>
             </div>
           )}

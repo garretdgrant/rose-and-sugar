@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -38,7 +37,7 @@ const TWO_DOZEN_PRICE_PER_DOZEN = 75;
 const STANDARD_PRICE_PER_DOZEN = 70;
 const GLUTEN_FREE_PRICE_PER_DOZEN = 6;
 const DYE_FREE_PRICE_PER_DOZEN = 10;
-const RIBBON_PACKAGING_PRICE_PER_DOZEN = 6;
+const RIBBON_PACKAGING_PRICE_PER_DOZEN = 10;
 const EARLIEST_CUSTOM_ORDER_DATE = "2026-05-22";
 
 const formSchema = z
@@ -375,22 +374,6 @@ const CustomOrderClient = () => {
                   </div>
                 )}
               />
-
-              <div className="rounded-2xl border border-bakery-pink/20 bg-gradient-to-br from-bakery-cream via-white to-bakery-pink-light/20 p-5 shadow-sm">
-                <p className="font-poppins text-sm leading-relaxed text-gray-700 md:text-[15px]">
-                  Megan is currently booked through June 7th. She has limited
-                  summer availability for custom orders so please don&apos;t
-                  wait to inquire! Interested in classes? Get added to the email
-                  list here:{" "}
-                  <Link
-                    href="/classes"
-                    className="font-semibold text-bakery-pink-dark underline decoration-bakery-pink/40 underline-offset-4 transition-colors hover:text-bakery-brown"
-                  >
-                    Classes
-                  </Link>
-                  .
-                </p>
-              </div>
 
               {currentStep === 5 && (
                 <div className="rounded-2xl border border-bakery-pink/20 bg-gradient-to-br from-bakery-cream via-white to-bakery-pink-light/20 p-5 shadow-sm">
@@ -744,7 +727,7 @@ const CustomOrderClient = () => {
                           {
                             value: "ribbon",
                             label: "Ribbon-Tied",
-                            desc: "+$6/dozen",
+                            desc: "+$10/dozen",
                           },
                         ].map((option) => (
                           <label

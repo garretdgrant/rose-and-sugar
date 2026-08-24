@@ -9,14 +9,9 @@ import WaitlistModal from "@/components/WaitlistModal";
 import {
   classesListQueryKey,
   fetchClassesList,
+  getUpcomingClasses,
   mapClassToShopifyProduct,
 } from "@/lib/shopifyClasses";
-
-const getEventTimestamp = (value?: string | null) => {
-  if (!value) return null;
-  const parsed = Date.parse(value);
-  return Number.isNaN(parsed) ? null : parsed;
-};
 
 const getGridClassName = (count: number) => {
   if (count === 1) return "grid-cols-1 max-w-md mx-auto";
@@ -42,23 +37,9 @@ const ClientClasses = () => {
       : null;
 
   const upcomingClasses = useMemo(() => {
-    return [...(apiClasses || [])]
-      .filter((classItem) => {
-        const eventEnd = getEventTimestamp(classItem.eventEndDateTime);
-        const eventStart = getEventTimestamp(classItem.eventStartDateTime);
-        const cutoff = eventEnd ?? eventStart;
-
-        if (cutoff === null) return true;
-        return cutoff >= cutoffTimestamp;
-      })
-      .sort((a, b) => {
-        const aTime =
-          getEventTimestamp(a.eventStartDateTime) ?? Number.POSITIVE_INFINITY;
-        const bTime =
-          getEventTimestamp(b.eventStartDateTime) ?? Number.POSITIVE_INFINITY;
-        return aTime - bTime;
-      })
-      .map(mapClassToShopifyProduct);
+    return getUpcomingClasses(apiClasses || [], cutoffTimestamp).map(
+      mapClassToShopifyProduct,
+    );
   }, [apiClasses, cutoffTimestamp]);
 
   return (

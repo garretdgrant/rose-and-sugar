@@ -35,6 +35,34 @@ type ClassesListResponse = {
 
 export const classesListQueryKey = ["products", "classes"] as const;
 
+const getEventTimestamp = (value?: string | null) => {
+  if (!value) return null;
+  const parsed = Date.parse(value);
+  return Number.isNaN(parsed) ? null : parsed;
+};
+
+export const getUpcomingClasses = (
+  classes: ClassesApiProduct[],
+  cutoffTimestamp: number,
+) => {
+  return [...classes]
+    .filter((classItem) => {
+      const eventEnd = getEventTimestamp(classItem.eventEndDateTime);
+      const eventStart = getEventTimestamp(classItem.eventStartDateTime);
+      const cutoff = eventEnd ?? eventStart;
+
+      if (cutoff === null) return true;
+      return cutoff >= cutoffTimestamp;
+    })
+    .sort((a, b) => {
+      const aTime =
+        getEventTimestamp(a.eventStartDateTime) ?? Number.POSITIVE_INFINITY;
+      const bTime =
+        getEventTimestamp(b.eventStartDateTime) ?? Number.POSITIVE_INFINITY;
+      return aTime - bTime;
+    });
+};
+
 const getApiUrl = (path: string) => {
   return typeof window === "undefined" ? buildCanonicalUrl(path) : path;
 };
