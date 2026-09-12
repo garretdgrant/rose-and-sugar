@@ -14,7 +14,6 @@ const validFlavorPreferences = new Set([
 ]);
 
 const validPackagingOptions = new Set(["sealed", "ribbon"]);
-const validTipPercentages = new Set(["10", "15", "20", "custom"]);
 
 const TWO_DOZEN_PRICE_PER_DOZEN = 75;
 const STANDARD_PRICE_PER_DOZEN = 70;
@@ -34,15 +33,6 @@ const getQuantityValue = (quantity: string) =>
 
 const getBasePricePerDozen = (quantity: number) =>
   quantity === 2 ? TWO_DOZEN_PRICE_PER_DOZEN : STANDARD_PRICE_PER_DOZEN;
-
-const parseCustomTipAmount = (value: unknown) => {
-  if (typeof value !== "string" && typeof value !== "number") {
-    return null;
-  }
-
-  const amount = Number(value);
-  return Number.isFinite(amount) && amount >= 0 ? amount : null;
-};
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -71,8 +61,6 @@ export async function POST(req: NextRequest) {
       packaging,
       referralSource,
       message,
-      tipPercentage,
-      customTipAmount,
       dyefree,
       company,
     } = body;
@@ -145,29 +133,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!validTipPercentages.has(tipPercentage)) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Please select a valid tip option.",
-        }),
-        { status: 400 },
-      );
-    }
-
-    const parsedCustomTipAmount =
-      tipPercentage === "custom" ? parseCustomTipAmount(customTipAmount) : null;
-
-    if (tipPercentage === "custom" && parsedCustomTipAmount === null) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Please enter a non-negative custom tip amount.",
-        }),
-        { status: 400 },
-      );
-    }
-
     const flavorList = flavorPreference
       .map((flavor: string) => `• ${flavor}`)
       .join("<br>");
@@ -179,15 +144,7 @@ export async function POST(req: NextRequest) {
       (packaging === "ribbon" ? RIBBON_PACKAGING_PRICE_PER_DOZEN : 0);
     const estimatedSubtotal =
       quantityValue * (basePricePerDozen + addOnsPerDozen);
-    const estimatedTipAmount =
-      tipPercentage === "custom"
-        ? (parsedCustomTipAmount ?? 0)
-        : estimatedSubtotal * (Number(tipPercentage) / 100);
-    const estimatedTotal = estimatedSubtotal + estimatedTipAmount;
-    const tipLabel =
-      tipPercentage === "custom"
-        ? `Custom tip (${formatCurrency(estimatedTipAmount)})`
-        : `${tipPercentage}% (${formatCurrency(estimatedTipAmount)})`;
+    const estimatedTotal = estimatedSubtotal;
 
     const { data, error } = await resend.emails.send({
       from: senderEmail,
@@ -235,10 +192,6 @@ export async function POST(req: NextRequest) {
               <td style="padding: 8px;">${formatCurrency(estimatedSubtotal)}</td>
             </tr>
             <tr>
-              <td style="padding: 8px; font-weight: bold;">Tip:</td>
-              <td style="padding: 8px;">${tipLabel}</td>
-            </tr>
-            <tr>
               <td style="padding: 8px; font-weight: bold;">Estimated Total:</td>
               <td style="padding: 8px;">${formatCurrency(estimatedTotal)}</td>
             </tr>
@@ -277,10 +230,7 @@ export async function POST(req: NextRequest) {
         dyefree,
         referralSource,
         message,
-        tipPercentage,
-        customTipAmount: parsedCustomTipAmount,
         estimatedSubtotal,
-        estimatedTipAmount,
         estimatedTotal,
       }),
     });

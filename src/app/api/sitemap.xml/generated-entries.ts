@@ -135,7 +135,7 @@ export const staticSitemapEntries: StaticSitemapEntry[] = [
     "sourceFile": "src/app/about/page.tsx",
     "priority": "0.7",
     "changefreq": "monthly",
-    "lastmod": "2026-04-24"
+    "lastmod": "2026-08-07"
   },
   {
     "path": "/about/our-website",
