@@ -12,7 +12,7 @@ export const customOrderFaqs = [
   {
     question: "What areas do you serve for custom cookie pickup?",
     answerText:
-      "Rose & Sugar is based in Folsom, CA with pickup available on Saturdays (preferred) or by arrangement. We serve customers throughout the greater Sacramento area including El Dorado Hills, Roseville, Granite Bay, Rocklin, and surrounding communities. We are unable to ship cookies under California Cottage Food laws.",
+      "Rose & Sugar is based in Folsom, CA with pickup on Saturdays unless another day is requested when placing your order and confirmed by Megan. Early pickup fees may apply. We serve customers throughout the greater Sacramento area including El Dorado Hills, Roseville, Granite Bay, Rocklin, and surrounding communities. We are unable to ship cookies under California Cottage Food laws.",
   },
   {
     question: "What flavors are available for custom cookies?",

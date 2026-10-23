@@ -150,6 +150,8 @@ export default async function Page({ params }: Props) {
     : validStart
       ? startDate.getTime()
       : null;
+  // This async Server Component checks availability at server render time.
+  // eslint-disable-next-line react-hooks/purity
   const isPastClass = pastClassCutoff !== null && pastClassCutoff < Date.now();
 
   const dateLabel = validStart ? formatDate(startDate) : "Date TBD";

@@ -26,13 +26,14 @@ import {
   Sparkles,
 } from "lucide-react";
 import CustomOrderClient from "./CustomOrderClient";
+import CustomOrderAvailability from "./CustomOrderAvailability";
 import { customOrderFaqs } from "./content";
 
 const PAGE_PATH = "/cookies/order-custom-sugar-cookies";
 const PAGE_TITLE =
   "Order Custom Sugar Cookies in Folsom & Sacramento | Rose & Sugar";
 const PAGE_DESCRIPTION =
-  "Order custom decorated sugar cookies starting at $70/dozen. Handcrafted in Folsom, CA for birthdays, showers, weddings & events. Request your free quote today!";
+  "Custom decorated sugar cookies starting at $70/dozen in Folsom, CA. Order requests are paused. Sign up to hear when custom orders are available.";
 
 const featureHighlights = [
   {
@@ -235,7 +236,8 @@ const CustomOrderPage = () => {
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: "Saturday",
-      description: "Pickup available Saturdays; other days by arrangement",
+      description:
+        "Saturday pickup; other days must be requested when ordering. Early pickup fees may apply.",
     },
     sameAs: ["https://www.instagram.com/roseandsugarcookies/"],
   };
@@ -421,6 +423,18 @@ const CustomOrderPage = () => {
                 </span>
               </h1>
 
+              <p className="mx-auto mb-6 max-w-2xl rounded-2xl border border-bakery-pink-light bg-white/90 px-5 py-4 font-poppins text-sm text-gray-800">
+                November 2026 custom orders are full. We aren&apos;t taking any
+                additional November orders.{" "}
+                <a
+                  href="#custom-order-availability"
+                  className="font-semibold underline underline-offset-4"
+                >
+                  Ask to be notified about availability
+                </a>
+                .
+              </p>
+
               <p
                 className="mx-auto mb-8 max-w-2xl font-poppins text-lg leading-relaxed text-gray-600 opacity-0 animate-fade-in-up md:text-xl"
                 style={{ animationDelay: "400ms" }}
@@ -486,20 +500,21 @@ const CustomOrderPage = () => {
             <div className="mx-auto max-w-4xl">
               <div className="mb-10 text-center">
                 <h2 className="font-bebas text-4xl tracking-tight text-gray-800 opacity-0 animate-fade-in-up md:text-5xl">
-                  Request a{" "}
                   <span className="bg-gradient-to-r from-bakery-pink-dark to-bakery-pink bg-clip-text text-transparent">
                     Custom Order
-                  </span>
+                  </span>{" "}
+                  Availability
                 </h2>
                 <p
                   className="mt-3 font-poppins text-gray-600 opacity-0 animate-fade-in-up"
                   style={{ animationDelay: "100ms" }}
                 >
-                  Tell us about your event and we&apos;ll follow up within 48
-                  hours.
+                  Order requests are currently paused. Sign up below to hear
+                  when custom orders are available.
                 </p>
               </div>
 
+              <CustomOrderAvailability />
               <CustomOrderClient />
 
               <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -558,14 +573,15 @@ const CustomOrderPage = () => {
                     to playful birthday party cookies in bold colors, we treat
                     every order as a collaboration. You&apos;ll receive a
                     personalized quote within 48 hours of submitting your
-                    request.
+                    request once custom orders reopen.
                   </p>
                   <p className="font-poppins text-base leading-relaxed text-gray-700">
                     Rose & Sugar proudly serves Folsom, Sacramento, El Dorado
                     Hills, Roseville, Granite Bay, and surrounding communities.
                     All custom orders are available for local pickup in Folsom,
-                    typically on Saturdays, with flexible scheduling available
-                    upon request. If you want to learn the techniques behind the
+                    on Saturdays unless another day is requested when placing
+                    your order and confirmed by Megan. Early pickup fees may
+                    apply. If you want to learn the techniques behind the
                     details, Megan also offers{" "}
                     <Link
                       href="/classes#book-class"
@@ -603,7 +619,7 @@ const CustomOrderPage = () => {
                       {[
                         "Starting at $70 per dozen",
                         "Minimum order: 2 dozen",
-                        "Preferred pickup on Saturdays",
+                        "Saturday pickup; request other days when ordering",
                       ].map((item) => (
                         <div
                           key={item}
@@ -652,8 +668,8 @@ const CustomOrderPage = () => {
                 </h3>
                 <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
                   Whatever the milestone, we&apos;ll design a cookie set to
-                  match. Just share your vision in our order form above and
-                  we&apos;ll take care of the rest.
+                  match. Custom order requests are currently paused. Leave your
+                  email above to hear when orders are available again.
                 </p>
               </div>
             </div>

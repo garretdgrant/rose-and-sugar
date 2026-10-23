@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { NextRequest } from "next/server";
 import { isSpamHoneypot } from "@/lib/spam";
 import { isValidEmail, isValidPhone } from "@/lib/validations";
+import { CUSTOM_ORDERS_ENABLED } from "@/lib/custom-order-status";
 
 const validFlavorPreferences = new Set([
   "vanilla",
@@ -35,6 +36,17 @@ const getBasePricePerDozen = (quantity: number) =>
   quantity === 2 ? TWO_DOZEN_PRICE_PER_DOZEN : STANDARD_PRICE_PER_DOZEN;
 
 export async function POST(req: NextRequest) {
+  if (!CUSTOM_ORDERS_ENABLED) {
+    return Response.json(
+      {
+        success: false,
+        error:
+          "Custom order requests are currently paused. Please use the availability notification form.",
+      },
+      { status: 503 },
+    );
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
   const senderEmail = process.env.SENDER_EMAIL;
   const receiverEmail = process.env.RECEIVER_EMAIL;
