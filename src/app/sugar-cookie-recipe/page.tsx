@@ -17,15 +17,8 @@ const productImageUrl = buildOgImageUrl(
 );
 
 const recipeHandle = "sugar-cookie-recipe";
-const recipePriceLabel = "$12";
 const recipePriceValue = "12.00";
 const priceValidUntil = "2027-03-06";
-
-const toPriceLabel = (amount: string) => {
-  const parsed = Number.parseFloat(amount);
-  if (Number.isNaN(parsed)) return recipePriceLabel;
-  return `$${parsed.toFixed(parsed % 1 === 0 ? 0 : 2)}`;
-};
 
 const trustBadges = [
   "Instant PDF Download",
@@ -140,7 +133,6 @@ const SugarCookieRecipePage = async () => {
     checkoutProduct?.node.variants?.edges?.[0]?.node.price.amount ||
     checkoutProduct?.node.priceRange?.minVariantPrice.amount ||
     recipePriceValue;
-  const checkoutPriceLabel = toPriceLabel(checkoutPriceValue);
 
   const productJsonLd = {
     "@context": "https://schema.org/",

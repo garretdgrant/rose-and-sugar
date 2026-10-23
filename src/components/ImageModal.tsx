@@ -47,35 +47,35 @@ const CornerFlourish = ({
   );
 };
 
-const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) => {
+const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) =>
+  isOpen ? (
+    <ImageModalContent key={image.src} onClose={onClose} image={image} />
+  ) : null;
+
+const ImageModalContent = ({
+  onClose,
+  image,
+}: Omit<ImageModalProps, "isOpen">) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      // Small delay to trigger CSS transitions
-      const timer = setTimeout(() => setIsVisible(true), 20);
-      previousFocusRef.current = document.activeElement as HTMLElement | null;
-      document.body.style.overflow = "hidden";
-      closeButtonRef.current?.focus();
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
-      setImageLoaded(false);
-      document.body.style.overflow = "unset";
-      previousFocusRef.current?.focus();
-    }
+    // Small delay to trigger CSS transitions on each opening.
+    const timer = setTimeout(() => setIsVisible(true), 20);
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
 
     return () => {
-      document.body.style.overflow = "unset";
+      clearTimeout(timer);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
     };
-  }, [isOpen]);
+  }, []);
 
   useEffect(() => {
-    if (!isOpen) return undefined;
-
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
@@ -84,9 +84,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, image }) => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {

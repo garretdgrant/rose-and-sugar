@@ -85,7 +85,7 @@ const FloatingPetal = ({
     <RosePetal
       className="w-4 h-5 text-bakery-pink"
       style={{
-        transform: `rotate(${Math.random() * 360}deg)`,
+        transform: `rotate(${(startX * 37 + delay * 100) % 360}deg)`,
       }}
     />
   </div>
@@ -96,6 +96,13 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [previousOpen, setPreviousOpen] = useState(open);
+
+  if (previousOpen !== open) {
+    setPreviousOpen(open);
+    setIsVisible(false);
+    setShowSuccess(false);
+  }
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -116,9 +123,6 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     if (open) {
       const timer = setTimeout(() => setIsVisible(true), 50);
       return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
-      setShowSuccess(false);
     }
   }, [open]);
 

@@ -46,7 +46,8 @@ const ShopifyPreDesignedClient = () => {
   const categoryScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true);
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const products = useMemo<ShopifyProduct[]>(() => {
