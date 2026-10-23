@@ -63,6 +63,56 @@ const request = (body) =>
     body: JSON.stringify(body),
   });
 
+test("paused custom orders reject direct submissions before accessing email or sync services", async () => {
+  const status = {};
+  vm.runInNewContext(compile("../src/lib/custom-order-status.ts"), {
+    exports: status,
+  });
+  const exports = {};
+  vm.runInNewContext(compile("../src/app/api/contact/custom-order/route.ts"), {
+    exports,
+    Response,
+    require(name) {
+      if (name === "@/lib/custom-order-status") return status;
+      if (name === "@/lib/spam") return spam.exports;
+      if (name === "@/lib/validations") return {};
+      if (name === "resend") {
+        return {
+          Resend: class {
+            constructor() {
+              assert.fail("Paused orders must not initialize email delivery");
+            }
+          },
+        };
+      }
+      throw new Error(`Unexpected dependency: ${name}`);
+    },
+  });
+  const req = new Request("http://localhost/api/contact/custom-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: "Test Customer",
+      email: "visitor@example.com",
+      phone: "9165550123",
+      eventDate: "2027-01-16",
+      quantity: "2",
+      flavorPreference: ["vanilla"],
+      packaging: "sealed",
+      referralSource: "Google",
+      message: "Cookies for a birthday party.",
+      dyefree: false,
+      company: "",
+    }),
+  });
+  const response = await exports.POST(req);
+  assert.equal(response.status, 503);
+  const body = await response.json();
+  assert.equal(body.success, false);
+  assert.match(body.error, /currently paused/);
+  assert.equal(req.bodyUsed, false);
+});
+
 test("forwards a trimmed opt-in email to the configured recipient, not the visitor", async () => {
   const { post, calls } = setup();
   const response = await post(
@@ -77,7 +127,28 @@ test("forwards a trimmed opt-in email to the configured recipient, not the visit
     calls[0].text,
     /not an order, a reservation, or a marketing subscription/,
   );
-  assert.equal(calls[0].html, undefined);
+  assert.match(calls[0].html, /New availability request/);
+  assert.match(calls[0].html, /visitor@example\.com/);
+  assert.match(
+    calls[0].html,
+    /not an order, a reservation, or a marketing subscription/,
+  );
+  assert.match(calls[0].html, /href="mailto:visitor%40example\.com"/);
+});
+
+test("escapes the visitor email in HTML and encodes the reply link", async () => {
+  const { post, calls } = setup();
+  const email = "o'connor+cookies@example.com";
+  const response = await post(request({ email, consent: true }));
+  assert.equal(response.status, 200);
+  assert.equal(calls[0].replyTo, email);
+  assert.match(calls[0].text, /o'connor\+cookies@example\.com/);
+  assert.match(calls[0].html, /o&#39;connor\+cookies@example\.com/);
+  assert.match(
+    calls[0].html,
+    /href="mailto:o'connor%2Bcookies%40example\.com"/,
+  );
+  assert.doesNotMatch(calls[0].html, /o'connor\+cookies@example\.com/);
 });
 
 for (const [label, body] of Object.entries({

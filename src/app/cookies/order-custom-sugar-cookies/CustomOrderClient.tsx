@@ -19,6 +19,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import {
+  CUSTOM_ORDERS_ENABLED,
+  CUSTOM_ORDERS_PAUSED_MESSAGE,
+} from "@/lib/custom-order-status";
+import {
   ArrowRight,
   Sparkles,
   Cookie,
@@ -146,6 +150,7 @@ const CustomOrderClient = () => {
   });
 
   const onSubmit = async (data: FormValues) => {
+    if (!CUSTOM_ORDERS_ENABLED) return;
     setIsSubmitting(true);
 
     try {
@@ -227,7 +232,22 @@ const CustomOrderClient = () => {
   });
 
   return (
-    <>
+    <fieldset
+      disabled={!CUSTOM_ORDERS_ENABLED}
+      aria-describedby={
+        !CUSTOM_ORDERS_ENABLED ? "custom-orders-paused" : undefined
+      }
+      aria-label="Custom order request"
+      className="min-w-0 disabled:[&>div]:opacity-50"
+    >
+      {!CUSTOM_ORDERS_ENABLED && (
+        <p
+          id="custom-orders-paused"
+          className="mb-6 rounded-2xl border border-bakery-pink-light bg-bakery-cream p-5 font-poppins text-sm text-gray-800"
+        >
+          {CUSTOM_ORDERS_PAUSED_MESSAGE}
+        </p>
+      )}
       <div
         className="mb-10 flex items-center justify-center opacity-0 animate-fade-in-up"
         style={{ animationDelay: "200ms" }}
@@ -861,12 +881,13 @@ const CustomOrderClient = () => {
           </Form>
 
           <p className="mt-6 text-center font-poppins text-sm text-gray-500">
-            After you submit, Megan will follow up within 48 hours with an
-            invoice and next steps.
+            {CUSTOM_ORDERS_ENABLED
+              ? "After you submit, Megan will follow up within 48 hours with an invoice and next steps."
+              : "Order submissions will resume when custom orders are available."}
           </p>
         </div>
       </div>
-    </>
+    </fieldset>
   );
 };
 

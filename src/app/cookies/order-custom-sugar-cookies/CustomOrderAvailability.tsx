@@ -53,8 +53,8 @@ export default function CustomOrderAvailability() {
       </h2>
       <p className="mt-2 font-poppins text-sm leading-relaxed text-gray-700">
         Thank you for keeping us busy! We aren&apos;t taking any additional
-        November custom orders. You can still use the form below to ask about
-        other dates.
+        November custom orders, and our order request form is currently paused.
+        Leave your email below to be notified when custom orders are available.
       </p>
       <h3 className="mt-6 font-poppins font-semibold text-gray-800">
         Get notified when custom orders are available

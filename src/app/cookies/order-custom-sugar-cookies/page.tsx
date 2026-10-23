@@ -33,7 +33,7 @@ const PAGE_PATH = "/cookies/order-custom-sugar-cookies";
 const PAGE_TITLE =
   "Order Custom Sugar Cookies in Folsom & Sacramento | Rose & Sugar";
 const PAGE_DESCRIPTION =
-  "Order custom decorated sugar cookies starting at $70/dozen. Handcrafted in Folsom, CA for birthdays, showers, weddings & events. Request your free quote today!";
+  "Custom decorated sugar cookies starting at $70/dozen in Folsom, CA. Order requests are paused. Sign up to hear when custom orders are available.";
 
 const featureHighlights = [
   {
@@ -500,17 +500,17 @@ const CustomOrderPage = () => {
             <div className="mx-auto max-w-4xl">
               <div className="mb-10 text-center">
                 <h2 className="font-bebas text-4xl tracking-tight text-gray-800 opacity-0 animate-fade-in-up md:text-5xl">
-                  Request a{" "}
                   <span className="bg-gradient-to-r from-bakery-pink-dark to-bakery-pink bg-clip-text text-transparent">
                     Custom Order
-                  </span>
+                  </span>{" "}
+                  Availability
                 </h2>
                 <p
                   className="mt-3 font-poppins text-gray-600 opacity-0 animate-fade-in-up"
                   style={{ animationDelay: "100ms" }}
                 >
-                  Tell us about your event and we&apos;ll follow up within 48
-                  hours.
+                  Order requests are currently paused. Sign up below to hear
+                  when custom orders are available.
                 </p>
               </div>
 
@@ -573,7 +573,7 @@ const CustomOrderPage = () => {
                     to playful birthday party cookies in bold colors, we treat
                     every order as a collaboration. You&apos;ll receive a
                     personalized quote within 48 hours of submitting your
-                    request.
+                    request once custom orders reopen.
                   </p>
                   <p className="font-poppins text-base leading-relaxed text-gray-700">
                     Rose & Sugar proudly serves Folsom, Sacramento, El Dorado
@@ -668,8 +668,8 @@ const CustomOrderPage = () => {
                 </h3>
                 <p className="mt-4 font-poppins text-base leading-relaxed text-gray-700">
                   Whatever the milestone, we&apos;ll design a cookie set to
-                  match. Just share your vision in our order form above and
-                  we&apos;ll take care of the rest.
+                  match. Custom order requests are currently paused. Leave your
+                  email above to hear when orders are available again.
                 </p>
               </div>
             </div>
