@@ -26,6 +26,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import CustomOrderClient from "./CustomOrderClient";
+import CustomOrderAvailability from "./CustomOrderAvailability";
 import { customOrderFaqs } from "./content";
 
 const PAGE_PATH = "/cookies/order-custom-sugar-cookies";
@@ -235,7 +236,8 @@ const CustomOrderPage = () => {
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: "Saturday",
-      description: "Pickup available Saturdays; other days by arrangement",
+      description:
+        "Saturday pickup; other days must be requested when ordering. Early pickup fees may apply.",
     },
     sameAs: ["https://www.instagram.com/roseandsugarcookies/"],
   };
@@ -421,6 +423,18 @@ const CustomOrderPage = () => {
                 </span>
               </h1>
 
+              <p className="mx-auto mb-6 max-w-2xl rounded-2xl border border-bakery-pink-light bg-white/90 px-5 py-4 font-poppins text-sm text-gray-800">
+                November 2026 custom orders are full. We aren&apos;t taking any
+                additional November orders.{" "}
+                <a
+                  href="#custom-order-availability"
+                  className="font-semibold underline underline-offset-4"
+                >
+                  Ask to be notified about availability
+                </a>
+                .
+              </p>
+
               <p
                 className="mx-auto mb-8 max-w-2xl font-poppins text-lg leading-relaxed text-gray-600 opacity-0 animate-fade-in-up md:text-xl"
                 style={{ animationDelay: "400ms" }}
@@ -500,6 +514,7 @@ const CustomOrderPage = () => {
                 </p>
               </div>
 
+              <CustomOrderAvailability />
               <CustomOrderClient />
 
               <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -564,8 +579,9 @@ const CustomOrderPage = () => {
                     Rose & Sugar proudly serves Folsom, Sacramento, El Dorado
                     Hills, Roseville, Granite Bay, and surrounding communities.
                     All custom orders are available for local pickup in Folsom,
-                    typically on Saturdays, with flexible scheduling available
-                    upon request. If you want to learn the techniques behind the
+                    on Saturdays unless another day is requested when placing
+                    your order and confirmed by Megan. Early pickup fees may
+                    apply. If you want to learn the techniques behind the
                     details, Megan also offers{" "}
                     <Link
                       href="/classes#book-class"
@@ -603,7 +619,7 @@ const CustomOrderPage = () => {
                       {[
                         "Starting at $70 per dozen",
                         "Minimum order: 2 dozen",
-                        "Preferred pickup on Saturdays",
+                        "Saturday pickup; request other days when ordering",
                       ].map((item) => (
                         <div
                           key={item}

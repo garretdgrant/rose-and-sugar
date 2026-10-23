@@ -433,6 +433,12 @@ const CustomOrderClient = () => {
                             {...field}
                           />
                         </FormControl>
+                        <FormDescription className="text-sm text-gray-700">
+                          Pickup is on Saturdays. Need another day? Request it
+                          in your order details when placing your order. Megan
+                          must confirm any change, and early pickup fees may
+                          apply.
+                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -741,8 +747,9 @@ const CustomOrderClient = () => {
                         />
                       </FormControl>
                       <FormDescription className="text-xs text-gray-500">
-                        We can always make updates later. Share your vision and
-                        we&apos;ll work together to bring it to life!
+                        Include any request for pickup on a day other than
+                        Saturday. Megan must confirm it, and early pickup fees
+                        may apply.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -766,6 +773,13 @@ const CustomOrderClient = () => {
                     </p>
                   </div>
                 </div>
+
+                <p className="rounded-2xl border border-bakery-pink-light/40 bg-bakery-cream/70 p-5 font-poppins text-sm text-gray-700">
+                  Before you submit: Saturdays are pickup days unless you
+                  request another day when placing your order and Megan confirms
+                  it. Please include that request in your order details. Early
+                  pickup fees may apply.
+                </p>
 
                 <div className="rounded-2xl border border-bakery-pink-light/40 bg-bakery-cream/70 p-5">
                   <div className="flex flex-col gap-3 font-poppins text-sm text-gray-700 sm:flex-row sm:items-center sm:justify-between">
